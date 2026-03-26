@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+export const runtime = 'edge';
+export const preferredRegion = 'hkg1';
 const SYSTEM_PROMPTS = {
   en: `You are D-Arrow's customer service agent. Be professional, confident, and concise.
 Rules: Reply in 2-3 sentences max. Use 1 emoji max per reply. Guide toward booking a free consultation. Don't list all services unless asked.
