@@ -94,6 +94,8 @@ export default function ChatBot() {
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState('');
   const [hasInitialNotification, setHasInitialNotification] = useState(false);
+  const [sessionId] = useState(() => Math.random().toString(36).slice(2) + Date.now().toString(36));
+  const [hasLoggedSession, setHasLoggedSession] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { lang } = useLanguage();
 
@@ -116,22 +118,36 @@ export default function ChatBot() {
     }
   }, [hasInitialNotification, lang]);
 
-  // Dispatch event when chatbot opens or closes
+  // Dispatch event when chatbot opens or closes + log conversations
   useEffect(() => {
     if (isOpen) {
       window.dispatchEvent(new Event('chatbot-opened'));
-      setUnreadCount(0); // Clear unread when opened
-      setShowNotification(false); // Hide notification when chat opens
+      setUnreadCount(0);
+      setShowNotification(false);
       
-      // Add greeting message if no messages exist
       if (messages.length === 0) {
         const greetingMsg = chatLanguage === 'ar' 
-          ? 'السلام عليكم! 👋 كيف يمكنني مساعدتك اليوم؟' 
-          : 'Hello! 👋 What can I do for you today?';
+          ? 'هلا! 👋 وش أقدر أساعدك اليوم؟' 
+          : 'Hey! 👋 How can I help you today?';
         setMessages([{ user: '', bot: greetingMsg }]);
       }
     } else {
       window.dispatchEvent(new Event('chatbot-closed'));
+      
+      // Log conversation when chat closes (if there are real messages)
+      const realMessages = messages.filter(m => m.user && m.user.trim());
+      if (realMessages.length > 0 && !hasLoggedSession) {
+        setHasLoggedSession(true);
+        fetch('/api/chat-log', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messages,
+            language: chatLanguage,
+            sessionId,
+          }),
+        }).catch(() => {}); // Silent fail — don't affect UX
+      }
     }
   }, [isOpen]);
 
