@@ -49,9 +49,11 @@ D-Arrow للتسويق الرقمي هي شريكك الموثوق لتحويل 
 كن ودياً وودوداً واحترافياً. استخدم الرموز التعبيرية في الرد. اجعل العملاء يشعرون بقيمتهم. اشرح الأمور بطريقة بسيطة وواضحة. اطرح أسئلة توضيحية عند الحاجة. قدم نصائح قابلة للتنفيذ. كن مساعداً وودياً دائماً!`,
 };
 
-// Model configuration — Primary: fast & cheap, Fallback: stable alternative
-const PRIMARY_MODEL = 'glm-4-flash';
-const FALLBACK_MODEL = 'glm-4-air';
+// Model configuration — Primary: fast & cheap, Fallback: full model
+// Docs: https://docs.z.ai/guides/llm/glm-4.7
+const PRIMARY_MODEL = 'glm-4.7-flash';
+const FALLBACK_MODEL = 'glm-4.7';
+const API_URL = 'https://api.z.ai/api/paas/v4/chat/completions';
 
 // Helper: call a specific model
 async function callModel(
@@ -61,7 +63,7 @@ async function callModel(
 ): Promise<{ reply: string; model: string } | null> {
   console.log(`🔄 Calling Zhipu ${model}...`);
 
-  const response = await fetch('https://open.bigmodel.cn/api/paas/v4/chat/completions', {
+  const response = await fetch(API_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
