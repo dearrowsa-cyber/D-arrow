@@ -7,7 +7,7 @@ export async function POST(req: Request) {
     const data = await req.json();
     const { name, email, phone, company, service, message, isCustomService, services, description } = data;
 
-    const recipient = process.env.CONTACT_RECIPIENT || 'y.iqbal@beedco.com';
+    const recipient = process.env.CONTACT_RECIPIENT || 'de.arrow.sa@gmail.com';
 
     // Generate HTML based on request type
     const html = isCustomService 

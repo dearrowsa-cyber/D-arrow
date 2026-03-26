@@ -19,7 +19,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: true, skipped: true });
     }
 
-    const recipient = process.env.CONTACT_RECIPIENT || 'y.iqbal@beedco.com';
+    const recipient = process.env.CONTACT_RECIPIENT || 'de.arrow.sa@gmail.com';
     const timestamp = new Date().toLocaleString('en-SA', { timeZone: 'Asia/Riyadh' });
 
     // Build conversation HTML
