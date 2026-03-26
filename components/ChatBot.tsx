@@ -198,9 +198,10 @@ export default function ChatBot() {
   };
 
   const isRTL = chatLanguage === 'ar';
+  const fontClass = isRTL ? 'font-bukra' : 'font-tt-hoves';
   const translations = {
-    en: { title: 'D-ARROW Assistant', greeting: 'Welcome! 👋', placeholder: 'Message...', askQuestion: 'How can I assist you?', thinking: 'Typing...', switchLang: 'العربية', online: 'Online' },
-    ar: { title: 'مساعد D-ARROW', greeting: 'أهلاً بك! 👋', placeholder: 'اكتب رسالة...', askQuestion: 'كيف يمكنني مساعدتك؟', thinking: 'جاري الكتابة...', switchLang: 'English', online: 'متصل' },
+    en: { title: 'D-Arrow', subtitle: 'Digital Marketing', greeting: 'Welcome 👋', placeholder: 'Type your message...', askQuestion: 'How can we help you today?', thinking: 'Typing...', switchLang: 'العربية', online: 'Online' },
+    ar: { title: 'D-Arrow', subtitle: 'التسويق الرقمي', greeting: 'أهلاً بك 👋', placeholder: 'اكتب رسالتك...', askQuestion: 'كيف نقدر نساعدك اليوم؟', thinking: 'جاري الكتابة...', switchLang: 'English', online: 'متصل' },
   };
   const t = translations[chatLanguage];
 
@@ -232,53 +233,49 @@ export default function ChatBot() {
 
       {/* Premium Glass Window */}
       {isOpen && (
-        <div className={`fixed bottom-24 z-50 w-[90vw] sm:w-[320px] h-[65vh] sm:h-[550px] max-h-[65vh] flex flex-col overflow-hidden rounded-[2.5rem] border border-[#FF4D6D] bg-white/70 backdrop-blur-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] ${isRTL ? 'left-6' : 'right-6'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+        <div className={`fixed bottom-24 z-50 w-[90vw] sm:w-[340px] h-[65vh] sm:h-[560px] max-h-[65vh] flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/70 backdrop-blur-3xl shadow-[0_20px_60px_rgba(0,0,0,0.2)] ${isRTL ? 'left-6' : 'right-6'} ${fontClass}`} dir={isRTL ? 'rtl' : 'ltr'}>
           
           {/* Three.js Background */}
-          <div className="absolute inset-0 -z-10 bg-[#000814]"> {/* Backup CSS background */}
-  <Canvas>
-    {/* R3F Background Color */}
-    <color attach="background" args={['#0B0D1F']} /> 
-    
-    <PerspectiveCamera makeDefault position={[0, 0, 5]} />
-    <BackgroundShapes />
-    
-    {/* Light add karna zaroori hai agar shapes dark navy mein dikhni chahiye */}
-    <ambientLight intensity={0.5} />
-    <pointLight position={[10, 10, 10]} />
-  </Canvas>
-</div>
+          <div className="absolute inset-0 -z-10 bg-[#0B0D1F]">
+            <Canvas>
+              <color attach="background" args={['#0B0D1F']} />
+              <PerspectiveCamera makeDefault position={[0, 0, 5]} />
+              <BackgroundShapes />
+              <ambientLight intensity={0.5} />
+              <pointLight position={[10, 10, 10]} />
+            </Canvas>
+          </div>
 
-          {/* Header (Snapchat Style) */}
-          <div className="flex items-center justify-between px-4 py-3 bg-[#14162E]/40 backdrop-blur-md border-b border-white/20">
-            <div className="flex items-center gap-2.5 flex-1">
-              <div className="w-9 h-9 rounded-full border-2 border-white shadow-md flex items-center justify-center text-white font-bold flex-shrink-0">
-                <img 
-    src="/chatbot-icon.jpeg"
-    alt="profile"
-    className="w-full h-full object-cover rounded-full"
-  />
+          {/* Header */}
+          <div className="flex items-center justify-between px-5 py-3.5 bg-gradient-to-r from-[#14162E]/60 to-[#1a1c3e]/60 backdrop-blur-xl border-b border-white/10">
+            <div className="flex items-center gap-3 flex-1">
+              <div className="w-10 h-10 rounded-full border-2 border-[#FF6F4F]/50 shadow-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+                <img src="/chatbot-icon.jpeg" alt="D-Arrow" className="w-full h-full object-cover rounded-full" />
               </div>
               <div className="flex-1 min-w-0">
-                <span className="font-bold !text-white !text-xs truncate leading-none m-0 py-0">{t.title}</span>
-                <span className="text-[8px] text-green-400 font-semibold flex items-center gap-0.5 -mt-1">
-                  <span className="w-1 h-1 bg-green-400 rounded-full animate-pulse" /> {t.online}
+                <div className="flex items-center gap-1.5">
+                  <span className="font-bold !text-white text-sm tracking-wide">{t.title}</span>
+                  <span className="text-[10px] text-white/50 font-medium">{t.subtitle}</span>
+                </div>
+                <span className="text-[10px] text-emerald-400 font-medium flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse" />{t.online}
                 </span>
               </div>
             </div>
-            <div className="flex items-center gap-1.5 flex-shrink-0">
-              <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-gradient-to-r hover:from-[#FF4D6D]/30 hover:to-[#FF9A3C]/30 rounded-full transition text-white/70 hover:text-white hover:scale-110 active:scale-95 border border-white/20 hover:border-[#FF9A3C]/50">
-                <X size={18} />
-              </button>
-            </div>
+            <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/10 rounded-xl transition text-white/60 hover:text-white">
+              <X size={18} />
+            </button>
           </div>
 
           {/* Message Area (WhatsApp Bubble Style) */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-transparent custom-scrollbar">
             {messages.length === 0 && (
-              <div className="text-center py-8 opacity-70">
+              <div className="text-center py-10">
+                <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-[#FF6F4F] to-[#FF4D6D] flex items-center justify-center shadow-lg">
+                  <MessageCircle size={24} className="text-white" />
+                </div>
                 <p className="text-sm font-bold !text-white mb-1">{t.greeting}</p>
-                <p className="text-xs !text-white/80">{t.askQuestion}</p>
+                <p className="text-xs !text-white/60">{t.askQuestion}</p>
               </div>
             )}
 
@@ -286,13 +283,13 @@ export default function ChatBot() {
               <div key={i} className="space-y-1 animate-in fade-in slide-in-from-bottom-2">
                 {/* User Message */}
                 <div className={`flex ${isRTL ? 'justify-start' : 'justify-end'}`}>
-                  <div className="max-w-[80%] bg-[#FF6F4F] text-white px-4 py-2.5 rounded-[1.2rem] rounded-tr-none shadow-md text-sm">
+                  <div className="max-w-[80%] bg-gradient-to-r from-[#FF6F4F] to-[#FF4D6D] text-white px-4 py-2.5 rounded-2xl rounded-tr-sm shadow-md text-[13px] leading-relaxed">
                     {m.user}
                   </div>
                 </div>
                 {/* Bot Message */}
                 <div className={`flex ${isRTL ? 'justify-end' : 'justify-start'}`}>
-                  <div className="max-w-[80%] bg-white/90 text-gray-800 px-4 py-2.5 rounded-[1.2rem] rounded-tl-none shadow-sm border border-white/50 text-xs backdrop-blur-sm">
+                  <div className="max-w-[85%] bg-white/95 text-gray-800 px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm border border-white/30 text-[13px] leading-relaxed backdrop-blur-sm">
                     <FormattedBotMessage text={m.bot} />
                   </div>
                 </div>
@@ -311,12 +308,9 @@ export default function ChatBot() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Input Area (Modern pill design) */}
-          <div className="p-4 bg-[#14162E]/30 backdrop-blur-md">
-            <div className="flex items-center gap-2 bg-white rounded-[2rem] p-1.5 shadow-xl border border-white/60">
-              <button className="p-2 text-gray-400 rounded-2xl hover:text-[#FF6F4F] transition">
-                <Paperclip size={20} />
-              </button>
+          {/* Input Area */}
+          <div className="p-3 bg-[#14162E]/40 backdrop-blur-xl border-t border-white/5">
+            <div className="flex items-center gap-2 bg-white rounded-2xl p-1.5 shadow-lg">
               <input
                 type="text"
                 value={message}
@@ -324,14 +318,14 @@ export default function ChatBot() {
                 onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
                 placeholder={t.placeholder}
                 disabled={loading}
-                className="flex-1 bg-transparent border-none outline-none text-sm !text-black placeholder:text-gray-400 py-2"
+                className={`flex-1 bg-transparent border-none outline-none text-[13px] !text-gray-800 placeholder:text-gray-400 py-2 px-3 ${fontClass}`}
               />
               <button
                 onClick={sendMessage}
                 disabled={!message.trim() || loading}
-                className="bg-gradient-to-r from-[#FF6F4F] to-[#FF4D6D] text-white p-2.5 rounded-full hover:scale-105 active:scale-95 transition shadow-lg disabled:opacity-50"
+                className="bg-gradient-to-r from-[#FF6F4F] to-[#FF4D6D] text-white p-2.5 rounded-xl hover:scale-105 active:scale-95 transition shadow-md disabled:opacity-40"
               >
-                <Send size={18} />
+                <Send size={16} />
               </button>
             </div>
           </div>
