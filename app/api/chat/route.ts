@@ -49,6 +49,50 @@ D-Arrow للتسويق الرقمي هي شريكك الموثوق لتحويل 
 كن ودياً وودوداً واحترافياً. استخدم الرموز التعبيرية في الرد. اجعل العملاء يشعرون بقيمتهم. اشرح الأمور بطريقة بسيطة وواضحة. اطرح أسئلة توضيحية عند الحاجة. قدم نصائح قابلة للتنفيذ. كن مساعداً وودياً دائماً!`,
 };
 
+// Model configuration — Primary: fast & cheap, Fallback: stable alternative
+const PRIMARY_MODEL = 'glm-4-flash';
+const FALLBACK_MODEL = 'glm-4-air';
+
+// Helper: call a specific model
+async function callModel(
+  model: string,
+  apiKey: string,
+  messages: { role: string; content: string }[]
+): Promise<{ reply: string; model: string } | null> {
+  console.log(`🔄 Calling Zhipu ${model}...`);
+
+  const response = await fetch('https://open.bigmodel.cn/api/paas/v4/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model,
+      messages,
+      temperature: 0.7,
+      top_p: 0.9,
+      max_tokens: 512,
+    }),
+  });
+
+  console.log(`📊 ${model} Response: ${response.status}`);
+
+  if (response.ok) {
+    const data = await response.json();
+    const reply = data.choices?.[0]?.message?.content;
+    if (reply) {
+      console.log(`✅ SUCCESS from ${model}!`);
+      return { reply: reply.trim(), model };
+    }
+  } else {
+    const errorData = await response.text().catch(() => 'Unknown error');
+    console.error(`❌ ${model} Error ${response.status}:`, errorData.substring(0, 300));
+  }
+
+  return null;
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { message, language = 'en' } = await req.json() as { message: string; language?: 'en' | 'ar' };
@@ -58,7 +102,7 @@ export async function POST(req: NextRequest) {
     }
 
     const apiKey = process.env.ZAI_API_KEY;
-    
+
     if (!apiKey) {
       console.warn('⚠️ ZAI_API_KEY not configured');
       const fallback = generateFallbackResponse(message, language as 'en' | 'ar');
@@ -70,51 +114,46 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    try {
-      console.log(`🔄 Calling Zhipu GLM-5 API`);
-      
-      const response = await fetch('https://open.bigmodel.cn/api/paas/v4/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model: 'glm-5',
-          messages: [
-            { role: 'system', content: SYSTEM_PROMPTS[language] },
-            { role: 'user', content: message }
-          ],
-          temperature: 0.7,
-          top_p: 0.95,
-        }),
-      });
+    const messages = [
+      { role: 'system', content: SYSTEM_PROMPTS[language] },
+      { role: 'user', content: message },
+    ];
 
-      console.log(`📊 Z.ai Response: ${response.status}`);
-      
-      if (response.ok) {
-        const data = await response.json();
-        const reply = data.choices?.[0]?.message?.content;
-        if (reply) {
-          console.log(`✅ SUCCESS from Zhipu GLM-5!`);
-          return NextResponse.json({
-            reply: reply.trim(),
-            language,
-            success: true,
-            source: 'zhipu-glm-5',
-            model: 'glm-5',
-          });
-        }
-      } else {
-        const errorData = await response.text().catch(() => 'Unknown error');
-        console.error(`❌ Zhipu GLM-5 Error ${response.status}:`, errorData.substring(0, 300));
+    // Try PRIMARY model first (glm-4-flash — fast & cheap)
+    try {
+      const result = await callModel(PRIMARY_MODEL, apiKey, messages);
+      if (result) {
+        return NextResponse.json({
+          reply: result.reply,
+          language,
+          success: true,
+          source: `zhipu-${result.model}`,
+          model: result.model,
+        });
       }
     } catch (e) {
-      console.error('⚠️ Zhipu GLM-5 API call failed:', e instanceof Error ? e.message : String(e));
+      console.error(`⚠️ ${PRIMARY_MODEL} failed:`, e instanceof Error ? e.message : String(e));
     }
 
-    // Fallback response
-    console.log('📌 Using fallback response');
+    // Try FALLBACK model (glm-4-air — stable backup)
+    try {
+      console.log(`🔁 Falling back to ${FALLBACK_MODEL}...`);
+      const result = await callModel(FALLBACK_MODEL, apiKey, messages);
+      if (result) {
+        return NextResponse.json({
+          reply: result.reply,
+          language,
+          success: true,
+          source: `zhipu-${result.model}`,
+          model: result.model,
+        });
+      }
+    } catch (e) {
+      console.error(`⚠️ ${FALLBACK_MODEL} failed:`, e instanceof Error ? e.message : String(e));
+    }
+
+    // Static fallback if both models fail
+    console.log('📌 Using static fallback response');
     const fallback = generateFallbackResponse(message, language as 'en' | 'ar');
     return NextResponse.json({
       reply: fallback,
@@ -123,7 +162,7 @@ export async function POST(req: NextRequest) {
       source: 'fallback',
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('💥 Unexpected error:', error);
     const fallback = generateFallbackResponse('hello', 'en');
     return NextResponse.json({
