@@ -149,14 +149,13 @@ export default function ChatBot() {
     setMessage('');
 
     try {
-      // No timeout - wait as long as needed for the response
       const res = await fetch('/api/chat/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           message: userMsg, 
           language: chatLanguage,
-          responseType: 'brief' // Request short responses
+          history: messages, // Send conversation history for memory
         }),
       });
       
