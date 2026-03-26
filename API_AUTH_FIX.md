@@ -14,12 +14,12 @@ Status: 403 (Forbidden) or 401 (Unauthorized)
 
 ✅ Should look like:
 ```
-xai-pVkuyzhzoyhtRFZ9euPV0Rtms6A0TdrYkjcfVIWXoAmzWjlwEaAAFFJCV46rKgxtZdMYZ4tBkSgKraBl
+xai-YOUR_API_KEY_HERE
 ```
 
 **Current key in .env.local:**
 ```
-GROK_API_KEY=xai-pVkuyzhzoyhtRFZ9euPV0Rtms6A0TdrYkjcfVIWXoAmzWjlwEaAAFFJCV46rKgxtZdMYZ4tBkSgKraBl
+GROK_API_KEY=xai-YOUR_API_KEY_HERE
 ```
 
 ✅ **Format correct** - Starts with `xai-`
@@ -57,7 +57,7 @@ If you have a new API key:
 **Run this PowerShell command to test:**
 
 ```powershell
-$apiKey = "xai-pVkuyzhzoyhtRFZ9euPV0Rtms6A0TdrYkjcfVIWXoAmzWjlwEaAAFFJCV46rKgxtZdMYZ4tBkSgKraBl"
+$apiKey = "xai-YOUR_API_KEY_HERE"
 
 $body = @{
     messages = @(

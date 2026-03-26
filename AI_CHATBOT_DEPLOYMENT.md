@@ -23,7 +23,7 @@
 
 - [ ] **Vercel Environment Variables**
   ```
-  GROK_API_KEY=xai-pVkuyzhzoyhtRFZ9euPV0Rtms6A0TdrYkjcfVIWXoAmzWjlwEaAAFFJCV46rKgxtZdMYZ4tBkSgKraBl
+  GROK_API_KEY=xai-YOUR_API_KEY_HERE
   SMTP_PASS=jcca sjrq eguq dogq
   CONTACT_RECIPIENT=d.arrow2026@gmail.com
   SMTP_USER=d.arrow2026@gmail.com

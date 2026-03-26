@@ -13,7 +13,7 @@
 
 **API Key (in .env.local):**
 ```
-xai-pVkuyzhzoyhtRFZ9euPV0Rtms6A0TdrYkjcfVIWXoAmzWjlwEaAAFFJCV46rKgxtZdMYZ4tBkSgKraBl
+xai-YOUR_API_KEY_HERE
 ```
 
 **Chatbot Features:**
@@ -49,7 +49,7 @@ Then open: **https://www.d-arrow.com/** (or 3001 if 3000 is in use)
 
 ### Step 1: Update Environment Variables
 ```
-GROK_API_KEY=xai-pVkuyzhzoyhtRFZ9euPV0Rtms6A0TdrYkjcfVIWXoAmzWjlwEaAAFFJCV46rKgxtZdMYZ4tBkSgKraBl
+GROK_API_KEY=xai-YOUR_API_KEY_HERE
 ```
 
 ### Step 2: Push to GitHub

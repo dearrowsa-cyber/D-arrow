@@ -35,7 +35,7 @@ Navigate to:
 
 2. **Find line 14:**
    ```
-   GROK_API_KEY=xai-pVkuyzhzoyhtRFZ9euPV0Rtms6A0TdrYkjcfVIWXoAmzWjlwEaAAFFJCV46rKgxtZdMYZ4tBkSgKraBl
+   GROK_API_KEY=xai-YOUR_API_KEY_HERE
    ```
 
 3. **Replace with new key:**

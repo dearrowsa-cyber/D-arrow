@@ -102,7 +102,7 @@ Invoke-WebRequest -Uri "https://www.d-arrow.com//api/chat" `
 2. **Add Environment Variable**
    - Go to Vercel Dashboard
    - Project Settings → Environment Variables
-   - Add: `GROK_API_KEY=xai-pVkuyzhzoyhtRFZ9euPV0Rtms6A0TdrYkjcfVIWXoAmzWjlwEaAAFFJCV46rKgxtZdMYZ4tBkSgKraBl`
+   - Add: `GROK_API_KEY=xai-YOUR_API_KEY_HERE`
 
 3. **Wait for Auto-Deploy**
    - Vercel rebuilds automatically

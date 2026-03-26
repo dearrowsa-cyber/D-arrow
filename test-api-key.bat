@@ -9,7 +9,7 @@ echo    Grok API Key Validation Test
 echo ========================================
 echo.
 
-set "API_KEY=xai-pVkuyzhzoyhtRFZ9euPV0Rtms6A0TdrYkjcfVIWXoAmzWjlwEaAAFFJCV46rKgxtZdMYZ4tBkSgKraBl"
+set "API_KEY=xai-YOUR_API_KEY_HERE"
 
 echo [1/3] Checking API Key Format...
 echo API Key: %API_KEY:~0,10%...%API_KEY:~-5%
