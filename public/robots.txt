@@ -1,0 +1,65 @@
+# D Arrow Digital Marketing - Robots.txt Configuration
+# Allow all legitimate crawlers
+
+User-agent: *
+Allow: /
+Allow: /services/
+Allow: /pricing/
+Allow: /contact/
+Allow: /why-us/
+Allow: /process/
+Allow: /custom-package/
+
+# Disallow sensitive paths
+Disallow: /api/
+Disallow: /_next/
+Disallow: /private/
+Disallow: /.env
+Disallow: /.git
+Disallow: /node_modules/
+Disallow: /test-email/
+Disallow: /test-z-ai/
+
+# Sitemaps
+Sitemap: https://d-arrow.com/sitemap.xml
+
+# Crawl delay for all bots (in seconds)
+Crawl-delay: 0.5
+
+# Specific rules for Google - High priority crawling
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Specific rules for Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Specific rules for DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 0.5
+
+# Allow image indexing for all bots
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot-Image
+Allow: /
+
+# Block bad/aggressive bots
+User-agent: AhrefsBot
+User-agent: SemrushBot
+User-agent: DotBot
+User-agent: MJ12bot
+User-agent: Surveyor
+Disallow: /
+
+# Allow video/document indexing
+User-agent: Googlebot-Video
+Allow: /
+
+# Performance note
+# This configuration allows search engines optimal crawling
+# while protecting API endpoints and private resources
