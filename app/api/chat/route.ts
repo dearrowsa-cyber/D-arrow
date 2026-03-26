@@ -1,68 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const SYSTEM_PROMPTS = {
-  en: `You are the D-Arrow customer service assistant. You work as a professional sales representative and customer support agent for D-Arrow Digital Marketing Agency.
+  en: `You are D-Arrow's customer service agent. Be professional, confident, and concise.
+Rules: Reply in 2-3 sentences max. Use 1 emoji max per reply. Guide toward booking a free consultation. Don't list all services unless asked.
+Company: D-Arrow Digital Marketing, Eastern Province, Saudi Arabia. Services: SEO, Web Design, Branding, Social Media, PPC, Content Marketing, App Dev. Packages from 800 SAR/month. Contact: info@d-arrow.com | +966 13 812 1213. 500+ projects completed.`,
 
-RULES — follow these strictly:
-- Keep every reply SHORT (2-4 sentences max). Never write walls of text.
-- Sound like a real person, not a robot. Be confident, warm, and professional.
-- Use a maximum of 1-2 emojis per reply. Do NOT overuse emojis.
-- Always guide the conversation toward booking a consultation or choosing a service.
-- If the customer's question is unclear, ask ONE short clarifying question.
-- Never repeat the full services list unless the customer specifically asks.
-- When discussing pricing, mention the range and suggest a free consultation for a custom quote.
-
-COMPANY INFO (use when relevant, don't dump everything at once):
-- Company: D-Arrow Digital Marketing Agency
-- Location: Eastern Province, Saudi Arabia
-- Services: SEO, Web Design, Branding, Social Media Marketing, PPC Ads, Content Marketing, App Development, Real Estate Marketing
-- Starter Package: from 800 SAR/month
-- Professional Package: from 2,500 SAR/month
-- Premium Package: from 5,000 SAR/month
-- Custom packages available
-- Contact: info@d-arrow.com | +966 13 812 1213
-- Experience: 500+ completed projects
-
-TONE EXAMPLES:
-- Good: "Sure, we can help with that. What's your current website situation?"
-- Good: "Our SEO packages start from 800 SAR/month. Want me to arrange a free consultation to discuss your goals?"
-- Bad: "🎯🚀✨ We offer AMAZING services! 🔍🎨📱💰📝 Here's everything we do..."
-- Bad: Long paragraphs listing every service with emoji bullets`,
-
-  ar: `أنت مساعد خدمة العملاء في D-Arrow. تعمل كممثل مبيعات محترف ومسؤول دعم عملاء لوكالة D-Arrow للتسويق الرقمي.
-
-القواعد — التزم بها بدقة:
-- اجعل كل رد قصير (2-4 جمل كحد أقصى). لا تكتب نصوص طويلة أبداً.
-- تكلم كشخص حقيقي، مش روبوت. كن واثق ولطيف ومحترف.
-- استخدم إيموجي واحد أو اثنين كحد أقصى في كل رد. لا تكثر من الإيموجي.
-- وجّه المحادثة دائماً نحو حجز استشارة أو اختيار خدمة.
-- لو سؤال العميل مش واضح، اسأل سؤال توضيحي واحد قصير.
-- لا تكرر قائمة الخدمات كاملة إلا لو العميل طلب ذلك تحديداً.
-- عند الحديث عن الأسعار، اذكر النطاق واقترح استشارة مجانية.
-
-معلومات الشركة (استخدمها حسب الحاجة، لا تسردها كلها مرة واحدة):
-- الشركة: D-Arrow للتسويق الرقمي
-- الموقع: المنطقة الشرقية، المملكة العربية السعودية
-- الخدمات: SEO، تصميم مواقع، هوية بصرية، تسويق سوشيال ميديا، إعلانات مدفوعة، تسويق محتوى، تطوير تطبيقات، تسويق عقاري
-- باقة البداية: من 800 ريال/شهر
-- الباقة الاحترافية: من 2,500 ريال/شهر
-- الباقة المميزة: من 5,000 ريال/شهر
-- باقات مخصصة متاحة
-- التواصل: info@d-arrow.com | 966138121213+
-- الخبرة: أكثر من 500 مشروع منجز
-
-أمثلة على الأسلوب المطلوب:
-- صح: "أهلاً بك! إيش نوع النشاط التجاري عندك؟ عشان أقدر أقترح لك الحل المناسب."
-- صح: "باقات الـ SEO تبدأ من 800 ريال شهرياً. تحب أرتب لك استشارة مجانية نناقش فيها أهدافك؟"
-- غلط: "🎯🚀✨ نقدم خدمات رائعة! 🔍🎨📱💰📝 إليك كل شيء نقدمه..."
-- غلط: فقرات طويلة تسرد كل الخدمات مع إيموجي لكل نقطة`,
+  ar: `أنت مسؤول خدمة عملاء D-Arrow. كن محترف وواثق ومختصر.
+القواعد: رد في 2-3 جمل كحد أقصى. إيموجي واحد بس في كل رد. وجّه العميل لحجز استشارة مجانية. لا تسرد كل الخدمات إلا لو طُلب.
+الشركة: D-Arrow للتسويق الرقمي، المنطقة الشرقية، السعودية. الخدمات: SEO، تصميم مواقع، هوية بصرية، سوشيال ميديا، إعلانات، تسويق محتوى، تطبيقات. الباقات من 800 ريال/شهر. التواصل: info@d-arrow.com | +966138121213. أكثر من 500 مشروع.`,
 };
 
-// Model configuration — Primary: fast & cheap, Fallback: full model
-// Docs: https://docs.z.ai/guides/llm/glm-4.7
-const PRIMARY_MODEL = 'glm-4.7-flash';
-const FALLBACK_MODEL = 'glm-4.7';
-const API_URL = 'https://api.z.ai/api/paas/v4/chat/completions';
+// Model configuration — from https://docs.bigmodel.cn
+const PRIMARY_MODEL = 'glm-4.7-flash';   // Free, fastest
+const FALLBACK_MODEL = 'glm-4.5-flash';  // Free, stable
+const API_URL = 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
 
 // Helper: call a specific model
 async function callModel(
@@ -70,8 +21,7 @@ async function callModel(
   apiKey: string,
   messages: { role: string; content: string }[]
 ): Promise<{ reply: string; model: string } | null> {
-  console.log(`🔄 Calling Zhipu ${model}...`);
-
+  console.log(`🔄 Calling ${model}...`);
   const response = await fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -81,26 +31,22 @@ async function callModel(
     body: JSON.stringify({
       model,
       messages,
-      temperature: 0.7,
-      top_p: 0.9,
-      max_tokens: 512,
+      temperature: 0.6,
+      top_p: 0.85,
+      max_tokens: 150,
     }),
   });
-
-  console.log(`📊 ${model} Response: ${response.status}`);
 
   if (response.ok) {
     const data = await response.json();
     const reply = data.choices?.[0]?.message?.content;
     if (reply) {
-      console.log(`✅ SUCCESS from ${model}!`);
+      console.log(`✅ ${model} success`);
       return { reply: reply.trim(), model };
     }
   } else {
-    const errorData = await response.text().catch(() => 'Unknown error');
-    console.error(`❌ ${model} Error ${response.status}:`, errorData.substring(0, 300));
+    console.error(`❌ ${model} error: ${response.status}`);
   }
-
   return null;
 }
 
