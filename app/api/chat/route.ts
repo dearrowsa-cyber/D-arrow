@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'edge';
-export const preferredRegion = 'hkg1';
 const SYSTEM_PROMPTS = {
   en: `You are D-Arrow's customer service agent. Be professional, confident, and concise.
 Rules: Reply in 2-3 sentences max. Use 1 emoji max per reply. Guide toward booking a free consultation. Don't list all services unless asked.
@@ -12,44 +10,21 @@ Company: D-Arrow Digital Marketing, Eastern Province, Saudi Arabia. Services: SE
 الشركة: D-Arrow للتسويق الرقمي، المنطقة الشرقية، السعودية. الخدمات: SEO، تصميم مواقع، هوية بصرية، سوشيال ميديا، إعلانات، تسويق محتوى، تطبيقات. الباقات من 800 ريال/شهر. التواصل: info@d-arrow.com | +966138121213. أكثر من 500 مشروع.`,
 };
 
-// Model configuration — from https://docs.bigmodel.cn
-const PRIMARY_MODEL = 'glm-4.7-flash';   // Free, fastest
-const FALLBACK_MODEL = 'glm-4.5-flash';  // Free, stable
+// Use glm-4-flash — confirmed working, no rate limits
+const MODELS = ['glm-4-flash', 'glm-4v-flash'];
 const API_URL = 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
+const TIMEOUT_MS = 8000; // 8 second timeout — fall back to static if API is slow
 
-// Helper: call a specific model
-async function callModel(
-  model: string,
-  apiKey: string,
-  messages: { role: string; content: string }[]
-): Promise<{ reply: string; model: string } | null> {
-  console.log(`🔄 Calling ${model}...`);
-  const response = await fetch(API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model,
-      messages,
-      temperature: 0.6,
-      top_p: 0.85,
-      max_tokens: 150,
-    }),
-  });
-
-  if (response.ok) {
-    const data = await response.json();
-    const reply = data.choices?.[0]?.message?.content;
-    if (reply) {
-      console.log(`✅ ${model} success`);
-      return { reply: reply.trim(), model };
-    }
-  } else {
-    console.error(`❌ ${model} error: ${response.status}`);
+// Fetch with timeout
+async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { ...options, signal: controller.signal });
+    return res;
+  } finally {
+    clearTimeout(timer);
   }
-  return null;
 }
 
 export async function POST(req: NextRequest) {
@@ -63,71 +38,66 @@ export async function POST(req: NextRequest) {
     const apiKey = process.env.ZAI_API_KEY;
 
     if (!apiKey) {
-      console.warn('⚠️ ZAI_API_KEY not configured');
-      const fallback = generateFallbackResponse(message, language as 'en' | 'ar');
       return NextResponse.json({
-        reply: fallback,
-        language,
-        success: true,
-        source: 'fallback',
+        reply: generateFallbackResponse(message, language as 'en' | 'ar'),
+        language, success: true, source: 'fallback',
       });
     }
 
-    const messages = [
+    const msgs = [
       { role: 'system', content: SYSTEM_PROMPTS[language] },
       { role: 'user', content: message },
     ];
 
-    // Try PRIMARY model first (glm-4-flash — fast & cheap)
-    try {
-      const result = await callModel(PRIMARY_MODEL, apiKey, messages);
-      if (result) {
-        return NextResponse.json({
-          reply: result.reply,
-          language,
-          success: true,
-          source: `zhipu-${result.model}`,
-          model: result.model,
-        });
+    // Try each model with a timeout
+    for (const model of MODELS) {
+      try {
+        console.log(`🔄 Trying ${model}...`);
+        const response = await fetchWithTimeout(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model,
+            messages: msgs,
+            temperature: 0.6,
+            max_tokens: 150,
+          }),
+        }, TIMEOUT_MS);
+
+        if (response.ok) {
+          const data = await response.json();
+          const reply = data.choices?.[0]?.message?.content;
+          if (reply) {
+            console.log(`✅ ${model} replied`);
+            return NextResponse.json({
+              reply: reply.trim(), language, success: true,
+              source: `zhipu-${model}`, model,
+            });
+          }
+        } else {
+          console.error(`❌ ${model}: ${response.status}`);
+        }
+      } catch (e) {
+        // Timeout or network error — try next model or fall back
+        console.error(`⏱️ ${model} timeout/error`);
       }
-    } catch (e) {
-      console.error(`⚠️ ${PRIMARY_MODEL} failed:`, e instanceof Error ? e.message : String(e));
     }
 
-    // Try FALLBACK model (glm-4-air — stable backup)
-    try {
-      console.log(`🔁 Falling back to ${FALLBACK_MODEL}...`);
-      const result = await callModel(FALLBACK_MODEL, apiKey, messages);
-      if (result) {
-        return NextResponse.json({
-          reply: result.reply,
-          language,
-          success: true,
-          source: `zhipu-${result.model}`,
-          model: result.model,
-        });
-      }
-    } catch (e) {
-      console.error(`⚠️ ${FALLBACK_MODEL} failed:`, e instanceof Error ? e.message : String(e));
-    }
-
-    // Static fallback if both models fail
-    console.log('📌 Using static fallback response');
-    const fallback = generateFallbackResponse(message, language as 'en' | 'ar');
+    // All models failed — return instant static response
+    console.log('📌 Static fallback');
     return NextResponse.json({
-      reply: fallback,
-      language,
-      success: true,
-      source: 'fallback',
+      reply: generateFallbackResponse(message, language as 'en' | 'ar'),
+      language, success: true, source: 'fallback',
     });
 
   } catch (error: unknown) {
-    console.error('💥 Unexpected error:', error);
-    const fallback = generateFallbackResponse('hello', 'en');
+    console.error('💥 Error:', error);
     return NextResponse.json({
-      reply: fallback,
-      success: true,
-      source: 'fallback',
+      reply: generateFallbackResponse('hello', 'en'),
+      success: true, source: 'fallback',
     }, { status: 200 });
   }
 }
