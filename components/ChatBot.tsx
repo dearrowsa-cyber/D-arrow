@@ -307,7 +307,7 @@ export default function ChatBot() {
                 {/* Bot Message */}
                 {m.bot && (
                   <div className={`flex ${isRTL ? 'justify-end' : 'justify-start'}`}>
-                    <div className="max-w-[85%] bg-orange-500 text-white px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm border border-orange-400/50 text-[13px] leading-relaxed backdrop-blur-sm">
+                    <div className="max-w-[85%] bg-gradient-to-r from-[#FF9A3C] to-[#FF4D6D] text-white px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm border border-white/20 text-[13px] leading-relaxed backdrop-blur-sm">
                       <FormattedBotMessage text={m.bot} />
                     </div>
                   </div>
