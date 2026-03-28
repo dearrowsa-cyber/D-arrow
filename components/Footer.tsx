@@ -109,7 +109,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="https://www.instagram.com/d.arrow.co?igsh=Ym0ybGZkMHZjMTVl"
+                href="https://www.instagram.com/darrow.co/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-secondary-dark rounded-md flex items-center justify-center hover:bg-pink-500 transition transform hover:scale-110"

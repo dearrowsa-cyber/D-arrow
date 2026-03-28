@@ -367,7 +367,7 @@ export default function ContactPage() {
 
             {/* Instagram */}
             <a
-              href="https://www.instagram.com/d.arrow.co?igsh=Ym0ybGZkMHZjMTVl"
+              href="https://www.instagram.com/darrow.co/"
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-pink/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"

@@ -98,7 +98,7 @@ export default function RootLayout({
               foundingLocation: 'Saudi Arabia',
               sameAs: [
                 'https://www.facebook.com/darrowdigital',
-                'https://www.instagram.com/darrowdigital',
+                'https://www.instagram.com/darrow.co/',
                 'https://www.linkedin.com/company/darrowdigital',
                 'https://www.twitter.com/darrowdigital',
               ],
