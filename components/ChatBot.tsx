@@ -346,11 +346,16 @@ export default function ChatBot() {
                 )}
                 {/* Bot Message */}
                 {m.bot && (() => {
-                  const urlRegex = /(https?:\/\/wa\.me\/[^\s]+)/g;
-                  const hasWhatsApp = urlRegex.test(m.bot);
-                  const waMatches = m.bot.match(urlRegex);
+                  // Normalize markdown links: `[Text](https://wa.me/...)` -> `https://wa.me/...`
+                  const botStr = m.bot.replace(/\[([^\]]*)\]\((https?:\/\/wa\.me\/[^\s)]+)\)/g, '$2');
+                  
+                  const urlRegex = /(https?:\/\/wa\.me\/[^\s)]+)/g;
+                  const hasWhatsApp = urlRegex.test(botStr);
+                  const waMatches = botStr.match(urlRegex);
                   const waLink = waMatches ? waMatches[0] : 'https://wa.me/966500466349';
-                  const botText = m.bot.replace(urlRegex, '').trim();
+                  
+                  // This removes the raw link, and the markdown brackets/text are already gone
+                  const botText = botStr.replace(urlRegex, '').trim();
 
                   return (
                     <div className={`flex flex-col gap-3 ${isRTL ? 'items-start' : 'items-end'} w-full mt-1`}>
