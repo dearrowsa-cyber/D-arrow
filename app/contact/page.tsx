@@ -130,7 +130,7 @@ export default function ContactPage() {
       {/* Contact Info Cards */}
       <section className="relative py-16 lg:py-2">
         {/* SVG Definition for Gradient Icons */}
-        <svg width="0" height="0" className="hidden">
+        <svg className="absolute w-0 h-0" style={{ width: 0, height: 0 }}>
           <defs>
             <linearGradient id="brand-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop stopColor="#FF4D6D" offset="0%" />
