@@ -85,7 +85,7 @@ const Footer = () => {
                   className="hover:text-pink-500 transition"
                   dir="ltr"
                 >
-                  {lang === "ar" ? "٠٥٠٠٤٦٦٣٤٩" : "+966 50 046 6349"}
+                  {lang === "ar" ? "+966 50 046 6349" : "+966 50 046 6349"}
                 </a>
               </div>
 

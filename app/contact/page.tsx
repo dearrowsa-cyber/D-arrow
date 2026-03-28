@@ -129,6 +129,16 @@ export default function ContactPage() {
 
       {/* Contact Info Cards */}
       <section className="relative py-16 lg:py-2">
+        {/* SVG Definition for Gradient Icons */}
+        <svg width="0" height="0" className="hidden">
+          <defs>
+            <linearGradient id="brand-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop stopColor="#FF4D6D" offset="0%" />
+              <stop stopColor="#FF9A3C" offset="100%" />
+            </linearGradient>
+          </defs>
+        </svg>
+
         <div className="w-full mx-auto px-6 md:px-12">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {contactInfo.map((info, index) => {
@@ -151,14 +161,14 @@ export default function ContactPage() {
                 <div
                   key={index}
                   onClick={clickAction}
-                  className={`group p-6 border text-white border-brand-pink/30 rounded-xl !bg-[#14162E] hover:bg-gradient-to-br hover:from-brand-pink/10 hover:to-brand-orange/10 transition-all duration-300 hover:!border-brand-pink/70 hover:shadow-2xl hover:!shadow-brand-pink/40 text-center transform hover:scale-105 hover:-translate-y-2 ${cursor}`}
+                  className={`group p-6 border text-white border-brand-pink/30 rounded-xl !bg-[#14162E] hover:bg-gradient-to-br hover:from-[rgba(255,77,109,0.15)] hover:to-[rgba(255,77,109,0.05)] transition-all duration-300 hover:!border-brand-pink hover:shadow-[0_0_30px_rgba(255,77,109,0.3)] text-center transform hover:scale-105 hover:-translate-y-2 ${cursor}`}
                 >
-                  <div className="inline-flex w-16 h-16 items-center justify-center bg-brand-orange rounded-lg mb-4 group-hover:bg-brand-pink group-hover:shadow-lg group-hover:shadow-brand-pink/50 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6">
-                    <Icon className="w-8 h-8 text-white group-hover:text-white transition-transform duration-300 group-hover:scale-125" />
+                  <div className="inline-flex w-16 h-16 items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110">
+                    <Icon stroke="url(#brand-gradient)" className="w-10 h-10 transition-transform duration-300 group-hover:scale-110" />
                   </div>
-                  <h3 className="text-lg text-white font-semibold mb-2 group-hover:text-brand-orange transition-colors duration-300">{t(info.titleKey)}</h3>
-                  <p className="text-brand-orange font-medium mb-1 group-hover:text-brand-pink transition-colors duration-300">{info.content}</p>
-                  <p className="text-sm text-brand-orange/80 group-hover:text-brand-pink/90 transition-colors duration-300">{t(info.subtextKey)}</p>
+                  <h3 className="text-lg text-white font-semibold mb-2 group-hover:text-brand-pink transition-colors duration-300">{t(info.titleKey)}</h3>
+                  <p className="text-white font-medium mb-1 group-hover:text-brand-pink transition-colors duration-300" dir={info.titleKey === 'contactPhone' ? 'ltr' : 'auto'}><bdi>{info.content}</bdi></p>
+                  <p className="text-sm text-gray-400 group-hover:text-white transition-colors duration-300">{t(info.subtextKey)}</p>
                 </div>
               );
             })}

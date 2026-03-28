@@ -259,7 +259,7 @@ const translations: Translations = {
   contactEmailValue: { en: 'support@d-arrow.com', ar: 'support@d-arrow.com' },
   contactEmailSubtext: { en: "We'll respond within 24 hours", ar: 'سنرد عليك في غضون 24 ساعة' },
   contactPhone: { en: 'Phone', ar: 'الهاتف' },
-  contactPhoneValue: { en: '+966 50 046 6349', ar: '+٩٦٦ ٥٠ ٠٤٦ ٦٣٤٩' },
+  contactPhoneValue: { en: '+966 50 046 6349', ar: '+966 50 046 6349' },
   contactPhoneSubtext: { en: 'Available during business hours', ar: 'متاح خلال ساعات العمل' },
   contactLocation: { en: 'Location', ar: 'الموقع' },
   contactLocationValue: { en: '6399, 4, Ibn Sina, AlKhobar, 34626,Dammam, Saudi Arabia', ar: '6399، 4، ابن سينا، الخبر، 34626، الدمام، المملكة العربية السعودية' },
