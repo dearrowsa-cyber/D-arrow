@@ -345,13 +345,42 @@ export default function ChatBot() {
                   </div>
                 )}
                 {/* Bot Message */}
-                {m.bot && (
-                  <div className={`flex ${isRTL ? 'justify-end' : 'justify-start'}`}>
-                    <div className="max-w-[85%] bg-gradient-to-r from-[#FF9A3C] to-[#FF4D6D] text-white px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm border border-white/20 text-[13px] leading-relaxed backdrop-blur-sm">
-                      <FormattedBotMessage text={m.bot} />
+                {m.bot && (() => {
+                  const urlRegex = /(https?:\/\/wa\.me\/[^\s]+)/g;
+                  const hasWhatsApp = urlRegex.test(m.bot);
+                  const waMatches = m.bot.match(urlRegex);
+                  const waLink = waMatches ? waMatches[0] : 'https://wa.me/966500466349';
+                  const botText = m.bot.replace(urlRegex, '').trim();
+
+                  return (
+                    <div className={`flex flex-col gap-3 ${isRTL ? 'items-start' : 'items-end'} w-full mt-1`}>
+                      {botText && (
+                        <div className={`flex ${isRTL ? 'justify-end' : 'justify-start'} w-full`}>
+                          <div className="max-w-[85%] bg-gradient-to-r from-[#FF9A3C] to-[#FF4D6D] text-white px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm border border-white/20 text-[13px] leading-relaxed backdrop-blur-sm">
+                            <FormattedBotMessage text={botText} />
+                          </div>
+                        </div>
+                      )}
+                      
+                      {hasWhatsApp && (
+                        <div className={`flex ${isRTL ? 'justify-end' : 'justify-start'} w-full animate-in fade-in slide-in-from-bottom-2 [animation-delay:600ms]`}>
+                          <div className="bg-white px-4 py-3 rounded-2xl rounded-tl-sm shadow-md border border-gray-100 flex flex-col gap-1 items-start">
+                            <span className="text-[11px] font-semibold text-gray-400">فريق المبيعات</span>
+                            <a
+                              href={waLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 text-[#FF4D6D] hover:text-[#FF6F4F] font-bold text-[13px] group transition-colors"
+                            >
+                              <MessageCircle size={18} className="text-[#25D366] group-hover:scale-110 transition-transform" />
+                              أكمل النقاش عبر الواتساب للصفقات والتفاصيل
+                            </a>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  </div>
-                )}
+                  );
+                })()}
               </div>
             ))}
 
