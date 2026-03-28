@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
 import { useLanguage } from '@/components/LanguageProvider';
-import { SiInstagram, SiSnapchat, SiLinkedin, SiTiktok, SiWhatsapp, SiFacebook, SiTwitter, SiYoutube } from 'react-icons/si';
+import Image from 'next/image';
 
 export default function ContactPage() {
   const { t } = useLanguage();
@@ -370,9 +370,9 @@ export default function ContactPage() {
               href="https://www.instagram.com/d.arrow.co?igsh=Ym0ybGZkMHZjMTVl"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-pink/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20"
+              className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-pink/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20 hover:scale-110"
             >
-              <SiInstagram className="w-10 h-10 text-pink-200 group-hover:text-pink-400 transition" />
+              <Image src="/icon-instagram.png" alt="Instagram" width={56} height={56} className="group-hover:scale-110 transition-transform duration-300" />
               <p className="text-sm !text-white font-semibold mt-2">{t('socialInstagram')}</p>
             </a>
 
@@ -381,9 +381,9 @@ export default function ContactPage() {
               href="https://www.snapchat.com/add/darrow.co?share_id=dwRY8EPAM3w&locale=en-US"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-[#071426] via-[#062a4a] to-[#021022] hover:from-[rgba(255,77,109,0.6)] hover:to-[rgba(255,77,109,0.4)] transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20"
+              className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-[#071426] via-[#062a4a] to-[#021022] hover:from-[rgba(255,77,109,0.6)] hover:to-[rgba(255,77,109,0.4)] transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20 hover:scale-110"
             >
-              <SiSnapchat className="w-10 h-10 !text-yellow-300 group-hover:text-brand-orange transition" />
+              <Image src="/icon-snapchat.png" alt="Snapchat" width={56} height={56} className="group-hover:scale-110 transition-transform duration-300" />
               <p className="text-sm !text-white font-semibold mt-2">{t('socialSnapchat')}</p>
             </a>
 
@@ -392,9 +392,9 @@ export default function ContactPage() {
               href="https://www.linkedin.com/in/d-arrow-4753393a8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-blue-950/40 hover:to-blue-900/40 transition-all duration-300 hover:border-blue-400/60 hover:shadow-lg hover:shadow-blue-400/20"
+              className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20 hover:scale-110"
             >
-              <SiLinkedin className="w-10 h-10 text-blue-400 group-hover:text-blue-300 transition" />
+              <Image src="/icon-linkedin.png" alt="LinkedIn" width={56} height={56} className="group-hover:scale-110 transition-transform duration-300" />
               <p className="text-sm !text-white font-semibold mt-2">{t('socialLinkedin')}</p>
             </a>
 
@@ -403,9 +403,9 @@ export default function ContactPage() {
               href="https://www.tiktok.com/@d.arrow2?_r=1&_t=ZS-93ORrxdtLq3"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-black/40 hover:to-black/40 transition-all duration-300 hover:border-white/60 hover:shadow-lg hover:shadow-white/20"
+              className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20 hover:scale-110"
             >
-              <SiTiktok className="w-10 h-10 text-white group-hover:text-gray-300 transition" />
+              <Image src="/icon-tiktok.png" alt="TikTok" width={56} height={56} className="group-hover:scale-110 transition-transform duration-300" />
               <p className="text-sm !text-white font-semibold mt-2">{t('socialTiktok')}</p>
             </a>
 
@@ -414,9 +414,9 @@ export default function ContactPage() {
               href="https://wa.me/966500466349"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-green-900/40 hover:to-green-900/40 transition-all duration-300 hover:border-green-500/60 hover:shadow-lg hover:shadow-green-500/20"
+              className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20 hover:scale-110"
             >
-              <SiWhatsapp className="w-10 h-10 text-green-300 group-hover:text-green-400 transition" />
+              <Image src="/icon-whatsapp.png" alt="WhatsApp" width={56} height={56} className="group-hover:scale-110 transition-transform duration-300" />
               <p className="text-sm !text-white font-semibold mt-2">{t('socialWhatsapp')}</p>
             </a>
           </div>
