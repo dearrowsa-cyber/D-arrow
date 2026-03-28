@@ -368,17 +368,32 @@ export default function ChatBot() {
                       )}
                       
                       {hasWhatsApp && (
-                        <div className={`flex ${isRTL ? 'justify-end' : 'justify-start'} w-full animate-in fade-in slide-in-from-bottom-2 [animation-delay:600ms]`}>
-                          <div className="bg-white px-4 py-3 rounded-2xl rounded-tl-sm shadow-md border border-gray-100 flex flex-col gap-1 items-start">
-                            <span className="text-[11px] font-semibold text-gray-400">فريق المبيعات</span>
+                        <div className={`flex ${isRTL ? 'justify-end' : 'justify-start'} w-full animate-in fade-in zoom-in-95 slide-in-from-bottom-3 duration-500 [animation-delay:600ms]`}>
+                          <div className="bg-gradient-to-br from-[#E8F8F5] to-[#F9FCFA] p-3.5 rounded-2xl rounded-tl-sm shadow-sm border border-[#25D366]/20 flex flex-col gap-3 w-fit max-w-[90%] relative overflow-hidden group">
+                            {/* Decorative background glow */}
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-[#25D366]/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-2xl transition-all duration-500 group-hover:bg-[#25D366]/20"></div>
+                            
+                            {/* Header: Icon + Title */}
+                            <div className="flex items-center gap-3 z-10 w-full pl-2">
+                              <div className="w-10 h-10 shrink-0 rounded-full bg-gradient-to-tr from-[#25D366] to-[#1DA851] flex items-center justify-center shadow-md shadow-[#25D366]/30 relative">
+                                <MessageCircle size={20} className="text-white fill-white relative z-10" />
+                                <div className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20 [animation-duration:2.5s]"></div>
+                              </div>
+                              <div className="flex flex-col flex-1">
+                                <span className="text-[14px] font-bold text-gray-800">تواصل مباشر</span>
+                                <span className="text-[11px] font-medium text-gray-500 line-clamp-1 leading-tight mt-0.5">جاهزين لخدمتك ومناقشة التفاصيل</span>
+                              </div>
+                            </div>
+                            
+                            {/* CTA Button */}
                             <a
                               href={waLink}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 text-[#FF4D6D] hover:text-[#FF6F4F] font-bold text-[13px] group transition-colors"
+                              className="z-10 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#25D366] to-[#1DA851] hover:from-[#1DA851] hover:to-[#168E42] text-white py-2.5 px-4 rounded-xl font-bold text-[13px] transition-all shadow-md shadow-[#25D366]/25 hover:shadow-lg hover:-translate-y-0.5 group/btn"
                             >
-                              <MessageCircle size={18} className="text-[#25D366] group-hover:scale-110 transition-transform" />
-                              أكمل النقاش عبر الواتساب للصفقات والتفاصيل
+                              <span>فتح المحادثة عبر الواتساب</span>
+                              <MessageCircle size={16} className="group-hover/btn:scale-110 transition-transform" />
                             </a>
                           </div>
                         </div>
