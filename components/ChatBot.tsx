@@ -390,7 +390,7 @@ export default function ChatBot() {
                               href={waLink}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="z-10 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF6F4F] to-[#FF4D6D] hover:from-[#FF4D6D] hover:to-[#E8445E] text-white py-2.5 px-4 rounded-xl font-bold text-[13px] transition-all shadow-md shadow-[#FF6F4F]/25 hover:shadow-lg hover:-translate-y-0.5 group/btn"
+                              className="z-10 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF6F4F] to-[#FF4D6D] hover:from-[#FF4D6D] hover:to-[#E8445E] !text-white py-2.5 px-4 rounded-xl font-bold text-[13px] transition-all shadow-md shadow-[#FF6F4F]/25 hover:shadow-lg hover:-translate-y-0.5 group/btn"
                             >
                               <span>فتح المحادثة عبر الواتساب</span>
                               <MessageCircle size={16} className="group-hover/btn:scale-110 transition-transform" />
