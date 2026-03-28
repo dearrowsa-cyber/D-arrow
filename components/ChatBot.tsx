@@ -39,6 +39,21 @@ function parseTextWithLinks(text: string) {
   return parts.map((part, i) => {
     if (part.match(urlRegex)) {
       const isWhatsApp = part.includes('wa.me');
+      if (isWhatsApp) {
+        return (
+          <div key={i} className="mt-2 w-full flex">
+            <a
+              href={part}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 bg-white text-[#FF4D6D] border border-white hover:bg-transparent hover:text-white px-4 py-2 rounded-full text-[13px] font-bold transition-all shadow-md group"
+            >
+              <MessageCircle size={16} className="text-[#25D366] group-hover:text-white transition-colors" />
+              أكمل النقاش عبر الواتساب
+            </a>
+          </div>
+        );
+      }
       return (
         <a
           key={i}
@@ -47,7 +62,7 @@ function parseTextWithLinks(text: string) {
           rel="noopener noreferrer"
           className="underline font-bold text-white hover:text-white/80 transition-colors mx-1"
         >
-          {isWhatsApp ? 'تواصل معنا على الواتساب 💬' : part}
+          {part}
         </a>
       );
     }
