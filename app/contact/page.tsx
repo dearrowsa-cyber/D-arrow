@@ -370,10 +370,10 @@ export default function ContactPage() {
               href="https://www.instagram.com/d.arrow.co?igsh=Ym0ybGZkMHZjMTVl"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-pink/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20 hover:scale-110"
+              className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-pink/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
             >
-              <Image src="/icon-instagram.png" alt="Instagram" width={120} height={120} className="group-hover:scale-110 transition-transform duration-300" />
-              <p className="text-sm !text-white font-semibold mt-2">{t('socialInstagram')}</p>
+              <Image src="/icon-instagram.png" alt="Instagram" width={96} height={96} className="drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,154,60,0.4)] transition-all duration-300 object-contain" />
+              <p className="mt-3 font-semibold text-white group-hover:text-brand-orange transition-colors">{t('socialInstagram')}</p>
             </a>
 
             {/* Snapchat */}
@@ -381,10 +381,10 @@ export default function ContactPage() {
               href="https://www.snapchat.com/add/darrow.co?share_id=dwRY8EPAM3w&locale=en-US"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-[#071426] via-[#062a4a] to-[#021022] hover:from-[rgba(255,77,109,0.6)] hover:to-[rgba(255,77,109,0.4)] transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20 hover:scale-110"
+              className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-[#071426] via-[#062a4a] to-[#021022] hover:from-[rgba(255,77,109,0.3)] hover:to-[rgba(255,77,109,0.1)] transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
             >
-              <Image src="/icon-snapchat.png" alt="Snapchat" width={120} height={120} className="group-hover:scale-110 transition-transform duration-300" />
-              <p className="text-sm !text-white font-semibold mt-2">{t('socialSnapchat')}</p>
+              <Image src="/icon-snapchat.png" alt="Snapchat" width={96} height={96} className="drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,154,60,0.4)] transition-all duration-300 object-contain" />
+              <p className="mt-3 font-semibold text-white group-hover:text-brand-orange transition-colors">{t('socialSnapchat')}</p>
             </a>
 
             {/* LinkedIn */}
@@ -392,10 +392,10 @@ export default function ContactPage() {
               href="https://www.linkedin.com/in/d-arrow-4753393a8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20 hover:scale-110"
+              className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
             >
-              <Image src="/icon-linkedin.png" alt="LinkedIn" width={120} height={120} className="group-hover:scale-110 transition-transform duration-300" />
-              <p className="text-sm !text-white font-semibold mt-2">{t('socialLinkedin')}</p>
+              <Image src="/icon-linkedin.png" alt="LinkedIn" width={96} height={96} className="drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,154,60,0.4)] transition-all duration-300 object-contain" />
+              <p className="mt-3 font-semibold text-white group-hover:text-brand-orange transition-colors">{t('socialLinkedin')}</p>
             </a>
 
             {/* TikTok */}
@@ -403,10 +403,10 @@ export default function ContactPage() {
               href="https://www.tiktok.com/@d.arrow2?_r=1&_t=ZS-93ORrxdtLq3"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20 hover:scale-110"
+              className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
             >
-              <Image src="/icon-tiktok.png" alt="TikTok" width={120} height={120} className="group-hover:scale-110 transition-transform duration-300" />
-              <p className="text-sm !text-white font-semibold mt-2">{t('socialTiktok')}</p>
+              <Image src="/icon-tiktok.png" alt="TikTok" width={96} height={96} className="drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,154,60,0.4)] transition-all duration-300 object-contain" />
+              <p className="mt-3 font-semibold text-white group-hover:text-brand-orange transition-colors">{t('socialTiktok')}</p>
             </a>
 
             {/* WhatsApp */}
@@ -414,10 +414,10 @@ export default function ContactPage() {
               href="https://wa.me/966500466349"
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20 hover:scale-110"
+              className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
             >
-              <Image src="/icon-whatsapp.png" alt="WhatsApp" width={120} height={120} className="group-hover:scale-110 transition-transform duration-300" />
-              <p className="text-sm !text-white font-semibold mt-2">{t('socialWhatsapp')}</p>
+              <Image src="/icon-whatsapp.png" alt="WhatsApp" width={96} height={96} className="drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,154,60,0.4)] transition-all duration-300 object-contain" />
+              <p className="mt-3 font-semibold text-white group-hover:text-brand-orange transition-colors">{t('socialWhatsapp')}</p>
             </a>
           </div>
         </div>
