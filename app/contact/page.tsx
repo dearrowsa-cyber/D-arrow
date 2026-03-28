@@ -372,7 +372,7 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-pink/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20 hover:scale-110"
             >
-              <Image src="/icon-instagram.png" alt="Instagram" width={56} height={56} className="group-hover:scale-110 transition-transform duration-300" />
+              <Image src="/icon-instagram.png" alt="Instagram" width={120} height={120} className="group-hover:scale-110 transition-transform duration-300" />
               <p className="text-sm !text-white font-semibold mt-2">{t('socialInstagram')}</p>
             </a>
 
@@ -383,7 +383,7 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-[#071426] via-[#062a4a] to-[#021022] hover:from-[rgba(255,77,109,0.6)] hover:to-[rgba(255,77,109,0.4)] transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20 hover:scale-110"
             >
-              <Image src="/icon-snapchat.png" alt="Snapchat" width={56} height={56} className="group-hover:scale-110 transition-transform duration-300" />
+              <Image src="/icon-snapchat.png" alt="Snapchat" width={120} height={120} className="group-hover:scale-110 transition-transform duration-300" />
               <p className="text-sm !text-white font-semibold mt-2">{t('socialSnapchat')}</p>
             </a>
 
@@ -394,7 +394,7 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20 hover:scale-110"
             >
-              <Image src="/icon-linkedin.png" alt="LinkedIn" width={56} height={56} className="group-hover:scale-110 transition-transform duration-300" />
+              <Image src="/icon-linkedin.png" alt="LinkedIn" width={120} height={120} className="group-hover:scale-110 transition-transform duration-300" />
               <p className="text-sm !text-white font-semibold mt-2">{t('socialLinkedin')}</p>
             </a>
 
@@ -405,7 +405,7 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20 hover:scale-110"
             >
-              <Image src="/icon-tiktok.png" alt="TikTok" width={56} height={56} className="group-hover:scale-110 transition-transform duration-300" />
+              <Image src="/icon-tiktok.png" alt="TikTok" width={120} height={120} className="group-hover:scale-110 transition-transform duration-300" />
               <p className="text-sm !text-white font-semibold mt-2">{t('socialTiktok')}</p>
             </a>
 
@@ -416,7 +416,7 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-32 h-32 border border-brand-pink/30 rounded-xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-lg hover:shadow-brand-pink/20 hover:scale-110"
             >
-              <Image src="/icon-whatsapp.png" alt="WhatsApp" width={56} height={56} className="group-hover:scale-110 transition-transform duration-300" />
+              <Image src="/icon-whatsapp.png" alt="WhatsApp" width={120} height={120} className="group-hover:scale-110 transition-transform duration-300" />
               <p className="text-sm !text-white font-semibold mt-2">{t('socialWhatsapp')}</p>
             </a>
           </div>
