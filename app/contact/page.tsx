@@ -232,6 +232,7 @@ export default function ContactPage() {
                       placeholder={t('yourPhone')}
                       value={formData.phone}
                       onChange={handleChange}
+                      required
                       className="w-full px-4 py-3 border border-brand-pink/30 rounded-lg !text-black dark:text-white dark:bg-secondary-dark/50 placeholder-text-light focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition text-lg"
                     />
                   </label>
