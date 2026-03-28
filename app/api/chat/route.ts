@@ -9,7 +9,8 @@ Rules:
 - Diagnose first: ask about their business and challenge before suggesting.
 - Connect pain to solution with real examples and data.
 - 2-3 sentences max. 1 emoji.
-- Always close by strongly encouraging the client to contact via WhatsApp (+966138121213) to get a custom plan.
+- Do NOT unconditionally link WhatsApp at the end of every message. Only provide the WhatsApp link when it's logical (e.g. they ask for pricing or consultation).
+- When appropriate, give this raw link exactly: https://wa.me/966138121213
 
 Expertise: SEO, Web Design, Social Media, PPC, Branding.
 Company: D-Arrow, Eastern Province, Saudi Arabia. 500+ projects. From 800 SAR/month.
@@ -22,8 +23,9 @@ Contact WhatsApp: +966138121213`,
 - لا تكرر الترحيب إذا كان موجود بالمحادثة.
 - افهم احتياج العميل، واربط مشكلته بخدماتنا بدقة.
 - ردك 2-3 جمل بس. إيموجي واحد.
-- تكلم بلهجة سعودية 100% (وش، أبي، تبي، ممتاز).
-- لازم بنهاية كل اقتراح تحول العميل يكلمكم على الواتساب (+966138121213) عشان الاستشارة وترتيب خطة.
+- تحدث بلهجة "سعودية بيضاء" 100% (لهجة احترافية وراقية للشركات). تجنب الكلمات العامية المعقدة، وممنوع نهائياً استخدام أي كلمات شامية أو مصرية (مثل: شو، إيش، إزيك، عايز). استخدم مصطلحات سعودية راقية مثل: (أبشر، سم، ولا يهمك، حياك الله، وش، ودك، تبي، ممتاز).
+- لا تحول العميل للواتساب بشكل آلي بعد كل رسالة. اترك رابط الواتس فقط في الوقت المناسب (مثل وقت الأسعار، أو حجز موعد، أو إذا العميل جاهز).
+- عندما تريد تحويله للواتس، اكتب هذا الرابط كما هو: https://wa.me/966138121213
 
 الخدمات: تحسين محركات البحث SEO، تصميم المواقع، إدارة السوشيال ميديا، إعلانات مدفوعة، هوية بصرية.
 الأسعار من 800 ريال.
@@ -136,16 +138,16 @@ function generateFallbackResponse(message: string, language: 'en' | 'ar'): strin
   const query = message.toLowerCase();
 
   if (language === 'ar') {
-    if (query.includes('خدمة') || query.includes('service') || query.includes('شو') || query.includes('ايش')) {
-      return 'نقدم خدمات التسويق الرقمي الشاملة: SEO، تصميم مواقع، هوية بصرية، سوشيال ميديا، وإعلانات مدفوعة. إيش المجال اللي يهمك بالتحديد؟';
+    if (query.includes('خدمة') || query.includes('service') || query.includes('شو') || query.includes('وش') || query.includes('ايش')) {
+      return 'حياك الله! نقدم خدمات التسويق الرقمي الشاملة: SEO، تصميم مواقع، هوية بصرية، سوشيال ميديا، وإعلانات مدفوعة. وش المجال اللي يهمك ودك نخدمك فيه؟';
     }
-    if (query.includes('سعر') || query.includes('كم') || query.includes('price') || query.includes('تكلفة')) {
-      return 'باقاتنا تبدأ من 800 ريال شهرياً، وتختلف حسب الخدمات المطلوبة. تحب أرتب لك استشارة مجانية نحدد فيها الأنسب لك؟';
+    if (query.includes('سعر') || query.includes('كم') || query.includes('price') || query.includes('تكلفة') || query.includes('بكم')) {
+      return 'باقاتنا تبدأ من 800 ريال شهرياً وتختلف حسب الخدمات اللي تحتاجها. ودك أرتب لك استشارة مجانية نحدد فيها الأنسب لك؟';
     }
     if (query.includes('تواصل') || query.includes('رقم') || query.includes('اتصال') || query.includes('contact')) {
-      return 'تقدر تتواصل معنا على info@d-arrow.com أو تتصل على 966138121213+. أو لو تحب، أقدر أرتب لك موعد استشارة مجانية.';
+      return 'تقدر تتواصل معنا مباشرة على الواتساب 966138121213+ أو عبر الإيميل info@d-arrow.com. وإذا حاب، أبشر أرتب لك موعد استشارة مجانية.';
     }
-    return 'أهلاً بك في D-Arrow! أنا هنا أساعدك. تقدر تسأل عن خدماتنا أو الأسعار أو تحجز استشارة مجانية.';
+    return 'حياك الله في D-Arrow! أنا هنا لخدمتك. تفضل اسألني عن خدماتنا، الأسعار، أو لو ودك تحجز استشارة مجانية.';
   }
 
   if (query.includes('service') || query.includes('what') || query.includes('offer')) {

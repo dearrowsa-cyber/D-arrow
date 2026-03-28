@@ -32,23 +32,46 @@ function formatBotResponse(text: string): string[] {
   return formatted;
 }
 
+function parseTextWithLinks(text: string) {
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  const parts = text.split(urlRegex);
+  
+  return parts.map((part, i) => {
+    if (part.match(urlRegex)) {
+      const isWhatsApp = part.includes('wa.me');
+      return (
+        <a
+          key={i}
+          href={part}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline font-bold text-white hover:text-white/80 transition-colors mx-1"
+        >
+          {isWhatsApp ? 'تواصل معنا على الواتساب 💬' : part}
+        </a>
+      );
+    }
+    return <span key={i}>{part}</span>;
+  });
+}
+
 // Component to render formatted bot response
 function FormattedBotMessage({ text }: { text: string }) {
   const lines = formatBotResponse(text);
   
   if (!lines || lines.length === 0) {
-    return <span>{text}</span>;
+    return <span>{parseTextWithLinks(text)}</span>;
   }
 
   if (lines.length === 1) {
-    return <span>{lines[0]}</span>;
+    return <span>{parseTextWithLinks(lines[0])}</span>;
   }
 
   // Check if it's a single paragraph or multiple items
   const isSingleParagraph = lines.join(' ').length < 100 && lines.length <= 2;
 
   if (isSingleParagraph) {
-    return <span>{lines.join(' ')}</span>;
+    return <span>{parseTextWithLinks(lines.join(' '))}</span>;
   }
 
   // Display as professional bullet points
@@ -57,7 +80,7 @@ function FormattedBotMessage({ text }: { text: string }) {
       {lines.map((line, i) => (
         <div key={i} className="flex gap-2 items-start">
           <span className="text-white font-bold mt-1">•</span>
-          <span className="text-white">{line}</span>
+          <span className="text-white flex-1">{parseTextWithLinks(line)}</span>
         </div>
       ))}
     </div>
