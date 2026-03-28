@@ -6,7 +6,7 @@ import { useLanguage } from '@/components/LanguageProvider';
 import Image from 'next/image';
 
 export default function ContactPage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   
   const [formData, setFormData] = useState({
     name: '',
@@ -211,14 +211,13 @@ export default function ContactPage() {
                     />
                   </label>
                   <label className="flex flex-col">
-                    <span className="text-sm text-white dark:text-gray-300 mb-2">{t('yourEmail')}</span>
+                    <span className="text-sm text-white dark:text-gray-300 mb-2">{t('yourEmail')} {lang === 'ar' ? '(اختياري)' : '(Optional)'}</span>
                     <input
                       type="email"
                       name="email"
                       placeholder="you@example.com"
                       value={formData.email}
                       onChange={handleChange}
-                      required
                       className="w-full px-4 py-3 border border-brand-pink/30 rounded-lg !text-black dark:text-white dark:bg-secondary-dark/50 placeholder-text-light focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition text-lg"
                     />
                   </label>
@@ -237,7 +236,7 @@ export default function ContactPage() {
                     />
                   </label>
                   <label className="flex flex-col">
-                    <span className="text-sm text-white dark:text-gray-300 mb-2">{t('yourCompany')}</span>
+                    <span className="text-sm text-white dark:text-gray-300 mb-2">{t('yourCompany')} {lang === 'ar' ? '(اختياري)' : '(Optional)'}</span>
                     <input
                       type="text"
                       name="company"
@@ -250,7 +249,7 @@ export default function ContactPage() {
                 </div>
 
                 <label className="flex flex-col">
-                  <span className="text-sm text-white dark:text-gray-300 mb-2">{t('selectService')}</span>
+                  <span className="text-sm text-white dark:text-gray-300 mb-2">{t('selectService')} {lang === 'ar' ? '(اختياري)' : '(Optional)'}</span>
                   <select
                     name="service"
                     value={formData.service}
@@ -269,7 +268,7 @@ export default function ContactPage() {
 
                 <label className="flex flex-col">
                   <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm text-white dark:text-gray-300">{t('yourMessage')}</span>
+                    <span className="text-sm text-white dark:text-gray-300">{t('yourMessage')} {lang === 'ar' ? '(اختياري)' : '(Optional)'}</span>
                     <span className="text-xs text-gray-600 dark:text-gray-500">{formData.message.length}/1000</span>
                   </div>
                   <textarea

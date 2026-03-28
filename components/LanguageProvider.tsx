@@ -262,7 +262,7 @@ const translations: Translations = {
   contactPhoneValue: { en: '+966 50 046 6349', ar: '+966 50 046 6349' },
   contactPhoneSubtext: { en: 'Available during business hours', ar: 'متاح خلال ساعات العمل' },
   contactLocation: { en: 'Location', ar: 'الموقع' },
-  contactLocationValue: { en: '6399, 4, Ibn Sina, AlKhobar, 34626,Dammam, Saudi Arabia', ar: '6399، 4، ابن سينا، الخبر، 34626، الدمام، المملكة العربية السعودية' },
+  contactLocationValue: { en: '6399, 4, Ibn Sina, AlKhobar, 34626, Saudi Arabia', ar: '6399، 4، ابن سينا، الخبر، 34626، المملكة العربية السعودية' },
   contactLocationSubtext: { en: 'Visit our office', ar: 'قم بزيارة مكتبنا' },
   contactHours: { en: 'Working Hours', ar: 'ساعات العمل' },
   contactHoursValue: { en: 'Mon - Fri, 9AM - 6PM', ar: 'الاثنين - الجمعة، 9 صباحًا - 6 مساءً' },
