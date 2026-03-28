@@ -56,8 +56,8 @@ function FormattedBotMessage({ text }: { text: string }) {
     <div className="space-y-2">
       {lines.map((line, i) => (
         <div key={i} className="flex gap-2 items-start">
-          <span className="text-[#FF6F4F] font-bold mt-1">•</span>
-          <span className="text-gray-800">{line}</span>
+          <span className="text-white font-bold mt-1">•</span>
+          <span className="text-white">{line}</span>
         </div>
       ))}
     </div>
@@ -297,17 +297,21 @@ export default function ChatBot() {
             {messages.map((m, i) => (
               <div key={i} className="space-y-1 animate-in fade-in slide-in-from-bottom-2">
                 {/* User Message */}
-                <div className={`flex ${isRTL ? 'justify-start' : 'justify-end'}`}>
-                  <div className="max-w-[80%] bg-gradient-to-r from-[#FF6F4F] to-[#FF4D6D] text-white px-4 py-2.5 rounded-2xl rounded-tr-sm shadow-md text-[13px] leading-relaxed">
-                    {m.user}
+                {m.user && (
+                  <div className={`flex ${isRTL ? 'justify-start' : 'justify-end'}`}>
+                    <div className="max-w-[80%] bg-gradient-to-r from-[#FF6F4F] to-[#FF4D6D] text-white px-4 py-2.5 rounded-2xl rounded-tr-sm shadow-md text-[13px] leading-relaxed">
+                      {m.user}
+                    </div>
                   </div>
-                </div>
+                )}
                 {/* Bot Message */}
-                <div className={`flex ${isRTL ? 'justify-end' : 'justify-start'}`}>
-                  <div className="max-w-[85%] bg-white/95 text-gray-800 px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm border border-white/30 text-[13px] leading-relaxed backdrop-blur-sm">
-                    <FormattedBotMessage text={m.bot} />
+                {m.bot && (
+                  <div className={`flex ${isRTL ? 'justify-end' : 'justify-start'}`}>
+                    <div className="max-w-[85%] bg-orange-500 text-white px-4 py-3 rounded-2xl rounded-tl-sm shadow-sm border border-orange-400/50 text-[13px] leading-relaxed backdrop-blur-sm">
+                      <FormattedBotMessage text={m.bot} />
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             ))}
 
