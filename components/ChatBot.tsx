@@ -127,7 +127,7 @@ export default function ChatBot() {
       
       if (messages.length === 0) {
         const greetingMsg = chatLanguage === 'ar' 
-          ? 'هلا! 👋 وش أقدر أساعدك اليوم؟' 
+          ? 'هلا! 👋 كيف أقدر أساعدك اليوم؟' 
           : 'Hey! 👋 How can I help you today?';
         setMessages([{ user: '', bot: greetingMsg }]);
       }
