@@ -299,8 +299,10 @@ export default function ChatBot() {
                 {/* User Message */}
                 {m.user && (
                   <div className={`flex ${isRTL ? 'justify-start' : 'justify-end'}`}>
-                    <div className="max-w-[80%] bg-gradient-to-r from-[#FF6F4F] to-[#FF4D6D] text-white px-4 py-2.5 rounded-2xl rounded-tr-sm shadow-md text-[13px] leading-relaxed">
-                      {m.user}
+                    <div className="max-w-[80%] bg-white px-4 py-2.5 rounded-2xl rounded-tr-sm shadow-md text-[13px] leading-relaxed border border-white/50">
+                      <span className="bg-gradient-to-r from-[#FF6F4F] to-[#FF4D6D] bg-clip-text text-transparent font-semibold inline-block">
+                        {m.user}
+                      </span>
                     </div>
                   </div>
                 )}
