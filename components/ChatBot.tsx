@@ -369,15 +369,15 @@ export default function ChatBot() {
                       
                       {hasWhatsApp && (
                         <div className={`flex ${isRTL ? 'justify-end' : 'justify-start'} w-full animate-in fade-in zoom-in-95 slide-in-from-bottom-3 duration-500 [animation-delay:600ms]`}>
-                          <div className="bg-gradient-to-br from-[#E8F8F5] to-[#F9FCFA] p-3.5 rounded-2xl rounded-tl-sm shadow-sm border border-[#25D366]/20 flex flex-col gap-3 w-fit max-w-[90%] relative overflow-hidden group">
+                          <div className="bg-gradient-to-br from-[#FFF5EE] to-[#FFF0F3] p-3.5 rounded-2xl rounded-tl-sm shadow-sm border border-[#FF6F4F]/20 flex flex-col gap-3 w-fit max-w-[90%] relative overflow-hidden group">
                             {/* Decorative background glow */}
-                            <div className="absolute top-0 right-0 w-24 h-24 bg-[#25D366]/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-2xl transition-all duration-500 group-hover:bg-[#25D366]/20"></div>
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-[#FF6F4F]/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-2xl transition-all duration-500 group-hover:bg-[#FF6F4F]/20"></div>
                             
                             {/* Header: Icon + Title */}
                             <div className="flex items-center gap-3 z-10 w-full pl-2">
-                              <div className="w-10 h-10 shrink-0 rounded-full bg-gradient-to-tr from-[#25D366] to-[#1DA851] flex items-center justify-center shadow-md shadow-[#25D366]/30 relative">
+                              <div className="w-10 h-10 shrink-0 rounded-full bg-gradient-to-tr from-[#FF6F4F] to-[#FF4D6D] flex items-center justify-center shadow-md shadow-[#FF6F4F]/30 relative">
                                 <MessageCircle size={20} className="text-white fill-white relative z-10" />
-                                <div className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-20 [animation-duration:2.5s]"></div>
+                                <div className="absolute inset-0 rounded-full bg-[#FF6F4F] animate-ping opacity-20 [animation-duration:2.5s]"></div>
                               </div>
                               <div className="flex flex-col flex-1">
                                 <span className="text-[14px] font-bold text-gray-800">تواصل مباشر</span>
@@ -390,7 +390,7 @@ export default function ChatBot() {
                               href={waLink}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="z-10 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#25D366] to-[#1DA851] hover:from-[#1DA851] hover:to-[#168E42] text-white py-2.5 px-4 rounded-xl font-bold text-[13px] transition-all shadow-md shadow-[#25D366]/25 hover:shadow-lg hover:-translate-y-0.5 group/btn"
+                              className="z-10 w-full flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF6F4F] to-[#FF4D6D] hover:from-[#FF4D6D] hover:to-[#E8445E] text-white py-2.5 px-4 rounded-xl font-bold text-[13px] transition-all shadow-md shadow-[#FF6F4F]/25 hover:shadow-lg hover:-translate-y-0.5 group/btn"
                             >
                               <span>فتح المحادثة عبر الواتساب</span>
                               <MessageCircle size={16} className="group-hover/btn:scale-110 transition-transform" />
