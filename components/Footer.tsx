@@ -48,7 +48,6 @@ const Footer = () => {
               <li><Link href="/#services" className="!text-white hover:text-pink-500 transition">{t("services")}</Link></li>
               <li><Link href="/pricing" className="!text-white hover:text-pink-500 transition">{t("pricing")}</Link></li>
               <li><Link href="/#contact" className="!text-white hover:text-pink-500 transition">{t("contact")}</Link></li>
-              <li ><a href="https://yusuf-weld.vercel.app/ " className="!text-white hover:!text-pink-500 transition">{t("meetOurTeam")}</a></li>
             </ul>
           </div>
 
