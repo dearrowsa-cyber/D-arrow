@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
 import Hero from '@/components/Hero';
 import Stats from '@/components/Stats';
+import LazySection from '@/components/LazySection';
 
 // Lazy load below-fold components with loading priority
 const Process = dynamic(() => import('@/components/Process'), {
@@ -83,9 +84,18 @@ export default function Home() {
     <main className="scroll-smooth">
       <Hero />
       <Stats />
-      <Process />
-      <CTA />
-      <PartnersInSuccess />
+      
+      <LazySection>
+        <Process />
+      </LazySection>
+
+      <LazySection>
+        <CTA />
+      </LazySection>
+
+      <LazySection>
+        <PartnersInSuccess />
+      </LazySection>
     </main>
   );
 }
