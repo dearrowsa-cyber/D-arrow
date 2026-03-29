@@ -5,7 +5,6 @@ import Image from 'next/image';
 const ImageMarquee = () => {
   const images = [
     '/beedco-main.png',
-    '/connects1.png',
     '/connects2.png',
     '/connects3.png',
     '/connects4.png',
