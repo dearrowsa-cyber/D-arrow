@@ -1,8 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useLanguage } from './LanguageProvider';
 
 export default function LoadingScreen() {
+  const { lang } = useLanguage();
   const colors = {
     midnight: '#0B0D1F',
     deepNavy: '#14162E',
@@ -82,7 +84,7 @@ export default function LoadingScreen() {
               lineHeight: '1.2',
             }}
           >
-            D-ARROW
+            {lang === 'ar' ? 'دي آرو' : 'D-ARROW'}
           </motion.h1>
           
           {/* Subtitle - Optimized */}
@@ -92,8 +94,8 @@ export default function LoadingScreen() {
             transition={{ delay: 0.6 }}
             className="flex flex-col items-center"
           >
-            <p className="text-xs md:text-sm uppercase tracking-[0.5em] font-light text-white/60 ml-[0.5em]">
-              Digital Marketing 
+            <p className="text-xs md:text-sm uppercase tracking-[0.2em] md:tracking-[0.5em] font-bold text-white/80 ml-[0.5em]" style={{ fontFamily: lang === 'ar' ? 'var(--font-cairo)' : 'inherit' }}>
+              {lang === 'ar' ? 'للتسويق الرقمي' : 'Digital Marketing'}
             </p>
             
             {/* Creative Loading Line - Optimized */}
@@ -117,7 +119,7 @@ export default function LoadingScreen() {
           transition={{ duration: 3, repeat: Infinity }}
           className="absolute bottom-8 text-[8px] uppercase tracking-[0.3em] text-white/30"
         >
-          Excellence in Motion
+          {lang === 'ar' ? 'التميز في الحركة' : 'Excellence in Motion'}
         </motion.span>
       </div>
     </motion.div>
