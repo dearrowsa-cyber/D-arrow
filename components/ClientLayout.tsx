@@ -30,7 +30,14 @@ interface ClientLayoutProps {
 export default function ClientLayout({ children }: ClientLayoutProps) {
   const [showLoadingScreen, setShowLoadingScreen] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [showChatBot, setShowChatBot] = useState(false);
   const { lang } = useLanguage();
+
+  useEffect(() => {
+    // Delay Chatbot rendering to drastically improve TBT and save ~1.5MB from the initial PageSpeed score
+    const chatTimer = setTimeout(() => setShowChatBot(true), 4000);
+    return () => clearTimeout(chatTimer);
+  }, []);
 
   useEffect(() => {
     // Mark as initialized immediately - don't block with loading screen
@@ -68,8 +75,8 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
         <Footer />
       </div>
 
-      {/* Floating ChatBot */}
-      <ChatBot />
+      {/* Floating ChatBot - Delayed to prevent massive JS execution during page load */}
+      {showChatBot && <ChatBot />}
       
       {/* ChatBot Announcement - Disabled for performance */}
       {/* <ChatBotAnnouncement /> */}

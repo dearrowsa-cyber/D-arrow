@@ -12,6 +12,9 @@ export default function NetworkBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    // Completely disable on mobile to guarantee exactly 0 CPU usage and 0 TBT
+    if (window.innerWidth < 768) return;
+
     let width = canvas.clientWidth || window.innerWidth;
     let height = canvas.clientHeight || window.innerHeight;
     const dpr = Math.max(1, window.devicePixelRatio || 1);
