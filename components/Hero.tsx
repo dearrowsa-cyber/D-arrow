@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLanguage } from './LanguageProvider';
@@ -8,7 +8,21 @@ import HeroServicesCarousel from './HeroServicesCarousel';
 
 const Hero = () => {
   const { t, lang } = useLanguage();
+  const videoRef = useRef<HTMLVideoElement>(null);
 
+  useEffect(() => {
+    // Force play on mount to bypass aggressive mobile browser autoplay restrictions
+    // especially on iOS Safari which sometimes ignores the autoPlay attribute
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      const playPromise = videoRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.log("Autoplay was prevented by browser policy:", error);
+        });
+      }
+    }
+  }, []);
 
   const featuredServices = [
     {
@@ -47,6 +61,7 @@ const Hero = () => {
     <section className="relative overflow-hidden m-0 p-0 h-[500px] flex items-center">
       {/* Background Video - Restored on all devices as requested by client */}
       <video
+        ref={videoRef}
         autoPlay
         muted
         loop
