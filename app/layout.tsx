@@ -10,14 +10,14 @@ const cairo = Cairo({
   subsets: ['arabic', 'latin'],
   weight: ['400', '500', '600', '700', '800', '900'],
   variable: '--font-cairo',
-  display: 'swap',
+  display: 'optional',
 });
 
 const tajawal = Tajawal({
   subsets: ['arabic', 'latin'],
   weight: ['400', '500', '700'],
   variable: '--font-tajawal',
-  display: 'swap',
+  display: 'optional',
 });
 
 export const revalidate = 86400; // 24 hours caching (LiteSpeed equivalent for Next)
