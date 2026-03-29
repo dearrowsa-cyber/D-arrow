@@ -4,8 +4,13 @@ import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import ChatBot from '@/components/ChatBot';
 import ChatBotAnnouncement from '@/components/ChatBotAnnouncement';
+
+// Lazy load ChatBot (contains heavy Three.js 3D engine)
+const ChatBot = dynamic(() => import('@/components/ChatBot'), {
+  ssr: false,
+  loading: () => null,
+});
 
 import { useLanguage } from '@/components/LanguageProvider';
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useLanguage } from './LanguageProvider';
@@ -45,14 +45,26 @@ const Hero = () => {
 
   return (
     <section className="relative overflow-hidden m-0 p-0 h-[500px] flex items-center">
-      {/* Background Video - Loaded immediately for visibility */}
+      {/* Mobile: Static poster image for instant LCP */}
+      <Image
+        src="/main-one.png"
+        alt="D-Arrow Digital Marketing"
+        fill
+        priority
+        sizes="100vw"
+        className="absolute inset-0 w-full h-full object-cover z-0 md:hidden"
+      />
+      {/* Desktop: Background Video with poster fallback */}
       <video
         autoPlay
         muted
         loop
         playsInline
-        preload="auto"
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        preload="none"
+        poster="/main-one.png"
+        width={1920}
+        height={500}
+        className="absolute inset-0 w-full h-full object-cover z-0 hidden md:block"
       >
         <source src="/main-video.mp4" type="video/mp4" />
       </video>

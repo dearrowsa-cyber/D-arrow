@@ -22,7 +22,7 @@ export default memo(function Header() {
   const toggleLang = () => setLang(lang === 'en' ? 'ar' : 'en');
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-transparent backdrop-blur-[2px]">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full bg-transparent backdrop-blur-[2px] min-h-[64px]">
       <div className="w-full px-2 sm:px-4 md:px-6 lg:px-12 py-3">
         <div className="flex justify-between items-center w-full gap-4">
           <Link href="/" className="hover:opacity-90 transition duration-300 flex items-center flex-shrink-0 group">

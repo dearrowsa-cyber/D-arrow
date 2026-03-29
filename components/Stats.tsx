@@ -85,7 +85,7 @@ const StatCard = ({
         {/* Content */}
         <div className="relative z-10 text-center">
         {/* Number with counter animation */}
-          <div className="text-white text-6xl md:text-7xl lg:text-8xl font-black leading-tight tabular-nums" style={{ fontFamily: 'var(--font-gilroy)' }}>
+          <div className="text-white text-6xl md:text-7xl lg:text-8xl font-black leading-tight tabular-nums min-h-[1em]" style={{ fontFamily: 'var(--font-gilroy)' }}>
             <CounterNumber value={value} />
           </div>
           
