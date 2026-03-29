@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -28,7 +29,7 @@ interface ClientLayoutProps {
 }
 
 export default function ClientLayout({ children }: ClientLayoutProps) {
-  const [showLoadingScreen, setShowLoadingScreen] = useState(false);
+  const [showLoadingScreen, setShowLoadingScreen] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
   const [showChatBot, setShowChatBot] = useState(false);
   const { lang } = useLanguage();
@@ -45,10 +46,10 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       setIsInitialized(true);
     }
 
-    // Only show loading for a very brief moment if needed (200ms)
+    // Only show loading for a brief moment (1.2s to satisfy client requirement but save LCP)
     const timer = setTimeout(() => {
       setShowLoadingScreen(false);
-    }, 200);
+    }, 1200);
 
     return () => clearTimeout(timer);
   }, [isInitialized]);
@@ -62,10 +63,11 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
 
   return (
     <>
-      {/* N8N Chatbot */}
-      
+      <AnimatePresence>
+        {showLoadingScreen && <LoadingScreen />}
+      </AnimatePresence>
 
-      {/* Main Content - No blocking, renders immediately */}
+      {/* Main Content - No blocking, renders immediately behind the preloader */}
       <NetworkBackground />
       <div className="grid-background w-full overflow-x-hidden relative z-10">
         <Header />
