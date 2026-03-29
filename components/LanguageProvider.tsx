@@ -156,7 +156,7 @@ const translations: Translations = {
   serviceFeatures_photography: { en: ['Portfolio Photography', 'Product Photography', 'Professional Editing', 'Digital Delivery'], ar: ['تصوير المحفظة', 'تصوير المنتجات', 'التحرير الاحترافي', 'التسليم الرقمي'] },
 
   // New Digital Marketing Services
-  service_softwareDev_title: { en: 'Software Design Development ', ar: 'تطوير تصميم البرمجيات' },
+  service_softwareDev_title: { en: 'Software Design and Development ', ar: 'تصميم وتطوير البرمجيات' },
   service_softwareDev_desc: { en: 'Custom software solutions tailored to your business needs', ar: 'حلول برامج مخصصة مصممة لاحتياجات عملك' },
   serviceFeatures_softwareDev: { en: ['Custom Development', 'Scalable Solutions', 'Quality Assurance', 'Maintenance Support', 'API Integration', 'Database Design', 'Security Implementation', 'Cloud Deployment'], ar: ['التطوير المخصص', 'حلول قابلة للتوسع', 'ضمان الجودة', 'دعم الصيانة', 'دمج API', 'تصميم قاعدة البيانات', 'تنفيذ الأمان', 'نشر سحابة'] },
   
@@ -164,7 +164,7 @@ const translations: Translations = {
   service_appDev_desc: { en: 'Native and cross-platform mobile applications', ar: 'تطبيقات الهاتف المحمول الأصلية والمتقاطعة' },
   serviceFeatures_appDev: { en: ['iOS & Android', 'User-Friendly Design', 'Performance Optimization', 'App Store Deployment', 'Push Notifications', 'Offline Functionality', 'In-App Analytics', 'Regular Updates'], ar: ['iOS و Android', 'تصميم سهل الاستخدام', 'تحسين الأداء', 'نشر متجر التطبيقات', 'إشعارات فورية', 'وظائف بدون اتصال', 'تحليلات داخل التطبيق', 'تحديثات منتظمة'] },
   
-  service_websiteDev_title: { en: 'Website Design Development', ar: 'تطوير تصميم المواقع' },
+  service_websiteDev_title: { en: 'Website Design and Development', ar: 'تصميم وتطوير المواقع' },
   service_websiteDev_desc: { en: 'Professional websites that convert visitors to customers', ar: 'مواقع احترافية تحول الزوار إلى عملاء' },
   serviceFeatures_websiteDev: { en: ['Responsive Design', 'Fast Loading', 'SEO Friendly', 'CMS Integration', 'Responsive Design', 'SEO Integration', 'Fast Loading', 'Security Features'], ar: ['تصميم متجاوب', 'تحميل سريع', 'محسّن للبحث', 'دمج نظام إدارة المحتوى', 'تصميم متجاوب', 'دمج SEO', 'تحميل سريع', 'ميزات الأمان'] },
   
