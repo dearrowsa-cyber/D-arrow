@@ -2,6 +2,7 @@
 
 import { useLanguage } from './LanguageProvider';
 import styles from '@/app/pricing/pricing.module.css';
+import Image from 'next/image';
 
 const processSteps = [
   {
@@ -70,9 +71,11 @@ const Process = () => {
             >
               <div className={styles.cardTop}>
                 <div className={styles.iconWrap}>
-                  <img
+                  <Image
                     src={step.icon}
                     alt={t(step.titleKey)}
+                    width={90}
+                    height={90}
                     className={styles.iconImage}
                     loading="lazy"
                   />
