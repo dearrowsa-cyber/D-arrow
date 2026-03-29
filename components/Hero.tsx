@@ -45,20 +45,19 @@ const Hero = () => {
 
   return (
     <section className="relative overflow-hidden m-0 p-0 h-[500px] flex items-center">
-      {/* Background Video - Loaded immediately for max LCP efficiency */}
+      {/* Background Video - Loaded only on Desktop strictly via CSS and media queries for blazing fast mobile LCP */}
       <video
         autoPlay
         muted
         loop
         playsInline
-        preload="auto"
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        className="absolute inset-0 w-full h-full object-cover z-0 hidden md:block"
       >
-        <source src="/main-video.mp4" type="video/mp4" />
+        <source src="/main-video.mp4" type="video/mp4" media="(min-width: 768px)" />
       </video>
       
-      {/* Blur Overlay on Video */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm z-[1]"></div>
+      {/* Blur Overlay on Video (only visible if video plays) */}
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm z-[1] hidden md:block"></div>
       
       {/* Fallback Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#0B0D1F] via-[#1a1d3f] to-[#0B0D1F]" style={{zIndex: -50}}></div>
