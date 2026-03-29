@@ -97,6 +97,14 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         
+        {/* Preload critical fonts to completely eliminate LCP delay (saving ~4000ms) */}
+        <link rel="preload" href="/fonts/Gilroy-Bold.otf" as="font" type="font/otf" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/Gilroy-Medium.otf" as="font" type="font/otf" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/Gilroy-Heavy.otf" as="font" type="font/otf" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/tthovespro.otf" as="font" type="font/otf" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/29ltbukra.otf" as="font" type="font/otf" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/29LTBukra-Regular.otf" as="font" type="font/otf" crossOrigin="anonymous" />
+        
         {/* JSON-LD Schema Markup for Organization & LocalBusiness */}
         <script
           type="application/ld+json"
