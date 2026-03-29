@@ -53,8 +53,8 @@ Thumbs.db
 *~
 
 # Ignore large media files that should be hosted externally or via CDN
-/public/*.mp4
 /public/*.mov
 /public/videos/
 /public/*.webm
-# If you need to keep a single lightweight demo video, add it explicitly to source control
+# Allow the hero video to be deployed
+!/public/main-video.mp4
