@@ -80,8 +80,8 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       {/* Floating ChatBot - Delayed to prevent massive JS execution during page load */}
       {showChatBot && <ChatBot />}
       
-      {/* ChatBot Announcement - Restored from yesterday to satisfy Arabic text requests */}
-      {showChatBot && <ChatBotAnnouncement />}
+      {/* ChatBot Announcement - Disabled as requested */}
+      {/* <ChatBotAnnouncement /> */}
     </>
   );
 }
