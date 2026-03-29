@@ -8,22 +8,22 @@ import Stats from '@/components/Stats';
 // Lazy load below-fold components with loading priority
 const Process = dynamic(() => import('@/components/Process'), {
   loading: () => <div className="py-8 lg:py-16 bg-gray-900" />,
-  ssr: true,
+  ssr: false,
 });
 
 const CTA = dynamic(() => import('@/components/CTA'), {
   loading: () => <div className="py-8 lg:py-12 bg-gray-900" />,
-  ssr: true,
+  ssr: false,
 });
 
 const PartnersInSuccess = dynamic(() => import('@/components/PartnersInSuccess'), {
   loading: () => <div className="py-8 lg:py-16 bg-gray-900" />,
-  ssr: true,
+  ssr: false,
 });
 
 const Portfolio = dynamic(() => import('@/components/Portfolio'), {
   loading: () => <div className="py-8 lg:py-16 bg-gray-900" />,
-  ssr: true,
+  ssr: false,
 });
 
 
