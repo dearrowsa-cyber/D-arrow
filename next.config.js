@@ -25,8 +25,9 @@ const nextConfig = {
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   
-  // Cache headers for static assets
+  // LiteSpeed-style aggressive caching headers
   headers: async () => [
+    // Security headers for all routes
     {
       source: '/:path*',
       headers: [
@@ -36,22 +37,76 @@ const nextConfig = {
         { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
       ],
     },
+    // Next.js built JS/CSS bundles — immutable forever
     {
       source: '/_next/static/:path*',
       headers: [
         { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
       ],
     },
+    // All images (png, jpg, webp, avif, svg)
     {
-      source: '/images/:path*',
+      source: '/:path*.(png|jpg|jpeg|gif|webp|avif|svg|ico)',
       headers: [
         { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
       ],
     },
+    // Icons folder
     {
-      source: '/public/fonts/:path*',
+      source: '/icon/:path*',
       headers: [
         { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+      ],
+    },
+    // Videos (hero background etc.)
+    {
+      source: '/:path*.(mp4|webm|ogg)',
+      headers: [
+        { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+      ],
+    },
+    // Fonts
+    {
+      source: '/:path*.(woff|woff2|ttf|otf|eot)',
+      headers: [
+        { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+      ],
+    },
+    // HTML pages — cache 1 hour, serve stale while revalidating (like LiteSpeed page cache)
+    {
+      source: '/',
+      headers: [
+        { key: 'Cache-Control', value: 'public, s-maxage=3600, stale-while-revalidate=86400' },
+      ],
+    },
+    {
+      source: '/services',
+      headers: [
+        { key: 'Cache-Control', value: 'public, s-maxage=3600, stale-while-revalidate=86400' },
+      ],
+    },
+    {
+      source: '/pricing',
+      headers: [
+        { key: 'Cache-Control', value: 'public, s-maxage=3600, stale-while-revalidate=86400' },
+      ],
+    },
+    {
+      source: '/why-us',
+      headers: [
+        { key: 'Cache-Control', value: 'public, s-maxage=3600, stale-while-revalidate=86400' },
+      ],
+    },
+    {
+      source: '/blog',
+      headers: [
+        { key: 'Cache-Control', value: 'public, s-maxage=3600, stale-while-revalidate=86400' },
+      ],
+    },
+    {
+      source: '/contact',
+      headers: [
+        { key: 'Cache-Control', value: 'public, s-maxage=1800, stale-while-revalidate=43200' },
       ],
     },
   ],

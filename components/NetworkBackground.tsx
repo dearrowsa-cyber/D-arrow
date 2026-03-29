@@ -34,8 +34,11 @@ export default function NetworkBackground() {
     type Point = { x: number; y: number; vx: number; vy: number };
     const points: Point[] = [];
 
-    // Reduced particle count for faster initial paint
-    const POINT_COUNT = Math.min(70, Math.max(30, Math.floor((width * height) / 30000)));
+    // Reduced particle count for faster initial paint, drastically reduced for mobile
+    const isMobile = width < 768;
+    const maxPoints = isMobile ? 15 : 70;
+    const minPoints = isMobile ? 8 : 30;
+    const POINT_COUNT = Math.min(maxPoints, Math.max(minPoints, Math.floor((width * height) / (isMobile ? 50000 : 30000))));
     for (let i = 0; i < POINT_COUNT; i++) {
       points.push({
         x: Math.random() * width,

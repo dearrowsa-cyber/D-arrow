@@ -1,10 +1,26 @@
-
 import type { Metadata } from "next";
+import { Cairo, Tajawal } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/ClientLayout";
 
 import { LanguageProvider } from '@/components/LanguageProvider';
 import { ThemeProvider } from '@/components/ThemeProvider';
+
+const cairo = Cairo({
+  subsets: ['arabic', 'latin'],
+  weight: ['400', '500', '600', '700', '800', '900'],
+  variable: '--font-cairo',
+  display: 'swap',
+});
+
+const tajawal = Tajawal({
+  subsets: ['arabic', 'latin'],
+  weight: ['400', '500', '700'],
+  variable: '--font-tajawal',
+  display: 'swap',
+});
+
+export const revalidate = 86400; // 24 hours caching (LiteSpeed equivalent for Next)
 
 export const metadata: Metadata = {
   title: "D Arrow - Digital Marketing Agency | SEO, Web Design, Branding",
@@ -71,7 +87,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${cairo.variable} ${tajawal.variable}`}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

@@ -1,9 +1,11 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { Float, Sphere, MeshDistortMaterial, PerspectiveCamera } from '@react-three/drei';
 import { MessageCircle, X, Send, Globe, MoreVertical, Paperclip } from 'lucide-react';
+import dynamic from 'next/dynamic';
+
+const ChatBotScene = dynamic(() => import('@/components/ChatBotScene'), { ssr: false });
+
 import { useLanguage } from '@/components/LanguageProvider';
 
 // Format bot responses for professional display
@@ -102,25 +104,7 @@ function FormattedBotMessage({ text }: { text: string }) {
   );
 }
 
-// 3D Background Scene - Snapchat inspired visuals
-function BackgroundShapes() {
-  return (
-    <group>
-      <Float speed={4} rotationIntensity={0.5} floatIntensity={1}>
-        <Sphere args={[1.2, 64, 64]} position={[-2, 2, -5]}>
-          <MeshDistortMaterial color="#FF6F4F" speed={2} distort={0.3} radius={1} />
-        </Sphere>
-      </Float>
-      <Float speed={3} rotationIntensity={1} floatIntensity={2}>
-        <Sphere args={[0.8, 64, 64]} position={[2, -2, -3]}>
-          <MeshDistortMaterial color="#FF4D6D" speed={4} distort={0.5} radius={1} />
-        </Sphere>
-      </Float>
-      <ambientLight intensity={0.7} />
-      <pointLight position={[10, 10, 10]} />
-    </group>
-  );
-}
+
 
 export default function ChatBot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -273,7 +257,7 @@ export default function ChatBot() {
             <X size={24} className="text-white font-bold" />
           </div>
         ) : (
-          <img src="/chatbot-main-2.png" alt="Chat" className="w-80 h-80  object-contain animate-pulse !text-black rounded-3xl" />
+          <img src="/chatbot-main-2.png" alt="Chat" className="w-14 h-14 object-contain animate-pulse !text-black rounded-3xl" />
         )}
         
         {/* Unread Badge - Minimalist Style */}
@@ -288,16 +272,8 @@ export default function ChatBot() {
       {isOpen && (
         <div className={`fixed bottom-24 z-50 w-[90vw] sm:w-[340px] h-[65vh] sm:h-[560px] max-h-[65vh] flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/70 backdrop-blur-3xl shadow-[0_20px_60px_rgba(0,0,0,0.2)] ${isRTL ? 'left-6' : 'right-6'} ${fontClass}`} dir={isRTL ? 'rtl' : 'ltr'}>
           
-          {/* Three.js Background */}
-          <div className="absolute inset-0 -z-10 bg-[#0B0D1F]">
-            <Canvas>
-              <color attach="background" args={['#0B0D1F']} />
-              <PerspectiveCamera makeDefault position={[0, 0, 5]} />
-              <BackgroundShapes />
-              <ambientLight intensity={0.5} />
-              <pointLight position={[10, 10, 10]} />
-            </Canvas>
-          </div>
+          {/* Three.js Background Component */}
+          <ChatBotScene />
 
           {/* Header */}
           <div className="flex items-center justify-between px-5 py-3.5 bg-gradient-to-r from-[#14162E]/60 to-[#1a1c3e]/60 backdrop-blur-xl border-b border-white/10">

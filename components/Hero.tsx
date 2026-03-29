@@ -8,12 +8,7 @@ import HeroServicesCarousel from './HeroServicesCarousel';
 
 const Hero = () => {
   const { t, lang } = useLanguage();
-  const [showVideo, setShowVideo] = useState(false);
 
-  // Load video immediately for visibility
-  useEffect(() => {
-    setShowVideo(true);
-  }, []);
 
   const featuredServices = [
     {
@@ -51,18 +46,16 @@ const Hero = () => {
   return (
     <section className="relative overflow-hidden m-0 p-0 h-[500px] flex items-center">
       {/* Background Video - Loaded immediately for visibility */}
-      {showVideo && (
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-          className="absolute inset-0 w-full h-full object-cover z-0"
-        >
-          <source src="/main-video.mp4" type="video/mp4" />
-        </video>
-      )}
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="auto"
+        className="absolute inset-0 w-full h-full object-cover z-0"
+      >
+        <source src="/main-video.mp4" type="video/mp4" />
+      </video>
       
       {/* Blur Overlay on Video */}
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm z-[1]"></div>
