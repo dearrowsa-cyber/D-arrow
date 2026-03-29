@@ -43,7 +43,7 @@ const Hero = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden m-0 p-0 h-[500px] flex items-center">
+    <section className="relative overflow-hidden m-0 p-0 min-h-[550px] md:min-h-[600px] py-24 md:py-0 flex items-center">
       {/* Background Video - Restored on all devices as requested by client */}
       <video
         autoPlay
@@ -74,7 +74,7 @@ const Hero = () => {
               <span suppressHydrationWarning className="text-white text-sm font-semibold bg-gradient-to-r from-brand-pink to-brand-orange bg-clip-text text-transparent">{t('heroBadge')}</span>
             </div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-4 bg-gradient-to-r from-brand-pink to-brand-orange bg-clip-text text-transparent min-h-[4rem] md:min-h-[6rem]">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-4 bg-gradient-to-r from-brand-pink to-brand-orange bg-clip-text text-transparent min-h-[4rem] md:min-h-[6rem]">
               {t('heroHeading')}
             </h1>
 
@@ -82,11 +82,11 @@ const Hero = () => {
               <HeroServicesCarousel services={featuredServices} />
             </div>
 
-            <div suppressHydrationWarning className={`flex flex-wrap md:flex-nowrap justify-center ${lang === 'ar' ? 'md:justify-end' : 'md:justify-start'} gap-4 mt-12`}>
-              <Link href="/contact" className="bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] !text-white px-8 py-4 rounded-lg font-semibold text-base transition-transform duration-300 hover:shadow-lg hover:scale-105 active:scale-95">
+            <div suppressHydrationWarning className={`flex flex-col sm:flex-row flex-wrap md:flex-nowrap justify-center ${lang === 'ar' ? 'md:justify-end' : 'md:justify-start'} gap-4 mt-8 md:mt-12`}>
+              <Link href="/contact" className="w-full sm:w-auto text-center bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] !text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold text-sm md:text-base transition-transform duration-300 hover:shadow-lg hover:scale-105 active:scale-95">
                 {t('getYourFreeConsultation')}
               </Link>
-              <Link href="/pricing" className="border-2 border-[rgba(255,77,109,0.4)] hover:border-[rgba(255,77,109,0.8)] !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] px-8 py-4 rounded-lg font-semibold text-base transition-colors duration-300">
+              <Link href="/pricing" className="w-full sm:w-auto text-center border-2 border-[rgba(255,77,109,0.4)] hover:border-[rgba(255,77,109,0.8)] !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold text-sm md:text-base transition-colors duration-300">
                 {t('viewPricing')}
               </Link>
             </div>
