@@ -26,7 +26,7 @@ export default function HeroServicesCarousel({ services }: HeroServicesCarouselP
   }, [services.length]);
 
   return (
-    <div className="w-full" style={{ minHeight: '100px', display: 'flex', alignItems: 'center', justifyContent: 'inherit', marginBottom: '32px', position: 'relative', zIndex: 20 }}>
+    <div className="w-full" style={{ minHeight: '130px', display: 'flex', alignItems: 'center', justifyContent: 'inherit', marginBottom: '32px', position: 'relative', zIndex: 20 }}>
       <div 
         className="w-full font-bold transition-opacity duration-300 leading-tight"
         style={{
@@ -36,7 +36,7 @@ export default function HeroServicesCarousel({ services }: HeroServicesCarouselP
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',
           display: 'block',
-          minHeight: '80px'
+          minHeight: '110px'
         }}
       >
         {t(services[currentIndex].titleKey)}

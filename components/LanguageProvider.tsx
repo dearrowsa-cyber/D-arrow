@@ -631,20 +631,7 @@ const arabicCountries = [
   'IR', // Iran (has Arabic speakers)
 ];
 
-// Function to detect user's country from IP geolocation
-const detectCountryFromIP = async (): Promise<string | null> => {
-  try {
-    const response = await fetch('https://geojs.io/geolocation/geojs', { 
-      method: 'GET',
-      headers: { Accept: 'application/json' }
-    });
-    const data = await response.json();
-    return data.country_code || null;
-  } catch (error) {
-    console.log('Geolocation detection failed, using browser language instead');
-    return null;
-  }
-};
+// Language detection from IP is disabled to prevent massive Cumulative Layout Shifts (CLS)
 
 const createTranslationFunction = (lang: Lang) => {
   return (key: string): string => {
@@ -678,27 +665,11 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       return;
     }
 
-    // If no stored preference, detect language from geolocation or browser
-    const detectAndSetLanguage = async () => {
-      let detectedLang: Lang = defaultLang;
-
-      if (typeof window !== 'undefined') {
-        // Try geolocation first
-        const countryCode = await detectCountryFromIP();
-        if (countryCode && arabicCountries.includes(countryCode)) {
-          detectedLang = 'ar';
-        } else {
-          // Fall back to browser language detection
-          const browserLang = navigator.language || navigator.languages?.[0] || 'en';
-          detectedLang = browserLang.startsWith('ar') ? 'ar' : 'en';
-        }
-      }
-
-      setLangState(detectedLang);
-      applyLanguageToDOM(detectedLang);
-    };
-
-    detectAndSetLanguage();
+    // If no stored preference, we stick to the default SSR language (ar) to prevent 
+    // destructive Cumulative Layout Shifts (CLS) where the entire page flips language and layout direction
+    // after the initial paint.
+    setLangState(defaultLang);
+    applyLanguageToDOM(defaultLang);
   }, []);
 
   useEffect(() => {
