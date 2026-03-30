@@ -3,8 +3,8 @@
 import { useLanguage } from "./LanguageProvider";
 import Link from "next/link";
 import Image from "next/image";
-import { Linkedin, Instagram, Camera, Mail, MapPin, MessageCircle, Phone, TrendingUp } from "lucide-react";
-import { FaTiktok } from "react-icons/fa";
+import { Linkedin, Instagram, Mail, MapPin, Phone, TrendingUp } from "lucide-react";
+import { FaTiktok, FaSnapchatGhost, FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
   const { t, lang } = useLanguage();
@@ -131,7 +131,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-secondary-dark rounded-md flex items-center justify-center hover:bg-brand-pink transition transform hover:scale-110"
               >
-                <Camera size={18} />
+                <FaSnapchatGhost size={18} />
               </a>
 
               <a
@@ -140,7 +140,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-secondary-dark rounded-md flex items-center justify-center hover:bg-brand-pink transition transform hover:scale-110"
               >
-                <MessageCircle size={18} />
+                <FaWhatsapp size={18} />
               </a>
             </div>
           </div>
