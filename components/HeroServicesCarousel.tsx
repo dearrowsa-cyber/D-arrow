@@ -14,7 +14,7 @@ interface HeroServicesCarouselProps {
 }
 
 export default function HeroServicesCarousel({ services }: HeroServicesCarouselProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -30,7 +30,8 @@ export default function HeroServicesCarousel({ services }: HeroServicesCarouselP
       <div 
         className="w-full font-bold transition-opacity duration-300 leading-tight"
         style={{
-          fontSize: 'clamp(1.7rem, 4.2vw, 2.8rem)',
+          fontSize: 'clamp(1.4rem, 3.2vw, 2.2rem)',
+          fontFamily: lang === 'ar' ? "'29LT-Bukra', system-ui" : "'Gilroy', system-ui",
           backgroundImage: 'linear-gradient(to right, #FF4D6D, #FF9A3C)',
           backgroundClip: 'text',
           WebkitBackgroundClip: 'text',

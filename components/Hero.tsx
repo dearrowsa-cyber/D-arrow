@@ -71,10 +71,10 @@ const Hero = () => {
           {/* Text Content Div */}
           <div suppressHydrationWarning className={`flex-[1] py-18 md:px-6 w-full ${lang === 'ar' ? 'text-right md:text-right' : 'text-center md:text-left'}`} style={{zIndex: 10}}>
             <div className="inline-block bg-gradient-to-r from-[rgba(255,77,109,0.15)] to-[rgba(255,154,60,0.15)] border border-[rgba(255,77,109,0.3)] rounded-full px-2 py-2 mb-8 h-8">
-              <span suppressHydrationWarning className="text-white text-sm font-semibold bg-gradient-to-r from-brand-pink to-brand-orange bg-clip-text text-transparent">{t('heroBadge')}</span>
+              <span suppressHydrationWarning className="text-white text-sm font-semibold bg-gradient-to-r from-brand-pink to-brand-orange bg-clip-text text-transparent" style={{ fontFamily: lang === 'ar' ? "'29LT-Bukra', system-ui" : "'TT Hoves Pro', system-ui" }}>{t('heroBadge')}</span>
             </div>
 
-            <h1 className="font-bold leading-tight mb-4 bg-gradient-to-r from-brand-pink to-brand-orange bg-clip-text text-transparent" style={{ fontSize: 'clamp(2rem, 5vw, 4rem)' }}>
+            <h1 className="font-bold leading-tight mb-4 bg-gradient-to-r from-brand-pink to-brand-orange bg-clip-text text-transparent" style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', fontFamily: lang === 'ar' ? "'29LT-Bukra', system-ui" : "'Gilroy', system-ui" }}>
               {t('heroHeading')}
             </h1>
 
@@ -83,10 +83,10 @@ const Hero = () => {
             </div>
 
             <div suppressHydrationWarning className={`flex flex-col sm:flex-row flex-wrap md:flex-nowrap justify-center ${lang === 'ar' ? 'md:justify-end' : 'md:justify-start'} gap-4 mt-8 md:mt-12`}>
-              <Link href="/contact" className="w-full sm:w-auto text-center bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] !text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold text-sm md:text-base transition-transform duration-300 hover:shadow-lg hover:scale-105 active:scale-95">
+              <Link href="/contact" className="w-full sm:w-auto text-center bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] !text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold text-sm md:text-base transition-transform duration-300 hover:shadow-lg hover:scale-105 active:scale-95" style={{ fontFamily: lang === 'ar' ? "'29LT-Bukra', system-ui" : "'TT Hoves Pro', system-ui" }}>
                 {t('getYourFreeConsultation')}
               </Link>
-              <Link href="/pricing" className="w-full sm:w-auto text-center border-2 border-[rgba(255,77,109,0.4)] hover:border-[rgba(255,77,109,0.8)] !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold text-sm md:text-base transition-colors duration-300">
+              <Link href="/pricing" className="w-full sm:w-auto text-center border-2 border-[rgba(255,77,109,0.4)] hover:border-[rgba(255,77,109,0.8)] !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold text-sm md:text-base transition-colors duration-300" style={{ fontFamily: lang === 'ar' ? "'29LT-Bukra', system-ui" : "'TT Hoves Pro', system-ui" }}>
                 {t('viewPricing')}
               </Link>
             </div>
