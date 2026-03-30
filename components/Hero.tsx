@@ -74,7 +74,7 @@ const Hero = () => {
               <span suppressHydrationWarning className="text-white text-sm font-semibold bg-gradient-to-r from-brand-pink to-brand-orange bg-clip-text text-transparent">{t('heroBadge')}</span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-4 bg-gradient-to-r from-brand-pink to-brand-orange bg-clip-text text-transparent min-h-[4rem] md:min-h-[6rem]">
+            <h1 className="font-bold leading-tight mb-4 bg-gradient-to-r from-brand-pink to-brand-orange bg-clip-text text-transparent" style={{ fontSize: 'clamp(2rem, 5vw, 4rem)' }}>
               {t('heroHeading')}
             </h1>
 
