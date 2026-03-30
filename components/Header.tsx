@@ -177,107 +177,9 @@ export default memo(function Header() {
             <Link href="/pricing" className="relative hover:!text-brand-pink transition duration-300 !text-white !text-xl font-medium px-3 py-2 rounded-lg group">{t('packages')}<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] group-hover:w-full transition-all duration-300"></span></Link>
             <Link href="/why-us" className="relative hover:!text-brand-pink transition duration-300 !text-white !text-xl font-medium px-3 py-2 rounded-lg group">{t('ourCommitment')}<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] group-hover:w-full transition-all duration-300"></span></Link>
             
-            {/* Resources Dropdown */}
-            <div className="relative" onMouseEnter={() => { if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current); setResourcesOpen(true); }} onMouseLeave={() => { closeTimeoutRef.current = window.setTimeout(() => setResourcesOpen(false), 200); }}>
-              <button
-                aria-haspopup="true"
-                aria-expanded={resourcesOpen}
-                onClick={() => {
-                  setResourcesOpen(v => !v);
-                  if (closeTimeoutRef.current) {
-                    window.clearTimeout(closeTimeoutRef.current);
-                  }
-                }}
-                className="relative flex items-center gap-2
-                           bg-transparent hover:bg-transparent 
-                           !text-white hover:text-brand-orange 
-                           transition duration-300 
-                            
-                            !text-xl
-                           px-0 py-0 
-                           border-none outline-none 
-                           group"
-                style={{ textTransform: 'none' }}
-              >
-                {t('resources')}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 
-                               bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] 
-                               group-hover:w-full transition-all duration-300">
-                </span>
-              </button>
-              
-              <div
-                onMouseEnter={() => { if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current); }}
-                onMouseLeave={() => { closeTimeoutRef.current = window.setTimeout(() => setResourcesOpen(false), 200); }}
-                className={`
-                  ${resourcesOpen 
-                    ? 'opacity-100 translate-y-0 visible pointer-events-auto' 
-                    : 'opacity-0 -translate-y-2 invisible pointer-events-none'}
-                  transition-all duration-200 ease-out
-                  absolute ${lang === 'ar' ? 'right-0' : 'left-0'}
-                  mt-2 w-[300px]
-                  bg-[#14162E]
-                  border border-gray-700
-                  rounded-lg
-                  shadow-xl
-                  p-3
-                  z-[999]
-                `}
-                dir={lang === 'ar' ? 'rtl' : 'ltr'}
-              >
-                <div className="flex flex-col gap-2">
-                  
-                  {/* Portfolio */}
-                  <Link
-                    href="/provisions"
-                    onClick={() => setResourcesOpen(false)}
-                    className={`
-                      flex ${lang === 'ar' ? 'flex-row-reverse' : ''}
-                      items-center gap-3
-                      p-2.5
-                      rounded-md
-                      !text-white
-                      hover:bg-[rgba(255,77,109,0.15)]
-                      transition
-                      group
-                    `}
-                  >
-                   <img src="/icon/update/portfolio.png" alt="Portfolio" className="w-9 h-9 object-contain" loading="lazy" decoding="async" />
-                     
-                    <div className={lang === 'ar' ? 'text-right' : ''}>
-                      <h4 className="text-sm font-semibold text-white group-hover:text-brand-pink transition">
-                        {t('portfolio')}
-                      </h4>
-                    </div>
-                  </Link>
-
-                  {/* Blog */}
-                  <Link
-                    href="/blog"
-                    onClick={() => setResourcesOpen(false)}
-                    className={`
-                      flex ${lang === 'ar' ? 'flex-row-reverse' : ''}
-                      items-center gap-3
-                      p-2.5
-                      rounded-md
-                      hover:bg-[rgba(255,77,109,0.15)]
-                      transition
-                      group
-                    `}
-                  >
-                    <img src="/icon/update/blog.png" alt="Blog" className="w-9 h-9 object-contain" loading="lazy" decoding="async" />
-                     
-                    <div className={lang === 'ar' ? 'text-right' : ''}>
-                      <h4 className="text-sm font-semibold text-white group-hover:text-brand-pink transition">
-                        {t('blog')}
-                      </h4>
-                    </div>
-                  </Link>
-
-                </div>
-              </div>
-            </div>
-
+            <Link href="/provisions" className="relative hover:!text-brand-pink transition duration-300 !text-white !text-xl font-medium px-3 py-2 rounded-lg group">{t('portfolio')}<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] group-hover:w-full transition-all duration-300"></span></Link>
+            <Link href="/blog" className="relative hover:!text-brand-pink transition duration-300 !text-white !text-xl font-medium px-3 py-2 rounded-lg group">{t('blog')}<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] group-hover:w-full transition-all duration-300"></span></Link>
+            
             <Link href="/contact" className="relative hover:text-brand-pink transition duration-300 !text-white !text-xl font-medium px-3 py-2 rounded-lg group">{t('contact')}<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] group-hover:w-full transition-all duration-300"></span></Link>
           </nav>
 
@@ -380,54 +282,9 @@ hover:shadow-md hover:scale-105 active:scale-95">
             <Link href="/pricing" onClick={() => handleNavClick('/pricing')} className="flex items-center gap-2 px-4 py-2.5 font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('packages')}</Link>
             <Link href="/why-us" onClick={() => handleNavClick('/why-us')} className="flex items-center gap-2 px-4 py-2.5 text-soft-white font-medium  !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('ourCommitment')}</Link>
             
-            {/* Mobile Resources Dropdown */}
-            <div className="relative" onMouseEnter={() => { if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current); setResourcesOpen(true); }} onMouseLeave={() => { closeTimeoutRef.current = window.setTimeout(() => setResourcesOpen(false), 100); }}>
-              <button
-                aria-haspopup="true"
-                aria-expanded={resourcesOpen}
-                onClick={() => {
-                  setResourcesOpen(v => !v);
-                  if (closeTimeoutRef.current) {
-                    window.clearTimeout(closeTimeoutRef.current);
-                  }
-                }}
-                className="w-full flex items-center gap-2 
-                           bg-transparent hover:bg-transparent 
-                           text-white text-lg
-                           transition text-md font-medium 
-                           px-0 py-0 
-                           border-none outline-none"
-                style={{ textTransform: 'none' }}
-              >
-                {t('resources')}
-              </button>
-              
-              <div 
-                onMouseEnter={() => { if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current); }}
-                onMouseLeave={() => { closeTimeoutRef.current = window.setTimeout(() => setResourcesOpen(false), 100); }}
-                className={`${resourcesOpen ? 'visible opacity-100 translate-y-0 pointer-events-auto' : 'invisible opacity-0 -translate-y-1 pointer-events-none'} transition-all duration-100 transform absolute ${lang === 'ar' ? 'right-0' : 'left-0'} mt-2 w-[280px] bg-[#14162E] border border-[rgba(255,77,109,0.2)] rounded-xl shadow-2xl p-4 z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-                <div className="grid grid-cols-1 gap-3">
-                  <Link href="/provisions" onClick={() => setResourcesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-2.5 rounded-lg hover:bg-[rgba(255,77,109,0.1)] hover:border-[rgba(255,77,109,0.3)] border border-transparent transition group`}>
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] flex items-center justify-center flex-shrink-0">
-                      <span className="text-sm">📁</span>
-                    </div>
-                    <div className={lang === 'ar' ? 'text-right' : ''}>
-                      <h4 className="!text-sm font-semibold text-brand-white group-hover:text-brand-pink transition">{t('portfolio')}</h4>
-                    </div>
-                  </Link>
-
-                  <Link href="/blog" onClick={() => setResourcesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-2.5 rounded-lg hover:bg-[rgba(255,77,109,0.1)] hover:border-[rgba(255,77,109,0.3)] border border-transparent transition group`}>
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] flex items-center justify-center flex-shrink-0">
-                      <span className="text-sm">📝</span>
-                    </div>
-                    <div className={lang === 'ar' ? 'text-right' : ''}>
-                      <h4 className="!text-sm font-semibold text-brand-white group-hover:text-brand-pink transition">{t('blog')}</h4>
-                    </div>
-                  </Link>
-                </div>
-              </div>
-            </div>
-
+            <Link href="/provisions" onClick={() => handleNavClick('/provisions')} className="flex items-center gap-2 px-4 py-2.5 font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('portfolio')}</Link>
+            <Link href="/blog" onClick={() => handleNavClick('/blog')} className="flex items-center gap-2 px-4 py-2.5 font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('blog')}</Link>
+            
             <Link href="/contact" onClick={() => handleNavClick('/contact')} className="flex items-center gap-2 px-4 py-2.5 text-soft-white font-medium  !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('contact')}</Link>
           </nav>
         )}
