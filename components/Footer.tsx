@@ -3,11 +3,20 @@
 import { useLanguage } from "./LanguageProvider";
 import Link from "next/link";
 import Image from "next/image";
+import { useSelectedLayoutSegments } from "next/navigation";
 import { Linkedin, Instagram, Mail, MapPin, Phone, TrendingUp } from "lucide-react";
 import { FaTiktok, FaSnapchatGhost, FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
-  const { t, lang } = useLanguage();
+  const segments = useSelectedLayoutSegments();
+  const isAdmin = segments && segments[0] === 'admin';
+  const { t, lang, siteData } = useLanguage();
+
+  if (isAdmin) return null;
+
+  const contact = siteData?.contact;
+  const social = siteData?.social;
+  const footer = siteData?.footer;
 
   return (
     <footer
@@ -33,7 +42,7 @@ const Footer = () => {
               />
             </div>
             <p className="text-white text-sm leading-relaxed">
-              {t("siteTagline")}
+              {footer?.tagline?.[lang] || t("siteTagline")}
             </p>
           </div>
 
@@ -61,30 +70,30 @@ const Footer = () => {
               <div className={`flex items-start gap-3 ${lang === "ar" ? "flex-row-reverse text-right" : ""}`}>
                 <MapPin size={18} className="flex-shrink-0" />
                 <p>
-                  {lang === "ar"
+                  {contact?.address?.[lang] || (lang === "ar"
                     ? "المملكة العربية السعودية، الخبر، الأحساء"
-                    : "Kingdom of Saudi Arabia Al-Khobar Al-Ahsa"}
+                    : "Kingdom of Saudi Arabia Al-Khobar Al-Ahsa")}
                 </p>
               </div>
 
               <div className={`flex items-center gap-3 ${lang === "ar" ? "flex-row-reverse text-right" : ""}`}>
                 <Mail size={18} className="flex-shrink-0" />
                 <a
-                  href="mailto:info@d-arrow.com"
+                  href={`mailto:${contact?.email || 'info@d-arrow.com'}`}
                   className="hover:text-pink-500 transition"
                 >
-                  info@d-arrow.com
+                  {contact?.email || 'info@d-arrow.com'}
                 </a>
               </div>
 
               <div className={`flex items-center gap-3 ${lang === "ar" ? "flex-row-reverse text-right" : ""}`}>
                 <Phone size={18} className="flex-shrink-0" />
                 <a
-                  href="tel:+966500466349"
+                  href={`tel:${contact?.phone || '+966500466349'}`}
                   className="hover:text-pink-500 transition"
                   dir="ltr"
                 >
-                  {lang === "ar" ? "+966 50 046 6349" : "+966 50 046 6349"}
+                  {contact?.phone || "+966 50 046 6349"}
                 </a>
               </div>
 
@@ -99,7 +108,7 @@ const Footer = () => {
 
             <div className="flex gap-4">
               <a
-                href="https://www.linkedin.com/in/d-arrow-4753393a8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+                href={social?.linkedin || "https://www.linkedin.com/in/d-arrow-4753393a8"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-secondary-dark rounded-md flex items-center justify-center hover:bg-brand-pink transition transform hover:scale-110"
@@ -108,7 +117,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="https://www.instagram.com/darrow.co/"
+                href={social?.instagram || "https://www.instagram.com/darrow.co/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-secondary-dark rounded-md flex items-center justify-center hover:bg-pink-500 transition transform hover:scale-110"
@@ -117,7 +126,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="https://www.tiktok.com/"
+                href={social?.tiktok || "https://www.tiktok.com/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-secondary-dark rounded-md flex items-center justify-center hover:bg-brand-pink transition transform hover:scale-110"
@@ -126,7 +135,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="https://www.snapchat.com/add/darrow.co?share_id=dwRY8EPAM3w&locale=en-US"
+                href={social?.snapchat || "https://www.snapchat.com/add/darrow.co"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-secondary-dark rounded-md flex items-center justify-center hover:bg-brand-pink transition transform hover:scale-110"
@@ -135,7 +144,7 @@ const Footer = () => {
               </a>
 
               <a
-                href="https://wa.me/966500466349"
+                href={social?.whatsapp || "https://wa.me/966500466349"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-secondary-dark rounded-md flex items-center justify-center hover:bg-brand-pink transition transform hover:scale-110"
@@ -148,7 +157,7 @@ const Footer = () => {
 
         {/* BOTTOM BAR */}
         <div className="border-t border-brand-pink/20 pt-6 text-center md:flex md:justify-between text-white text-xs md:text-sm">
-          <p>{t("copyrightText")}</p>
+          <p>{footer?.copyright?.[lang] || t("copyrightText")}</p>
           <div className="flex justify-center md:justify-end gap-6 mt-4 md:mt-0">
             <a href="#" className="hover:text-pink-500 transition">{t("privacyPolicy")}</a>
             <a href="#" className="hover:text-pink-500 transition">{t("termsOfService")}</a>

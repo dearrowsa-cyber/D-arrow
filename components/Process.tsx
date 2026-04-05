@@ -1,7 +1,7 @@
 'use client';
 
 import { useLanguage } from './LanguageProvider';
-import styles from '@/app/pricing/pricing.module.css';
+import styles from '@/app/(main)/pricing/pricing.module.css';
 import Image from 'next/image';
 
 const processSteps = [

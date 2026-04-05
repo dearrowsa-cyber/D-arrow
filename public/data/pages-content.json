@@ -1,0 +1,313 @@
+{
+  "hero": {
+    "badge": {
+      "en": "NEXT-GENERATION SOLUTIONS",
+      "ar": "حلول الجيل التالي"
+    },
+    "heading": {
+      "en": "Next-Generation Digital Marketing Solutions",
+      "ar": "حلول تسويق رقمي من الجيل التالي"
+    },
+    "subheading": {
+      "en": "We deliver innovative ideas to elevate your digital products and sharpen your brand.",
+      "ar": "نقدم أفكارًا مبتكرة للنهوض بمنتجاتك الرقمية وصقل علامتك التجارية."
+    }
+  },
+  "stats": {
+    "yearsExperience": "6",
+    "teamMembers": "25",
+    "projectsCompleted": "500",
+    "satisfiedCustomers": "300"
+  },
+  "contact": {
+    "email": "support@d-arrow.com",
+    "phone": "+966 50 046 6349",
+    "address": {
+      "en": "6399, 4, Ibn Sina, AlKhobar, 34626, Saudi Arabia",
+      "ar": "6399، 4، ابن سينا، الخبر، 34626، المملكة العربية السعودية"
+    },
+    "workingHours": {
+      "en": "Mon - Fri, 9AM - 6PM",
+      "ar": "الاثنين - الجمعة، 9 صباحًا - 6 مساءً"
+    }
+  },
+  "footer": {
+    "tagline": {
+      "en": "Next-generation digital marketing solutions for modern businesses driving growth and innovation",
+      "ar": "حلول تسويق رقمي من الجيل التالي للأعمال الحديثة لدفع النمو والابتكار"
+    },
+    "copyright": {
+      "en": "© 2026 D Arrow Digital. All rights reserved.",
+      "ar": "© 2026 دي آرو الرقمي. جميع الحقوق محفوظة."
+    }
+  },
+  "social": {
+    "instagram": "https://www.instagram.com/darrow.co/",
+    "snapchat": "https://www.snapchat.com/add/darrowdigital",
+    "linkedin": "https://www.linkedin.com/company/darrowdigital",
+    "tiktok": "https://www.tiktok.com/@darrowdigital",
+    "whatsapp": "https://wa.me/966500466349"
+  },
+  "whyUs": {
+    "badge": {
+      "en": "WHY CHOOSE US",
+      "ar": "لماذا تختارنا"
+    },
+    "title": {
+      "en": "Why Choose Us",
+      "ar": "لماذا تختارنا"
+    },
+    "description": {
+      "en": "We deliver excellence through innovation, expertise, and unwavering commitment",
+      "ar": "نقدم التميز من خلال الابتكار والخبرة والالتزام المستمر"
+    },
+    "features": [
+      {
+        "icon": "/icon/mainicons1/datadrive1.png",
+        "title": {
+          "en": "Data-Driven Results",
+          "ar": "نتائج مستندة إلى البيانات"
+        },
+        "description": {
+          "en": "Every decision backed by analytics and measurable outcomes",
+          "ar": "كل قرار مدعوم بالتحليلات والنتائج القابلة للقياس"
+        }
+      },
+      {
+        "icon": "/icon/mainicons1/expertteam1.png",
+        "title": {
+          "en": "Expert Team",
+          "ar": "فريق خبير"
+        },
+        "description": {
+          "en": "Industry veterans with 6+ years of combined experience",
+          "ar": "خبراء في الصناعة مع أكثر من 6 أعوام من الخبرة المجمعة"
+        }
+      },
+      {
+        "icon": "/icon/update/support3.png",
+        "title": {
+          "en": "24/7 Support",
+          "ar": "الدعم 24/7"
+        },
+        "description": {
+          "en": "Dedicated support team ready to help whenever you need",
+          "ar": "فريق دعم مخصص جاهز للمساعدة في أي وقت"
+        }
+      },
+      {
+        "icon": "/icon/update/custom3.png",
+        "title": {
+          "en": "Custom Solutions",
+          "ar": "حلول مخصصة"
+        },
+        "description": {
+          "en": "Tailored strategies for your unique business goals",
+          "ar": "استراتيجيات مخصصة لأهداف عملك الفريدة"
+        }
+      },
+      {
+        "icon": "/icon/mainicons1/transparent10.png",
+        "title": {
+          "en": "Transparent Reporting",
+          "ar": "تقارير شفافة"
+        },
+        "description": {
+          "en": "Clear, detailed reports on campaign performance and ROI",
+          "ar": "تقارير واضحة ومفصلة عن أداء الحملات ونتائجها"
+        }
+      },
+      {
+        "icon": "/icon/update/track3.png",
+        "title": {
+          "en": "Proven Track Record",
+          "ar": "سجل حافل"
+        },
+        "description": {
+          "en": "Proven track record of successful campaigns with measurable ROI growth",
+          "ar": "سجل حافل من الحملات الناجحة مع نمو قابل للقياس في العائد على الاستثمار"
+        }
+      }
+    ]
+  },
+  "services": {
+    "badge": {
+      "en": "OUR SERVICES",
+      "ar": "خدماتنا"
+    },
+    "title": {
+      "en": "Services",
+      "ar": "الخدمات"
+    },
+    "description": {
+      "en": "At our digital marketing agency, we offer a range of services to help businesses grow and succeed online.",
+      "ar": "في وكالتنا للتسويق الرقمي، نقدم مجموعة من الخدمات لمساعدة الشركات على النمو والنجاح عبر الإنترنت."
+    },
+    "categories": {
+      "digital-marketing": [
+        {
+          "title": {
+            "en": "Social Media Management",
+            "ar": "إدارة منصات التواصل الاجتماعي"
+          },
+          "description": {
+            "en": "Comprehensive management of your social media platforms",
+            "ar": "إدارة شاملة لمنصات التواصل الاجتماعي"
+          },
+          "icon": "/icon/mainicons1/social-media10.png",
+          "price": "3,000",
+          "priceCurrency": "SAR / month",
+          "backgroundImage": "/services/social-media-marketing1.jpeg"
+        },
+        {
+          "title": {
+            "en": "Digital Marketing & Promotion",
+            "ar": "التسويق الرقمي والترويج"
+          },
+          "description": {
+            "en": "Targeted campaigns to reach your ideal audience",
+            "ar": "حملات موجهة للوصول إلى جمهورك المثالي"
+          },
+          "icon": "/icon/services-icon/digital_marketing_promotion.png",
+          "price": "Contact for Quote",
+          "priceCurrency": "Custom",
+          "backgroundImage": "/services/Digital-marketing1.jpeg"
+        },
+        {
+          "title": {
+            "en": "Visual Production",
+            "ar": "الإنتاج المرئي"
+          },
+          "description": {
+            "en": "High-quality video and photo production",
+            "ar": "إنتاج فيديو وصور عالية الجودة"
+          },
+          "icon": "/icon/mainicons1/visiual.png",
+          "price": "2,000",
+          "priceCurrency": "SAR / project",
+          "backgroundImage": "/services/Visual-Production1.jpeg"
+        }
+      ],
+      "innovation-development": [
+        {
+          "title": {
+            "en": "App Development",
+            "ar": "تطوير التطبيقات"
+          },
+          "description": {
+            "en": "Native and cross-platform mobile apps",
+            "ar": "تطبيقات الهاتف المحمول الأصلية وعبر الأنظمة الأساسية"
+          },
+          "icon": "/icon/mainicons1/app10.png",
+          "price": "Contact for Quote",
+          "priceCurrency": "Custom",
+          "backgroundImage": "/services/app-development.jpg"
+        },
+        {
+          "title": {
+            "en": "Website Development",
+            "ar": "تطوير المواقع بالكامل"
+          },
+          "description": {
+            "en": "Custom websites designed for conversion",
+            "ar": "مواقع ويب مخصصة مصممة للتحويل"
+          },
+          "icon": "/icon/mainicons1/webd1.png",
+          "price": "Contact for Quote",
+          "priceCurrency": "Custom",
+          "backgroundImage": "/services/website-development1.jpeg"
+        }
+      ],
+      "real-estate": [
+        {
+          "title": {
+            "en": "Real Estate Appraisal",
+            "ar": "التقييم العقاري"
+          },
+          "description": {
+            "en": "Professional property valuation services",
+            "ar": "خدمات التقييم العقاري الاحترافية"
+          },
+          "icon": "/icon/mainicons1/analysis.png",
+          "price": "Contact for Quote",
+          "priceCurrency": "Custom",
+          "backgroundImage": "/services/appraisal1.jpeg"
+        },
+        {
+          "title": {
+            "en": "Real Estate Marketing",
+            "ar": "التسويق العقاري"
+          },
+          "description": {
+            "en": "Targeted marketing for real estate properties",
+            "ar": "تسويق موجه للعقارات"
+          },
+          "icon": "/icon/mainicons1/real-estate-marketing.png",
+          "price": "Contact for Quote",
+          "priceCurrency": "Custom",
+          "backgroundImage": "/services/REAL-MARKETING1.jpeg"
+        }
+      ]
+    }
+  },
+  "process": {
+    "badge": {
+      "en": "OUR PROCESS",
+      "ar": "آلية العمل"
+    },
+    "title": {
+      "en": "How We Work",
+      "ar": "كيف نعمل"
+    },
+    "description": {
+      "en": "We follow a structured and transparent process to ensure your project is a success from start to finish.",
+      "ar": "نتبع عملية منظمة وشفافة لضمان نجاح مشروعك من البداية إلى النهاية."
+    },
+    "steps": [
+      {
+        "icon": "/icon/analysis-icon.png",
+        "title": {
+          "en": "Initial Consultation",
+          "ar": "الاستشارة الأولية"
+        },
+        "description": {
+          "en": "We start by understanding your business goals, challenges, and objectives to lay a solid foundation.",
+          "ar": "نبدأ بفهم أهداف عملك وتحدياته لوضع أساس قوي."
+        }
+      },
+      {
+        "icon": "/icon/result-icon.png",
+        "title": {
+          "en": "Strategy & Planning",
+          "ar": "الاستراتيجية والتخطيط"
+        },
+        "description": {
+          "en": "We develop a customized digital marketing strategy tailored to your specific needs and target audience.",
+          "ar": "نطور استراتيجية تسويق رقمي مخصصة لاحتياجاتك وجمهورك المستهدف."
+        }
+      },
+      {
+        "icon": "/icon/data-drive-icon.png",
+        "title": {
+          "en": "Execution & Implementation",
+          "ar": "التنفيذ"
+        },
+        "description": {
+          "en": "Our team executes the plan, launching campaigns, creating content, and optimizing for performance.",
+          "ar": "ينفذ فريقنا الخطة، يطلق الحملات، ينشئ المحتوى، ويحسّن الأداء."
+        }
+      },
+      {
+        "icon": "/icon/transparent-icon.png",
+        "title": {
+          "en": "Analysis & Reporting",
+          "ar": "التحليل والتقارير"
+        },
+        "description": {
+          "en": "We continuously monitor performance, providing detailed reports and actionable insights for ongoing growth.",
+          "ar": "نراقب الأداء باستمرار ونوفر تقارير مفصلة ورؤى قابلة للتنفيذ للنمو المستمر."
+        }
+      }
+    ]
+  }
+}

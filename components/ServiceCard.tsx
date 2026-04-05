@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from './LanguageProvider';
-import styles from '@/app/pricing/pricing.module.css';
+import styles from '@/app/(main)/pricing/pricing.module.css';
 
 interface ServiceCardProps {
   service: {
@@ -160,14 +160,19 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
           viewport={{ once: true }}
           whileHover="hover"
         >
-          <img src={service.icon} alt={t(service.titleKey)} className={styles.iconImage} />
+          <img src={service.icon} alt={(service as any).title || t(service.titleKey)} className={styles.iconImage} />
         </motion.div>
       </div>
 
       <div className={`${styles.cardBody} relative z-10`}>
-        
+        <motion.h3 variants={itemVariants} className="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors duration-300">
+          {(service as any).title || t(service.titleKey)}
+        </motion.h3>
 
-        
+        <motion.p variants={itemVariants} className="text-gray-300 text-sm leading-relaxed mb-4">
+          {(service as any).description || t(service.descKey)}
+        </motion.p>
+
 
         <motion.div variants={itemVariants} className={styles.divider} />
 
@@ -221,7 +226,7 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
             href={`/custom-package?service=${service.titleKey}`}
             className={styles.ctaButton}
           >
-            {t(service.titleKey)}
+            {(service as any).title || t(service.titleKey)}
           </Link>
         </motion.div>
       </div>

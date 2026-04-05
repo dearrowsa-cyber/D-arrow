@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Check } from 'lucide-react';
 import { useLanguage } from './LanguageProvider';
-import styles from '@/app/pricing/pricing.module.css';
+import styles from '@/app/(main)/pricing/pricing.module.css';
 
 interface ServiceDetail {
   titleKey: string;

@@ -1,12 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useSelectedLayoutSegments } from "next/navigation";
 
 export default function NetworkBackground() {
+  const segments = useSelectedLayoutSegments();
+  const isAdmin = segments && segments[0] === 'admin';
   const ref = useRef<HTMLCanvasElement | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
+    if (isAdmin) return;
     const canvas = ref.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -189,6 +193,8 @@ export default function NetworkBackground() {
       window.removeEventListener("resize", resize);
     };
   }, []);
+
+  if (isAdmin) return null;
 
   return (
     <canvas

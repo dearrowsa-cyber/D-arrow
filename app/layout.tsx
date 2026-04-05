@@ -291,14 +291,7 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <ThemeProvider>
-          <LanguageProvider>
-            <ClientLayout>
-              {children}
-            </ClientLayout>
-          </LanguageProvider>
-        </ThemeProvider>
-       
+        {children}
       </body>
     </html>
   );

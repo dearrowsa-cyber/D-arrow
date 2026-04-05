@@ -1,6 +1,6 @@
 "use client";
 
-import styles from '../app/pricing/pricing.module.css';
+import styles from '@/app/(main)/pricing/pricing.module.css';
 import Image from 'next/image';
 import { useLanguage } from './LanguageProvider';
 import { motion } from 'framer-motion';

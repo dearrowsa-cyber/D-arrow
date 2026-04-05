@@ -1,0 +1,141 @@
+import { NextRequest, NextResponse } from 'next/server';
+import fs from 'fs';
+import path from 'path';
+
+const getPricingDataPath = () => {
+  const dataDir = path.join(process.cwd(), 'public', 'data');
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true });
+  }
+  return path.join(dataDir, 'pricing-data.json');
+};
+
+const defaultPricingData = {
+  marketing: [
+    {
+      id: 'basic',
+      name: { en: 'Basic', ar: 'أساسي' },
+      price: '3,500',
+      currency: 'SAR',
+      period: { en: '/month', ar: '/شهرياً' },
+      features: [
+        { en: '8 social media posts / month', ar: '8 منشورات على وسائل التواصل الاجتماعي / شهرياً' },
+        { en: 'Basic creatives & captions', ar: 'تصاميم وتعليقات أساسية' },
+        { en: 'Hashtag research', ar: 'بحث علامات التجزئة' },
+        { en: 'Monthly performance report', ar: 'تقرير الأداء الشهري' },
+        { en: 'Account insights & recommendations', ar: 'رؤى الحساب والتوصيات' },
+      ],
+      popular: false,
+    },
+    {
+      id: 'growth',
+      name: { en: 'Growth', ar: 'النمو' },
+      price: '5,500',
+      currency: 'SAR',
+      period: { en: '/month', ar: '/شهرياً' },
+      features: [
+        { en: '12 posts / month + content calendar', ar: '12 منشور / شهرياً + تقويم المحتوى' },
+        { en: 'Community engagement (comments & DMs)', ar: 'مشاركة المجتمع (التعليقات والرسائل المباشرة)' },
+        { en: 'Basic ad spend management', ar: 'إدارة الإنفاق الإعلاني الأساسية' },
+        { en: 'Weekly optimization & reporting', ar: 'التحسين والإبلاغ الأسبوعي' },
+        { en: 'Audience growth strategy', ar: 'استراتيجية نمو الجمهور' },
+      ],
+      popular: true,
+    },
+    {
+      id: 'professional',
+      name: { en: 'Professional', ar: 'احترافي' },
+      price: '7,000',
+      currency: 'SAR',
+      period: { en: '/month', ar: '/شهرياً' },
+      features: [
+        { en: 'Strategy & campaign planning', ar: 'الاستراتيجية وتخطيط الحملة' },
+        { en: 'Targeted paid ads (Facebook/Instagram)', ar: 'إعلانات مدفوعة موجهة (Facebook/Instagram)' },
+        { en: 'Landing page creatives', ar: 'تصاميم صفحة الهبوط' },
+        { en: 'Advanced monthly analytics report', ar: 'تقرير التحليلات المتقدم الشهري' },
+        { en: 'A/B testing & monthly optimization', ar: 'اختبار A/B والتحسين الشهري' },
+      ],
+      popular: false,
+    },
+  ],
+  development: [
+    {
+      id: 'starter',
+      name: { en: 'Starter Package', ar: 'حزمة البداية' },
+      price: '4,000',
+      currency: 'SAR',
+      period: { en: '', ar: '' },
+      features: [
+        { en: '5 Pages Website', ar: 'موقع إلكتروني من 5 صفحات' },
+        { en: 'Responsive Design', ar: 'تصميم متجاوب' },
+        { en: 'Basic UI/UX Design', ar: 'تصميم واجهة المستخدم الأساسي' },
+        { en: 'Contact Form Integration', ar: 'تكامل نموذج الاتصال' },
+        { en: 'Basic SEO Setup', ar: 'إعداد SEO الأساسي' },
+        { en: '1 Month Support', ar: 'دعم شهر واحد' },
+      ],
+      popular: false,
+    },
+    {
+      id: 'business',
+      name: { en: 'Business Package', ar: 'حزمة الأعمال' },
+      price: '7,000',
+      currency: 'SAR',
+      period: { en: '', ar: '' },
+      features: [
+        { en: '8–12 Pages Website', ar: 'موقع إلكتروني من 8-12 صفحة' },
+        { en: 'Custom UI/UX Design', ar: 'تصميم واجهة المستخدم المخصص' },
+        { en: 'Admin Panel (Content Management)', ar: 'لوحة التحكم (إدارة المحتوى)' },
+        { en: 'Speed Optimization', ar: 'تحسين السرعة' },
+        { en: 'On-Page SEO Optimization', ar: 'تحسين SEO داخل الصفحة' },
+        { en: '2 Months Support', ar: 'دعم شهرين' },
+      ],
+      popular: true,
+    },
+    {
+      id: 'ecommerce',
+      name: { en: 'E-Commerce Package', ar: 'حزمة التجارة الإلكترونية' },
+      price: '12,000',
+      currency: 'SAR',
+      period: { en: '', ar: '' },
+      features: [
+        { en: 'Full E-Commerce Website', ar: 'موقع تجارة إلكترونية كامل' },
+        { en: 'Product Management System', ar: 'نظام إدارة المنتجات' },
+        { en: 'Payment Gateway Integration', ar: 'تكامل بوابة الدفع' },
+        { en: 'Order & Invoice System', ar: 'نظام الطلبات والفواتير' },
+        { en: 'Advanced Security Setup', ar: 'إعداد الأمان المتقدم' },
+        { en: '3 Months Support', ar: 'دعم ثلاثة أشهر' },
+      ],
+      popular: false,
+    },
+  ],
+};
+
+const initializePricingData = () => {
+  const filePath = getPricingDataPath();
+  if (!fs.existsSync(filePath)) {
+    fs.writeFileSync(filePath, JSON.stringify(defaultPricingData, null, 2));
+  }
+};
+
+export async function GET() {
+  try {
+    initializePricingData();
+    const filePath = getPricingDataPath();
+    const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    return NextResponse.json({ success: true, data });
+  } catch (error) {
+    return NextResponse.json({ success: false, error: 'Failed to fetch pricing data' }, { status: 500 });
+  }
+}
+
+export async function PUT(req: NextRequest) {
+  try {
+    const updates = await req.json();
+    initializePricingData();
+    const filePath = getPricingDataPath();
+    fs.writeFileSync(filePath, JSON.stringify(updates, null, 2));
+    return NextResponse.json({ success: true, data: updates, message: 'تم تحديث الأسعار بنجاح' });
+  } catch (error) {
+    return NextResponse.json({ success: false, error: 'Failed to update pricing data' }, { status: 500 });
+  }
+}

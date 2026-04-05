@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from '../pricing/pricing.module.css';
 import { useLanguage } from '@/components/LanguageProvider';
@@ -38,7 +39,8 @@ const features = [
 ];
 
 export default function WhyUsPage() {
-  const { t } = useLanguage();
+  const { t, lang, siteData } = useLanguage();
+  const pageData = siteData;
 
   return (
     <div className="min-h-screen text-white">
@@ -47,14 +49,13 @@ export default function WhyUsPage() {
         <div className="w-full mx-auto px-6 md:px-12">
           <div className="text-center max-w-3xl mx-auto mb-8">
             <div className={styles.heroMeta}>
-              <span className={styles.heroBadge}>{t('whyChooseUsBadge')}</span>
-              <span className={styles.heroPill}>{t('whyChooseUsPill')}</span>
+              <span className={styles.heroBadge}>{pageData?.whyUs?.badge?.[lang] || t('whyChooseUsBadge') || t('whyUs')}</span>
             </div>
             <h1 className="text-4xl  md:text-5xl font-bold  mb-4 text-black dark:text-white">
-              {t('whyChooseUsTitle')}
+              {pageData?.whyUs?.title?.[lang] || t('whyChooseUsTitle')}
             </h1>
             <p className="text-lg text-white ">
-              {t('whyChooseUsDesc')}
+              {pageData?.whyUs?.description?.[lang] || t('whyChooseUsDesc')}
             </p>
           </div>
         </div>
@@ -64,18 +65,18 @@ export default function WhyUsPage() {
       <section className="relative py-2 lg:py-4">
         <div className="w-full mx-auto px-6 md:px-12">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature, index) => (
+            {(pageData?.whyUs?.features || features).map((feature: any, index: number) => (
               <div key={index} className={styles.whyCard}>
                 <div className={styles.cardTop}>
                   <div className={styles.iconWrap}>
-                    <img src={feature.icon} alt={t(feature.titleKey)} className={styles.iconImage} />
+                    <img src={feature.icon} alt={feature.title?.[lang] || t(feature.titleKey)} className={styles.iconImage} />
                   </div>
                 </div>
 
                 <div className={styles.cardBody}>
-                  <h3 className={styles.cardTitle}>{t(feature.titleKey)}</h3>
+                  <h3 className={styles.cardTitle}>{feature.title?.[lang] || t(feature.titleKey)}</h3>
                   <p style={{ fontSize: '0.95rem', lineHeight: '1.6' }} className="text-gray-300 dark:text-gray-300">
-                    {t(feature.descKey)}
+                    {feature.description?.[lang] || t(feature.descKey)}
                   </p>
                 </div>
               </div>

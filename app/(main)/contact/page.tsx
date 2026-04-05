@@ -6,7 +6,9 @@ import { useLanguage } from '@/components/LanguageProvider';
 import Image from 'next/image';
 
 export default function ContactPage() {
-  const { t, lang } = useLanguage();
+  const { t, lang, siteData } = useLanguage();
+  const contact = siteData?.contact;
+  const social = siteData?.social;
   
   const [formData, setFormData] = useState({
     name: '',
@@ -54,29 +56,34 @@ export default function ContactPage() {
     }
   };
 
+  const dynamicEmail = contact?.email || 'info@d-arrow.com';
+  const dynamicPhone = contact?.phone || '+966500466349';
+  const dynamicAddress = contact?.address?.[lang] || (lang === 'ar' ? 'المملكة العربية السعودية، الخبر، الأحساء' : 'Kingdom of Saudi Arabia Al-Khobar Al-Ahsa');
+  const dynamicHours = contact?.workingHours?.[lang] || t('contactHoursValue');
+
   const contactInfo = [
     {
       icon: Mail,
       titleKey: 'contactEmail',
-      content: t('contactEmailValue'),
+      content: dynamicEmail,
       subtextKey: 'contactEmailSubtext'
     },
     {
       icon: Phone,
       titleKey: 'contactPhone',
-      content: t('contactPhoneValue'),
+      content: dynamicPhone,
       subtextKey: 'contactPhoneSubtext'
     },
     {
       icon: MapPin,
       titleKey: 'contactLocation',
-      content: t('contactLocationValue'),
+      content: dynamicAddress,
       subtextKey: 'contactLocationSubtext'
     },
     {
       icon: Clock,
       titleKey: 'contactHours',
-      content: t('contactHoursValue'),
+      content: dynamicHours,
       subtextKey: 'contactHoursSubtext'
     },
   ];
@@ -147,10 +154,10 @@ export default function ContactPage() {
               let cursor = 'cursor-default';
               
               if (info.titleKey === 'contactEmail') {
-                clickAction = () => window.location.href = 'mailto:info@d-arrow.com';
+                clickAction = () => window.location.href = `mailto:${dynamicEmail}`;
                 cursor = 'cursor-pointer hover:underline';
               } else if (info.titleKey === 'contactPhone') {
-                clickAction = () => window.open('https://wa.me/966500466349', '_blank');
+                clickAction = () => window.open(social?.whatsapp || `https://wa.me/${dynamicPhone.replace(/[^0-9]/g, '')}`, '_blank');
                 cursor = 'cursor-pointer hover:underline';
               } else if (info.titleKey === 'contactLocation') {
                 clickAction = () => window.open('https://maps.google.com/?q=6399+Ibn+Sina+Street+AlKhobar+Saudi+Arabia', '_blank');
@@ -377,7 +384,7 @@ export default function ContactPage() {
 
             {/* Instagram */}
             <a
-              href="https://www.instagram.com/darrow.co/"
+              href={social?.instagram || "https://www.instagram.com/darrow.co/"}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-pink/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
@@ -388,7 +395,7 @@ export default function ContactPage() {
 
             {/* Snapchat */}
             <a
-              href="https://www.snapchat.com/add/darrow.co?share_id=dwRY8EPAM3w&locale=en-US"
+              href={social?.snapchat || "https://www.snapchat.com/add/darrow.co"}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-[#071426] via-[#062a4a] to-[#021022] hover:from-[rgba(255,77,109,0.3)] hover:to-[rgba(255,77,109,0.1)] transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
@@ -399,7 +406,7 @@ export default function ContactPage() {
 
             {/* LinkedIn */}
             <a
-              href="https://www.linkedin.com/in/d-arrow-4753393a8?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+              href={social?.linkedin || "https://www.linkedin.com/in/d-arrow-4753393a8"}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
@@ -410,7 +417,7 @@ export default function ContactPage() {
 
             {/* TikTok */}
             <a
-              href="https://www.tiktok.com/@d.arrow2?_r=1&_t=ZS-93ORrxdtLq3"
+              href={social?.tiktok || "https://www.tiktok.com/@d.arrow2"}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
@@ -421,7 +428,7 @@ export default function ContactPage() {
 
             {/* WhatsApp */}
             <a
-              href="https://wa.me/966500466349"
+              href={social?.whatsapp || "https://wa.me/966500466349"}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"

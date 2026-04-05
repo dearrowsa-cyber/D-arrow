@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from '../pricing/pricing.module.css';
 import { useLanguage } from '@/components/LanguageProvider';
@@ -33,7 +34,9 @@ const processSteps = [
 ];
 
 export default function ProcessPage() {
-  const { t } = useLanguage();
+  const { t, lang, siteData } = useLanguage();
+  const pageData = siteData;
+
 
   return (
     <main className="min-h-screen text-white">
@@ -42,14 +45,13 @@ export default function ProcessPage() {
         <div className="w-full mx-auto px-6 md:px-12">
           <div className="text-center max-w-3xl mx-auto mb-8">
             <div className={styles.heroMeta}>
-              <span className={styles.heroBadge}>{t('processHeroBadge')}</span>
-              <span className={styles.heroPill}>{t('processHeroPill')}</span>
+              <span className={styles.heroBadge}>{pageData?.process?.badge?.[lang] || t('processHeroBadge') || 'OUR PROCESS'}</span>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3 !text-black dark:bg-clip-text dark:text-transparent dark:bg-gradient-to-r dark:from-brand-pink dark:to-brand-orange">
-              {t('ourProvenProcess')}
+              {pageData?.process?.title?.[lang] || t('ourProvenProcess')}
             </h1>
             <p className="text-lg text-black dark:text-gray-800">
-              {t('processHeroDesc')}
+              {pageData?.process?.description?.[lang] || t('processHeroDesc')}
             </p>
           </div>
         </div>
@@ -59,30 +61,32 @@ export default function ProcessPage() {
       <section className="relative lg:py-6">
         <div className="w-full mx-auto px-6 md:px-12">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 ">
-            {processSteps.map((step) => (
-              <div key={step.number} className={styles.processCard}>
+            {(pageData?.process?.steps || processSteps).map((step: any, index: number) => {
+               const stepNum = index + 1;
+               return (
+              <div key={stepNum} className={styles.processCard}>
                 <div className={styles.cardTop}>
                   <div className={styles.iconWrap}>
-                    <img src={step.icon} alt={t(step.titleKey)} className={styles.iconImage} />
+                    <img src={step.icon} alt={step.title?.[lang] || t(step.titleKey)} className={styles.iconImage} />
                   </div>
                   <div className= {`${styles.badge}`} style={{ background: 'linear-gradient(90deg, #f7df04, #f7e204)'}}>
-                    <span className='!text-black'>Step {step.number}</span>
+                    <span className='!text-black'>Step {stepNum}</span>
                   </div>
                 </div>
 
                 <div className={styles.cardBody}>
-                  <h3 className={styles.cardTitleprocess} style={{ color: 'var(--text-dark) !important', fontWeight: 'bold' }}>{t(step.titleKey)}</h3>
+                  <h3 className={styles.cardTitleprocess} style={{ color: 'var(--text-dark) !important', fontWeight: 'bold' }}>{step.title?.[lang] || t(step.titleKey)}</h3>
                   <p style={{ color: 'var(--text-light)', fontSize: '0.95rem', lineHeight: '1.6' }}>
-                    {t(step.descKey)}
+                    {step.description?.[lang] || t(step.descKey)}
                   </p>
                   <div className={styles.divider} />
 
                   <div style={{ fontSize: '0.9rem', color: 'var(--text-light)', paddingTop: '0.5rem' }}>
-                    <span style={{ color: 'var(--brand-orange)', fontWeight: 600 }}>Phase {step.number}</span> of the process
+                    <span style={{ color: 'var(--brand-orange)', fontWeight: 600 }}>Phase {stepNum}</span> {t('ofTheProcess') || 'of the process'}
                   </div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         </div>
       </section>

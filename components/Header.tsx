@@ -3,17 +3,22 @@
 import { useState, useEffect, useRef, memo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSelectedLayoutSegments } from 'next/navigation';
 import { Sun, Moon } from 'lucide-react';
 import { useLanguage } from './LanguageProvider';
 import { useTheme } from './ThemeProvider';
 
 export default memo(function Header() {
+  const segments = useSelectedLayoutSegments();
+  const isAdmin = segments && segments[0] === 'admin';
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const closeTimeoutRef = useRef<number | null>(null);
   const { lang, setLang, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
+
+  if (isAdmin) return null;
 
   const handleNavClick = (href: string) => {
     setIsMenuOpen(false);

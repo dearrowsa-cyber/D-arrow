@@ -33,7 +33,7 @@ const translations: Translations = {
     feature_dataDriven_title: { en: 'Data-Driven Results', ar: 'نتائج مستندة إلى البيانات' },
     feature_dataDriven_desc: { en: 'Every decision backed by analytics and measurable outcomes', ar: 'كل قرار مدعوم بالتحليلات والنتائج القابلة للقياس' },
     feature_expertTeam_title: { en: 'Expert Team', ar: 'فريق خبير' },
-    feature_expertTeam_desc: { en: 'Industry veterans with 15+ years of combined experience', ar: 'خبراء في الصناعة مع أكثر من 6 عامًا من الخبرة المجمعة' },
+    feature_expertTeam_desc: { en: 'Industry veterans with 6+ years of combined experience', ar: 'خبراء في الصناعة مع أكثر من 6 أعوام من الخبرة المجمعة' },
     feature_support_title: { en: '24/7 Support', ar: 'الدعم 24/7' },
     feature_support_desc: { en: 'Dedicated support team ready to help whenever you need', ar: 'فريق دعم مخصص جاهز للمساعدة في أي وقت' },
     feature_custom_title: { en: 'Custom Solutions', ar: 'حلول مخصصة' },
@@ -41,7 +41,7 @@ const translations: Translations = {
     feature_reporting_title: { en: 'Transparent Reporting', ar: 'تقارير شفافة' },
     feature_reporting_desc: { en: 'Clear, detailed reports on campaign performance and ROI', ar: 'تقارير واضحة ومفصلة عن أداء الحملات ونتائجها ' },
     feature_proven_title: { en: 'Proven Track Record', ar: 'سجل حافل' },
-    feature_proven_desc: { en: '500+ successful campaigns with average 120% ROI growth', ar: 'أكثر من 500 حملة ناجحة بمتوسط نمو في العائد على الاستثمار 120%' },
+    feature_proven_desc: { en: 'Proven track record of successful campaigns with measurable ROI growth', ar: 'سجل حافل من الحملات الناجحة مع نمو قابل للقياس في العائد على الاستثمار' },
 
     discoverDesc: { en: 'Explore a selection of our projects that showcase our commitment to quality, creativity, and results.', ar: 'استعرض مجموعة من مشاريعنا التي تُظهر التزامنا بالجودة والإبداع والنتائج.' },
     viewProject: { en: 'View Project', ar: 'عرض المشروع' },
@@ -647,14 +647,17 @@ const LanguageContext = createContext<{
   lang: Lang;
   setLang: (l: Lang) => void;
   t: (key: string) => string;
+  siteData: any;
 }>({
   lang: defaultLang,
   setLang: () => {},
   t: createTranslationFunction(defaultLang),
+  siteData: null,
 });
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [lang, setLangState] = useState<Lang>(defaultLang);
+  const [siteData, setSiteData] = useState<any>(null);
 
   useEffect(() => {
     // Check for stored language preference first (user manual selection takes priority)
@@ -662,14 +665,20 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     if (stored === 'ar' || stored === 'en') {
       setLangState(stored as Lang);
       applyLanguageToDOM(stored as Lang);
-      return;
+    } else {
+      setLangState(defaultLang);
+      applyLanguageToDOM(defaultLang);
     }
 
-    // If no stored preference, we stick to the default SSR language (ar) to prevent 
-    // destructive Cumulative Layout Shifts (CLS) where the entire page flips language and layout direction
-    // after the initial paint.
-    setLangState(defaultLang);
-    applyLanguageToDOM(defaultLang);
+    // Fetch dynamic site data
+    fetch('/api/admin/pages')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          setSiteData(data.data);
+        }
+      })
+      .catch(err => console.error('Failed to load dynamic site data', err));
   }, []);
 
   useEffect(() => {
@@ -684,7 +693,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const t = createTranslationFunction(lang);
 
   return (
-    <LanguageContext.Provider value={{ lang, setLang, t }}>
+    <LanguageContext.Provider value={{ lang, setLang, t, siteData }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -11,9 +11,11 @@ import AnimatedServicesShowcase from '@/components/AnimatedServicesShowcase';
 import { useSearchParams } from 'next/navigation';
 
 export default function ServicesPage() {
-  const { t, lang } = useLanguage();
+  const { t, lang, siteData } = useLanguage();
   const [expandedCategory, setExpandedCategory] = useState('digital-marketing');
   const searchParams = useSearchParams();
+  const pageData = siteData;
+
 
   useEffect(() => {
     const category = searchParams?.get('category') || 'digital-marketing';
@@ -343,7 +345,7 @@ export default function ServicesPage() {
               viewport={{ once: true }}
               className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-black dark:text-white"
             >
-              {t('ourServices')}
+              {pageData?.services?.title?.[lang] || t('ourServices')}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -352,7 +354,7 @@ export default function ServicesPage() {
               viewport={{ once: true }}
               className="text-lg text-gray-800 dark:text-gray-300"
             >
-              {t('servicesHeroDesc')}
+              {pageData?.services?.description?.[lang] || t('servicesHeroDesc')}
             </motion.p>
           </div>
         </div>
@@ -373,17 +375,15 @@ export default function ServicesPage() {
             transition={{ duration: 0.5 }}
             className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
-            {expandedCategory === 'digital-marketing'
-              ? services['digital-marketing'].map((service, index) => (
-                  <ServiceCard key={index} service={service} index={index} />
-                ))
-              : expandedCategory === 'innovation-development'
-              ? services['innovation-development'].map((service, index) => (
-                  <ServiceCard key={index} service={service} index={index} />
-                ))
-              : services['real-estate'].map((service, index) => (
-                  <ServiceCard key={index} service={service} index={index} />
-                ))}
+            {(pageData?.services?.categories?.[expandedCategory] || services[expandedCategory as keyof typeof services] || []).map((service: any, index: number) => {
+               // Normalization to handle both the old hardcoded structure (titleKey, descKey) and the new dynamic structure (title.en, title.ar)
+               const normalizedService = {
+                 ...service,
+                 title: service.title?.[lang] || t(service.titleKey),
+                 description: service.description?.[lang] || t(service.descKey),
+               };
+               return <ServiceCard key={index} service={normalizedService} index={index} />;
+            })}
           </motion.div>
         </div>
       </section>

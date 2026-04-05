@@ -7,7 +7,8 @@ import { useLanguage } from './LanguageProvider';
 import HeroServicesCarousel from './HeroServicesCarousel';
 
 const Hero = () => {
-  const { t, lang } = useLanguage();
+  const { t, lang, siteData } = useLanguage();
+  const hero = siteData?.hero;
 
   const featuredServices = [
     {
@@ -71,11 +72,11 @@ const Hero = () => {
           {/* Text Content Div */}
           <div suppressHydrationWarning className={`flex-[1] py-18 md:px-6 w-full ${lang === 'ar' ? 'text-right md:text-right' : 'text-center md:text-left'}`} style={{zIndex: 10}}>
             <div className="inline-block bg-gradient-to-r from-[rgba(255,77,109,0.15)] to-[rgba(255,154,60,0.15)] border border-[rgba(255,77,109,0.3)] rounded-full px-2 py-2 mb-8 h-8">
-              <span suppressHydrationWarning className="text-white text-sm font-semibold bg-gradient-to-r from-brand-pink to-brand-orange bg-clip-text text-transparent" style={{ fontFamily: lang === 'ar' ? "'29LT-Bukra', system-ui" : "'TT Hoves Pro', system-ui" }}>{t('heroBadge')}</span>
+              <span suppressHydrationWarning className="text-white text-sm font-semibold bg-gradient-to-r from-brand-pink to-brand-orange bg-clip-text text-transparent" style={{ fontFamily: lang === 'ar' ? "'29LT-Bukra', system-ui" : "'TT Hoves Pro', system-ui" }}>{hero?.badge?.[lang] || t('heroBadge')}</span>
             </div>
 
             <h1 className="font-bold leading-tight mb-4 bg-gradient-to-r from-brand-pink to-brand-orange bg-clip-text text-transparent" style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', fontFamily: lang === 'ar' ? "'29LT-Bukra', system-ui" : "'Gilroy', system-ui" }}>
-              {t('heroHeading')}
+              {hero?.heading?.[lang] || t('heroHeading')}
             </h1>
 
             <div style={{zIndex: 20, position: 'relative'}}>

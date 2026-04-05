@@ -105,7 +105,23 @@ const StatCard = ({
 };
 
 const Stats = () => {
-  const { t } = useLanguage();
+  const { t, siteData } = useLanguage();
+
+  const dynamicStats = stats.map(s => {
+    // Map stat keys to siteData.stats keys
+    const keyMap: Record<string, string> = {
+      yearsOfExperience: 'yearsExperience',
+      teamMembers: 'teamMembers',
+      projectsCompleted: 'projectsCompleted',
+      satisfiedCustomers: 'satisfiedCustomers',
+    };
+    const dataKey = keyMap[s.key] || s.key;
+    const dynamicValue = siteData?.stats?.[dataKey];
+    return {
+      ...s,
+      value: dynamicValue ? parseInt(dynamicValue, 10) : s.value,
+    };
+  });
 
   return (
     <section className="py-10 lg:py-12 border-t border-gray-800/50 bg-gradient-to-b from-white/0 via-white/50 to-white/20 relative overflow-hidden">
@@ -120,7 +136,7 @@ const Stats = () => {
         <div 
           className="grid grid-cols-1 text-white sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mt-16"
         >
-          {stats.map((s, idx) => (
+          {dynamicStats.map((s, idx) => (
             <StatCard key={idx} value={s.value} label={t(s.key)} index={idx} />
           ))}
         </div>
