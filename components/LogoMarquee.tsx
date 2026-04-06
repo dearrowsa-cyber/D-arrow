@@ -9,6 +9,7 @@ const LogoMarquee = () => {
     { src: '/pro3.png', alt: 'New Age Maintenance Center' },
     { src: '/connects2.png', alt: 'شركة بيد BEEDCO' },
     { src: '/connects1.png', alt: 'ToPco' },
+    { src: '/connects3.png', alt: 'نادي وجهات الإعلامي' },
   ];
 
   return (
