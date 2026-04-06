@@ -16,7 +16,11 @@ const LogoMarquee = () => {
   ];
 
   return (
-    <div className="w-full overflow-hidden py-6">
+    <div className="w-full overflow-hidden py-10 relative">
+      {/* Edge Fade effect for a seamless look without a sharp cutoff */}
+      <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#0B0D1F] to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#0B0D1F] to-transparent z-10 pointer-events-none"></div>
+      
       <style>{`
         @keyframes marqueeScroll {
           0% { transform: translateX(0); }
@@ -26,9 +30,10 @@ const LogoMarquee = () => {
         .marquee-track {
           display: flex;
           align-items: center;
-          gap: 3rem;
-          animation: marqueeScroll 25s linear infinite;
+          gap: 2.5rem;
+          /* The width must be max-content so the 50% translation moves exactly one set of logos */
           width: max-content;
+          animation: marqueeScroll 35s linear infinite;
         }
 
         .marquee-track:hover {
@@ -37,50 +42,50 @@ const LogoMarquee = () => {
 
         .marquee-logo-card {
           flex-shrink: 0;
-          width: 180px;
-          height: 90px;
+          width: 170px;
+          height: 85px;
           display: flex;
           align-items: center;
           justify-content: center;
-          background: rgba(255, 255, 255, 0.06);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 16px;
-          padding: 16px;
+          /* Solid white background so colorful logos pop and look clean */
+          background-color: #ffffff;
+          border-radius: 12px;
+          padding: 12px;
           transition: all 0.3s ease;
-          backdrop-filter: blur(4px);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .marquee-logo-card:hover {
-          background: rgba(255, 255, 255, 0.12);
-          border-color: rgba(255, 154, 60, 0.3);
-          box-shadow: 0 4px 20px rgba(255, 154, 60, 0.15);
-          transform: translateY(-2px);
+          transform: translateY(-5px) scale(1.02);
+          box-shadow: 0 8px 25px rgba(255, 154, 60, 0.4);
+          border: 1px solid rgba(255, 154, 60, 0.5);
         }
       `}</style>
       
       <div className="marquee-track">
-        {/* First set */}
+        {/* Set 1 */}
         {logos.map((logo, i) => (
-          <div key={i} className="marquee-logo-card">
+          <div key={`set1-${i}`} className="marquee-logo-card group">
             <Image
               src={logo.src}
               alt={logo.alt}
-              width={160}
-              height={80}
-              className="w-full h-full object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-all duration-300"
+              width={150}
+              height={65}
+              /* NO brightness/invert filters! Just the original colorful logo properly sized */
+              className="w-full h-full object-contain grayscale-[20%] group-hover:grayscale-0 transition-all duration-300"
             />
           </div>
         ))}
         
-        {/* Duplicate set for seamless infinite loop */}
+        {/* Set 2 (Required for infinite CSS marquee loop to work seamlessly) */}
         {logos.map((logo, i) => (
-          <div key={`dup-${i}`} className="marquee-logo-card">
+          <div key={`set2-${i}`} className="marquee-logo-card group">
             <Image
               src={logo.src}
               alt={logo.alt}
-              width={160}
-              height={80}
-              className="w-full h-full object-contain brightness-0 invert opacity-70 hover:opacity-100 transition-all duration-300"
+              width={150}
+              height={65}
+              className="w-full h-full object-contain grayscale-[20%] group-hover:grayscale-0 transition-all duration-300"
             />
           </div>
         ))}
