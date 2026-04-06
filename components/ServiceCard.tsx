@@ -129,32 +129,32 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
       }}
     >
       {/* --- TOP: 100% VISIBLE IMAGE AREA --- */}
-      <div className="relative w-full h-[220px] shrink-0 overflow-hidden">
+      <div className="relative w-full h-[280px] shrink-0 overflow-hidden">
         <div 
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
           style={{ backgroundImage: `url('${resolveBackgroundImage().replace(/ /g, '%20')}')` }}
         />
         
         {/* Soft bottom blend to seamlessly connect to the dark text area */}
-        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#0A0D1E] to-transparent" />
-        
-        {/* Overlapping Icon securely placed on the seam */}
-        <div className="absolute -bottom-6 left-6 z-20">
-          <motion.div
-            className="w-16 h-16 rounded-2xl bg-black/50 backdrop-blur-md border border-white/20 shadow-xl flex items-center justify-center overflow-hidden"
-            variants={iconVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            whileHover="hover"
-          >
-            <img src={service.icon} alt={(service as any).title || t(service.titleKey)} className="w-9 h-9 object-contain" />
-          </motion.div>
-        </div>
+        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0A0D1E] via-[#0A0D1E]/60 to-transparent" />
+      </div>
+
+      {/* Overlapping Icon securely placed on the seam - Moved OUTSIDE the overflow-hidden div! */}
+      <div className="absolute top-[252px] left-6 z-20">
+        <motion.div
+          className="w-16 h-16 rounded-2xl bg-[#14162e] backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.4)] flex items-center justify-center"
+          variants={iconVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          whileHover="hover"
+        >
+          <img src={service.icon} alt={(service as any).title || t(service.titleKey)} className="w-9 h-9 object-contain" />
+        </motion.div>
       </div>
 
       {/* --- BOTTOM: TEXT CONTENT AREA --- */}
-      <div className={`${styles.cardBody} flex flex-col flex-grow p-6 pt-10 relative z-10 bg-[#0A0D1E]`}>
+      <div className={`${styles.cardBody} flex flex-col flex-grow p-6 pt-12 relative z-10 bg-[#0A0D1E]`}>
         <motion.h3 variants={itemVariants} className="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors duration-300">
           {(service as any).title || t(service.titleKey)}
         </motion.h3>
