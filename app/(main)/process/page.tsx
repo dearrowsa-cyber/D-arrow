@@ -10,7 +10,7 @@ const processSteps = [
   {
     titleKey: 'step_initial_title',
     descKey: 'step_initial_desc',
-    icon: '/icon/mainicons1/app10.png',
+    icon: '/icon/mainicons1/transparent101.png',
     number: 1
   },
   {
