@@ -130,8 +130,9 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
         backgroundPosition: 'center',
       }}
     >
-      {/* Intense Background Overlay for perfect text readability on any image */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/75 to-black/60 group-hover:from-black/80 group-hover:via-black/65 group-hover:to-black/50 transition-colors duration-300" />
+      {/* Balanced Background Overlay: Image stays visible, gradient helps bottom text */}
+      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-90" />
 
       {/* Animated Background Gradient */}
       <motion.div
@@ -164,7 +165,7 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
         </motion.div>
       </div>
 
-      <div className={`${styles.cardBody} relative z-10`}>
+      <div className={`${styles.cardBody} relative z-10 [text-shadow:_0_1px_3px_rgb(0_0_0_/_80%)]`}>
         <motion.h3 variants={itemVariants} className="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors duration-300">
           {(service as any).title || t(service.titleKey)}
         </motion.h3>
