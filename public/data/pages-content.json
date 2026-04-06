@@ -157,7 +157,7 @@
           "icon": "/icon/mainicons1/social-media10.png",
           "price": "3,000",
           "priceCurrency": "SAR / month",
-          "backgroundImage": "/services/social-media-marketing1.jpeg"
+          "backgroundImage": "/services/new images/social-media-marketing1.jpeg_202603300121.jpeg"
         },
         {
           "title": {
@@ -171,7 +171,7 @@
           "icon": "/icon/services-icon/digital_marketing_promotion.png",
           "price": "Contact for Quote",
           "priceCurrency": "Custom",
-          "backgroundImage": "/services/Digital-marketing1.jpeg"
+          "backgroundImage": "/services/new images/Digital-marketing1.jpeg_202603300120.jpeg"
         },
         {
           "title": {
@@ -185,7 +185,7 @@
           "icon": "/icon/mainicons1/visiual.png",
           "price": "2,000",
           "priceCurrency": "SAR / project",
-          "backgroundImage": "/services/Visual-Production1.jpeg"
+          "backgroundImage": "/services/new images/Visual-Production1.jpeg_202603300121.jpeg"
         },
         {
           "title": {
@@ -199,7 +199,7 @@
           "icon": "/icon/mainicons1/influencer.png",
           "price": "Contact for Quote",
           "priceCurrency": "Custom",
-          "backgroundImage": "/services/influencer.jpeg"
+          "backgroundImage": "/services/new images/influencer.jpeg_202603300122.jpeg"
         },
         {
           "title": {
@@ -213,7 +213,7 @@
           "icon": "/icon/services-icon/marketing_performance_chart.png",
           "price": "1,200",
           "priceCurrency": "SAR / month",
-          "backgroundImage": "/services/creative-content1.jpeg"
+          "backgroundImage": "/services/new images/Branding1.jpeg_202603300118.jpeg"
         },
         {
           "title": {
@@ -227,7 +227,7 @@
           "icon": "/icon/mainicons1/sales-real10.png",
           "price": "Contact for Quote",
           "priceCurrency": "Custom",
-          "backgroundImage": "/services/Exhibitions1.jpeg"
+          "backgroundImage": "/services/new images/put_this_logo_202603300119.png"
         },
         {
           "title": {
@@ -241,7 +241,7 @@
           "icon": "/icon/mainicons1/real-estate-marketing.png",
           "price": "1,500",
           "priceCurrency": "SAR / month",
-          "backgroundImage": "/services/Advertisements1.jpeg"
+          "backgroundImage": "/services/new images/Advertisements1.jpeg_202603300118.jpeg"
         },
         {
           "title": {
@@ -255,7 +255,7 @@
           "icon": "/icon/mainicons1/expertteam1.png",
           "price": "500",
           "priceCurrency": "SAR / hour",
-          "backgroundImage": "/services/Marketing-Consultation1.jpeg"
+          "backgroundImage": "/services/new images/put_this_logo_202603300120.png"
         },
         {
           "title": {
@@ -269,7 +269,7 @@
           "icon": "/icon/mainicons1/seo&sro10.png",
           "price": "1,800",
           "priceCurrency": "SAR / month",
-          "backgroundImage": "/services/seo-sro1.jpeg",
+          "backgroundImage": "/services/new images/ازل_حروف_د_202603300122.png",
           "featured": true
         }
       ],
@@ -286,7 +286,7 @@
           "icon": "/icon/mainicons1/app10.png",
           "price": "Contact for Quote",
           "priceCurrency": "Custom",
-          "backgroundImage": "/services/app-development.jpg"
+          "backgroundImage": "/services/new images/app-development.jpg_202603300119.jpeg"
         },
         {
           "title": {
@@ -300,7 +300,7 @@
           "icon": "/icon/mainicons1/webd1.png",
           "price": "Contact for Quote",
           "priceCurrency": "Custom",
-          "backgroundImage": "/services/website-development1.jpeg"
+          "backgroundImage": "/services/new images/website-development1.jpeg_202603300101.jpeg"
         },
         {
           "title": {
@@ -314,7 +314,7 @@
           "icon": "/icon/mainicons1/bdeveloment.png",
           "price": "Contact for Quote",
           "priceCurrency": "Custom",
-          "backgroundImage": "/services/BRAND-DESIGN.png",
+          "backgroundImage": "/services/new images/BRAND-DESIGN.png_202603300119.jpeg",
           "featured": true
         },
         {
@@ -329,7 +329,7 @@
           "icon": "/icon/mainicons1/software-10.png",
           "price": "Contact for Quote",
           "priceCurrency": "Custom",
-          "backgroundImage": "/services/software-development.jpg"
+          "backgroundImage": "/services/new images/software-development.jpg_202603300121.jpeg"
         },
         {
           "title": {
@@ -343,7 +343,7 @@
           "icon": "/icon/mainicons1/cloud10.png",
           "price": "Contact for Quote",
           "priceCurrency": "Custom",
-          "backgroundImage": "/services/cloud-services1.jpeg"
+          "backgroundImage": "/services/new images/cloud-services1.jpeg_202603300121.jpeg"
         }
       ],
       "real-estate": [
@@ -359,7 +359,7 @@
           "icon": "/icon/mainicons1/analysis.png",
           "price": "Contact for Quote",
           "priceCurrency": "Custom",
-          "backgroundImage": "/services/appraisal1.jpeg"
+          "backgroundImage": "/services/new images/appraisal1.jpeg_202603300121.jpeg"
         },
         {
           "title": {
@@ -373,7 +373,7 @@
           "icon": "/icon/mainicons1/real-estate-marketing.png",
           "price": "Contact for Quote",
           "priceCurrency": "Custom",
-          "backgroundImage": "/services/REAL-MARKETING1.jpeg"
+          "backgroundImage": "/services/new images/Campaign-Management.jpg_202603300119.jpeg"
         },
         {
           "title": {
@@ -387,7 +387,7 @@
           "icon": "/icon/mainicons1/sales-real10.png",
           "price": "Contact for Quote",
           "priceCurrency": "Custom",
-          "backgroundImage": "/services/propert1.jpeg",
+          "backgroundImage": "/services/new images/Real-Estate-Management.jpg_202603300121.jpeg",
           "featured": true
         },
         {
@@ -402,7 +402,7 @@
           "icon": "/icon/mainicons1/influencer.png",
           "price": "2,500",
           "priceCurrency": "SAR / project",
-          "backgroundImage": "/services/PHOTOGRAPH1.jpeg"
+          "backgroundImage": "/services/new images/PHOTOGRAPH1.jpeg_202603300122.jpeg"
         },
         {
           "title": {
@@ -416,7 +416,7 @@
           "icon": "/icon/services-icon/real_estate_marketing.png",
           "price": "2,000",
           "priceCurrency": "SAR / month",
-          "backgroundImage": "/services/Campaign-Management1.jpeg"
+          "backgroundImage": "/services/new images/Campaign-Management1.jpeg_202603300120.jpeg"
         },
         {
           "title": {
@@ -444,7 +444,7 @@
           "icon": "/icon/mainicons1/current-image.png",
           "price": "1,500",
           "priceCurrency": "SAR / project",
-          "backgroundImage": "/services/current-image.jpeg"
+          "backgroundImage": "/services/new images/current-image.jpeg_202603300122.jpeg"
         },
         {
           "title": {
@@ -458,7 +458,7 @@
           "icon": "/icon/mainicons1/real-estate-project.png",
           "price": "1,000",
           "priceCurrency": "SAR / project",
-          "backgroundImage": "/services/project-naming.jpeg"
+          "backgroundImage": "/services/new images/project-naming.jpeg_202603300119.jpeg"
         }
       ]
     }
