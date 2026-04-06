@@ -123,50 +123,38 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
       whileInView="visible"
       viewport={{ once: true, margin: '-50px' }}
       whileHover="hover"
-      className={`${styles.serviceCard} ${service.featured ? styles.featured : ''} group relative overflow-hidden`}
+      className={`${styles.serviceCard} ${service.featured ? styles.featured : ''} group relative overflow-hidden !p-0 bg-[#0A0D1E]`}
       style={{
-        backgroundImage: `url('${resolveBackgroundImage().replace(/ /g, '%20')}')`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        // Remove general background image to separate image from text
       }}
     >
-      {/* NO Image Overlays! The background image remains 100% bright and vividly clear. */}
-      
-      {/* Subtle gentle gradient at the absolute bottom just to blend the glass card */}
-      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent opacity-50" />
-
-      {/* Animated Background Gradient */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-brand-pink/10 opacity-0 group-hover:opacity-100"
-        transition={{ duration: 0.4 }}
-      />
-
-      {/* Animated Border Glow on Hover */}
-      <motion.div
-        className="absolute inset-0 rounded-lg border-2 border-gradient-to-r from-transparent via-brand-orange to-transparent opacity-0 group-hover:opacity-50"
-        animate={{
-          backgroundImage: [
-            'linear-gradient(to right, transparent, rgba(251, 146, 60, 0.3), transparent)',
-            'linear-gradient(to right, transparent, rgba(251, 146, 60, 0.1), transparent)',
-          ],
-        }}
-        transition={{ duration: 2, repeat: Infinity }}
-      />
-
-      <div className={`${styles.cardTop} relative z-10`}>
-        <motion.div
-          className={`${styles.iconWrap} bg-black/40 backdrop-blur-sm border border-white/10`}
-          variants={iconVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          whileHover="hover"
-        >
-          <img src={service.icon} alt={(service as any).title || t(service.titleKey)} className={styles.iconImage} />
-        </motion.div>
+      {/* --- TOP: 100% VISIBLE IMAGE AREA --- */}
+      <div className="relative w-full h-[220px] shrink-0 overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+          style={{ backgroundImage: `url('${resolveBackgroundImage().replace(/ /g, '%20')}')` }}
+        />
+        
+        {/* Soft bottom blend to seamlessly connect to the dark text area */}
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#0A0D1E] to-transparent" />
+        
+        {/* Overlapping Icon securely placed on the seam */}
+        <div className="absolute -bottom-6 left-6 z-20">
+          <motion.div
+            className="w-16 h-16 rounded-2xl bg-black/50 backdrop-blur-md border border-white/20 shadow-xl flex items-center justify-center overflow-hidden"
+            variants={iconVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            whileHover="hover"
+          >
+            <img src={service.icon} alt={(service as any).title || t(service.titleKey)} className="w-9 h-9 object-contain" />
+          </motion.div>
+        </div>
       </div>
 
-      <div className={`${styles.cardBody} relative z-10 mt-6 -mx-3 -mb-3 bg-[#0a0a0a]/60 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.5)] transition-all duration-300 group-hover:bg-[#0a0a0a]/50`}>
+      {/* --- BOTTOM: TEXT CONTENT AREA --- */}
+      <div className={`${styles.cardBody} flex flex-col flex-grow p-6 pt-10 relative z-10 bg-[#0A0D1E]`}>
         <motion.h3 variants={itemVariants} className="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors duration-300">
           {(service as any).title || t(service.titleKey)}
         </motion.h3>
