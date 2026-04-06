@@ -4,11 +4,9 @@ import Image from 'next/image';
 
 const LogoMarquee = () => {
   const logos = [
-    { src: '/beedco-main.png', alt: 'Beedco' },
     { src: '/connects1.png', alt: 'Connects 1' },
     { src: '/pro1.png', alt: 'Partner 1' },
     { src: '/connects2.png', alt: 'Connects 2' },
-    { src: '/pro2.png', alt: 'Partner 2' },
     { src: '/connects3.png', alt: 'Connects 3' },
     { src: '/pro3.png', alt: 'Partner 3' },
     { src: '/connects4.png', alt: 'Connects 4' },
