@@ -129,7 +129,7 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
       }}
     >
       {/* --- TOP: 100% VISIBLE IMAGE AREA --- */}
-      <div className="relative w-full h-[280px] shrink-0 overflow-hidden bg-[#0a0d1e]">
+      <div className="relative w-full h-[180px] md:h-[280px] shrink-0 overflow-hidden bg-[#0a0d1e]">
         <div 
           className={`absolute inset-0 bg-cover ${
             ((service as any).title || t(service.titleKey))?.toLowerCase().includes('naming') || 
@@ -142,30 +142,30 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
         />
         
         {/* Soft bottom blend to seamlessly connect to the dark text area */}
-        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0A0D1E] via-[#0A0D1E]/60 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 h-14 md:h-20 bg-gradient-to-t from-[#0A0D1E] via-[#0A0D1E]/60 to-transparent" />
       </div>
 
       {/* Overlapping Icon securely placed on the seam - Moved OUTSIDE the overflow-hidden div! */}
-      <div className="absolute top-[252px] left-6 z-20">
+      <div className="absolute top-[155px] md:top-[252px] left-4 md:left-6 z-20">
         <motion.div
-          className="w-16 h-16 rounded-2xl bg-[#14162e] backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.4)] flex items-center justify-center"
+          className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-[#14162e] backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.4)] flex items-center justify-center"
           variants={iconVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           whileHover="hover"
         >
-          <img src={service.icon} alt={(service as any).title || t(service.titleKey)} className="w-9 h-9 object-contain" />
+          <img src={service.icon} alt={(service as any).title || t(service.titleKey)} className="w-7 h-7 md:w-9 md:h-9 object-contain" />
         </motion.div>
       </div>
 
       {/* --- BOTTOM: TEXT CONTENT AREA --- */}
-      <div className={`${styles.cardBody} flex flex-col flex-grow p-6 pt-12 relative z-10 bg-[#0A0D1E]`}>
-        <motion.h3 variants={itemVariants} className="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors duration-300">
+      <div className={`${styles.cardBody} flex flex-col flex-grow p-4 pt-9 md:p-6 md:pt-12 relative z-10 bg-[#0A0D1E]`}>
+        <motion.h3 variants={itemVariants} className="text-base md:text-xl font-bold text-white mb-1 md:mb-2 group-hover:text-amber-400 transition-colors duration-300">
           {(service as any).title || t(service.titleKey)}
         </motion.h3>
 
-        <motion.p variants={itemVariants} className="text-gray-300 text-sm leading-relaxed mb-4">
+        <motion.p variants={itemVariants} className="text-gray-300 text-xs md:text-sm leading-relaxed mb-2 md:mb-4 line-clamp-3 md:line-clamp-none">
           {(service as any).description || t(service.descKey)}
         </motion.p>
 

@@ -373,7 +373,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
           >
             {(pageData?.services?.categories?.[expandedCategory] || services[expandedCategory as keyof typeof services] || []).map((service: any, index: number) => {
                // Normalization to handle both the old hardcoded structure (titleKey, descKey) and the new dynamic structure (title.en, title.ar)
