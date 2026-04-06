@@ -130,9 +130,10 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
         backgroundPosition: 'center',
       }}
     >
-      {/* Balanced Background Overlay: Image stays visible, gradient helps bottom text */}
-      <div className="absolute inset-0 bg-black/30 group-hover:bg-black/20 transition-colors duration-300" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-90" />
+      {/* NO Image Overlays! The background image remains 100% bright and vividly clear. */}
+      
+      {/* Subtle gentle gradient at the absolute bottom just to blend the glass card */}
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/40 to-transparent opacity-50" />
 
       {/* Animated Background Gradient */}
       <motion.div
@@ -154,7 +155,7 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
 
       <div className={`${styles.cardTop} relative z-10`}>
         <motion.div
-          className={styles.iconWrap}
+          className={`${styles.iconWrap} bg-black/40 backdrop-blur-sm border border-white/10`}
           variants={iconVariants}
           initial="hidden"
           whileInView="visible"
@@ -165,7 +166,7 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
         </motion.div>
       </div>
 
-      <div className={`${styles.cardBody} relative z-10 [text-shadow:_0_1px_3px_rgb(0_0_0_/_80%)]`}>
+      <div className={`${styles.cardBody} relative z-10 mt-6 -mx-3 -mb-3 bg-[#0a0a0a]/60 backdrop-blur-xl p-5 rounded-2xl border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.5)] transition-all duration-300 group-hover:bg-[#0a0a0a]/50`}>
         <motion.h3 variants={itemVariants} className="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors duration-300">
           {(service as any).title || t(service.titleKey)}
         </motion.h3>
