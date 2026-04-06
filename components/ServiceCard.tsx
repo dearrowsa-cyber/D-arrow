@@ -129,9 +129,15 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
       }}
     >
       {/* --- TOP: 100% VISIBLE IMAGE AREA --- */}
-      <div className="relative w-full h-[280px] shrink-0 overflow-hidden">
+      <div className="relative w-full h-[280px] shrink-0 overflow-hidden bg-[#0a0d1e]">
         <div 
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+          className={`absolute inset-0 bg-cover ${
+            ((service as any).title || t(service.titleKey))?.toLowerCase().includes('naming') || 
+            ((service as any).title || t(service.titleKey))?.includes('تسميات') ||
+            ((service as any).title || t(service.titleKey))?.includes('تسمية') 
+              ? 'bg-top' 
+              : 'bg-center'
+          } transition-transform duration-700 group-hover:scale-105`}
           style={{ backgroundImage: `url('${resolveBackgroundImage().replace(/ /g, '%20')}')` }}
         />
         
