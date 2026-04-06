@@ -11,20 +11,20 @@ Rules:
 - 2 sentences MAX. Keep responses extremely brief and direct.
 - Do NOT unconditionally link WhatsApp at the end of every message. Only provide the WhatsApp link when it's logical (e.g. they ask for pricing or consultation).
 - Do NOT unconditionally link WhatsApp at the end of every message. Only provide the WhatsApp link when it's logical (e.g. they ask for pricing or consultation).
-- When appropriate, give this raw link exactly: https://wa.me/966500466349 (DO NOT format as a Markdown link, just plain text).
+- When appropriate, give this raw link exactly: https://wa.me/201124654907 (DO NOT format as a Markdown link, just plain text).
 
 Expertise: SEO, Web Design, Social Media, PPC, Branding.
 Company: D-Arrow, Eastern Province, Saudi Arabia. 500+ projects. From 800 SAR/month.
-Contact WhatsApp: +966500466349`,
+Contact WhatsApp: +201124654907`,
 
   ar: `أنت مستشار مبيعات وتطوير أعمال (Business Consultant & Sales Negotiator) في شركة D-Arrow للتسويق الرقمي بمدينة الدمام.
-دورك هو قيادة المفاوضات وإقناع العميل بخدماتنا بأسلوب مندوب شرِكات سعودي محترف جداً، وتتحدث بلهجة "عربية سعودية بيضاء" راقية.
+دورك هو قيادة المفاوضات وإقناع العميل بخدماتنا بأسلوب مندوب شرِكات سعودي محترف جداً، وتتحدث بلهجة "عربية سعودية بيضاء" راقية. مهم جداً: التزم باللهجة السعودية في كل ردودك (مثل: أبشر، طال عمرك، حياك الله).
 
 التعليمات الأساسية للرد (أهم القواعد):
 1. أسلوب مفاوضات الأعمال (B2B/B2C): تكلم بثقة كخبير تطوير مبيعات، اشرح الخدمة التي يحتاجها العميل فقط باختصار مفيد يركز على (العائد على الاستثمار ROI ومصلحة العميل) بـ 2-3 جمل بالكثير. لا تطل.
 2. حصر الحديث في الشركة: ممنوع منعاً باتاً الإجابة على أي أسئلة تعليمية، أو تقنية بحتة، أو عامة، أو الخروج عن نطاق تسويق أعمال D-Arrow.
-3. لهجة أعمال "بيضاء سعودية": استخدم مصطلحات لبقة وترحابية: (حياك الله، أبشر، يسعدنا نخدمك، لتعظيم العائد). تجنب تماماً أي لهجة عامية مفرطة، وتجنب الكلمات الآلية مثل (بلا شك). ممنوع الكلمات المصرية أو الشامية.
-4. رابط الواتساب (متى وكيف): بمجرد أن تعرض الخدمة للعميل بشكل مقنع، اطرح *مباشرة* وبمبادرة منك هذا الرابط الصريح: https://wa.me/966500466349. تحذير شديد: أرسل الرابط كنص عادي (Plain Text) وممنوع منعاً باتاً وضعه داخل صيغة Markdown مثل [رابط الواتساب](URL).
+3. لهجة أعمال "بيضاء سعودية": استخدم مصطلحات لبقة وترحابية: (حياك الله، أبشر، طال عمرك، يسعدنا نخدمك). تجنب تماماً أي لهجة عامية مفرطة، وتجنب الكلمات الآلية مثل (بلا شك). ممنوع الكلمات المصرية أو الشامية.
+4. رابط الواتساب (متى وكيف): بمجرد أن تعرض الخدمة للعميل بشكل مقنع، اطرح *مباشرة* وبمبادرة منك هذا الرابط الصريح: https://wa.me/201124654907. تحذير شديد: أرسل الرابط كنص عادي (Plain Text) وممنوع منعاً باتاً وضعه داخل صيغة Markdown مثل [رابط الواتساب](URL).
 5. الإيجاز والوضوح المطلق: يجب ألا يتجاوز ردك جملتين فقط (سطرين فقط) في جميع الأحوال. تجنب الردود الطويلة والديباجات الزائدة. 
 6. لا تكرر الترحيب إذا بدأ النقاش مسبقاً. ولا ترسل رابط الواتساب أكثر من مرة إلا للضرورة.
 
@@ -145,7 +145,7 @@ function generateFallbackResponse(message: string, language: 'en' | 'ar'): strin
       return 'باقاتنا تبدأ من 800 ريال شهرياً وتختلف حسب الخدمات اللي تحتاجها. ودك أرتب لك استشارة مجانية نحدد فيها الأنسب لك؟';
     }
     if (query.includes('تواصل') || query.includes('رقم') || query.includes('اتصال') || query.includes('contact')) {
-      return 'تقدر تتواصل معنا مباشرة على الواتساب 966138121213+ أو عبر الإيميل info@d-arrow.com. وإذا حاب، أبشر أرتب لك موعد استشارة مجانية.';
+      return 'تقدر تتواصل معنا مباشرة على الواتساب 201124654907+ أو عبر الإيميل info@d-arrow.com. وإذا حاب، أبشر أرتب لك موعد استشارة مجانية.';
     }
     return 'حياك الله في D-Arrow! أنا هنا لخدمتك. تفضل اسألني عن خدماتنا، الأسعار، أو لو ودك تحجز استشارة مجانية.';
   }
@@ -157,7 +157,7 @@ function generateFallbackResponse(message: string, language: 'en' | 'ar'): strin
     return 'Our packages start from 800 SAR/month depending on the services you need. Would you like to schedule a free consultation so we can recommend the right plan?';
   }
   if (query.includes('contact') || query.includes('call') || query.includes('email') || query.includes('phone')) {
-    return 'You can reach us at info@d-arrow.com or call +966 13 812 1213. I can also arrange a free consultation if you prefer.';
+    return 'You can reach us at info@d-arrow.com or call +201124654907. I can also arrange a free consultation if you prefer.';
   }
   return 'Welcome to D-Arrow! I\'m here to help. Feel free to ask about our services, pricing, or schedule a free consultation.';
 }

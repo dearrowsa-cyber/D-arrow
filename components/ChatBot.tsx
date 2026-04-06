@@ -328,7 +328,7 @@ export default function ChatBot() {
                   const urlRegex = /(https?:\/\/wa\.me\/[^\s)]+)/g;
                   const hasWhatsApp = urlRegex.test(botStr);
                   const waMatches = botStr.match(urlRegex);
-                  const waLink = waMatches ? waMatches[0] : 'https://wa.me/966500466349';
+                  const waLink = waMatches ? waMatches[0] : 'https://wa.me/201124654907';
                   
                   // This removes the raw link, and the markdown brackets/text are already gone
                   const botText = botStr.replace(urlRegex, '').trim();
