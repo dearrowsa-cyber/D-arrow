@@ -125,7 +125,7 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
       whileHover="hover"
       className={`${styles.serviceCard} ${service.featured ? styles.featured : ''} group relative overflow-hidden`}
       style={{
-        backgroundImage: `url(${resolveBackgroundImage()})`,
+        backgroundImage: `url('${resolveBackgroundImage().replace(/ /g, '%20')}')`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
