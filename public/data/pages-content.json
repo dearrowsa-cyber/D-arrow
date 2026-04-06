@@ -147,12 +147,12 @@
       "digital-marketing": [
         {
           "title": {
-            "en": "Social Media Management",
+            "en": "Social Media Accounts Management",
             "ar": "إدارة منصات التواصل الاجتماعي"
           },
           "description": {
-            "en": "Comprehensive management of your social media platforms",
-            "ar": "إدارة شاملة لمنصات التواصل الاجتماعي"
+            "en": "Comprehensive management of your social media presence across all platforms",
+            "ar": "إدارة شاملة لوجودك على وسائل التواصل الاجتماعي عبر جميع المنصات"
           },
           "icon": "/icon/mainicons1/social-media10.png",
           "price": "3,000",
@@ -161,12 +161,12 @@
         },
         {
           "title": {
-            "en": "Digital Marketing & Promotion",
-            "ar": "التسويق الرقمي والترويج"
+            "en": "Digital Marketing",
+            "ar": "التسويق الرقمي"
           },
           "description": {
-            "en": "Targeted campaigns to reach your ideal audience",
-            "ar": "حملات موجهة للوصول إلى جمهورك المثالي"
+            "en": "Strategic digital marketing campaigns to reach your target audience",
+            "ar": "حملات تسويق رقمي استراتيجية للوصول إلى جمهورك المستهدف"
           },
           "icon": "/icon/services-icon/digital_marketing_promotion.png",
           "price": "Contact for Quote",
@@ -176,27 +176,112 @@
         {
           "title": {
             "en": "Visual Production",
-            "ar": "الإنتاج المرئي"
+            "ar": "الإنتاج البصري"
           },
           "description": {
-            "en": "High-quality video and photo production",
-            "ar": "إنتاج فيديو وصور عالية الجودة"
+            "en": "Professional visual content creation for engaging your audience",
+            "ar": "إنشاء محتوى بصري احترافي لجذب جمهورك"
           },
           "icon": "/icon/mainicons1/visiual.png",
           "price": "2,000",
           "priceCurrency": "SAR / project",
           "backgroundImage": "/services/Visual-Production1.jpeg"
+        },
+        {
+          "title": {
+            "en": "Influencer Marketing",
+            "ar": "تسويق المؤثرين"
+          },
+          "description": {
+            "en": "Connect with influential personalities to amplify your brand message",
+            "ar": "التواصل مع شخصيات مؤثرة لتضخيم رسالة علامتك التجارية"
+          },
+          "icon": "/icon/mainicons1/influencer.png",
+          "price": "Contact for Quote",
+          "priceCurrency": "Custom",
+          "backgroundImage": "/services/influencer.jpeg"
+        },
+        {
+          "title": {
+            "en": "Creative Content",
+            "ar": "المحتوى الإبداعي"
+          },
+          "description": {
+            "en": "Compelling creative content that resonates with your audience",
+            "ar": "محتوى إبداعي جذاب يتردد مع جمهورك"
+          },
+          "icon": "/icon/services-icon/marketing_performance_chart.png",
+          "price": "1,200",
+          "priceCurrency": "SAR / month",
+          "backgroundImage": "/services/creative-content1.jpeg"
+        },
+        {
+          "title": {
+            "en": "Exhibitions and Conferences Management",
+            "ar": "إدارة المعارض والمؤتمرات"
+          },
+          "description": {
+            "en": "Complete management of exhibitions and conferences for maximum impact",
+            "ar": "إدارة كاملة للمعارض والمؤتمرات للحصول على أقصى تأثير"
+          },
+          "icon": "/icon/mainicons1/sales-real10.png",
+          "price": "Contact for Quote",
+          "priceCurrency": "Custom",
+          "backgroundImage": "/services/Exhibitions1.jpeg"
+        },
+        {
+          "title": {
+            "en": "Advertisements",
+            "ar": "حملات الإعلانات"
+          },
+          "description": {
+            "en": "Strategic advertising campaigns across multiple channels",
+            "ar": "حملات إعلانية استراتيجية عبر قنوات متعددة"
+          },
+          "icon": "/icon/mainicons1/real-estate-marketing.png",
+          "price": "1,500",
+          "priceCurrency": "SAR / month",
+          "backgroundImage": "/services/Advertisements1.jpeg"
+        },
+        {
+          "title": {
+            "en": "Marketing Consultation",
+            "ar": "الاستشارات التسويقية"
+          },
+          "description": {
+            "en": "Expert marketing guidance tailored to your business goals",
+            "ar": "توجيه تسويقي خبير مصمم لأهداف عملك"
+          },
+          "icon": "/icon/mainicons1/expertteam1.png",
+          "price": "500",
+          "priceCurrency": "SAR / hour",
+          "backgroundImage": "/services/Marketing-Consultation1.jpeg"
+        },
+        {
+          "title": {
+            "en": "SEO & SRO",
+            "ar": "تحسين محركات البحث SEO & SRO"
+          },
+          "description": {
+            "en": "Optimize your online presence for search engines",
+            "ar": "حسّن وجودك على الإنترنت لمحركات البحث"
+          },
+          "icon": "/icon/mainicons1/seo&sro10.png",
+          "price": "1,800",
+          "priceCurrency": "SAR / month",
+          "backgroundImage": "/services/seo-sro1.jpeg",
+          "featured": true
         }
       ],
       "innovation-development": [
         {
           "title": {
-            "en": "App Development",
-            "ar": "تطوير التطبيقات"
+            "en": "Apps Design and Development",
+            "ar": "تصميم وتطوير التطبيقات"
           },
           "description": {
-            "en": "Native and cross-platform mobile apps",
-            "ar": "تطبيقات الهاتف المحمول الأصلية وعبر الأنظمة الأساسية"
+            "en": "Native and cross-platform mobile applications built for performance",
+            "ar": "تطبيقات الهاتف المحمول الأصلية والمتقاطعة المبنية للأداء"
           },
           "icon": "/icon/mainicons1/app10.png",
           "price": "Contact for Quote",
@@ -205,28 +290,71 @@
         },
         {
           "title": {
-            "en": "Website Development",
-            "ar": "تطوير المواقع بالكامل"
+            "en": "Website Design and Development",
+            "ar": "تصميم وتطوير المواقع الإلكترونية"
           },
           "description": {
-            "en": "Custom websites designed for conversion",
-            "ar": "مواقع ويب مخصصة مصممة للتحويل"
+            "en": "Professional websites that drive conversions and user engagement",
+            "ar": "مواقع احترافية تحفز التحويلات والمشاركة"
           },
           "icon": "/icon/mainicons1/webd1.png",
           "price": "Contact for Quote",
           "priceCurrency": "Custom",
           "backgroundImage": "/services/website-development1.jpeg"
+        },
+        {
+          "title": {
+            "en": "Branding Design & Development",
+            "ar": "تصميم وتطوير العلامات التجارية"
+          },
+          "description": {
+            "en": "Complete brand identity development from concept to execution",
+            "ar": "تطوير هوية العلامة التجارية الكاملة من المفهوم إلى التنفيذ"
+          },
+          "icon": "/icon/mainicons1/bdeveloment.png",
+          "price": "Contact for Quote",
+          "priceCurrency": "Custom",
+          "backgroundImage": "/services/BRAND-DESIGN.png",
+          "featured": true
+        },
+        {
+          "title": {
+            "en": "Software Design and Development",
+            "ar": "تصميم وتطوير البرمجيات"
+          },
+          "description": {
+            "en": "Custom software solutions tailored to your specific business needs",
+            "ar": "حلول برامج مخصصة مصممة لاحتياجات عملك المحددة"
+          },
+          "icon": "/icon/mainicons1/software-10.png",
+          "price": "Contact for Quote",
+          "priceCurrency": "Custom",
+          "backgroundImage": "/services/software-development.jpg"
+        },
+        {
+          "title": {
+            "en": "Cloud Services",
+            "ar": "خدمات السحابة"
+          },
+          "description": {
+            "en": "Secure and scalable cloud infrastructure for your applications",
+            "ar": "بنية تحتية سحابية آمنة وقابلة للتوسع لتطبيقاتك"
+          },
+          "icon": "/icon/mainicons1/cloud10.png",
+          "price": "Contact for Quote",
+          "priceCurrency": "Custom",
+          "backgroundImage": "/services/cloud-services1.jpeg"
         }
       ],
       "real-estate": [
         {
           "title": {
             "en": "Real Estate Appraisal",
-            "ar": "التقييم العقاري"
+            "ar": "التسويق العقاري"
           },
           "description": {
-            "en": "Professional property valuation services",
-            "ar": "خدمات التقييم العقاري الاحترافية"
+            "en": "Professional property valuation and appraisal services",
+            "ar": "خدمات تقييم وتقدير العقارات الاحترافية"
           },
           "icon": "/icon/mainicons1/analysis.png",
           "price": "Contact for Quote",
@@ -236,16 +364,101 @@
         {
           "title": {
             "en": "Real Estate Marketing",
-            "ar": "التسويق العقاري"
+            "ar": "التطوير العقاري"
           },
           "description": {
-            "en": "Targeted marketing for real estate properties",
-            "ar": "تسويق موجه للعقارات"
+            "en": "Comprehensive real estate marketing strategies and campaigns",
+            "ar": "استراتيجيات وحملات تسويق العقارات الشاملة"
           },
           "icon": "/icon/mainicons1/real-estate-marketing.png",
           "price": "Contact for Quote",
           "priceCurrency": "Custom",
           "backgroundImage": "/services/REAL-MARKETING1.jpeg"
+        },
+        {
+          "title": {
+            "en": "Property Management and Sales",
+            "ar": "إدارة الأملاك والمبيعات"
+          },
+          "description": {
+            "en": "Professional property and sales management services",
+            "ar": "خدمات إدارة الممتلكات والمبيعات الاحترافية"
+          },
+          "icon": "/icon/mainicons1/sales-real10.png",
+          "price": "Contact for Quote",
+          "priceCurrency": "Custom",
+          "backgroundImage": "/services/propert1.jpeg",
+          "featured": true
+        },
+        {
+          "title": {
+            "en": "Professional Photography & Representation",
+            "ar": "تصوير المشاريع"
+          },
+          "description": {
+            "en": "High-quality photography and professional property representation",
+            "ar": "تصوير عالي الجودة وتمثيل احترافي للعقارات"
+          },
+          "icon": "/icon/mainicons1/influencer.png",
+          "price": "2,500",
+          "priceCurrency": "SAR / project",
+          "backgroundImage": "/services/PHOTOGRAPH1.jpeg"
+        },
+        {
+          "title": {
+            "en": "Advertising Campaign Management",
+            "ar": "إدارة الحملات الإعلانية"
+          },
+          "description": {
+            "en": "Strategic advertising campaigns to attract qualified buyers",
+            "ar": "حملات إعلانية استراتيجية لجذب المشترين المؤهلين"
+          },
+          "icon": "/icon/services-icon/real_estate_marketing.png",
+          "price": "2,000",
+          "priceCurrency": "SAR / month",
+          "backgroundImage": "/services/Campaign-Management1.jpeg"
+        },
+        {
+          "title": {
+            "en": "Real Estate Project Image Creation",
+            "ar": "تصميم صفحات الوصول"
+          },
+          "description": {
+            "en": "Professional image creation and presentation for real estate projects",
+            "ar": "إنشاء صور احترافية وعرض لمشاريع العقارات"
+          },
+          "icon": "/icon/mainicons1/creation10.png",
+          "price": "3,000",
+          "priceCurrency": "SAR / project",
+          "backgroundImage": "/services/image1.jpeg"
+        },
+        {
+          "title": {
+            "en": "Current Image Evaluation & Enhancement",
+            "ar": "تحسين الهوية الحالية للمشاريع العقارية"
+          },
+          "description": {
+            "en": "Evaluate and enhance current project images and branding",
+            "ar": "تقييم وتحسين صور المشاريع الحالية والعلامات التجارية"
+          },
+          "icon": "/icon/mainicons1/current-image.png",
+          "price": "1,500",
+          "priceCurrency": "SAR / project",
+          "backgroundImage": "/services/current-image.jpeg"
+        },
+        {
+          "title": {
+            "en": "Real Estate Project Naming",
+            "ar": "تسمية المشاريع العقارية"
+          },
+          "description": {
+            "en": "Strategic naming services for real estate projects",
+            "ar": "خدمات التسمية الاستراتيجية لمشاريع العقارات"
+          },
+          "icon": "/icon/mainicons1/real-estate-project.png",
+          "price": "1,000",
+          "priceCurrency": "SAR / project",
+          "backgroundImage": "/services/project-naming.jpeg"
         }
       ]
     }
