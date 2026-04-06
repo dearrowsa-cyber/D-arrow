@@ -130,12 +130,12 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
         backgroundPosition: 'center',
       }}
     >
-      {/* Background Overlay for better text readability */}
-      <div className="absolute inset-0 bg-black/50 group-hover:bg-black/40 transition-colors duration-300" />
+      {/* Intense Background Overlay for perfect text readability on any image */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/75 to-black/60 group-hover:from-black/80 group-hover:via-black/65 group-hover:to-black/50 transition-colors duration-300" />
 
       {/* Animated Background Gradient */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-brand-pink/5 opacity-0 group-hover:opacity-100"
+        className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-brand-pink/10 opacity-0 group-hover:opacity-100"
         transition={{ duration: 0.4 }}
       />
 

@@ -227,7 +227,7 @@
           "icon": "/icon/mainicons1/sales-real10.png",
           "price": "Contact for Quote",
           "priceCurrency": "Custom",
-          "backgroundImage": "/services/new images/put_this_logo_202603300119.png"
+          "backgroundImage": "/services/Exhibitions1.jpeg"
         },
         {
           "title": {
@@ -255,7 +255,7 @@
           "icon": "/icon/mainicons1/expertteam1.png",
           "price": "500",
           "priceCurrency": "SAR / hour",
-          "backgroundImage": "/services/new images/put_this_logo_202603300120.png"
+          "backgroundImage": "/services/Marketing-Consultation1.jpeg"
         },
         {
           "title": {
@@ -269,7 +269,7 @@
           "icon": "/icon/mainicons1/seo&sro10.png",
           "price": "1,800",
           "priceCurrency": "SAR / month",
-          "backgroundImage": "/services/new images/ازل_حروف_د_202603300122.png",
+          "backgroundImage": "/services/seo-sro1.jpeg",
           "featured": true
         }
       ],
