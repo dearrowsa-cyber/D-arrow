@@ -8,7 +8,7 @@ const processSteps = [
   {
     titleKey: 'step_initial_title',
     descKey: 'step_initial_desc',
-    icon: '/icon/update/Initial-Consultation2.png',
+    icon: '/icon/mainicons1/app10.png',
     number: 1
   },
   {

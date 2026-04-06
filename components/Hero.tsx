@@ -14,32 +14,32 @@ const Hero = () => {
     {
       titleKey: 'service_seoNew_title',
       descKey: 'service_seoNew_desc',
-      icon: '/icon/seo-icon.png',
+      icon: '/icon/mainicons1/seo&sro10.png',
     },
     {
       titleKey: 'service_smmNew_title',
       descKey: 'service_smmNew_desc',
-      icon: '/icon/social-media-icon.png',
+      icon: '/icon/mainicons1/social-media10.png',
     },
     {
       titleKey: 'service_websiteDev_title',
       descKey: 'service_websiteDev_desc',
-      icon: '/icon/webd-icon.png',
+      icon: '/icon/mainicons1/webd1.png',
     },
     {
       titleKey: 'service_appDev_title',
       descKey: 'service_appDev_desc',
-      icon: '/icon/webd-icon.png',
+      icon: '/icon/mainicons1/app10.png',
     },
     {
       titleKey: 'service_brandNew_title',
       descKey: 'service_brandNew_desc',
-      icon: '/icon/brand-icon.png',
+      icon: '/icon/mainicons1/bdeveloment.png',
     },
     {
       titleKey: 'service_ppcNew_title',
       descKey: 'service_ppcNew_desc',
-      icon: '/icon/per-click-icon.png',
+      icon: '/icon/mainicons1/real-estate-marketing.png',
     },
   ];
 

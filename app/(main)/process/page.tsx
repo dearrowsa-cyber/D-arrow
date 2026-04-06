@@ -10,25 +10,25 @@ const processSteps = [
   {
     titleKey: 'step_initial_title',
     descKey: 'step_initial_desc',
-    icon: '/icon/analysis-icon.png',
+    icon: '/icon/mainicons1/app10.png',
     number: 1
   },
   {
     titleKey: 'step_strategy_title',
     descKey: 'step_strategy_desc',
-    icon: '/icon/result-icon.png',
+    icon: '/icon/mainicons1/stragies&planning1.png',
     number: 2
   },
   {
     titleKey: 'step_execution_title',
     descKey: 'step_execution_desc',
-    icon: '/icon/data-drive-icon.png',
+    icon: '/icon/mainicons1/execution10.png',
     number: 3
   },
   {
     titleKey: 'step_analysis_title',
     descKey: 'step_analysis_desc',
-    icon: '/icon/transparent-icon.png',
+    icon: '/icon/mainicons1/analysis.png',
     number: 4
   },
 ];
@@ -140,10 +140,10 @@ export default function ProcessPage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: '/icon/result-icon.png', titleKey: 'strategicFoundation', descKey: 'strategicFoundationDesc' },
-              { icon: '/icon/data-drive-icon.png', titleKey: 'continuousMonitoring', descKey: 'continuousMonitoringDesc' },
-              { icon: '/icon/proven2-icon.png', titleKey: 'measurableResults', descKey: 'measurableResultsDesc' },
-              { icon: '/icon/transparent-icon.png', titleKey: 'transparentCommunication', descKey: 'transparentCommunicationDesc' },
+              { icon: '/icon/mainicons1/stragies&planning1.png', titleKey: 'strategicFoundation', descKey: 'strategicFoundationDesc' },
+              { icon: '/icon/mainicons1/datadrive1.png', titleKey: 'continuousMonitoring', descKey: 'continuousMonitoringDesc' },
+              { icon: '/icon/mainicons1/transparent10.png', titleKey: 'measurableResults', descKey: 'measurableResultsDesc' },
+              { icon: '/icon/mainicons1/transparent101.png', titleKey: 'transparentCommunication', descKey: 'transparentCommunicationDesc' },
             ].map((feature, i) => (
               <div key={i} className="p-6 border border-gray-800 rounded-lg text-center hover:border-brand-pink/50 transition">
                 <div className="mb-3"><img src={feature.icon} alt={t(feature.titleKey)} className={styles.iconImage} /></div>

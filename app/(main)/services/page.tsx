@@ -414,8 +414,8 @@ export default function ServicesPage() {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: '/icon/update/fast-turnaround.png', titleKey: 'servicesFeature_turnaround', descKey: 'servicesFeature_turnaround_desc' },
-              { icon: '/icon/update/result-oriented.png', titleKey: 'servicesFeature_focused', descKey: 'servicesFeature_focused_desc' },
+              { icon: '/icon/mainicons1/execution10.png', titleKey: 'servicesFeature_turnaround', descKey: 'servicesFeature_turnaround_desc' },
+              { icon: '/icon/mainicons1/datadrive1.png', titleKey: 'servicesFeature_focused', descKey: 'servicesFeature_focused_desc' },
               { icon: '/icon/mainicons1/support10.png', titleKey: 'servicesFeature_support', descKey: 'servicesFeature_support_desc' },
               { icon: '/icon/mainicons1/analysis.png', titleKey: 'servicesFeature_analytics', descKey: 'servicesFeature_analytics_desc' },
             ].map((feature, i) => (
