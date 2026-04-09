@@ -18,7 +18,7 @@ export default function PricingPage() {
   const [selectedPackage, setSelectedPackage] = useState('');
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<'marketing' | 'development'>('marketing');
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const bgRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -120,7 +120,16 @@ export default function PricingPage() {
     { question: t('faq_q4'), answer: t('faq_a4') },
   ];
 
-  const digitalServices = [
+  const digitalServices = lang === 'ar' ? [
+    'التسويق عبر وسائل التواصل الاجتماعي',
+    'تحسين محركات البحث وتسويق المحتوى',
+    'التسويق عبر البريد الإلكتروني',
+    'إعلانات الدفع مقابل النقرة',
+    'إنتاج الفيديو',
+    'صناعة المحتوى',
+    'التحليلات والتقارير',
+    'استراتيجية العلامة التجارية',
+  ] : [
     'Social Media Marketing',
     'SEO & Content Marketing',
     'Email Marketing',
@@ -131,7 +140,16 @@ export default function PricingPage() {
     'Brand Strategy',
   ];
 
-  const realEstateServices = [
+  const realEstateServices = lang === 'ar' ? [
+    'جولات العقارات الافتراضية',
+    'تسويق العقارات',
+    'تحسين قوائم العقارات',
+    'التصوير بالطائرات بدون طيار',
+    'التصوير المعماري',
+    'جذب العملاء المحتملين',
+    'تحسين محركات البحث العقاري',
+    'هوية العلامة التجارية العقارية',
+  ] : [
     'Virtual Property Tours',
     'Property Marketing',
     'Listing Optimization',
@@ -153,7 +171,7 @@ export default function PricingPage() {
   const categories = [
     {
       id: 'marketing',
-      title: 'Marketing Package',
+      title: t('marketingPackages'),
       plans: [
         {
           title: t('pricingBasic'),
@@ -213,7 +231,7 @@ export default function PricingPage() {
     },
     {
       id: 'development',
-      title: 'Development & Design Package',
+      title: t('developmentDesignPackage'),
       plans: [
         {
           title: t('pricingStarterPackage'),
