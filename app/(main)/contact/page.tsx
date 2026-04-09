@@ -428,8 +428,9 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/icon-tiktok-new.svg" alt="TikTok" width={96} height={96} className="drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,154,60,0.4)] transition-all duration-300 object-contain" />
+              <div className="w-[96px] h-[96px] flex items-center justify-center">
+                <FaTiktok className="w-[44px] h-[44px] drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,77,109,0.5)] transition-all duration-300" style={{ color: '#FF4D6D' }} />
+              </div>
               <p className="mt-3 font-semibold text-white group-hover:text-brand-orange transition-colors">{t('socialTiktok')}</p>
             </a>
 
@@ -440,8 +441,9 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/icon-whatsapp-new.svg" alt="WhatsApp" width={96} height={96} className="drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,154,60,0.4)] transition-all duration-300 object-contain" />
+              <div className="w-[96px] h-[96px] flex items-center justify-center">
+                <FaWhatsapp className="w-[44px] h-[44px] drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,77,109,0.5)] transition-all duration-300" style={{ color: '#FF4D6D' }} />
+              </div>
               <p className="mt-3 font-semibold text-white group-hover:text-brand-orange transition-colors">{t('socialWhatsapp')}</p>
             </a>
           </div>
