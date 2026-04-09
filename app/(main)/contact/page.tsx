@@ -428,7 +428,10 @@ export default function ContactPage() {
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
             >
               <div className="w-[96px] h-[96px] flex items-center justify-center drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,154,60,0.6)] transition-all duration-300">
-                <TbBrandTiktok stroke="url(#neon-glow)" strokeWidth={1.5} style={{ fill: 'none', filter: 'drop-shadow(0px 0px 4px rgba(243,67,114,0.5))' }} className="w-[44px] h-[44px]" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-[60px] h-[60px]" viewBox="0 0 24 24" strokeWidth="1.5" stroke="url(#neon-glow)" fill="none" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0px 0px 4px rgba(243,67,114,0.5))' }}>
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M9 12a4 4 0 1 0 4 4v-12a5 5 0 0 0 5 5" />
+                </svg>
               </div>
               <p className="mt-3 font-semibold text-white group-hover:text-brand-orange transition-colors">{t('socialTiktok')}</p>
             </a>
@@ -441,7 +444,11 @@ export default function ContactPage() {
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
             >
               <div className="w-[96px] h-[96px] flex items-center justify-center drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,154,60,0.6)] transition-all duration-300">
-                <TbBrandWhatsapp stroke="url(#neon-glow)" strokeWidth={1.5} style={{ fill: 'none', filter: 'drop-shadow(0px 0px 4px rgba(243,67,114,0.5))' }} className="w-[44px] h-[44px]" />
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-[60px] h-[60px]" viewBox="0 0 24 24" strokeWidth="1.5" stroke="url(#neon-glow)" fill="none" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0px 0px 4px rgba(243,67,114,0.5))' }}>
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" />
+                  <path d="M9 10a.5 .5 0 0 0 1 0v-1a.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a.5 .5 0 0 0 0 -1h-1a.5 .5 0 0 0 0 1" />
+                </svg>
               </div>
               <p className="mt-3 font-semibold text-white group-hover:text-brand-orange transition-colors">{t('socialWhatsapp')}</p>
             </a>
