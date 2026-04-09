@@ -671,7 +671,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
 
     // Fetch dynamic site data
-    fetch('/api/admin/pages')
+    fetch(`/api/admin/pages?t=${Date.now()}`, { cache: 'no-store' })
       .then(res => res.json())
       .then(data => {
         if (data.success) {
