@@ -423,7 +423,9 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
             >
-              <FaTiktok className="w-[96px] h-[96px] text-white group-hover:scale-110 transition-all duration-300 object-contain" style={{ filter: "drop-shadow(2px 2px 0px #ff0050) drop-shadow(-2px -2px 0px #00f2fe)" }} />
+              <div className="w-[96px] h-[96px] flex items-center justify-center drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,154,60,0.4)] transition-all duration-300">
+                <FaTiktok fill="url(#brand-gradient)" className="w-[48px] h-[48px]" />
+              </div>
               <p className="mt-3 font-semibold text-white group-hover:text-brand-orange transition-colors">{t('socialTiktok')}</p>
             </a>
 
@@ -434,7 +436,9 @@ export default function ContactPage() {
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
             >
-              <FaWhatsapp className="w-[96px] h-[96px] text-[#25D366] drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,154,60,0.4)] transition-all duration-300 object-contain" />
+              <div className="w-[96px] h-[96px] flex items-center justify-center drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,154,60,0.4)] transition-all duration-300">
+                <FaWhatsapp fill="url(#brand-gradient)" className="w-[48px] h-[48px]" />
+              </div>
               <p className="mt-3 font-semibold text-white group-hover:text-brand-orange transition-colors">{t('socialWhatsapp')}</p>
             </a>
           </div>
