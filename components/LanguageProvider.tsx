@@ -315,8 +315,8 @@ const translations: Translations = {
   pricingGrowth: { en: 'Growth', ar: 'النمو' },
   pricingGrowthPrice: { en: '5,500 SAR', ar: '5,500 ريال سعودي' },
   pricingGrowthFeature1: { en: '12 posts / month + content calendar', ar: '12 منشور / شهرياً + تقويم المحتوى' },
-  pricingGrowthFeature2: { en: 'Community engagement (comments & DMs)', ar: 'مشاركة المجتمع (التعليقات والرسائل المباشرة)' },
-  pricingGrowthFeature3: { en: 'Basic ad spend management (up to X SAR ad budget)', ar: 'إدارة الإنفاق الإعلاني الأساسية (لميزانية إعلانية محددة)' },
+  pricingGrowthFeature2: { en: 'Community engagement (comments & DMs)', ar: 'إدارة التفاعل (التعليقات والرسائل)' },
+  pricingGrowthFeature3: { en: 'Basic ad spend management (up to X SAR ad budget)', ar: 'إدارة الحملات الإعلانية الأساسية' },
   pricingGrowthFeature4: { en: 'Weekly optimization & reporting', ar: 'التحسين والإبلاغ الأسبوعي' },
   pricingGrowthFeature5: { en: 'Audience growth strategy', ar: 'استراتيجية نمو الجمهور' },
   pricingMostPopular: { en: 'Most Popular', ar: 'الأكثر شعبية' },
@@ -333,9 +333,9 @@ const translations: Translations = {
   // Pricing Card - Custom Plan
   pricingCustom: { en: 'Custom Package', ar: 'حزمة مخصصة' },
   pricingCustomPrice: { en: 'Custom Pricing', ar: 'أسعار مخصصة' },
-  pricingCustomFeature1: { en: 'Tailored marketing mix (posts + ads + reels + influencer collabs)', ar: 'مزيج تسويقي مخصص (منشورات + إعلانات + ملفات فيديو + تعاونات المؤثرين)' },
+  pricingCustomFeature1: { en: 'Tailored marketing mix (posts + ads + reels + influencer collabs)', ar: 'مزيج تسويقي مخصص (منشورات، إعلانات، فيديو)' },
   pricingCustomFeature2: { en: 'Dedicated account manager', ar: 'مدير حساب مخصص' },
-  pricingCustomFeature3: { en: 'SEO + email + content marketing alignment', ar: 'توافق تحسين محركات البحث + البريد الإلكتروني + التسويق بالمحتوى' },
+  pricingCustomFeature3: { en: 'SEO + email + content marketing alignment', ar: 'التسويق الشامل (SEO، إيميل، محتوى)' },
   pricingCustomFeature4: { en: 'Quarterly strategy & planning', ar: 'استراتيجية وتخطيط ربع سنوي' },
   pricingCustomFeature5: { en: 'Advanced reporting & integrations', ar: 'إعداد التقارير والتكاملات المتقدمة' },
   
