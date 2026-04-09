@@ -270,12 +270,12 @@ export default function ContactPage() {
                     className="w-full px-4 py-3 border border-brand-pink/30 rounded-lg !text-black dark:text-white dark:bg-secondary-dark focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition text-lg"
                   >
                     <option value="">{t('selectService')}</option>
-                    <option value="digital-strategy">Digital Strategy</option>
-                    <option value="seo">SEO & Content</option>
-                    <option value="social-media">Social Media Marketing</option>
-                    <option value="branding">Branding & Design</option>
-                    <option value="web-design">Web Design & Development</option>
-                    <option value="other">Other</option>
+                    <option value="digital-strategy">{lang === 'ar' ? 'استراتيجية رقمية' : 'Digital Strategy'}</option>
+                    <option value="seo">{lang === 'ar' ? 'تحسين محركات البحث والمحتوى' : 'SEO & Content'}</option>
+                    <option value="social-media">{lang === 'ar' ? 'التسويق عبر منصات التواصل' : 'Social Media Marketing'}</option>
+                    <option value="branding">{lang === 'ar' ? 'العلامة التجارية والتصميم' : 'Branding & Design'}</option>
+                    <option value="web-design">{lang === 'ar' ? 'تصميم وتطوير المواقع' : 'Web Design & Development'}</option>
+                    <option value="other">{lang === 'ar' ? 'أخرى' : 'Other'}</option>
                   </select>
                 </label>
 

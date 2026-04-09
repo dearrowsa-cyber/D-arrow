@@ -22,7 +22,23 @@ interface ServiceDetailModalProps {
 }
 
 export default function ServiceDetailModal({ isOpen, onClose, service }: ServiceDetailModalProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+
+  const getTranslatedPrice = (price?: string) => {
+    if (!price) return null;
+    if (price === 'Contact for Quote' && lang === 'ar') return 'تواصل للحصول على عرض سعر';
+    return price;
+  };
+
+  const getTranslatedCurrency = (currency?: string) => {
+    if (!currency) return null;
+    if (lang !== 'ar') return currency;
+    if (currency.toLowerCase().includes('custom')) return 'مخصص';
+    if (currency.includes('SAR / month')) return 'ر.س / شهر';
+    if (currency.includes('SAR / project')) return 'ر.س / مشروع';
+    if (currency.includes('SAR / hour')) return 'ر.س / ساعة';
+    return currency.replace('SAR', 'ر.س');
+  };
 
   if (!service) return null;
 
@@ -110,12 +126,12 @@ export default function ServiceDetailModal({ isOpen, onClose, service }: Service
                       <p className="text-slate-400 text-xs font-medium tracking-wider uppercase">{t('pricing') || 'Pricing'}</p>
                       <div className="flex items-baseline gap-3">
                         <span className="text-5xl font-bold bg-gradient-to-r from-brand-pink via-[#FF6F4F] to-brand-orange bg-clip-text text-transparent">
-                          {service.price}
+                          {getTranslatedPrice(service.price)}
                         </span>
-                        <span className="text-slate-300 text-base font-medium">{service.priceCurrency}</span>
+                        <span className="text-slate-300 text-base font-medium">{getTranslatedCurrency(service.priceCurrency)}</span>
                       </div>
                       {service.priceCurrency && service.priceCurrency.toLowerCase().includes('custom') && (
-                        <p className="text-slate-400 text-sm mt-2">Get a tailored quote based on your specific requirements</p>
+                        <p className="text-slate-400 text-sm mt-2">{lang === 'ar' ? 'احصل على عرض سعر مخصص بناءً على متطلباتك الخاصة' : 'Get a tailored quote based on your specific requirements'}</p>
                       )}
                     </div>
                   </motion.div>

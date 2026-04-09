@@ -68,7 +68,7 @@ const REAL_ESTATE_MARKETING_SERVICES = [
 ];
 
 export default function CustomPackagePage() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const searchParams = useSearchParams();
   const [isMounted, setIsMounted] = useState(false);
 
@@ -243,7 +243,7 @@ export default function CustomPackagePage() {
                         />
                         <span className="ml-3 text-white font-medium">{t(service.titleKey)}</span>
                       </div>
-                      {service.price > 0 && <div className="text-soft-white font-semibold">{service.price.toLocaleString()} SAR/m</div>}
+                      {service.price > 0 && <div className="text-soft-white font-semibold">{service.price.toLocaleString()} {lang === 'ar' ? 'ر.س/ش' : 'SAR/m'}</div>}
                     </label>
                   ))}
                 </div>
@@ -280,7 +280,7 @@ export default function CustomPackagePage() {
                         />
                         <span className="ml-3 text-white font-medium">{t(service.titleKey)}</span>
                       </div>
-                      {service.price > 0 && <div className="text-soft-white font-semibold">{service.price.toLocaleString()} SAR</div>}
+                      {service.price > 0 && <div className="text-soft-white font-semibold">{service.price.toLocaleString()} {lang === 'ar' ? 'ر.س' : 'SAR'}</div>}
                     </label>
                   ))}
                 </div>
@@ -317,7 +317,7 @@ export default function CustomPackagePage() {
                         />
                         <span className="ml-3 text-white font-medium">{t(service.titleKey)}</span>
                       </div>
-                      {service.price > 0 && <div className="text-soft-white font-semibold">{service.price.toLocaleString()} SAR</div>}
+                      {service.price > 0 && <div className="text-soft-white font-semibold">{service.price.toLocaleString()} {lang === 'ar' ? 'ر.س' : 'SAR'}</div>}
                     </label>
                   ))}
                 </div>
@@ -339,7 +339,7 @@ export default function CustomPackagePage() {
                               {t('remove')}
                             </button>
                           </div>
-                          {service.price > 0 && <div className="font-semibold text-brand-pink">{service.price.toLocaleString()} SAR</div>}
+                          {service.price > 0 && <div className="font-semibold text-brand-pink">{service.price.toLocaleString()} {lang === 'ar' ? 'ر.س' : 'SAR'}</div>}
                         </div>
                       ))}
                     </div>
@@ -348,7 +348,7 @@ export default function CustomPackagePage() {
                       <div className="mt-4 flex items-center justify-between pt-4 border-t border-brand-pink/20">
                         <div className="text-sm text-soft-white">{t('subtotal')}</div>
                         <div className="text-lg font-bold text-brand-pink">
-                          {selectedServices.reduce((sum, s) => sum + (s.price || 0), 0).toLocaleString()} SAR/m
+                          {selectedServices.reduce((sum, s) => sum + (s.price || 0), 0).toLocaleString()} {lang === 'ar' ? 'ر.س/ش' : 'SAR/m'}
                         </div>
                       </div>
                     )}

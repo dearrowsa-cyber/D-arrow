@@ -70,7 +70,7 @@ export default function ProcessPage() {
                     <img src={step.icon} alt={step.title?.[lang] || t(step.titleKey)} className={styles.iconImage} />
                   </div>
                   <div className= {`${styles.badge}`} style={{ background: 'linear-gradient(90deg, #f7df04, #f7e204)'}}>
-                    <span className='!text-black'>Step {stepNum}</span>
+                    <span className='!text-black'>{lang === 'ar' ? 'الخطوة' : 'Step'} {stepNum}</span>
                   </div>
                 </div>
 
@@ -82,7 +82,7 @@ export default function ProcessPage() {
                   <div className={styles.divider} />
 
                   <div style={{ fontSize: '0.9rem', color: 'var(--text-light)', paddingTop: '0.5rem' }}>
-                    <span style={{ color: 'var(--brand-orange)', fontWeight: 600 }}>Phase {stepNum}</span> {t('ofTheProcess') || 'of the process'}
+                    <span style={{ color: 'var(--brand-orange)', fontWeight: 600 }}>{lang === 'ar' ? 'المرحلة' : 'Phase'} {stepNum}</span> {t('ofTheProcess') || (lang === 'ar' ? 'من العملية' : 'of the process')}
                   </div>
                 </div>
               </div>

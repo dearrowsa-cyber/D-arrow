@@ -32,7 +32,7 @@ const REAL_ESTATE_MARKETING_SERVICES = [
 ];
 
 export default function CustomServicesInquiryModal({ isOpen, onClose }: CustomServicesInquiryModalProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [selectedServices, setSelectedServices] = useState<Array<{ id: string; label?: string; labelKey?: string; price: number }>>([]);
   const [formData, setFormData] = useState({
     name: '',
@@ -165,7 +165,7 @@ export default function CustomServicesInquiryModal({ isOpen, onClose }: CustomSe
                       />
                       <span className="ml-3 text-gray-900 font-medium">{t(service.labelKey as string)}</span>
                     </div>
-                    <div className="text-gray-600 font-semibold">{service.price.toLocaleString()} SAR</div>
+                    <div className="text-gray-600 font-semibold">{service.price.toLocaleString()} {lang === 'ar' ? 'ر.س' : 'SAR'}</div>
                   </label>
                 ))}
               </div>
@@ -189,7 +189,7 @@ export default function CustomServicesInquiryModal({ isOpen, onClose }: CustomSe
                       />
                       <span className="ml-3 text-gray-900 font-medium">{t(service.labelKey as string)}</span>
                     </div>
-                    <div className="text-gray-600 font-semibold">{service.price.toLocaleString()} SAR</div>
+                    <div className="text-gray-600 font-semibold">{service.price.toLocaleString()} {lang === 'ar' ? 'ر.س' : 'SAR'}</div>
                   </label>
                 ))}
               </div>
@@ -205,14 +205,14 @@ export default function CustomServicesInquiryModal({ isOpen, onClose }: CustomSe
                               <span className="text-pink-900 font-medium">{t(service.labelKey as string) || service.label}</span>
                           <button type="button" onClick={() => handleServiceToggle(service.id)} className="text-gray-500 hover:text-gray-700">{t('remove')}</button>
                         </div>
-                        <div className="font-semibold text-pink-900">{service.price.toLocaleString()} SAR</div>
+                        <div className="font-semibold text-pink-900">{service.price.toLocaleString()} {lang === 'ar' ? 'ر.س' : 'SAR'}</div>
                       </div>
                     ))}
                   </div>
 
                   <div className="mt-4 flex items-center justify-between">
                     <div className="text-sm text-gray-700">{t('subtotal')}</div>
-                    <div className="text-lg font-bold text-gray-900">{selectedServices.reduce((sum, s) => sum + (s.price || 0), 0).toLocaleString()} SAR</div>
+                    <div className="text-lg font-bold text-gray-900">{selectedServices.reduce((sum, s) => sum + (s.price || 0), 0).toLocaleString()} {lang === 'ar' ? 'ر.س' : 'SAR'}</div>
                   </div>
                 </div>
               )}
