@@ -34,9 +34,9 @@ const defaultPagesContent = {
   },
   social: {
     instagram: 'https://www.instagram.com/darrow.co/',
-    snapchat: 'https://www.snapchat.com/add/darrowdigital',
+    snapchat: 'https://www.snapchat.com/@darrow.co?share_id=bINbFcr6nOc&locale=en-EG',
     linkedin: 'https://www.linkedin.com/company/darrowdigital',
-    tiktok: 'https://www.tiktok.com/@darrowdigital',
+    tiktok: 'https://www.tiktok.com/@d.arrow.sa?_r=1&_t=ZS-95OXOuGs34j',
     whatsapp: 'https://wa.me/966500466349',
   },
   whyUs: {

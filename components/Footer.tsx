@@ -126,7 +126,7 @@ const Footer = () => {
               </a>
 
               <a
-                href={social?.tiktok || "https://www.tiktok.com/"}
+                href={social?.tiktok || "https://www.tiktok.com/@d.arrow.sa?_r=1&_t=ZS-95OXOuGs34j"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-secondary-dark rounded-md flex items-center justify-center hover:bg-brand-pink transition transform hover:scale-110"
@@ -135,7 +135,7 @@ const Footer = () => {
               </a>
 
               <a
-                href={social?.snapchat || "https://www.snapchat.com/add/darrow.co"}
+                href={social?.snapchat || "https://www.snapchat.com/@darrow.co?share_id=bINbFcr6nOc&locale=en-EG"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-secondary-dark rounded-md flex items-center justify-center hover:bg-brand-pink transition transform hover:scale-110"

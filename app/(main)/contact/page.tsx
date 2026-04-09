@@ -400,7 +400,7 @@ export default function ContactPage() {
 
             {/* Snapchat */}
             <a
-              href={social?.snapchat || "https://www.snapchat.com/add/darrow.co"}
+              href={social?.snapchat || "https://www.snapchat.com/@darrow.co?share_id=bINbFcr6nOc&locale=en-EG"}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-[#071426] via-[#062a4a] to-[#021022] hover:from-[rgba(255,77,109,0.3)] hover:to-[rgba(255,77,109,0.1)] transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
@@ -422,7 +422,7 @@ export default function ContactPage() {
 
             {/* TikTok */}
             <a
-              href={social?.tiktok || "https://www.tiktok.com/@d.arrow2"}
+              href={social?.tiktok || "https://www.tiktok.com/@d.arrow.sa?_r=1&_t=ZS-95OXOuGs34j"}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
