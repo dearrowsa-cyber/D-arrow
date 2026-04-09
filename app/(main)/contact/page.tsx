@@ -227,7 +227,7 @@ export default function ContactPage() {
                     <input
                       type="email"
                       name="email"
-                      placeholder="you@example.com"
+                      placeholder={lang === 'ar' ? 'البريد الإلكتروني' : 'you@example.com'}
                       value={formData.email}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-brand-pink/30 rounded-lg !text-black dark:text-white dark:bg-secondary-dark/50 placeholder-text-light focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition text-lg"
@@ -253,7 +253,7 @@ export default function ContactPage() {
                     <input
                       type="text"
                       name="company"
-                      placeholder={t('yourName')}
+                      placeholder={lang === 'ar' ? 'اسم شركتك' : 'Your Company'}
                       value={formData.company}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-brand-pink/30 rounded-lg !text-black dark:text-white dark:bg-secondary-dark/50 placeholder-text-light focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition text-lg"
@@ -324,12 +324,12 @@ export default function ContactPage() {
 
                 <div className="mb-3">
                   <div className="text-sm text-white dark:text-gray-400">{t('yourEmail')}</div>
-                  <div className="font-medium !text-white dark:text-white">{formData.name || t('yourName')} <span className="!text-white dark:text-gray-500">&lt;{formData.email || 'you@example.com'}&gt;</span></div>
+                  <div className={`font-medium !text-white dark:text-white ${lang === 'ar' ? 'text-right' : ''}`} dir={lang === 'ar' ? 'ltr' : 'auto'}>{formData.name || t('yourName')} <span className="!text-white dark:text-gray-500">&lt;{formData.email || (lang === 'ar' ? 'بريدك الإلكتروني' : 'you@example.com')}&gt;</span></div>
                 </div>
 
                 <div className="mb-3">
                   <div className="text-sm text-white dark:text-gray-400">{t('emailSubject')}</div>
-                  <div className="font-semibold text-white dark:text-white">{formData.service ? `${formData.service} Inquiry` : t('generalInquiry')}</div>
+                  <div className="font-semibold text-white dark:text-white">{formData.service ? `${formData.service} ${lang === 'ar' ? 'استفسار' : 'Inquiry'}` : t('generalInquiry')}</div>
                 </div>
 
                 <div className="mt-4 p-4 bg-white rounded-md font-bold text-sm !text-black whitespace-pre-wrap min-h-[120px]">
