@@ -7,6 +7,11 @@ import Stats from '@/components/Stats';
 import LazySection from '@/components/LazySection';
 
 // Lazy load below-fold components with loading priority
+const AboutCompany = dynamic(() => import('@/components/AboutCompany'), {
+  loading: () => <div className="py-8 lg:py-16 bg-gray-900" />,
+  ssr: true,
+});
+
 const Process = dynamic(() => import('@/components/Process'), {
   loading: () => <div className="py-8 lg:py-16 bg-gray-900" />,
   ssr: true,
@@ -84,6 +89,10 @@ export default function Home() {
     <main className="scroll-smooth">
       <Hero />
       <Stats />
+
+      <LazySection>
+        <AboutCompany />
+      </LazySection>
       
       <LazySection>
         <Process />
