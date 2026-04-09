@@ -144,6 +144,10 @@ export default function ContactPage() {
               <stop stopColor="#FF4D6D" offset="0%" />
               <stop stopColor="#FF9A3C" offset="100%" />
             </linearGradient>
+            <linearGradient id="neon-glow" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop stopColor="#F34372" offset="0%" />
+              <stop stopColor="#FCAC3C" offset="100%" />
+            </linearGradient>
           </defs>
         </svg>
 
@@ -424,7 +428,7 @@ export default function ContactPage() {
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
             >
               <div className="w-[96px] h-[96px] flex items-center justify-center drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,154,60,0.6)] transition-all duration-300">
-                <TbBrandTiktok stroke="url(#brand-gradient)" strokeWidth={1.5} style={{ fill: 'none' }} className="w-[64px] h-[64px]" />
+                <TbBrandTiktok stroke="url(#neon-glow)" strokeWidth={1.5} style={{ fill: 'none', filter: 'drop-shadow(0px 0px 4px rgba(243,67,114,0.5))' }} className="w-[44px] h-[44px]" />
               </div>
               <p className="mt-3 font-semibold text-white group-hover:text-brand-orange transition-colors">{t('socialTiktok')}</p>
             </a>
@@ -437,7 +441,7 @@ export default function ContactPage() {
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"
             >
               <div className="w-[96px] h-[96px] flex items-center justify-center drop-shadow-md group-hover:scale-110 group-hover:drop-shadow-[0_0_20px_rgba(255,154,60,0.6)] transition-all duration-300">
-                <TbBrandWhatsapp stroke="url(#brand-gradient)" strokeWidth={1.5} style={{ fill: 'none' }} className="w-[64px] h-[64px]" />
+                <TbBrandWhatsapp stroke="url(#neon-glow)" strokeWidth={1.5} style={{ fill: 'none', filter: 'drop-shadow(0px 0px 4px rgba(243,67,114,0.5))' }} className="w-[44px] h-[44px]" />
               </div>
               <p className="mt-3 font-semibold text-white group-hover:text-brand-orange transition-colors">{t('socialWhatsapp')}</p>
             </a>
