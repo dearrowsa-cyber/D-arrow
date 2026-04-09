@@ -97,6 +97,17 @@ const Footer = () => {
                 </a>
               </div>
 
+              <div className={`flex flex-col gap-3 mt-5 pt-5 border-t border-brand-pink/20 ${lang === "ar" ? "text-right" : "text-left"}`}>
+                <div className={`flex items-center gap-2 ${lang === "ar" ? "flex-row-reverse" : ""}`}>
+                  <span className="font-semibold text-white">{lang === 'ar' ? 'السجل التجاري:' : 'CR Number:'}</span>
+                  <span className="text-gray-400" dir="ltr">7053575184</span>
+                </div>
+                <div className={`flex items-center gap-2 ${lang === "ar" ? "flex-row-reverse" : ""}`}>
+                  <span className="font-semibold text-white">{lang === 'ar' ? 'الرقم الضريبي:' : 'VAT Number:'}</span>
+                  <span className="text-gray-400" dir="ltr">314611548300003</span>
+                </div>
+              </div>
+
             </div>
           </div>
 
