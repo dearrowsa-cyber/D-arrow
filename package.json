@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "analyze": "cross-env ANALYZE=true next build",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate && prisma db push"
   },
   "dependencies": {
     "@n8n/chat": "^1.9.3",
