@@ -6,7 +6,10 @@ import path from 'path';
 
 export async function POST(req: NextRequest) {
   try {
-    const baseUrl = 'http://127.0.0.1:3000';
+    // Dynamically get the base URL from the request, fallback to localhost for dev
+    const protocol = req.headers.get('x-forwarded-proto') || 'http';
+    const host = req.headers.get('host') || '127.0.0.1:3000';
+    const baseUrl = `${protocol}://${host}`;
     
     // Core static routes
     const routes = [

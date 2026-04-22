@@ -8,6 +8,7 @@ import SeoScoreGauge from '@/components/seo/SeoScoreGauge';
 export default function SeoDashboard() {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
 
@@ -17,7 +18,15 @@ export default function SeoDashboard() {
     })
       .then(res => res.json())
       .then(res => {
-        if (res.success) setData(res.data);
+        if (res.success) {
+          setData(res.data);
+        } else {
+          setErrorMsg(res.error || 'Failed to load SEO data.');
+        }
+        setLoading(false);
+      })
+      .catch(err => {
+        setErrorMsg(err.message);
         setLoading(false);
       });
   }, []);
@@ -52,6 +61,12 @@ export default function SeoDashboard() {
         <h2 style={{ fontSize: '28px', margin: '0 0 8px' }}>لوحة تحكم السيو (SEO Dashboard)</h2>
         <p style={{ color: '#9CA3AF' }}>نظرة شاملة على أداء محركات البحث الخاص بموقعك</p>
       </div>
+
+      {errorMsg && (
+        <div style={{ padding: '16px', background: '#dc2626', color: '#fff', borderRadius: '8px', marginBottom: '24px' }}>
+          <strong>خطأ في جلب البيانات:</strong> {errorMsg}
+        </div>
+      )}
 
       <div className="admin-grid-4" style={{ marginBottom: '32px' }}>
         <div className="admin-stat-card">
