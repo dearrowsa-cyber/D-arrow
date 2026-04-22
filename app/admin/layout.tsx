@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import './admin.css';
-import { LayoutDashboard, FileText, Globe, DollarSign, LogOut, Menu, X, Image } from 'lucide-react';
+import { LayoutDashboard, FileText, Globe, DollarSign, LogOut, Menu, X, Image, Search, Tags, ArrowRightLeft, Bot, Code, Map } from 'lucide-react';
 
 const navItems = [
   { href: '/admin', label: 'لوحة التحكم', icon: LayoutDashboard },
@@ -12,6 +12,12 @@ const navItems = [
   { href: '/admin/pages', label: 'الصفحات', icon: Globe },
   { href: '/admin/pricing', label: 'الأسعار', icon: DollarSign },
   { href: '/admin/media', label: 'الوسائط', icon: Image },
+  { href: '/admin/seo', label: 'لوحة SEO', icon: Search },
+  { href: '/admin/seo/meta', label: 'بيانات SEO', icon: Tags },
+  { href: '/admin/seo/redirects', label: 'التحويلات', icon: ArrowRightLeft },
+  { href: '/admin/seo/robots', label: 'Robots.txt', icon: Bot },
+  { href: '/admin/seo/schema', label: 'Schema', icon: Code },
+  { href: '/admin/seo/sitemap', label: 'خريطة الموقع', icon: Map },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

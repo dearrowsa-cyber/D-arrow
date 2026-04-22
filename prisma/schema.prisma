@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model SeoMeta {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String?
+  description     String?
+  focusKeyword    String?
+  canonicalUrl    String?
+  robots          String?  @default("index, follow") // e.g., "noindex, nofollow"
+  ogTitle         String?
+  ogDescription   String?
+  ogImage         String?
+  twitterCard     String?  @default("summary_large_image")
+  schemaType      String?  @default("WebPage") // e.g., Article, Product, FAQ
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  auditLogs       SeoAuditLog[]
+}
+
+model SeoTemplate {
+  id              String   @id @default(cuid())
+  type            String   @unique // e.g., "post", "page", "product"
+  titleTemplate   String   @default("{{title}} | {{site_name}}")
+  descTemplate    String   @default("{{description}}")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Redirect {
+  id              String   @id @default(cuid())
+  sourceUrl       String   @unique
+  destinationUrl  String
+  type            Int      @default(301) // 301 or 302
+  enabled         Boolean  @default(true)
+  hitCount        Int      @default(0)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model RobotsRule {
+  id              String   @id @default(cuid())
+  userAgent       String   @default("*")
+  directive       String   // "Allow" or "Disallow"
+  path            String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([userAgent, path, directive])
+}
+
+model SchemaMarkup {
+  id              String   @id @default(cuid())
+  slug            String   @unique // The page slug to inject this into
+  type            String   // e.g., "Article", "FAQPage"
+  jsonData        String   // Stringified JSON-LD
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model SeoAuditLog {
+  id              String   @id @default(cuid())
+  seoMetaId       String
+  seoMeta         SeoMeta  @relation(fields: [seoMetaId], references: [id], onDelete: Cascade)
+  score           Int
+  issuesCount     Int
+  suggestions     String   // Stringified JSON array of suggestions
+  analyzedAt      DateTime @default(now())
+}
+
+model TrackedKeyword {
+  id            String   @id @default(cuid())
+  keyword       String   @unique
+  group         String?
+  starred       Boolean  @default(false)
+  priority      String?  @default("medium")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  rankings      KeywordRanking[]
+  pageKeywords  PageKeyword[]
+}
+
+model KeywordRanking {
+  id            String   @id @default(cuid())
+  keywordId     String
+  keyword       TrackedKeyword @relation(fields: [keywordId], references: [id], onDelete: Cascade)
+  position      Float
+  clicks        Int      @default(0)
+  impressions   Int      @default(0)
+  ctr           Float    @default(0)
+  date          DateTime
+  createdAt     DateTime @default(now())
+
+  @@unique([keywordId, date])
+}
+
+model PageKeyword {
+  id            String   @id @default(cuid())
+  keywordId     String
+  keyword       TrackedKeyword @relation(fields: [keywordId], references: [id], onDelete: Cascade)
+  pageUrl       String
+  position      Float
+  clicks        Int      @default(0)
+  impressions   Int      @default(0)
+  date          DateTime
+  createdAt     DateTime @default(now())
+
+  @@unique([keywordId, pageUrl, date])
+}
+
