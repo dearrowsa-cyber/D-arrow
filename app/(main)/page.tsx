@@ -40,6 +40,41 @@ export const revalidate = 3600;
 export default function Home() {
   return (
     <main className="scroll-smooth">
+      {/* JSON-LD Schema for WebSite and WebPage */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify([
+            {
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              '@id': 'https://d-arrow.com/#website',
+              url: 'https://d-arrow.com',
+              name: 'D Arrow Digital Marketing Agency',
+              description: 'Award-winning digital marketing agency providing comprehensive digital solutions including SEO, web design, branding, app development, and digital marketing services.',
+              publisher: {
+                '@id': 'https://d-arrow.com/#organization',
+              },
+              inLanguage: ['en', 'ar'],
+            },
+            {
+              '@context': 'https://schema.org',
+              '@type': 'WebPage',
+              '@id': 'https://d-arrow.com/#webpage',
+              url: 'https://d-arrow.com',
+              name: 'D Arrow - Digital Marketing Agency | SEO, Web Design, Branding',
+              isPartOf: {
+                '@id': 'https://d-arrow.com/#website',
+              },
+              about: {
+                '@id': 'https://d-arrow.com/#organization',
+              },
+              description: 'Transform your business with D Arrow\'s digital marketing solutions. Expert SEO, web design, branding, and digital marketing services.',
+              inLanguage: ['en', 'ar'],
+            }
+          ]),
+        }}
+      />
       <Hero />
       <Stats />
 

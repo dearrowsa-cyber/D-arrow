@@ -243,50 +243,7 @@ export default function RootLayout({
           }}
         />
 
-        {/* JSON-LD Schema for FAQPage */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'FAQPage',
-              mainEntity: [
-                {
-                  '@type': 'Question',
-                  name: 'What digital marketing services does D Arrow provide?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'D Arrow provides comprehensive digital marketing services including SEO, web design, app development, branding, social media marketing, email marketing, PPC advertising, and real estate marketing solutions.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'Does D Arrow offer free consultation?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'Yes, D Arrow offers free consultation to discuss your business needs and recommend the most suitable digital marketing solutions.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'What is the price range for D Arrow services?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'D Arrow services start from 800 SAR monthly with custom packages available. Visit our pricing page for detailed information.',
-                  },
-                },
-                {
-                  '@type': 'Question',
-                  name: 'Does D Arrow work with businesses outside Saudi Arabia?',
-                  acceptedAnswer: {
-                    '@type': 'Answer',
-                    text: 'Yes, D Arrow serves clients across the Gulf region including UAE, Kuwait, Qatar, Bahrain, and Oman, as well as international clients.',
-                  },
-                },
-              ],
-            }),
-          }}
-        />
+
       </head>
       <body className="antialiased">
         {children}
