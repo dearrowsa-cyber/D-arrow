@@ -32,9 +32,9 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
   const [showChatBot, setShowChatBot] = useState(false);
   const { lang } = useLanguage();
 
-  // Hide loading screen after minimum delay
+  // Hide loading screen after minimum delay (reduced for much faster FCP)
   useEffect(() => {
-    const timer = setTimeout(() => setShowLoadingScreen(false), 1200);
+    const timer = setTimeout(() => setShowLoadingScreen(false), 400);
     return () => clearTimeout(timer);
   }, []);
 

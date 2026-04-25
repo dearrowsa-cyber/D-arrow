@@ -52,9 +52,10 @@ const Hero = () => {
         loop
         playsInline
         preload="auto"
+        poster="/Darrow-1.png"
         src="/main-video.mp4"
         className="absolute inset-0 w-full h-full object-cover block"
-        style={{ zIndex: 1 }}
+        style={{ zIndex: 1, backgroundColor: '#0B0D1F' }}
       />
       
       {/* Blur Overlay on Video (only visible if video plays) */}
