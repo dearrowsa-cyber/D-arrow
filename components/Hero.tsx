@@ -52,11 +52,10 @@ const Hero = () => {
         loop
         playsInline
         preload="auto"
+        src="/main-video.mp4"
         className="absolute inset-0 w-full h-full object-cover block"
         style={{ zIndex: 1 }}
-      >
-        <source src="/main-video.mp4" type="video/mp4" />
-      </video>
+      />
       
       {/* Blur Overlay on Video (only visible if video plays) */}
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm block" style={{ zIndex: 2 }}></div>
