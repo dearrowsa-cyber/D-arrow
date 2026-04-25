@@ -524,13 +524,10 @@ html.lang-ar li {
 
 /* Performance Optimizations for Smooth Scrolling */
 
-/* GPU acceleration for sections */
+/* GPU acceleration for sections - excluding hero video containment issues */
 section {
-  transform: translateZ(0);
   backface-visibility: hidden;
-  perspective: 1000px;
-  will-change: contents;
-  contain: layout style;
+  will-change: auto;
 }
 
 /* Optimize animations */
