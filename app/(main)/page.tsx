@@ -28,10 +28,7 @@ const PartnersInSuccess = dynamic(() => import('@/components/PartnersInSuccess')
   ssr: true,
 });
 
-const Portfolio = dynamic(() => import('@/components/Portfolio'), {
-  loading: () => <div className="py-8 lg:py-16 bg-gray-900" />,
-  ssr: true,
-});
+
 
 export async function generateMetadata(): Promise<Metadata> {
   return getSeoMetadata('/');
