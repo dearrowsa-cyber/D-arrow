@@ -51,23 +51,24 @@ const Hero = () => {
         muted
         loop
         playsInline
-        className="absolute inset-0 w-full h-full object-cover z-0 block"
+        className="absolute inset-0 w-full h-full object-cover block"
+        style={{ zIndex: 1 }}
       >
         <source src="/main-video.mp4" type="video/mp4" />
       </video>
       
       {/* Blur Overlay on Video (only visible if video plays) */}
-      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm z-[1] block"></div>
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-sm block" style={{ zIndex: 2 }}></div>
       
       {/* Fallback Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0B0D1F] via-[#1a1d3f] to-[#0B0D1F]" style={{zIndex: -50}}></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0B0D1F] via-[#1a1d3f] to-[#0B0D1F]" style={{ zIndex: 0 }}></div>
       
       {/* Animated background circles */}
-      <div className="absolute top-10 right-10 w-72 h-72 bg-brand-pink opacity-5 rounded-full blur-3xl" style={{zIndex: -50}}></div>
-      <div className="absolute bottom-10 left-10 w-96 h-96 bg-brand-orange opacity-5 rounded-full blur-3xl" style={{zIndex: -50}}></div>
+      <div className="absolute top-10 right-10 w-72 h-72 bg-brand-pink opacity-5 rounded-full blur-3xl" style={{ zIndex: 0 }}></div>
+      <div className="absolute bottom-10 left-10 w-96 h-96 bg-brand-orange opacity-5 rounded-full blur-3xl" style={{ zIndex: 0 }}></div>
      
       {/* Content */}
-      <div className="relative z-10">
+      <div className="relative" style={{ zIndex: 10 }}>
         <div className="flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto w-full px-4">
           {/* Text Content Div */}
           <div suppressHydrationWarning className={`flex-[1] py-18 md:px-6 w-full ${lang === 'ar' ? 'text-right md:text-right' : 'text-center md:text-left'}`} style={{zIndex: 10}}>
