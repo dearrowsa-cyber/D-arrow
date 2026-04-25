@@ -115,7 +115,6 @@ const nextConfig = {
   experimental: {
     optimizePackageImports: ['components', 'lucide-react', 'react-icons'],
     scrollRestoration: true,
-    optimizeCss: true,
   },
   
   // Turbopack configuration

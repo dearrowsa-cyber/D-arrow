@@ -93,9 +93,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="theme-color" content="#FF4D6D" />
         
-        {/* Preconnect to external resources for performance */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Removed preconnects to Google Fonts as next/font/google handles them locally */}
         
         {/* Preload critical fonts to completely eliminate LCP delay (saving ~4000ms) */}
         <link rel="preload" href="/fonts/Gilroy-Bold.otf" as="font" type="font/otf" crossOrigin="anonymous" />

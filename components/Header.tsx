@@ -193,9 +193,9 @@ export default memo(function Header() {
               href="/contact"
               className="bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] 
 !text-white 
- p-2
- hover:!bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C]
-text-[8px] sm:text-md lg:text-lg 
+px-4 py-2 min-h-[44px] flex items-center justify-center
+hover:!bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C]
+text-xs sm:text-sm lg:text-lg 
 font-semibold 
 rounded-md 
 transition-all duration-300 
@@ -209,8 +209,8 @@ hover:shadow-md hover:scale-105 active:scale-95"
 
             <button onClick={toggleLang} className=" bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] 
 !text-white 
- p-2
-text-[8px] sm:text-md lg:text-lg 
+px-3 py-2 min-h-[44px] flex items-center justify-center
+text-xs sm:text-sm lg:text-lg 
 font-semibold 
 rounded-md 
 transition-all duration-300 
@@ -233,7 +233,7 @@ hover:shadow-md hover:scale-105 active:scale-95">
         {/* Mobile/Tablet Sidebar Menu */}
         {isMenuOpen && (
           <nav className="lg:hidden mt-4 space-y-2 pb-4 max-h-96 overflow-y-auto">
-            <Link href="/" onClick={() => handleNavClick('/')} className="flex items-center gap-2 px-4 py-2.5 font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition !text-md rounded-lg text-soft-white">{t('home')}</Link>
+            <Link href="/" onClick={() => handleNavClick('/')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition !text-md rounded-lg text-soft-white">{t('home')}</Link>
             <div className="relative" onMouseEnter={() => { if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current); setServicesOpen(true); }} onMouseLeave={() => { closeTimeoutRef.current = window.setTimeout(() => setServicesOpen(false), 100); }}>
           <button
   aria-haspopup="true"
@@ -248,7 +248,7 @@ hover:shadow-md hover:scale-105 active:scale-95">
              bg-transparent hover:bg-transparent 
              text-white text-lg
              transition text-md font-medium 
-             px-0 py-0 
+             px-4 py-3 min-h-[44px]
              border-none outline-none"
   style={{ textTransform: 'none' }}
 >
@@ -260,22 +260,22 @@ hover:shadow-md hover:scale-105 active:scale-95">
                 onMouseLeave={() => { closeTimeoutRef.current = window.setTimeout(() => setServicesOpen(false), 100); }}
                 className={`${servicesOpen ? 'visible opacity-100 translate-y-0 pointer-events-auto' : 'invisible opacity-0 -translate-y-1 pointer-events-none'} transition-all duration-100 transform absolute ${lang === 'ar' ? 'right-0' : 'left-0'} mt-2 w-[360px] bg-[#14162E] border border-[rgba(255,77,109,0.2)] rounded-xl shadow-2xl p-4 z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
                 <div className="grid grid-cols-1 gap-3">
-                  <Link href="/services?category=digital-marketing" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-2.5 rounded-lg hover:bg-[rgba(255,77,109,0.1)] hover:border-[rgba(255,77,109,0.3)] border border-transparent transition group`}>
-                    <img src="/icon/services-icon/digital_marketing_promotion.png" alt="Digital Marketing" className="w-12 h-6 rounded-lg object-cover shadow-sm flex-shrink-0 group-hover:shadow-lg group-hover:shadow-[rgba(255,77,109,0.3)] transition" loading="lazy" decoding="async" />
+                  <Link href="/services?category=digital-marketing" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-4 min-h-[44px] rounded-lg hover:bg-[rgba(255,77,109,0.1)] hover:border-[rgba(255,77,109,0.3)] border border-transparent transition group`}>
+                    <img src="/icon/services-icon/digital_marketing_promotion.png" alt="Digital Marketing" className="w-12 h-8 rounded-lg object-cover shadow-sm flex-shrink-0 group-hover:shadow-lg group-hover:shadow-[rgba(255,77,109,0.3)] transition" loading="lazy" decoding="async" />
                     <div className={lang === 'ar' ? 'text-right' : ''}>
                       <h4 className="!text-sm font-semibold text-brand-white group-hover:text-brand-pink transition">{t('digitalMarketingHeader')}</h4>
                     </div>
                   </Link>
 
-                  <Link href="/services?category=innovation-development" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-2.5 rounded-lg hover:bg-[rgba(255,77,109,0.1)] hover:border-[rgba(255,77,109,0.3)] border border-transparent transition group`}>
-                    <img src="/icon/services-icon/creative_digital_design.png" alt="Innovation & Development" className="w-12 h-9 rounded-lg object-cover shadow-sm flex-shrink-0 group-hover:shadow-lg group-hover:shadow-[rgba(255,77,109,0.3)] transition" loading="lazy" decoding="async" />
+                  <Link href="/services?category=innovation-development" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-4 min-h-[44px] rounded-lg hover:bg-[rgba(255,77,109,0.1)] hover:border-[rgba(255,77,109,0.3)] border border-transparent transition group`}>
+                    <img src="/icon/services-icon/creative_digital_design.png" alt="Innovation & Development" className="w-12 h-8 rounded-lg object-cover shadow-sm flex-shrink-0 group-hover:shadow-lg group-hover:shadow-[rgba(255,77,109,0.3)] transition" loading="lazy" decoding="async" />
                     <div className={lang === 'ar' ? 'text-right' : ''}>
                       <h4 className="!text-sm font-semibold text-brand-white group-hover:text-brand-pink transition">{t('innovationHeader')}</h4>
                     </div>
                   </Link>
 
-                  <Link href="/services?category=real-estate" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-2.5 rounded-lg hover:bg-[rgba(255,77,109,0.1)] hover:border-[rgba(255,77,109,0.3)] border border-transparent transition group`}>
-                    <img src="/icon/services-icon/real_estate_marketing.png" alt="Real Estate" className="w-12 h-9 rounded-lg object-cover shadow-sm flex-shrink-0 group-hover:shadow-lg group-hover:shadow-[rgba(255,77,109,0.3)] transition" loading="lazy" decoding="async" />
+                  <Link href="/services?category=real-estate" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-4 min-h-[44px] rounded-lg hover:bg-[rgba(255,77,109,0.1)] hover:border-[rgba(255,77,109,0.3)] border border-transparent transition group`}>
+                    <img src="/icon/services-icon/real_estate_marketing.png" alt="Real Estate" className="w-12 h-8 rounded-lg object-cover shadow-sm flex-shrink-0 group-hover:shadow-lg group-hover:shadow-[rgba(255,77,109,0.3)] transition" loading="lazy" decoding="async" />
                     <div className={lang === 'ar' ? 'text-right' : ''}>
                       <h4 className="!text-sm font-semibold text-brand-white group-hover:text-brand-pink transition">{t('realEstateHeader')}</h4>
                     </div>
@@ -284,13 +284,13 @@ hover:shadow-md hover:scale-105 active:scale-95">
               </div>
             </div>
 
-            <Link href="/pricing" onClick={() => handleNavClick('/pricing')} className="flex items-center gap-2 px-4 py-2.5 font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('packages')}</Link>
-            <Link href="/why-us" onClick={() => handleNavClick('/why-us')} className="flex items-center gap-2 px-4 py-2.5 text-soft-white font-medium  !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('ourCommitment')}</Link>
+            <Link href="/pricing" onClick={() => handleNavClick('/pricing')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('packages')}</Link>
+            <Link href="/why-us" onClick={() => handleNavClick('/why-us')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] text-soft-white font-medium  !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('ourCommitment')}</Link>
             
-            <Link href="/provisions" onClick={() => handleNavClick('/provisions')} className="flex items-center gap-2 px-4 py-2.5 font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('portfolio')}</Link>
-            <Link href="/blog" onClick={() => handleNavClick('/blog')} className="flex items-center gap-2 px-4 py-2.5 font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('blog')}</Link>
+            <Link href="/provisions" onClick={() => handleNavClick('/provisions')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('portfolio')}</Link>
+            <Link href="/blog" onClick={() => handleNavClick('/blog')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('blog')}</Link>
             
-            <Link href="/contact" onClick={() => handleNavClick('/contact')} className="flex items-center gap-2 px-4 py-2.5 text-soft-white font-medium  !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('contact')}</Link>
+            <Link href="/contact" onClick={() => handleNavClick('/contact')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] text-soft-white font-medium  !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('contact')}</Link>
           </nav>
         )}
       </div>
