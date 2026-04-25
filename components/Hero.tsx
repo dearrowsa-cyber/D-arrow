@@ -44,13 +44,14 @@ const Hero = () => {
   ];
 
   return (
-    <section className="relative overflow-hidden m-0 p-0 min-h-[420px] md:min-h-[600px] py-10 md:py-0 flex items-center">
+    <section className="relative overflow-hidden m-0 p-0 min-h-[420px] md:min-h-[600px] py-10 md:py-0 flex items-center" style={{ zIndex: 5 }}>
       {/* Background Video - Restored on all devices as requested by client */}
       <video
         autoPlay
         muted
         loop
         playsInline
+        preload="auto"
         className="absolute inset-0 w-full h-full object-cover block"
         style={{ zIndex: 1 }}
       >
