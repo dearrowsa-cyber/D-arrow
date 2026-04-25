@@ -141,6 +141,14 @@ export default function RootLayout({
               },
               areaServed: [
                 {
+                  '@type': 'City',
+                  name: 'Al Khobar'
+                },
+                {
+                  '@type': 'City',
+                  name: 'Al Ahsa'
+                },
+                {
                   '@type': 'State',
                   name: 'Saudi Arabia'
                 },
@@ -231,6 +239,16 @@ export default function RootLayout({
                 'App Development',
                 'Branding',
                 'Social Media Marketing',
+              ],
+              areaServed: [
+                {
+                  '@type': 'City',
+                  name: 'Al Khobar'
+                },
+                {
+                  '@type': 'City',
+                  name: 'Al Ahsa'
+                }
               ],
               aggregateRating: {
                 '@type': 'AggregateRating',

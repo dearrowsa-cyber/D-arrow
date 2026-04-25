@@ -123,7 +123,13 @@ export default function ContactPage() {
               postalCode: '31982',
               addressCountry: 'SA',
             },
-            areaServed: ['SA', 'AE', 'KW'],
+            areaServed: [
+              { '@type': 'City', name: 'Al Khobar' },
+              { '@type': 'City', name: 'Al Ahsa' },
+              { '@type': 'State', name: 'SA' },
+              { '@type': 'State', name: 'AE' },
+              { '@type': 'State', name: 'KW' }
+            ],
             priceRange: '$$',
             aggregateRating: {
               '@type': 'AggregateRating',
