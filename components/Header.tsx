@@ -256,28 +256,26 @@ hover:shadow-md hover:scale-105 active:scale-95">
 </button>
     {/* Enhanced dropdown - 3 featured columns with brand colors */}
               <div 
-                onMouseEnter={() => { if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current); }}
-                onMouseLeave={() => { closeTimeoutRef.current = window.setTimeout(() => setServicesOpen(false), 100); }}
-                className={`${servicesOpen ? 'visible opacity-100 translate-y-0 pointer-events-auto' : 'invisible opacity-0 -translate-y-1 pointer-events-none'} transition-all duration-100 transform absolute ${lang === 'ar' ? 'right-0' : 'left-0'} mt-2 w-[360px] bg-[#14162E] border border-[rgba(255,77,109,0.2)] rounded-xl shadow-2xl p-4 z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-                <div className="grid grid-cols-1 gap-3">
-                  <Link href="/services?category=digital-marketing" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-4 min-h-[44px] rounded-lg hover:bg-[rgba(255,77,109,0.1)] hover:border-[rgba(255,77,109,0.3)] border border-transparent transition group`}>
-                    <img src="/icon/services-icon/digital_marketing_promotion.png" alt="Digital Marketing" className="w-12 h-8 rounded-lg object-cover shadow-sm flex-shrink-0 group-hover:shadow-lg group-hover:shadow-[rgba(255,77,109,0.3)] transition" loading="lazy" decoding="async" />
-                    <div className={lang === 'ar' ? 'text-right' : ''}>
-                      <h4 className="!text-sm font-semibold text-brand-white group-hover:text-brand-pink transition">{t('digitalMarketingHeader')}</h4>
+                className={`${servicesOpen ? 'max-h-[500px] opacity-100 mt-2 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300 ease-in-out relative w-full bg-[#14162E]/40 border-l-2 border-brand-pink rounded-r-lg z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+                <div className="flex flex-col gap-2 p-2">
+                  <Link href="/services?category=digital-marketing" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center p-3 sm:p-4 min-h-[54px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition group w-full mb-1`}>
+                    <img src="/icon/services-icon/digital_marketing_promotion.png" alt="Digital Marketing" className="w-10 h-10 rounded-md object-cover shadow-sm flex-shrink-0 group-hover:scale-105 transition" loading="lazy" decoding="async" />
+                    <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
+                      <h4 className="text-[15px] font-bold text-brand-white group-hover:text-brand-pink transition">{t('digitalMarketingHeader')}</h4>
                     </div>
                   </Link>
 
-                  <Link href="/services?category=innovation-development" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-4 min-h-[44px] rounded-lg hover:bg-[rgba(255,77,109,0.1)] hover:border-[rgba(255,77,109,0.3)] border border-transparent transition group`}>
-                    <img src="/icon/services-icon/creative_digital_design.png" alt="Innovation & Development" className="w-12 h-8 rounded-lg object-cover shadow-sm flex-shrink-0 group-hover:shadow-lg group-hover:shadow-[rgba(255,77,109,0.3)] transition" loading="lazy" decoding="async" />
-                    <div className={lang === 'ar' ? 'text-right' : ''}>
-                      <h4 className="!text-sm font-semibold text-brand-white group-hover:text-brand-pink transition">{t('innovationHeader')}</h4>
+                  <Link href="/services?category=innovation-development" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center p-3 sm:p-4 min-h-[54px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition group w-full mb-1`}>
+                    <img src="/icon/services-icon/creative_digital_design.png" alt="Innovation & Development" className="w-10 h-10 rounded-md object-cover shadow-sm flex-shrink-0 group-hover:scale-105 transition" loading="lazy" decoding="async" />
+                    <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
+                      <h4 className="text-[15px] font-bold text-brand-white group-hover:text-brand-pink transition">{t('innovationHeader')}</h4>
                     </div>
                   </Link>
 
-                  <Link href="/services?category=real-estate" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-4 min-h-[44px] rounded-lg hover:bg-[rgba(255,77,109,0.1)] hover:border-[rgba(255,77,109,0.3)] border border-transparent transition group`}>
-                    <img src="/icon/services-icon/real_estate_marketing.png" alt="Real Estate" className="w-12 h-8 rounded-lg object-cover shadow-sm flex-shrink-0 group-hover:shadow-lg group-hover:shadow-[rgba(255,77,109,0.3)] transition" loading="lazy" decoding="async" />
-                    <div className={lang === 'ar' ? 'text-right' : ''}>
-                      <h4 className="!text-sm font-semibold text-brand-white group-hover:text-brand-pink transition">{t('realEstateHeader')}</h4>
+                  <Link href="/services?category=real-estate" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center p-3 sm:p-4 min-h-[54px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition group w-full`}>
+                    <img src="/icon/services-icon/real_estate_marketing.png" alt="Real Estate" className="w-10 h-10 rounded-md object-cover shadow-sm flex-shrink-0 group-hover:scale-105 transition" loading="lazy" decoding="async" />
+                    <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
+                      <h4 className="text-[15px] font-bold text-brand-white group-hover:text-brand-pink transition">{t('realEstateHeader')}</h4>
                     </div>
                   </Link>
                 </div>
