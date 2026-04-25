@@ -18,7 +18,7 @@ export default function ContactPage() {
     company: '',
     service: '',
     message: '',
-    botField: '',
+    website_url: '',
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -32,12 +32,12 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.botField) {
+    if (formData.website_url) {
       // Spam honeypot triggered: silently resolve
       setSubmitting(true);
       setTimeout(() => {
         setSubmitted(true);
-        setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '', botField: '' });
+        setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '', website_url: '' });
         setSubmitting(false);
         setTimeout(() => setSubmitted(false), 4000);
       }, 500);
@@ -56,7 +56,7 @@ export default function ContactPage() {
       const json = await res.json();
       if (json.ok) {
         setSubmitted(true);
-        setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '', botField: '' });
+        setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '', website_url: '' });
       } else {
         setError(json.error || 'Failed to send message');
       }
@@ -221,17 +221,18 @@ export default function ContactPage() {
               )}
 
               <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6">
-                <div className="hidden" aria-hidden="true" style={{ display: 'none' }}>
-                  <label>
-                    Leave this field empty if you are human:
-                    <input
-                      type="text"
-                      name="botField"
-                      tabIndex={-1}
-                      value={formData.botField}
-                      onChange={handleChange}
-                    />
-                  </label>
+                {/* Advanced Honeypot - Offscreen instead of display: none */}
+                <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }} aria-hidden="true">
+                  <label htmlFor="website_url">Website URL (leave blank)</label>
+                  <input
+                    type="text"
+                    id="website_url"
+                    name="website_url"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={formData.website_url}
+                    onChange={handleChange}
+                  />
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   <label className="flex flex-col">

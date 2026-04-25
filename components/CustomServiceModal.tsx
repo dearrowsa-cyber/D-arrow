@@ -18,7 +18,7 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
     company: '',
     services: [] as string[],
     description: '',
-    botField: '',
+    website_url: '',
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -88,13 +88,13 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.botField) {
+    if (formData.website_url) {
       // Spam honeypot triggered: silently resolve
       setSubmitted(true);
       setTimeout(() => {
         setSubmitted(false);
         onClose();
-        setFormData({ name: '', email: '', phone: '', company: '', services: [], description: '', botField: '' });
+        setFormData({ name: '', email: '', phone: '', company: '', services: [], description: '', website_url: '' });
       }, 2000);
       return;
     }
@@ -121,7 +121,7 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
             company: '',
             services: [],
             description: '',
-            botField: '',
+            website_url: '',
           });
         }, 2000);
       }
@@ -158,12 +158,19 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
         ) : (
           <form onSubmit={handleSubmit} className="p-8 space-y-6">
             {/* Personal Information */}
-            <div className="hidden" aria-hidden="true" style={{ display: 'none' }}>
-              <label>
-                Leave this field empty if you are human:
-                <input type="text" name="botField" tabIndex={-1} value={formData.botField} onChange={handleInputChange} />
-              </label>
-            </div>
+            {/* Advanced Honeypot - Offscreen instead of display: none */}
+          <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }} aria-hidden="true">
+            <label htmlFor="website_url">Website URL (leave blank)</label>
+            <input
+              type="text"
+              id="website_url"
+              name="website_url"
+              tabIndex={-1}
+              autoComplete="off"
+              value={formData.website_url}
+              onChange={handleInputChange}
+            />
+          </div>
             <div>
               <h3 className="text-lg font-semibold !text-white mb-4 flex items-center">
                 <span className="text-pink-600 mr-2">

@@ -21,7 +21,7 @@ export default function PricingInquiryModal({ isOpen, onClose, packageName }: Pr
     budget: '',
     timeline: '',
     additionalInfo: '',
-    botField: '',
+    website_url: '',
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -40,7 +40,7 @@ export default function PricingInquiryModal({ isOpen, onClose, packageName }: Pr
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (formData.botField) {
+    if (formData.website_url) {
       // Spam honeypot triggered: silently resolve
       setSubmitting(true);
       setTimeout(() => {
@@ -57,7 +57,7 @@ export default function PricingInquiryModal({ isOpen, onClose, packageName }: Pr
             budget: '',
             timeline: '',
             additionalInfo: '',
-            botField: '',
+            website_url: '',
           });
         }, 2000);
       }, 500);
@@ -89,7 +89,7 @@ export default function PricingInquiryModal({ isOpen, onClose, packageName }: Pr
             budget: '',
             timeline: '',
             additionalInfo: '',
-            botField: '',
+            website_url: '',
           });
         }, 2000);
       } else {
@@ -136,17 +136,18 @@ export default function PricingInquiryModal({ isOpen, onClose, packageName }: Pr
               <p className="text-lg font-bold text-brand-pink\">{packageName}</p>
             </div>
             
-            <div className="hidden" aria-hidden="true" style={{ display: 'none' }}>
-              <label>
-                Leave this field empty if you are human:
-                <input
-                  type="text"
-                  name="botField"
-                  tabIndex={-1}
-                  value={formData.botField}
-                  onChange={handleInputChange}
-                />
-              </label>
+            {/* Advanced Honeypot - Offscreen instead of display: none */}
+            <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }} aria-hidden="true">
+              <label htmlFor="website_url">Website URL (leave blank)</label>
+              <input
+                type="text"
+                id="website_url"
+                name="website_url"
+                tabIndex={-1}
+                autoComplete="off"
+                value={formData.website_url}
+                onChange={handleInputChange}
+              />
             </div>
 
             {/* Personal Information */}

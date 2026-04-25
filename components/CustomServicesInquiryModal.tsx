@@ -42,7 +42,7 @@ export default function CustomServicesInquiryModal({ isOpen, onClose }: CustomSe
     budget: '',
     timeline: '',
     additionalInfo: '',
-    botField: '',
+    website_url: '',
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -74,7 +74,7 @@ export default function CustomServicesInquiryModal({ isOpen, onClose }: CustomSe
       return;
     }
 
-    if (formData.botField) {
+    if (formData.website_url) {
       // Spam honeypot triggered: silently resolve
       setSubmitting(true);
       setTimeout(() => {
@@ -90,7 +90,7 @@ export default function CustomServicesInquiryModal({ isOpen, onClose }: CustomSe
             budget: '',
             timeline: '',
             additionalInfo: '',
-            botField: '',
+            website_url: '',
           });
           setSelectedServices([]);
         }, 2000);
@@ -128,7 +128,7 @@ export default function CustomServicesInquiryModal({ isOpen, onClose }: CustomSe
             budget: '',
             timeline: '',
             additionalInfo: '',
-            botField: '',
+            website_url: '',
           });
           setSelectedServices([]);
         }, 2000);
@@ -245,11 +245,18 @@ export default function CustomServicesInquiryModal({ isOpen, onClose }: CustomSe
             </div>
 
             {/* Personal Information */}
-            <div className="hidden" aria-hidden="true" style={{ display: 'none' }}>
-              <label>
-                Leave this field empty if you are human:
-                <input type="text" name="botField" tabIndex={-1} value={formData.botField} onChange={handleInputChange} />
-              </label>
+            {/* Advanced Honeypot - Offscreen instead of display: none */}
+            <div style={{ position: 'absolute', left: '-9999px', top: '-9999px' }} aria-hidden="true">
+              <label htmlFor="website_url">Website URL (leave blank)</label>
+              <input
+                type="text"
+                id="website_url"
+                name="website_url"
+                tabIndex={-1}
+                autoComplete="off"
+                value={formData.website_url}
+                onChange={handleInputChange}
+              />
             </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
