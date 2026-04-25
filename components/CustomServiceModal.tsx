@@ -18,6 +18,7 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
     company: '',
     services: [] as string[],
     description: '',
+    botField: '',
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -87,6 +88,16 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData.botField) {
+      // Spam honeypot triggered: silently resolve
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        onClose();
+        setFormData({ name: '', email: '', phone: '', company: '', services: [], description: '', botField: '' });
+      }, 2000);
+      return;
+    }
     
     try {
       const response = await fetch('/api/contact', {
@@ -110,6 +121,7 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
             company: '',
             services: [],
             description: '',
+            botField: '',
           });
         }, 2000);
       }
@@ -146,6 +158,12 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
         ) : (
           <form onSubmit={handleSubmit} className="p-8 space-y-6">
             {/* Personal Information */}
+            <div className="hidden" aria-hidden="true" style={{ display: 'none' }}>
+              <label>
+                Leave this field empty if you are human:
+                <input type="text" name="botField" tabIndex={-1} value={formData.botField} onChange={handleInputChange} />
+              </label>
+            </div>
             <div>
               <h3 className="text-lg font-semibold !text-white mb-4 flex items-center">
                 <span className="text-pink-600 mr-2">

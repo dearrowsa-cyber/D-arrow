@@ -81,6 +81,7 @@ export default function CustomPackagePage() {
     budget: '',
     timeline: '',
     additionalInfo: '',
+    botField: '',
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -134,6 +135,29 @@ export default function CustomPackagePage() {
       return;
     }
 
+    if (formData.botField) {
+      // Spam honeypot triggered: silently resolve
+      setSubmitting(true);
+      setTimeout(() => {
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            company: '',
+            budget: '',
+            timeline: '',
+            additionalInfo: '',
+            botField: '',
+          });
+          setSelectedServices([]);
+        }, 2000);
+      }, 500);
+      return;
+    }
+
     setSubmitting(true);
 
     try {
@@ -163,6 +187,7 @@ export default function CustomPackagePage() {
             budget: '',
             timeline: '',
             additionalInfo: '',
+            botField: '',
           });
           setSelectedServices([]);
         }, 2000);
@@ -368,6 +393,12 @@ export default function CustomPackagePage() {
               )}
 
               {/* Personal Information */}
+              <div className="hidden" aria-hidden="true" style={{ display: 'none' }}>
+                <label>
+                  Leave this field empty if you are human:
+                  <input type="text" name="botField" tabIndex={-1} value={formData.botField} onChange={handleInputChange} />
+                </label>
+              </div>
               <div>
                 <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                   <span className="!text-orange-500 mr-2">

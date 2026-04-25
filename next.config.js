@@ -35,6 +35,8 @@ const nextConfig = {
         { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
         { key: 'X-XSS-Protection', value: '1; mode=block' },
         { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        { key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains; preload' },
+        { key: 'Content-Security-Policy', value: "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https:; frame-ancestors 'self';" },
       ],
     },
     // Next.js built JS/CSS bundles — immutable forever

@@ -21,6 +21,7 @@ export default function PricingInquiryModal({ isOpen, onClose, packageName }: Pr
     budget: '',
     timeline: '',
     additionalInfo: '',
+    botField: '',
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -39,6 +40,29 @@ export default function PricingInquiryModal({ isOpen, onClose, packageName }: Pr
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData.botField) {
+      // Spam honeypot triggered: silently resolve
+      setSubmitting(true);
+      setTimeout(() => {
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          onClose();
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            company: '',
+            selectedPackage: packageName,
+            budget: '',
+            timeline: '',
+            additionalInfo: '',
+            botField: '',
+          });
+        }, 2000);
+      }, 500);
+      return;
+    }
     setError(null);
     setSubmitting(true);
 
@@ -65,6 +89,7 @@ export default function PricingInquiryModal({ isOpen, onClose, packageName }: Pr
             budget: '',
             timeline: '',
             additionalInfo: '',
+            botField: '',
           });
         }, 2000);
       } else {
@@ -109,6 +134,19 @@ export default function PricingInquiryModal({ isOpen, onClose, packageName }: Pr
             <div className="bg-[#14162E] border border-pink-200 rounded-lg p-4">
               <p className="text-sm text-pink-900 font-semibold\">{t('selectedPackageLabel')}</p>
               <p className="text-lg font-bold text-brand-pink\">{packageName}</p>
+            </div>
+            
+            <div className="hidden" aria-hidden="true" style={{ display: 'none' }}>
+              <label>
+                Leave this field empty if you are human:
+                <input
+                  type="text"
+                  name="botField"
+                  tabIndex={-1}
+                  value={formData.botField}
+                  onChange={handleInputChange}
+                />
+              </label>
             </div>
 
             {/* Personal Information */}

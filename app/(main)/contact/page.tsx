@@ -18,6 +18,7 @@ export default function ContactPage() {
     company: '',
     service: '',
     message: '',
+    botField: '',
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -31,6 +32,17 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (formData.botField) {
+      // Spam honeypot triggered: silently resolve
+      setSubmitting(true);
+      setTimeout(() => {
+        setSubmitted(true);
+        setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '', botField: '' });
+        setSubmitting(false);
+        setTimeout(() => setSubmitted(false), 4000);
+      }, 500);
+      return;
+    }
     setError(null);
     setSubmitting(true);
     try {
@@ -44,7 +56,7 @@ export default function ContactPage() {
       const json = await res.json();
       if (json.ok) {
         setSubmitted(true);
-        setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '' });
+        setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '', botField: '' });
       } else {
         setError(json.error || 'Failed to send message');
       }
@@ -209,6 +221,18 @@ export default function ContactPage() {
               )}
 
               <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6">
+                <div className="hidden" aria-hidden="true" style={{ display: 'none' }}>
+                  <label>
+                    Leave this field empty if you are human:
+                    <input
+                      type="text"
+                      name="botField"
+                      tabIndex={-1}
+                      value={formData.botField}
+                      onChange={handleChange}
+                    />
+                  </label>
+                </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   <label className="flex flex-col">
                     <span className="text-sm text-white dark:text-gray-300 mb-2">{t('yourName')}</span>

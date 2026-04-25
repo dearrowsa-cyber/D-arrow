@@ -42,6 +42,7 @@ export default function CustomServicesInquiryModal({ isOpen, onClose }: CustomSe
     budget: '',
     timeline: '',
     additionalInfo: '',
+    botField: '',
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -70,6 +71,30 @@ export default function CustomServicesInquiryModal({ isOpen, onClose }: CustomSe
 
     if (selectedServices.length === 0) {
       setError(t('selectAtLeastOneService'));
+      return;
+    }
+
+    if (formData.botField) {
+      // Spam honeypot triggered: silently resolve
+      setSubmitting(true);
+      setTimeout(() => {
+        setSubmitted(true);
+        setTimeout(() => {
+          setSubmitted(false);
+          onClose();
+          setFormData({
+            name: '',
+            email: '',
+            phone: '',
+            company: '',
+            budget: '',
+            timeline: '',
+            additionalInfo: '',
+            botField: '',
+          });
+          setSelectedServices([]);
+        }, 2000);
+      }, 500);
       return;
     }
 
@@ -103,6 +128,7 @@ export default function CustomServicesInquiryModal({ isOpen, onClose }: CustomSe
             budget: '',
             timeline: '',
             additionalInfo: '',
+            botField: '',
           });
           setSelectedServices([]);
         }, 2000);
@@ -219,6 +245,12 @@ export default function CustomServicesInquiryModal({ isOpen, onClose }: CustomSe
             </div>
 
             {/* Personal Information */}
+            <div className="hidden" aria-hidden="true" style={{ display: 'none' }}>
+              <label>
+                Leave this field empty if you are human:
+                <input type="text" name="botField" tabIndex={-1} value={formData.botField} onChange={handleInputChange} />
+              </label>
+            </div>
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                 <span className="!text-black mr-2"><img src="/icon/update/user-cion.png" alt="User Icon" className="w-7 h-10 pt-2" /></span>
