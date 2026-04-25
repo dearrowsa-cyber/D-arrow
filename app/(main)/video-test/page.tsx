@@ -1,0 +1,1 @@
+export default function VideoTest() { return <video autoPlay muted loop playsInline src='/main-video.mp4' style={{ width: '100%', height: '500px', backgroundColor: 'red' }} /> }
