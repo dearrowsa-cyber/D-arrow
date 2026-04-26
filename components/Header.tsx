@@ -46,15 +46,8 @@ export default memo(function Header() {
           <nav className="hidden lg:flex gap-1 items-center flex-1 justify-center px-4">
             <Link href="/" className="relative hover:text-brand-pink transition duration-300 !text-white !text-xl font-medium px-3 py-2 rounded-lg group">{t('home')}<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] group-hover:w-full transition-all duration-300"></span></Link>
             <div className="relative" onMouseEnter={() => { if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current); setServicesOpen(true); }} onMouseLeave={() => { closeTimeoutRef.current = window.setTimeout(() => setServicesOpen(false),200 ); }}>
-<button
-  aria-haspopup="true"
-  aria-expanded={servicesOpen}
-  onClick={() => {
-    setServicesOpen(v => !v);
-    if (closeTimeoutRef.current) {
-      window.clearTimeout(closeTimeoutRef.current);
-    }
-  }}
+<Link
+  href="/services"
   className="relative flex items-center gap-2
              bg-transparent hover:bg-transparent 
               !text-white hover:text-brand-orange 
@@ -70,7 +63,7 @@ export default memo(function Header() {
                    bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] 
                    group-hover:w-full transition-all duration-300">
   </span>
-</button>
+</Link>
               {/* Enhanced dropdown - 3 featured columns with brand colors */}
              <div
   onMouseEnter={() => { if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current); }}
@@ -235,25 +228,29 @@ hover:shadow-md hover:scale-105 active:scale-95">
           <nav className="lg:hidden mt-4 space-y-2 pb-4 max-h-96 overflow-y-auto">
             <Link href="/" onClick={() => handleNavClick('/')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition !text-md rounded-lg text-soft-white">{t('home')}</Link>
             <div className="relative" onMouseEnter={() => { if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current); setServicesOpen(true); }} onMouseLeave={() => { closeTimeoutRef.current = window.setTimeout(() => setServicesOpen(false), 100); }}>
-          <button
-  aria-haspopup="true"
-  aria-expanded={servicesOpen}
-  onClick={() => {
-    setServicesOpen(v => !v);
-    if (closeTimeoutRef.current) {
-      window.clearTimeout(closeTimeoutRef.current);
-    }
-  }}
-  className="w-full flex items-center gap-2 
-             bg-transparent hover:bg-transparent 
-             text-white text-lg
-             transition text-md font-medium 
-             px-4 py-3 min-h-[44px]
-             border-none outline-none"
-  style={{ textTransform: 'none' }}
->
-  {t('solutions')}
-</button>
+          <div className="flex w-full items-center justify-between">
+            <Link
+              href="/services"
+              onClick={() => handleNavClick('/services')}
+              className="flex-1 flex items-center gap-2 
+                         bg-transparent hover:bg-transparent 
+                         text-white text-lg
+                         transition text-md font-medium 
+                         px-4 py-3 min-h-[44px]
+                         border-none outline-none"
+              style={{ textTransform: 'none' }}
+            >
+              {t('solutions')}
+            </Link>
+            <button
+              onClick={() => setServicesOpen(v => !v)}
+              className="p-3 text-white focus:outline-none"
+            >
+              <svg className={`w-5 h-5 transition-transform duration-300 ${servicesOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
     {/* Enhanced dropdown - 3 featured columns with brand colors */}
               <div 
                 className={`${servicesOpen ? 'max-h-[500px] opacity-100 mt-2 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300 ease-in-out relative w-full bg-[#14162E]/40 border-l-2 border-brand-pink rounded-r-lg z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
