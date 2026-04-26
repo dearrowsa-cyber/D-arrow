@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ArrowRight, Upload, X, Save } from 'lucide-react';
 import Link from 'next/link';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 
 const CATEGORIES = [
   'Digital Marketing', 'AI & Technology', 'Innovation',
@@ -223,7 +224,7 @@ export default function EditPostPage() {
                 </div>
                 <div>
                   <label className="admin-label">المحتوى بالعربية</label>
-                  <textarea className="admin-textarea" value={form.contentAr} onChange={e => updateField('contentAr', e.target.value)} style={{ minHeight: 300 }} dir="rtl" />
+                  <RichTextEditor value={form.contentAr} onChange={(val) => updateField('contentAr', val)} dir="rtl" />
                 </div>
               </>
             ) : (
@@ -247,7 +248,7 @@ export default function EditPostPage() {
                 </div>
                 <div>
                   <label className="admin-label">Content</label>
-                  <textarea className="admin-textarea" value={form.content} onChange={e => updateField('content', e.target.value)} style={{ minHeight: 300 }} dir="ltr" />
+                  <RichTextEditor value={form.content} onChange={(val) => updateField('content', val)} dir="ltr" />
                 </div>
               </>
             )}

@@ -184,9 +184,12 @@ export default function BlogPage() {
                       </div>
 
                       {/* Read More Button */}
-                      <button className="w-full mt-4 px-4 py-2 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-[#FF4D6D]/50 transition-all duration-300 active:scale-95">
+                      <Link 
+                        href={`/blog/${post.id}`}
+                        className="w-full mt-4 px-4 py-2 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-[#FF4D6D]/50 transition-all duration-300 active:scale-95 block text-center"
+                      >
                         {t('blogReadMore')}
-                      </button>
+                      </Link>
                     </div>
                   </article>
                 ))}

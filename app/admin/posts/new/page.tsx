@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, Upload, X, Save, Eye } from 'lucide-react';
 import Link from 'next/link';
+import RichTextEditor from '@/components/admin/RichTextEditor';
 
 const CATEGORIES = [
   'Digital Marketing', 'AI & Technology', 'Innovation',
@@ -201,13 +202,11 @@ export default function NewPostPage() {
                 </div>
                 <div>
                   <label className="admin-label">المحتوى بالعربية *</label>
-                  <textarea
-                    className="admin-textarea"
-                    placeholder="اكتب محتوى المقال هنا..."
+                  <RichTextEditor
                     value={form.contentAr}
-                    onChange={e => updateField('contentAr', e.target.value)}
-                    style={{ minHeight: 300 }}
+                    onChange={(val) => updateField('contentAr', val)}
                     dir="rtl"
+                    placeholder="اكتب محتوى المقال هنا..."
                   />
                 </div>
               </>
@@ -245,13 +244,11 @@ export default function NewPostPage() {
                 </div>
                 <div>
                   <label className="admin-label">Content (English) *</label>
-                  <textarea
-                    className="admin-textarea"
-                    placeholder="Write article content here..."
+                  <RichTextEditor
                     value={form.content}
-                    onChange={e => updateField('content', e.target.value)}
-                    style={{ minHeight: 300 }}
+                    onChange={(val) => updateField('content', val)}
                     dir="ltr"
+                    placeholder="Write article content here..."
                   />
                 </div>
               </>
