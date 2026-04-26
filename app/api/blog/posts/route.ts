@@ -60,18 +60,18 @@ export async function POST(req: NextRequest) {
 
     const post = {
       id: `post-${Date.now()}`,
-      title: newPost.title,
+      title: newPost.title || '',
       titleAr: newPost.titleAr || '',
-      content: newPost.content,
+      content: newPost.content || '',
       contentAr: newPost.contentAr || '',
-      excerpt: newPost.excerpt || newPost.content.substring(0, 150),
-      excerptAr: newPost.excerptAr || '',
+      excerpt: newPost.excerpt || (newPost.content ? newPost.content.substring(0, 150) : ''),
+      excerptAr: newPost.excerptAr || (newPost.contentAr ? newPost.contentAr.substring(0, 150) : ''),
       author: newPost.author || 'D-Arrow',
       category: newPost.category || 'News',
       categoryAr: newPost.categoryAr || '',
       date: newPost.date || new Date().toISOString().split('T')[0],
       time: newPost.time || new Date().toTimeString().split(' ')[0],
-      readTime: newPost.readTime || Math.ceil(newPost.content.split(' ').length / 200),
+      readTime: newPost.readTime || Math.ceil(((newPost.content || newPost.contentAr || '').split(' ').length) / 200),
       imageUrl: newPost.imageUrl || null,
       status: newPost.status || 'published',
     };
