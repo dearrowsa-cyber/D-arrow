@@ -44,10 +44,13 @@ export async function POST(req: NextRequest) {
   try {
     const newPost = await req.json();
     
-    if (!newPost.title || !newPost.content) {
+    const hasTitle = newPost.title || newPost.titleAr;
+    const hasContent = newPost.content || newPost.contentAr;
+
+    if (!hasTitle || !hasContent) {
       return NextResponse.json({
         success: false,
-        error: 'Missing required fields: title, content',
+        error: 'Missing required fields: title or titleAr, and content or contentAr',
       }, { status: 400 });
     }
 

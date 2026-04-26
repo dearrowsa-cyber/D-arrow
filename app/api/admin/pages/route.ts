@@ -26,7 +26,7 @@ const defaultPagesContent = {
   contact: {
     email: 'support@d-arrow.com',
     phone: '+966 50 046 6349',
-    address: { en: '6399, 4, Ibn Sina, AlKhobar, 34626, Saudi Arabia', ar: '6399، 4، ابن سينا، الخبر، 34626، المملكة العربية السعودية' },
+    address: { en: 'Al-Ahsa Region, Saudi Arabia', ar: 'منطقة الأحساء، المملكة العربية السعودية' },
     workingHours: { en: 'Mon - Fri, 9AM - 6PM', ar: 'الاثنين - الجمعة، 9 صباحًا - 6 مساءً' },
   },
   footer: {

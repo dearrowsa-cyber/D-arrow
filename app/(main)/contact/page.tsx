@@ -183,7 +183,7 @@ export default function ContactPage() {
                 clickAction = () => window.open(social?.whatsapp || `https://wa.me/${dynamicPhone.replace(/[^0-9]/g, '')}`, '_blank');
                 cursor = 'cursor-pointer hover:underline';
               } else if (info.titleKey === 'contactLocation') {
-                clickAction = () => window.open('https://maps.google.com/?q=6399+Ibn+Sina+Street+AlKhobar+Saudi+Arabia', '_blank');
+                clickAction = () => window.open('https://maps.google.com/?q=Al+Ahsa+Saudi+Arabia', '_blank');
                 cursor = 'cursor-pointer hover:underline';
               }
               

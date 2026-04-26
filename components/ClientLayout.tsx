@@ -6,6 +6,8 @@ import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Analytics from '@/components/Analytics';
+import CookieConsent from '@/components/CookieConsent';
 
 // Lazy load ChatBot (contains heavy Three.js 3D engine)
 const ChatBot = dynamic(() => import('@/components/ChatBot'), {
@@ -81,6 +83,9 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       </div>
 
       {showChatBot && <ChatBot />}
+      
+      <CookieConsent />
+      <Analytics />
     </>
   );
 }

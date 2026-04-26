@@ -271,7 +271,7 @@ const translations: Translations = {
   contactPhoneValue: { en: '+966 50 046 6349', ar: '+966 50 046 6349' },
   contactPhoneSubtext: { en: 'Available during business hours', ar: 'متاح خلال ساعات العمل' },
   contactLocation: { en: 'Location', ar: 'الموقع' },
-  contactLocationValue: { en: '6399, 4, Ibn Sina, AlKhobar, 34626, Saudi Arabia', ar: '6399، 4، ابن سينا، الخبر، 34626، المملكة العربية السعودية' },
+  contactLocationValue: { en: 'Al-Ahsa Region, Saudi Arabia', ar: 'منطقة الأحساء، المملكة العربية السعودية' },
   contactLocationSubtext: { en: 'Visit our office', ar: 'قم بزيارة مكتبنا' },
   contactHours: { en: 'Working Hours', ar: 'ساعات العمل' },
   contactHoursValue: { en: 'Mon - Fri, 9AM - 6PM', ar: 'الاثنين - الجمعة، 9 صباحًا - 6 مساءً' },
@@ -612,6 +612,33 @@ const translations: Translations = {
   blogError: { en: 'Failed to load blog posts', ar: 'فشل في تحميل مقالات المدونة' },
   resources: { en: 'Resources', ar: 'الموارد' },
   portfolio: { en: 'Portfolio', ar: 'عملائنا' },
+
+  // Privacy & Cookies Policies
+  privacyTitle: { en: 'Privacy Policy', ar: 'سياسة الخصوصية' },
+  privacyLastUpdated: { en: 'Last Updated: April 2026', ar: 'آخر تحديث: أبريل 2026' },
+  privacyIntro: { en: 'At D Arrow Digital, we value your privacy and are committed to protecting your personal data.', ar: 'في دي آرو الرقمية، نقدر خصوصيتك ونلتزم بحماية بياناتك الشخصية.' },
+  dataCollectionTitle: { en: '1. Data Collection', ar: '1. جمع البيانات' },
+  dataCollectionDesc: { en: 'We collect personal information such as name, email, and phone number only when you voluntarily submit it through our contact forms or service inquiries. We also collect non-identifiable usage data to improve our website experience.', ar: 'نقوم بجمع المعلومات الشخصية مثل الاسم، البريد الإلكتروني، ورقم الهاتف فقط عند إرسالها طواعية عبر نماذج الاتصال أو استفسارات الخدمات. كما نقوم بجمع بيانات استخدام غير معرفة لتحسين تجربة موقعنا.' },
+  dataUseTitle: { en: '2. How We Use Your Data', ar: '2. كيف نستخدم بياناتك' },
+  dataUseDesc: { en: 'Your data is used to provide requested services, respond to inquiries, improve our website, and send promotional communications (if opted in). We do not sell your personal data to third parties.', ar: 'تُستخدم بياناتك لتقديم الخدمات المطلوبة، الرد على الاستفسارات، تحسين موقعنا، وإرسال الاتصالات الترويجية (إذا وافقت على ذلك). نحن لا نبيع بياناتك الشخصية لأطراف ثالثة.' },
+  dataSecurityTitle: { en: '3. Data Security', ar: '3. أمن البيانات' },
+  dataSecurityDesc: { en: 'We implement reasonable security measures to protect your personal information against unauthorized access or disclosure.', ar: 'نحن ننفذ تدابير أمنية معقولة لحماية معلوماتك الشخصية ضد الوصول أو الكشف غير المصرح به.' },
+  userRightsTitle: { en: '4. Your Rights', ar: '4. حقوقك' },
+  userRightsDesc: { en: 'You have the right to access, correct, or delete your personal data. Contact us if you wish to exercise these rights.', ar: 'لديك الحق في الوصول إلى بياناتك الشخصية أو تصحيحها أو حذفها. تواصل معنا إذا كنت ترغب في ممارسة هذه الحقوق.' },
+
+  cookiePolicyTitle: { en: 'Cookie Policy', ar: 'سياسة ملفات تعريف الارتباط' },
+  cookiePolicyIntro: { en: 'This website uses cookies to enhance user experience and analyze website traffic.', ar: 'يستخدم هذا الموقع ملفات تعريف الارتباط لتحسين تجربة المستخدم وتحليل حركة مرور الموقع.' },
+  whatAreCookiesTitle: { en: 'What are Cookies?', ar: 'ما هي ملفات تعريف الارتباط؟' },
+  whatAreCookiesDesc: { en: 'Cookies are small text files stored on your device that help websites work efficiently and provide usage analytics.', ar: 'ملفات تعريف الارتباط هي ملفات نصية صغيرة مخزنة على جهازك تساعد المواقع على العمل بكفاءة وتوفير تحليلات الاستخدام.' },
+  cookieTypesTitle: { en: 'Types of Cookies We Use', ar: 'أنواع ملفات تعريف الارتباط التي نستخدمها' },
+  cookieEssentialTitle: { en: 'Essential Cookies:', ar: 'ملفات ضرورية:' },
+  cookieEssentialDesc: { en: 'Required for basic website functionality. These cannot be disabled.', ar: 'مطلوبة لوظائف الموقع الأساسية. لا يمكن تعطيلها.' },
+  cookieAnalyticsTitle: { en: 'Analytics Cookies:', ar: 'ملفات إحصائية:' },
+  cookieAnalyticsDesc: { en: 'Help us understand how visitors interact with our website (e.g., Google Analytics). These are only active if you consent.', ar: 'تساعدنا على فهم كيفية تفاعل الزوار مع موقعنا (مثل Google Analytics). لا يتم تفعيلها إلا بموافقتك.' },
+  cookieConsentBannerText: { en: 'We use cookies to enhance your browsing experience and analyze our traffic. By clicking "Accept", you consent to our use of cookies.', ar: 'نستخدم ملفات تعريف الارتباط لتحسين تجربة التصفح الخاصة بك وتحليل حركة المرور لدينا. بالنقر فوق "موافق"، فإنك توافق على استخدامنا لملفات تعريف الارتباط.' },
+  cookieAcceptAll: { en: 'Accept All', ar: 'موافقة على الكل' },
+  cookieRejectAll: { en: 'Reject Non-Essential', ar: 'رفض غير الأساسية' },
+  manageCookies: { en: 'Manage Cookies', ar: 'إدارة الكوكيز' },
 };
 
 const defaultLang: Lang = 'ar';

@@ -71,8 +71,8 @@ const Footer = () => {
                 <MapPin size={18} className="flex-shrink-0" />
                 <p>
                   {contact?.address?.[lang] || (lang === "ar"
-                    ? "المملكة العربية السعودية، الخبر، الأحساء"
-                    : "Kingdom of Saudi Arabia Al-Khobar Al-Ahsa")}
+                    ? "منطقة الأحساء، المملكة العربية السعودية"
+                    : "Al-Ahsa Region, Saudi Arabia")}
                 </p>
               </div>
 
@@ -170,8 +170,8 @@ const Footer = () => {
         <div className="border-t border-brand-pink/20 pt-6 text-center md:flex md:justify-between text-white text-xs md:text-sm">
           <p>{footer?.copyright?.[lang] || t("copyrightText")}</p>
           <div className="flex justify-center md:justify-end gap-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-pink-500 transition">{t("privacyPolicy")}</a>
-            <a href="#" className="hover:text-pink-500 transition">{t("termsOfService")}</a>
+            <Link href="/privacy" className="hover:text-pink-500 transition">{t("privacyPolicy")}</Link>
+            <Link href="/cookies" className="hover:text-pink-500 transition">{t("cookiePolicyTitle") || t("cookieSettings")}</Link>
           </div>
         </div>
 
