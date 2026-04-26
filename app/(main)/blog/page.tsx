@@ -44,7 +44,9 @@ export default function BlogPage() {
       }
       const data = await response.json();
       // Sort posts by date and time (newest first)
-      const sortedPosts = data.posts.sort((a: BlogPost, b: BlogPost) => {
+      // Filter out draft posts - only show published ones on public blog
+      const publishedPosts = (data.posts || []).filter((p: any) => p.status !== 'draft');
+      const sortedPosts = publishedPosts.sort((a: BlogPost, b: BlogPost) => {
         const dateA = new Date(`${a.date} ${a.time}`);
         const dateB = new Date(`${b.date} ${b.time}`);
         return dateB.getTime() - dateA.getTime();

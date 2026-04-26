@@ -101,13 +101,15 @@ export default function AdminDashboardPage() {
           <div className="admin-stat-label">مقالات منشورة</div>
         </div>
 
-        <div className="admin-stat-card">
-          <div className="admin-stat-icon orange">
-            <Clock size={24} />
+        <Link href="/admin/posts?status=draft" style={{ textDecoration: 'none' }}>
+          <div className="admin-stat-card" style={{ cursor: 'pointer', transition: 'transform 0.2s, box-shadow 0.2s' }}>
+            <div className="admin-stat-icon orange">
+              <Clock size={24} />
+            </div>
+            <div className="admin-stat-value">{stats.draftPosts}</div>
+            <div className="admin-stat-label">مسودات</div>
           </div>
-          <div className="admin-stat-value">{stats.draftPosts}</div>
-          <div className="admin-stat-label">مسودات</div>
-        </div>
+        </Link>
 
         <div className="admin-stat-card">
           <div className="admin-stat-icon blue">

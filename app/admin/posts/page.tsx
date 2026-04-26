@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Plus, Search, Trash2, Edit, Eye, FileText } from 'lucide-react';
 
@@ -17,10 +18,12 @@ interface Post {
 }
 
 export default function PostsListPage() {
+  const searchParams = useSearchParams();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
+  const [filterStatus, setFilterStatus] = useState<string>(searchParams.get('status') || 'all');
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
 
@@ -70,7 +73,8 @@ export default function PostsListPage() {
   const filteredPosts = posts.filter(p => {
     const matchSearch = (p.title + (p.titleAr || '')).toLowerCase().includes(search.toLowerCase());
     const matchCategory = filterCategory === 'all' || p.category === filterCategory;
-    return matchSearch && matchCategory;
+    const matchStatus = filterStatus === 'all' || (filterStatus === 'draft' ? p.status === 'draft' : p.status !== 'draft');
+    return matchSearch && matchCategory && matchStatus;
   });
 
   if (loading) {
@@ -135,6 +139,16 @@ export default function PostsListPage() {
               style={{ paddingRight: 16 }}
             />
           </div>
+          <select
+            className="admin-select"
+            value={filterStatus}
+            onChange={e => setFilterStatus(e.target.value)}
+            style={{ width: 'auto', minWidth: 130 }}
+          >
+            <option value="all">كل الحالات</option>
+            <option value="published">منشور</option>
+            <option value="draft">مسودة</option>
+          </select>
           <select
             className="admin-select"
             value={filterCategory}
