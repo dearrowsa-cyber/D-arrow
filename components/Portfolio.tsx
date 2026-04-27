@@ -22,14 +22,14 @@ const projects = [
   },
   {
     id: 'beedco',
-    logoUrl: '/beedco-main.png',
+    logoUrl: '/beedco-logo.png',
     title: { en: 'Beedco', ar: 'بيدكو' },
     subtitle: { en: 'Enterprise Digital Platform', ar: 'منصة رقمية للمؤسسات' },
     description: { 
       en: 'An enterprise-level platform for construction management. We implemented a scalable UI, integrated module flows, and clear dashboards for operations teams.',
       ar: 'منصة على مستوى المؤسسات لإدارة البناء. قمنا بتنفيذ واجهة قابلة للتوسع، وتكامل الوحدات، ولوحات تحكم واضحة لفرق التشغيل.'
     },
-    imageUrl: '/beedco-main.png',
+    imageUrl: '/beedco-logo.png',
     tags: {
       en: ['Construction & Contracting','Design & Engineering','Supply & Procurement','Maintenance & Operations','Electrical, Plumbing, HVAC & Safety Systems','Digital Services'],
       ar: ['البناء والمقاولات','التصميم والهندسة','التوريد والمشتريات','الصيانة والعمليات','الأنظمة الكهربائية والسباكة والتدفئة والتهوية والتكييف والسلامة','الخدمات الرقمية']
