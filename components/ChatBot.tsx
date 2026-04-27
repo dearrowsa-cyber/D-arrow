@@ -257,7 +257,7 @@ export default function ChatBot() {
             <X size={24} className="text-white font-bold" />
           </div>
         ) : (
-          <img src="/chatbot-main-2.png" alt="Chat" className="w-14 h-14 object-contain animate-pulse !text-black rounded-3xl" />
+          <img src="/DR-LOGO.png" alt="Chat" className="w-14 h-14 object-contain animate-bounce drop-shadow-xl" />
         )}
         
         {/* Unread Badge - Minimalist Style */}
