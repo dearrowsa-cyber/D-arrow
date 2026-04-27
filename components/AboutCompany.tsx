@@ -1,6 +1,5 @@
 "use client";
 
-import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useLanguage } from './LanguageProvider';
 
@@ -22,11 +21,12 @@ export default function AboutCompany() {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-brand-pink/20">
               <div className="absolute inset-0 bg-gradient-to-tr from-brand-pink/20 to-transparent mix-blend-overlay z-10"></div>
-              <Image 
-                src="/about/about-company.png" 
-                alt={t('aboutImgAlt')} 
-                width={800} 
-                height={600} 
+              <video 
+                src="/media/about-video.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
                 className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
               />
             </div>
