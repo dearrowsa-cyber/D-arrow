@@ -264,6 +264,17 @@ export default function ChatBot() {
           </div>
         )}
         
+        {/* Floating Welcome Message */}
+        {!isOpen && (
+          <div className={`absolute top-1/2 -translate-y-1/2 whitespace-nowrap bg-white text-[#14162E] px-4 py-2.5 rounded-2xl shadow-2xl font-bold text-sm flex items-center gap-2 ${isRTL ? 'left-[120%] rounded-bl-sm' : 'right-[120%] rounded-br-sm'} animate-float-gentle [animation-delay:0.5s] pointer-events-none transition-all duration-300 before:absolute before:content-[''] before:top-1/2 before:-translate-y-1/2 before:border-8 before:border-transparent ${isRTL ? 'before:border-r-white before:-left-[15px]' : 'before:border-l-white before:-right-[15px]'}`}>
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#25D366] opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#25D366]"></span>
+            </span>
+            <span className="bg-gradient-to-r from-[#FF6F4F] to-[#FF4D6D] bg-clip-text text-transparent">{chatLanguage === 'ar' ? 'مساعد دي أرو الذكي' : 'D-Arrow Smart Assistant'}</span>
+          </div>
+        )}
+        
         {/* Unread Badge - Minimalist Style */}
         {unreadCount > 0 && !isOpen && (
           <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center shadow-lg border-2 border-white animate-pulse">
