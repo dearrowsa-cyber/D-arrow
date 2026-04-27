@@ -257,7 +257,11 @@ export default function ChatBot() {
             <X size={24} className="text-white font-bold" />
           </div>
         ) : (
-          <img src="/DR-LOGO.png" alt="Chat" className="w-14 h-14 object-contain animate-bounce drop-shadow-xl" />
+          <div className="relative w-16 h-16 rounded-full bg-[#14162E] border border-white/10 flex items-center justify-center animate-glow animate-float-gentle group">
+            {/* Inner glow effect behind the logo */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-[#FF4D6D]/20 to-[#FF9A3C]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <img src="/DR-LOGO.png" alt="Chat" className="w-10 h-10 object-contain drop-shadow-2xl relative z-10" />
+          </div>
         )}
         
         {/* Unread Badge - Minimalist Style */}
