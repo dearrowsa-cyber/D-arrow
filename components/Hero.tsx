@@ -53,7 +53,7 @@ const Hero = () => {
         playsInline
         preload="auto"
         poster="/Darrow-1.png"
-        src="/main-video.mp4"
+        src="/main-video.mp4?v=2"
         className="absolute inset-0 w-full h-full object-cover block"
         style={{ zIndex: 1, backgroundColor: '#0B0D1F' }}
       />

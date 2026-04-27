@@ -22,7 +22,7 @@ export default function AboutCompany() {
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-brand-pink/20">
               <div className="absolute inset-0 bg-gradient-to-tr from-brand-pink/20 to-transparent mix-blend-overlay z-10"></div>
               <video 
-                src="/media/about-video.mp4"
+                src="/media/about-video.mp4?v=2"
                 autoPlay
                 loop
                 muted
