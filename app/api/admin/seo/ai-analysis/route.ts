@@ -63,10 +63,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: fetchError.name === 'AbortError' ? 'AI request timed out' : 'Failed to reach AI service' }, { status: 504 });
     }
 
-    const data = await response.json();
-    const text = data.choices?.[0]?.message?.content || 'No analysis generated.';
 
-    return NextResponse.json({ analysis: text });
   } catch (error) {
     console.error('AI Analysis API Error:', error);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
