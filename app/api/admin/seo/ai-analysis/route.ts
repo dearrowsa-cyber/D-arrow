@@ -25,25 +25,42 @@ export async function POST(req: NextRequest) {
     const errorList = errors.map((e: any) => `- Page: ${e.page} -> Issue: ${e.error}`).join('\n');
     const prompt = `أنت خبير SEO محترف. قم بتحليل قائمة الأخطاء التالية من موقعنا، واكتب خطة عمل من 3 خطوات واضحة (باللغة العربية) لحلها. اجعل الرد منسقاً باستخدام Markdown. لا تقم بشرح الأخطاء خطأ بخطأ، بل أعطني استراتيجية عامة ومركزة لإصلاح أهم المشاكل.\n\nالأخطاء:\n${errorList}`;
 
-    // Call Zhipu AI (GLM) API
-    const response = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        messages: [{ role: 'user', content: prompt }],
-        temperature: 0.7,
-        max_tokens: 1000
-      })
-    });
+    // Fetch with timeout helper
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('ZAI API Error:', errorText);
-      return NextResponse.json({ error: 'Failed to fetch AI analysis.' }, { status: 500 });
+    // Call Zhipu AI (GLM) API
+    try {
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: MODEL,
+          messages: [{ role: 'user', content: prompt }],
+          temperature: 0.7,
+          max_tokens: 1000
+        }),
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('ZAI API Error:', errorText);
+        return NextResponse.json({ error: 'Failed to fetch AI analysis.' }, { status: 500 });
+      }
+
+      const data = await response.json();
+      const text = data.choices?.[0]?.message?.content || 'No analysis generated.';
+
+      return NextResponse.json({ analysis: text });
+    } catch (fetchError: any) {
+      clearTimeout(timeout);
+      console.error('ZAI API Fetch Error:', fetchError);
+      return NextResponse.json({ error: fetchError.name === 'AbortError' ? 'AI request timed out' : 'Failed to reach AI service' }, { status: 504 });
     }
 
     const data = await response.json();

@@ -14,14 +14,14 @@ export async function POST(req: NextRequest) {
     console.log('📋 Testing Z.ai API Connection...');
 
     const apiKey = process.env.ZAI_API_KEY;
-    const apiBase = process.env.ZAI_API_BASE || 'https://api.z.ai/v1';
-    const model = process.env.ZAI_MODEL || 'glm-4.5-air';
+    const apiBase = process.env.ZAI_API_BASE || 'https://open.bigmodel.cn/api/paas/v4';
+    const model = process.env.ZAI_MODEL || 'glm-4-flash';
 
     console.log(`📌 API Key: ${apiKey ? apiKey.substring(0, 20) + '...' : 'NOT CONFIGURED'}`);
     console.log(`📌 Base URL: ${apiBase}`);
     console.log(`📌 Model: ${model}`);
 
-    if (!apiKey) {
+    if (!apiKey || apiKey === 'YOUR_API_KEY_HERE') {
       return NextResponse.json(
         {
           success: false,
@@ -40,25 +40,35 @@ export async function POST(req: NextRequest) {
     console.log(`🎯 Model: ${model}`);
 
     const startTime = Date.now();
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 15000);
 
-    const response = await fetch(endpointUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: model,
-        messages: [
-          {
-            role: 'user',
-            content: testMessage,
-          },
-        ],
-        temperature: 0.7,
-        top_p: 0.95,
-      }),
-    });
+    let response;
+    try {
+      response = await fetch(endpointUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: [
+            {
+              role: 'user',
+              content: testMessage,
+            },
+          ],
+          temperature: 0.7,
+          top_p: 0.95,
+        }),
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
+    } catch(e) {
+      clearTimeout(timeout);
+      throw e;
+    }
 
     const elapsedTime = Date.now() - startTime;
 

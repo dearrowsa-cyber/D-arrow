@@ -41,10 +41,10 @@ export async function POST(req: NextRequest) {
     console.log('🚀 Starting blog post generation with ZAI API...');
 
     const apiKey = process.env.ZAI_API_KEY;
-    const apiBase = process.env.ZAI_API_BASE || 'https://api.z.ai/v1';
-    const model = process.env.ZAI_MODEL || 'glm-4.5-air';
+    const apiBase = process.env.ZAI_API_BASE || 'https://open.bigmodel.cn/api/paas/v4';
+    const model = process.env.ZAI_MODEL || 'glm-4-flash';
 
-    if (!apiKey) {
+    if (!apiKey || apiKey === 'YOUR_API_KEY_HERE') {
       return NextResponse.json({
         success: false,
         error: 'ZAI_API_KEY is not configured',
@@ -88,28 +88,43 @@ Make it informative, engaging, and optimized for web readers in BOTH languages.`
     console.log(`🏷️ Category: ${category}`);
     console.log(`🔗 API Base: ${apiBase}`);
 
-    const response = await fetch(`${apiBase}/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: model,
-        messages: [
-          {
-            role: 'system',
-            content: 'You are a professional blog writer for a digital marketing agency. Generate high-quality, SEO-optimized blog content.',
-          },
-          {
-            role: 'user',
-            content: prompt,
-          },
-        ],
-        temperature: 0.7,
-        top_p: 0.95,
-      }),
-    });
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000);
+
+    let response;
+    try {
+      response = await fetch(`${apiBase}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: model,
+          messages: [
+            {
+              role: 'system',
+              content: 'You are a professional blog writer for a digital marketing agency. Generate high-quality, SEO-optimized blog content.',
+            },
+            {
+              role: 'user',
+              content: prompt,
+            },
+          ],
+          temperature: 0.7,
+          top_p: 0.95,
+        }),
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
+    } catch (e: any) {
+      clearTimeout(timeout);
+      console.error('❌ Fetch failed:', e);
+      return NextResponse.json({
+        success: false,
+        error: e.name === 'AbortError' ? 'API request timed out' : 'Failed to reach API',
+      }, { status: 504 });
+    }
 
     if (!response.ok) {
       const errorData = await response.text();

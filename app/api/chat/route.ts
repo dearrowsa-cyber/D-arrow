@@ -10,14 +10,13 @@ Rules:
 - Connect pain to solution with real examples and data.
 - 2 sentences MAX. Keep responses extremely brief and direct.
 - Do NOT unconditionally link WhatsApp at the end of every message. Only provide the WhatsApp link when it's logical (e.g. they ask for pricing or consultation).
-- Do NOT unconditionally link WhatsApp at the end of every message. Only provide the WhatsApp link when it's logical (e.g. they ask for pricing or consultation).
 - When appropriate, give this raw link exactly: https://wa.me/966500466349 (DO NOT format as a Markdown link, just plain text).
 
 Expertise: SEO, Web Design, Social Media, PPC, Branding.
-Company: D-Arrow, Eastern Province, Saudi Arabia. 500+ projects. From 800 SAR/month.
+Company: D-Arrow, Al-Ahsa Region, Saudi Arabia. 45+ projects. From 800 SAR/month.
 Contact WhatsApp: +966500466349`,
 
-  ar: `أنت مستشار مبيعات وتطوير أعمال (Business Consultant & Sales Negotiator) في شركة D-Arrow للتسويق الرقمي بمدينة الدمام.
+  ar: `أنت مستشار مبيعات وتطوير أعمال (Business Consultant & Sales Negotiator) في شركة D-Arrow للتسويق الرقمي بمنطقة الأحساء.
 دورك هو قيادة المفاوضات وإقناع العميل بخدماتنا بأسلوب مندوب شرِكات سعودي محترف جداً، وتتحدث بلهجة "عربية سعودية بيضاء" راقية.
 
 التعليمات الأساسية للرد (أهم القواعد):
@@ -32,10 +31,10 @@ Contact WhatsApp: +966500466349`,
 الخدمات: تحسين محركات البحث SEO، بناء وتطوير المواقع، إدارة مجتمعات السوشيال ميديا، وإعلانات الشركات.`,
 };
 
-// Use glm-4-flash — confirmed working, no rate limits
-const MODELS = ['glm-4-flash', 'glm-4v-flash'];
+// Unified API config — Zhipu BigModel (GLM)
 const API_URL = 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
-const TIMEOUT_MS = 6000; // 6 second timeout — faster fallback
+const MODELS = ['glm-4-flash', 'glm-4v-flash'];
+const TIMEOUT_MS = 15000; // 15 seconds — enough for China-based API
 
 // Fetch with timeout
 async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number): Promise<Response> {
@@ -63,7 +62,9 @@ export async function POST(req: NextRequest) {
 
     const apiKey = process.env.ZAI_API_KEY;
 
-    if (!apiKey) {
+    // Check if API key is missing or is the placeholder value
+    if (!apiKey || apiKey === 'YOUR_API_KEY_HERE') {
+      console.warn('⚠️ ZAI_API_KEY is not configured or is placeholder. Using fallback.');
       return NextResponse.json({
         reply: generateFallbackResponse(message, language as 'en' | 'ar'),
         language, success: true, source: 'fallback',
@@ -84,7 +85,9 @@ export async function POST(req: NextRequest) {
     // Try each model with a timeout
     for (const model of MODELS) {
       try {
-        console.log(`🔄 Trying ${model}...`);
+        console.log(`🔄 Trying ${model} at ${API_URL}...`);
+        const startTime = Date.now();
+        
         const response = await fetchWithTimeout(API_URL, {
           method: 'POST',
           headers: {
@@ -99,34 +102,40 @@ export async function POST(req: NextRequest) {
           }),
         }, TIMEOUT_MS);
 
+        const elapsed = Date.now() - startTime;
+
         if (response.ok) {
           const data = await response.json();
           const reply = data.choices?.[0]?.message?.content;
           if (reply) {
-            console.log(`✅ ${model} replied`);
+            console.log(`✅ ${model} replied in ${elapsed}ms`);
             return NextResponse.json({
               reply: reply.trim(), language, success: true,
               source: `zhipu-${model}`, model,
             });
           }
         } else {
-          console.error(`❌ ${model}: ${response.status}`);
+          const errorBody = await response.text();
+          console.error(`❌ ${model}: HTTP ${response.status} in ${elapsed}ms — ${errorBody.substring(0, 200)}`);
         }
-      } catch (e) {
-        // Timeout or network error — try next model or fall back
-        console.error(`⏱️ ${model} timeout/error`);
+      } catch (e: any) {
+        if (e?.name === 'AbortError') {
+          console.error(`⏱️ ${model} timed out after ${TIMEOUT_MS}ms`);
+        } else {
+          console.error(`💥 ${model} error:`, e?.message || e);
+        }
       }
     }
 
     // All models failed — return instant static response
-    console.log('📌 Static fallback');
+    console.log('📌 All AI models failed. Returning static fallback.');
     return NextResponse.json({
       reply: generateFallbackResponse(message, language as 'en' | 'ar'),
       language, success: true, source: 'fallback',
     });
 
   } catch (error: unknown) {
-    console.error('💥 Error:', error);
+    console.error('💥 Chat API Error:', error);
     return NextResponse.json({
       reply: generateFallbackResponse('hello', 'en'),
       success: true, source: 'fallback',
@@ -145,7 +154,7 @@ function generateFallbackResponse(message: string, language: 'en' | 'ar'): strin
       return 'باقاتنا تبدأ من 800 ريال شهرياً وتختلف حسب الخدمات اللي تحتاجها. ودك أرتب لك استشارة مجانية نحدد فيها الأنسب لك؟';
     }
     if (query.includes('تواصل') || query.includes('رقم') || query.includes('اتصال') || query.includes('contact')) {
-      return 'تقدر تتواصل معنا مباشرة على الواتساب 966138121213+ أو عبر الإيميل info@d-arrow.com. وإذا حاب، أبشر أرتب لك موعد استشارة مجانية.';
+      return 'تقدر تتواصل معنا مباشرة على الواتساب https://wa.me/966500466349 أو عبر الإيميل support@d-arrow.com. وإذا حاب، أبشر أرتب لك موعد استشارة مجانية.';
     }
     return 'حياك الله في D-Arrow! أنا هنا لخدمتك. تفضل اسألني عن خدماتنا، الأسعار، أو لو ودك تحجز استشارة مجانية.';
   }
@@ -157,7 +166,7 @@ function generateFallbackResponse(message: string, language: 'en' | 'ar'): strin
     return 'Our packages start from 800 SAR/month depending on the services you need. Would you like to schedule a free consultation so we can recommend the right plan?';
   }
   if (query.includes('contact') || query.includes('call') || query.includes('email') || query.includes('phone')) {
-    return 'You can reach us at info@d-arrow.com or call +966 13 812 1213. I can also arrange a free consultation if you prefer.';
+    return 'You can reach us at support@d-arrow.com or WhatsApp https://wa.me/966500466349. I can also arrange a free consultation if you prefer.';
   }
   return 'Welcome to D-Arrow! I\'m here to help. Feel free to ask about our services, pricing, or schedule a free consultation.';
 }
