@@ -80,7 +80,7 @@ const Portfolio = () => {
             >
               <div className=" h-[600px] rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#14162E] to-[#0B0D1F] border border-brand-pink/20 transition-transform transform-gpu group-hover:-translate-y-3 group-hover:scale-[1.01]">
                 <div className="relative h-56 md:h-44 lg:h-52 flex items-center justify-center bg-gradient-to-br from-[#14162E] to-[#0B0D1F] p-3">
-                  <Image src={project.imageUrl} alt={project.title[lang]} width={600} height={340} className="object-contain w-full h-full p-2" />
+                  <Image src={project.imageUrl} alt={project.title[lang]} width={600} height={340} className="object-contain w-full h-full p-2" loading="eager" style={{ backgroundColor: 'transparent' }} />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#14162E] via-transparent opacity-0 group-hover:opacity-80 transition-opacity duration-500 rounded-2xl" />
                 </div>
 
@@ -88,7 +88,7 @@ const Portfolio = () => {
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-4 ">
                       {project.logoUrl && (
-                        <div className="w-14 h-14 bg-white rounded-xl p-2 flex items-center justify-center shadow-sm border border-brand-pink/20">
+                        <div className="w-14 h-14 bg-[#14162E] rounded-xl p-2 flex items-center justify-center shadow-sm border border-brand-pink/20">
                           <Image src={project.logoUrl} alt={`${project.title[lang]} logo`} width={44} height={44} className="object-contain" />
                         </div>
                       )}
