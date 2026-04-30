@@ -68,6 +68,7 @@ const translations: Translations = {
     faq_a4: { en: 'Yes, all plans include 2-3 rounds of revisions. Additional revisions available at nominal cost.', ar: 'نعم، جميع الخطط تشمل 2-3 جولات من المراجعات. تتوفر مراجعات إضافية بتكلفة رمزية.' },
   contact: { en: 'Contact', ar: 'تواصل' },
   getStarted: { en: 'Get Started', ar: 'ابدأ الآن' },
+  pricingCta: { en: 'Start Now', ar: 'أبدأ الأن' },
   trustedByTitle: { en: 'Partners in Success', ar: 'شركاء النجاح' },
   trustedByDesc: { en: 'We partner with top brands to deliver measurable results and lasting impact.', ar: 'نحن نتعاون مع أفضل العلامات التجارية لتحقيق نتائج قابلة للقياس وتأثير دائم.' },
   yearsOfExperience: { en: 'Years of Experience', ar: 'سنوات الخبرة' },
