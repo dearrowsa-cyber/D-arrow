@@ -5,7 +5,7 @@ import Image from 'next/image';
 const LogoMarquee = () => {
   const logos = [
     { src: '/pro1.png', alt: 'مجلة السياحة العربية' },
-    { src: '/connects4.png', alt: 'جمعية مثوى الأهلية' },
+    { src: '/connects4-v2.png', alt: 'جمعية مثوى الأهلية' },
     { src: '/pro3.png', alt: 'New Age Maintenance Center' },
     { src: '/connects2.png', alt: 'شركة بيد BEEDCO' },
     { src: '/connects1.png', alt: 'ToPco' },
