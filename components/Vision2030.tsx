@@ -26,13 +26,13 @@ export default function Vision2030() {
             className={`w-full lg:w-1/2 flex flex-col ${lang === 'ar' ? 'text-right items-end' : 'text-left items-start'}`}
             dir={lang === 'ar' ? 'rtl' : 'ltr'}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 mb-6">
-              <span className="text-green-400 font-semibold text-sm tracking-wide uppercase">
+            <div className="inline-flex items-center px-4 py-1 rounded-full border border-gray-600 mb-6">
+              <span className="text-gray-300 text-sm tracking-wide">
                 {t('visionBadge')}
               </span>
             </div>
             
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
               {t('visionTitle')}
             </h2>
             
@@ -40,45 +40,45 @@ export default function Vision2030() {
               {t('visionDescription')}
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 w-full mb-10">
               <div className="flex flex-col gap-3">
                 <div className={`flex items-center gap-3 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-green-400/20 to-emerald-600/20 flex items-center justify-center border border-green-500/20 flex-shrink-0">
-                    <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  <div className="w-10 h-10 rounded border border-gray-600 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </div>
-                  <h4 className="text-white font-semibold text-base">{t('visionFeature1Title')}</h4>
+                  <h4 className="text-white font-semibold text-base md:text-lg">{t('visionFeature1Title')}</h4>
                 </div>
-                <p className="text-sm text-gray-400 pl-15">{t('visionFeature1Desc')}</p>
+                <p className="text-sm text-gray-400 leading-relaxed">{t('visionFeature1Desc')}</p>
               </div>
               
               <div className="flex flex-col gap-3">
                 <div className={`flex items-center gap-3 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-orange/20 to-brand-pink/20 flex items-center justify-center border border-brand-orange/20 flex-shrink-0">
-                    <svg className="w-5 h-5 text-brand-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  <div className="w-10 h-10 rounded border border-gray-600 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-5 h-5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                     </svg>
                   </div>
-                  <h4 className="text-white font-semibold text-base">{t('visionFeature2Title')}</h4>
+                  <h4 className="text-white font-semibold text-base md:text-lg">{t('visionFeature2Title')}</h4>
                 </div>
-                <p className="text-sm text-gray-400 pl-15">{t('visionFeature2Desc')}</p>
+                <p className="text-sm text-gray-400 leading-relaxed">{t('visionFeature2Desc')}</p>
               </div>
             </div>
 
             <a 
               href="/contact"
-              className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg font-bold transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] group text-sm"
+              className={`inline-flex items-center text-brand-pink hover:text-brand-orange transition-colors font-medium text-lg group ${lang === 'ar' ? 'flex-row-reverse' : ''}`}
             >
-              {t('visionCTA')}
               <svg 
-                className={`w-5 h-5 transition-transform group-hover:translate-x-1 ${lang === 'ar' ? 'mr-2 rotate-180' : 'ml-2'}`} 
+                className={`w-5 h-5 transition-transform ${lang === 'ar' ? 'mr-2 group-hover:-translate-x-1 rotate-180' : 'ml-2 group-hover:translate-x-1'}`} 
                 fill="none" 
                 viewBox="0 0 24 24" 
                 stroke="currentColor"
               >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>
+              {t('visionCTA')}
             </a>
           </motion.div>
 
@@ -88,10 +88,10 @@ export default function Vision2030() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="w-full lg:w-5/12 relative mx-auto"
+            className="w-full lg:w-1/2 relative flex justify-center"
           >
-            <div className="relative rounded-2xl overflow-hidden shadow-xl border border-green-500/20 aspect-video group">
-              <div className="absolute inset-0 bg-gradient-to-tr from-green-500/10 to-transparent mix-blend-overlay z-10 pointer-events-none"></div>
+            <div className="relative w-full max-w-md rounded-2xl overflow-hidden shadow-xl border border-gray-700 aspect-square group">
+              <div className="absolute inset-0 bg-gradient-to-tr from-gray-800/10 to-transparent mix-blend-overlay z-10 pointer-events-none"></div>
               <video 
                 src="/media/vision-2030.mp4"
                 autoPlay
