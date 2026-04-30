@@ -7,9 +7,9 @@ export default function AboutCompany() {
   const { t, lang } = useLanguage();
 
   return (
-    <section className="relative py-16 lg:py-24 overflow-hidden border-b border-gray-800/50">
+    <section className="relative py-12 lg:py-16 overflow-hidden border-b border-gray-800/50">
       <div className="w-full max-w-7xl mx-auto px-6 md:px-12">
-        <div className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${lang === 'ar' ? 'lg:flex-row-reverse' : ''}`}>
+        <div className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-12 ${lang === 'ar' ? 'lg:flex-row-reverse' : ''}`}>
           
           {/* Image Side */}
           <motion.div 
@@ -17,9 +17,9 @@ export default function AboutCompany() {
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="w-full lg:w-1/2 relative"
+            className="w-full lg:w-5/12 relative mx-auto"
           >
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-brand-pink/20">
+            <div className="relative rounded-2xl overflow-hidden shadow-xl border border-brand-pink/20">
               <div className="absolute inset-0 bg-gradient-to-tr from-brand-pink/20 to-transparent mix-blend-overlay z-10"></div>
               <video 
                 src="/media/about-video.mp4?v=2"
@@ -50,11 +50,11 @@ export default function AboutCompany() {
               </span>
             </div>
             
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
               {t('aboutTitle')}
             </h2>
             
-            <p className="text-lg text-gray-300 dark:text-gray-400 mb-8 leading-relaxed">
+            <p className="text-base md:text-lg text-gray-300 dark:text-gray-400 mb-6 leading-relaxed">
               {t('aboutDescription')}
             </p>
 
@@ -66,7 +66,7 @@ export default function AboutCompany() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </div>
-                  <h4 className="text-white font-semibold">{t('aboutFeature1Title')}</h4>
+                  <h4 className="text-white font-semibold text-base">{t('aboutFeature1Title')}</h4>
                 </div>
                 <p className="text-sm text-gray-500 dark:text-gray-400 pl-13">{t('aboutFeature1Desc')}</p>
               </div>
@@ -78,7 +78,7 @@ export default function AboutCompany() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                   </div>
-                  <h4 className="text-white font-semibold">{t('aboutFeature2Title')}</h4>
+                  <h4 className="text-white font-semibold text-base">{t('aboutFeature2Title')}</h4>
                 </div>
                 <p className="text-sm text-gray-500 dark:text-gray-400 pl-13">{t('aboutFeature2Desc')}</p>
               </div>
@@ -86,7 +86,7 @@ export default function AboutCompany() {
 
             <a 
               href="/why-us"
-              className="inline-flex items-center justify-center px-8 py-3.5 bg-gradient-to-r from-brand-pink to-brand-orange text-white rounded-lg font-bold transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(255,77,109,0.4)] group"
+              className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-brand-pink to-brand-orange text-white rounded-lg font-bold transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(255,77,109,0.4)] group text-sm"
             >
               {t('aboutCTA')}
               <svg 
