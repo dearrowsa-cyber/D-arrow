@@ -68,7 +68,7 @@ export default function Vision2030() {
 
             <a 
               href="/contact"
-              className="inline-flex items-center justify-center px-8 py-3.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white rounded-lg font-bold transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(255,77,109,0.4)] group"
+              className="inline-flex items-center justify-center px-8 py-3.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] !text-white rounded-lg font-bold transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(255,77,109,0.4)] group"
             >
               {t('visionCTA')}
               <svg 
