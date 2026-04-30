@@ -93,7 +93,7 @@ export default function Vision2030() {
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-brand-pink/20">
               <div className="absolute inset-0 bg-gradient-to-tr from-brand-pink/20 to-transparent mix-blend-overlay z-10 pointer-events-none"></div>
               <video 
-                src="/media/vision-2030.mp4"
+                src="/media/vision-2030-v2.mp4"
                 autoPlay
                 loop
                 muted
