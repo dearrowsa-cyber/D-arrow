@@ -28,6 +28,11 @@ const PartnersInSuccess = dynamic(() => import('@/components/PartnersInSuccess')
   ssr: true,
 });
 
+const Vision2030 = dynamic(() => import('@/components/Vision2030'), {
+  loading: () => <div className="py-8 lg:py-16 bg-gray-900" />,
+  ssr: true,
+});
+
 
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -82,6 +87,10 @@ export default function Home() {
         <AboutCompany />
       </LazySection>
       
+      <LazySection>
+        <Vision2030 />
+      </LazySection>
+
       <LazySection>
         <Process />
       </LazySection>

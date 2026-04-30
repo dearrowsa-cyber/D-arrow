@@ -639,6 +639,16 @@ const translations: Translations = {
   cookieAcceptAll: { en: 'Accept All', ar: 'موافقة على الكل' },
   cookieRejectAll: { en: 'Reject Non-Essential', ar: 'رفض غير الأساسية' },
   manageCookies: { en: 'Manage Cookies', ar: 'إدارة الكوكيز' },
+  
+  // Vision 2030 Section
+  visionBadge: { en: 'Our Vision', ar: 'رؤيتنا' },
+  visionTitle: { en: 'Aligning with Saudi Vision 2030', ar: 'مواكبة لرؤية المملكة 2030' },
+  visionDescription: { en: 'At D-Arrow, we are proud to align our goals with Saudi Vision 2030. We empower local businesses through comprehensive digital transformation, fostering innovation, and driving sustainable economic growth to build a thriving digital economy.', ar: 'في دي-آرو، نفخر بمواءمة أهدافنا مع رؤية المملكة العربية السعودية 2030. نحن نمكن الشركات المحلية من خلال التحول الرقمي الشامل، وتعزيز الابتكار، ودفع عجلة النمو الاقتصادي المستدام لبناء اقتصاد رقمي مزدهر.' },
+  visionFeature1Title: { en: 'Digital Transformation', ar: 'التحول الرقمي' },
+  visionFeature1Desc: { en: 'Elevating Saudi businesses to meet global digital standards and practices.', ar: 'الارتقاء بالأعمال السعودية لتواكب المعايير والممارسات الرقمية العالمية.' },
+  visionFeature2Title: { en: 'Economic Empowerment', ar: 'التمكين الاقتصادي' },
+  visionFeature2Desc: { en: 'Supporting local enterprises to innovate and thrive in the modern digital age.', ar: 'دعم وتمكين الشركات المحلية للابتكار والازدهار في العصر الرقمي الحديث.' },
+  visionCTA: { en: 'Join Our Journey', ar: 'شاركنا رحلة النجاح' },
 };
 
 const defaultLang: Lang = 'ar';
