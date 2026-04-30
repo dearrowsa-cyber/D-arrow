@@ -7,7 +7,7 @@ export default function Vision2030() {
   const { t, lang } = useLanguage();
 
   return (
-    <section className="relative py-16 lg:py-24 overflow-hidden bg-gray-900 border-b border-gray-800/50">
+    <section className="relative py-16 lg:py-24 overflow-hidden border-b border-gray-800/50">
       {/* Decorative Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute -top-[10%] -right-[10%] w-[40%] h-[40%] rounded-full bg-brand-pink/5 blur-[120px]"></div>
@@ -26,8 +26,8 @@ export default function Vision2030() {
             className={`w-full lg:w-1/2 flex flex-col ${lang === 'ar' ? 'text-right items-end' : 'text-left items-start'}`}
             dir={lang === 'ar' ? 'rtl' : 'ltr'}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-green-500/10 border border-green-500/20 mb-6">
-              <span className="text-green-400 font-semibold text-sm tracking-wide uppercase">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-pink/10 border border-brand-pink/20 mb-6">
+              <span className="text-brand-pink font-semibold text-sm tracking-wide uppercase">
                 {t('visionBadge')}
               </span>
             </div>
@@ -43,8 +43,8 @@ export default function Vision2030() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full mb-10">
               <div className="flex flex-col gap-3">
                 <div className={`flex items-center gap-3 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-400/20 to-emerald-600/20 flex items-center justify-center border border-green-500/20 flex-shrink-0">
-                    <svg className="w-6 h-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-orange/20 to-brand-pink/20 flex items-center justify-center border border-brand-orange/20 flex-shrink-0">
+                    <svg className="w-6 h-6 text-brand-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </div>
@@ -68,7 +68,7 @@ export default function Vision2030() {
 
             <a 
               href="/contact"
-              className="inline-flex items-center justify-center px-8 py-3.5 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-lg font-bold transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(16,185,129,0.4)] group"
+              className="inline-flex items-center justify-center px-8 py-3.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white rounded-lg font-bold transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(255,77,109,0.4)] group"
             >
               {t('visionCTA')}
               <svg 
@@ -90,8 +90,8 @@ export default function Vision2030() {
             viewport={{ once: true }}
             className="w-full lg:w-1/2 relative"
           >
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-green-500/20">
-              <div className="absolute inset-0 bg-gradient-to-tr from-green-500/10 to-transparent mix-blend-overlay z-10 pointer-events-none"></div>
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-brand-pink/20">
+              <div className="absolute inset-0 bg-gradient-to-tr from-brand-pink/20 to-transparent mix-blend-overlay z-10 pointer-events-none"></div>
               <video 
                 src="/media/vision-2030.mp4"
                 autoPlay
@@ -104,8 +104,8 @@ export default function Vision2030() {
             </div>
             
             {/* Decorative elements for video */}
-            <div className={`absolute -bottom-6 ${lang === 'ar' ? '-left-6' : '-right-6'} w-32 h-32 bg-green-500/20 rounded-full blur-3xl -z-10`}></div>
-            <div className={`absolute -top-6 ${lang === 'ar' ? '-right-6' : '-left-6'} w-24 h-24 bg-emerald-500/20 rounded-full blur-2xl -z-10`}></div>
+            <div className={`absolute -bottom-6 ${lang === 'ar' ? '-left-6' : '-right-6'} w-32 h-32 bg-brand-orange/20 rounded-full blur-3xl -z-10`}></div>
+            <div className={`absolute -top-6 ${lang === 'ar' ? '-right-6' : '-left-6'} w-24 h-24 bg-brand-pink/20 rounded-full blur-2xl -z-10`}></div>
           </motion.div>
 
         </div>
