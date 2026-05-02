@@ -291,7 +291,7 @@ const translations: Translations = {
   followUsTitle: { en: 'Follow Us', ar: 'تابعنا' },
   followUsDesc: { en: 'Connect with D Arrow Digital on social media for latest updates and insights', ar: 'تواصل مع دي آرو الرقمية على وسائل التواصل الاجتماعي لأحدث التحديثات والرؤى' },
   socialInstagram: { en: 'Instagram', ar: 'إنستغرام' },
-  socialSnapchat: { en: 'Snapchat', ar: 'سناب تشات' },
+  socialSnapchat: { en: 'Snapchat', ar: 'سناب شات' },
   socialLinkedin: { en: 'LinkedIn', ar: 'لينكدإن' },
   socialTiktok: { en: 'TikTok', ar: 'تيك توك' },
   socialWhatsapp: { en: 'WhatsApp', ar: 'واتس آب' },
