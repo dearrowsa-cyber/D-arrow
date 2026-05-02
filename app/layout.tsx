@@ -23,9 +23,12 @@ const tajawal = Tajawal({
 export const revalidate = 86400; // 24 hours caching (LiteSpeed equivalent for Next)
 
 export const metadata: Metadata = {
-  title: "D Arrow - Digital Marketing Agency | SEO, Web Design, Branding",
-  description: "Transform your business with D Arrow's digital marketing solutions. Expert SEO, web design, branding, and digital marketing services. Get your free consultation today.",
-  keywords: "digital marketing, SEO services, web design, branding, social media marketing, digital marketing agency",
+  title: {
+    default: 'D Arrow | دي آرو - وكالة تسويق رقمي | SEO, Web Design, Branding',
+    template: '%s | D Arrow',
+  },
+  description: "وكالة دي آرو للتسويق الرقمي - حلول تسويقية متكاملة: تحسين محركات البحث SEO، تصميم المواقع، الهوية التجارية، إدارة السوشيال ميديا. Transform your business with D Arrow's digital marketing solutions.",
+  keywords: 'تسويق رقمي, وكالة تسويق, SEO, تصميم مواقع, هوية تجارية, سوشيال ميديا, digital marketing, web design, branding, Saudi Arabia, الأحساء, الخبر',
   authors: [{ name: "D Arrow Digital" }],
   creator: "D Arrow Digital",
   publisher: "D Arrow Digital",
@@ -44,11 +47,12 @@ export const metadata: Metadata = {
   classification: 'Business',
   openGraph: {
     type: 'website',
-    locale: 'en_US',
+    locale: 'ar_SA',
+    alternateLocale: 'en_US',
     url: 'https://d-arrow.com',
-    siteName: 'D Arrow - Digital Marketing Agency',
-    title: 'D Arrow - Digital Marketing Agency | SEO, Web Design, Branding',
-    description: 'Transform your business with D Arrow\'s digital marketing solutions. Expert SEO, web design, branding, and digital marketing services.',
+    siteName: 'D Arrow - دي آرو للتسويق الرقمي',
+    title: 'D Arrow | دي آرو - وكالة تسويق رقمي',
+    description: 'وكالة دي آرو للتسويق الرقمي - حلول تسويقية متكاملة تشمل SEO وتصميم المواقع وإدارة السوشيال ميديا في السعودية.',
     images: [
       {
         url: 'https://d-arrow.com/DR-LOGO.png',
