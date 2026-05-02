@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'خدماتنا | D Arrow - وكالة تسويق رقمي',
   description: 'خدمات تسويق رقمي متكاملة: تحسين محركات البحث SEO، إدارة وسائل التواصل الاجتماعي، تصميم المواقع، تطوير التطبيقات، هوية العلامة التجارية، والإعلانات المدفوعة.',
