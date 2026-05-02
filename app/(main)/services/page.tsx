@@ -253,7 +253,7 @@ export default function ServicesPage() {
             'sameAs': [
               'https://www.facebook.com/darrowdigital',
               'https://www.twitter.com/darrowdigital',
-              'https://www.linkedin.com/company/darrowdigital',
+              'https://www.linkedin.com/in/%D8%B4%D8%B1%D9%83%D8%A9-%D8%AF%D9%8A-%D8%A2%D8%B1%D9%88-5024643b5/',
             ],
             'areaServed': ['SA', 'AE', 'KW', 'QA', 'BH', 'OM'],
             'serviceType': ['Digital Marketing', 'Software Development', 'Web Design', 'Real Estate Marketing'],

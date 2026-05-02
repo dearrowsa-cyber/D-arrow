@@ -121,7 +121,7 @@ export default function RootLayout({
               sameAs: [
                 'https://www.facebook.com/darrowdigital',
                 'https://www.instagram.com/darrow.co/',
-                'https://www.linkedin.com/company/darrowdigital',
+                'https://www.linkedin.com/in/%D8%B4%D8%B1%D9%83%D8%A9-%D8%AF%D9%8A-%D8%A2%D8%B1%D9%88-5024643b5/',
                 'https://www.twitter.com/darrowdigital',
               ],
               contactPoint: [

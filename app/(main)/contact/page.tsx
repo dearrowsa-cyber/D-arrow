@@ -442,7 +442,7 @@ export default function ContactPage() {
 
             {/* LinkedIn */}
             <a
-              href={social?.linkedin || "https://www.linkedin.com/in/d-arrow-4753393a8"}
+              href={social?.linkedin || "https://www.linkedin.com/in/%D8%B4%D8%B1%D9%83%D8%A9-%D8%AF%D9%8A-%D8%A2%D8%B1%D9%88-5024643b5/"}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex flex-col items-center justify-center w-[160px] h-[160px] border border-brand-pink/30 rounded-2xl bg-gradient-to-br from-secondary-dark via-dark-navy to-secondary-dark hover:from-brand-pink/10 hover:to-brand-orange/5 transition-all duration-300 hover:border-brand-pink/60 hover:shadow-2xl hover:shadow-brand-pink/30 hover:-translate-y-2"

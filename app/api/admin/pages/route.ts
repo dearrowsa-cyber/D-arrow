@@ -36,7 +36,7 @@ const defaultPagesContent = {
   social: {
     instagram: 'https://www.instagram.com/darrow.co/',
     snapchat: 'https://www.snapchat.com/@darrow.co?share_id=bINbFcr6nOc&locale=en-EG',
-    linkedin: 'https://www.linkedin.com/company/darrowdigital',
+    linkedin: 'https://www.linkedin.com/in/%D8%B4%D8%B1%D9%83%D8%A9-%D8%AF%D9%8A-%D8%A2%D8%B1%D9%88-5024643b5/',
     tiktok: 'https://www.tiktok.com/@d.arrow.sa?_r=1&_t=ZS-95OXOuGs34j',
     whatsapp: 'https://wa.me/966500466349',
   },

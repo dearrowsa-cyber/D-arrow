@@ -119,7 +119,7 @@ const Footer = () => {
 
             <div className="flex gap-4">
               <a
-                href={social?.linkedin || "https://www.linkedin.com/in/d-arrow-4753393a8"}
+                href={social?.linkedin || "https://www.linkedin.com/in/%D8%B4%D8%B1%D9%83%D8%A9-%D8%AF%D9%8A-%D8%A2%D8%B1%D9%88-5024643b5/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-secondary-dark rounded-md flex items-center justify-center hover:bg-brand-pink transition transform hover:scale-110"
