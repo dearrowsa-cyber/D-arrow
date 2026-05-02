@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'أعمالنا ومشاريعنا | D Arrow - معرض الأعمال',
+  title: 'أعمالنا ومشاريعنا',
   description: 'استعرض مشاريعنا الناجحة في التسويق الرقمي وتصميم المواقع والهوية التجارية. مشاريع حقيقية مع نتائج قابلة للقياس لعملاء في السعودية والخليج.',
   keywords: 'أعمال D Arrow, مشاريع تسويق رقمي, معرض أعمال, بورتفوليو',
   openGraph: {
-    title: 'أعمالنا ومشاريعنا | D Arrow',
+    title: 'أعمالنا ومشاريعنا',
     description: 'اكتشف مشاريعنا الناجحة في التسويق الرقمي وتصميم المواقع.',
     url: 'https://d-arrow.com/provisions',
     images: [{ url: 'https://d-arrow.com/DR-LOGO.png', width: 1200, height: 630, alt: 'D Arrow Portfolio' }],
