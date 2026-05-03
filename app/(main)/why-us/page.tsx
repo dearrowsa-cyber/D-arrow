@@ -90,9 +90,9 @@ export default function WhyUsPage() {
         <div className="w-full mx-auto px-6 md:px-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 ">
             {[
-              { number: '8+', labelKey: 'projectsDelivered' },
+              { number: '+105', labelKey: 'projectsDelivered' },
               { number: '98%', labelKey: 'clientSatisfaction' },
-              { number: '6+', labelKey: 'yearsExperience' },
+              { number: '+3', labelKey: 'yearsExperience' },
             ].map((stat, i) => (
               <div key={i} className="p-4 border border-brand-pink/30 rounded-lg text-center hover:border-brand-pink/50 bg-secondary-dark transition">
                 <div className="text-4xl font-bold text-brand-orange mb-2">
