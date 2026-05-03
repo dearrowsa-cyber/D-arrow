@@ -45,7 +45,7 @@ export default memo(function Header() {
           {/* Desktop Navigation - Hidden on tablet and below */}
           <nav className="hidden lg:flex gap-1 items-center flex-1 justify-center px-4">
             <Link href="/" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
-              <span className="relative z-10 group-hover:text-brand-pink transition-colors duration-300">{t('home')}</span>
+              <span className="relative z-10 text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all duration-300">{t('home')}</span>
               <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
             </Link>
 
@@ -62,7 +62,7 @@ export default memo(function Header() {
                            group overflow-hidden"
                 style={{ textTransform: 'none' }}
               >
-                <span className="relative z-10 group-hover:text-brand-pink transition-colors duration-300">{t('solutions')}</span>
+                <span className="relative z-10 text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all duration-300">{t('solutions')}</span>
                 <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
               </Link>
               {/* Enhanced dropdown - 3 featured columns with brand colors */}
@@ -108,7 +108,7 @@ export default memo(function Header() {
         className="w-14 h-10 rounded-md object-cover flex-shrink-0 transition group-hover:scale-105"
       />
       <div className={lang === 'ar' ? 'text-right' : ''}>
-        <h4 className="text-sm font-semibold text-white group-hover:text-brand-pink transition">
+        <h4 className="text-sm font-semibold text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all">
           {t('digitalMarketingHeader')}
         </h4>
         
@@ -135,7 +135,7 @@ export default memo(function Header() {
         className="w-14 h-10 rounded-md object-cover flex-shrink-0 transition group-hover:scale-105"
       />
       <div className={lang === 'ar' ? 'text-right' : ''}>
-        <h4 className="text-sm font-semibold text-white group-hover:text-brand-pink transition">
+        <h4 className="text-sm font-semibold text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all">
           {t('innovationHeader')}
         </h4>
        
@@ -162,7 +162,7 @@ export default memo(function Header() {
         className="w-14 h-10 rounded-md object-cover flex-shrink-0 transition group-hover:scale-105"
       />
       <div className={lang === 'ar' ? 'text-right' : ''}>
-        <h4 className="text-sm font-semibold text-white group-hover:text-brand-pink transition">
+        <h4 className="text-sm font-semibold text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all">
           {t('realEstateHeader')}
         </h4>
         
@@ -174,27 +174,27 @@ export default memo(function Header() {
             </div>
 
             <Link href="/pricing" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
-              <span className="relative z-10 group-hover:text-brand-pink transition-colors duration-300">{t('packages')}</span>
+              <span className="relative z-10 text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all duration-300">{t('packages')}</span>
               <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
             </Link>
             
             <Link href="/why-us" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
-              <span className="relative z-10 group-hover:text-brand-pink transition-colors duration-300">{t('ourCommitment')}</span>
+              <span className="relative z-10 text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all duration-300">{t('ourCommitment')}</span>
               <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
             </Link>
             
             <Link href="/provisions" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
-              <span className="relative z-10 group-hover:text-brand-pink transition-colors duration-300">{t('portfolio')}</span>
+              <span className="relative z-10 text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all duration-300">{t('portfolio')}</span>
               <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
             </Link>
             
             <Link href="/blog" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
-              <span className="relative z-10 group-hover:text-brand-pink transition-colors duration-300">{t('blog')}</span>
+              <span className="relative z-10 text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all duration-300">{t('blog')}</span>
               <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
             </Link>
             
             <Link href="/contact" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
-              <span className="relative z-10 group-hover:text-brand-pink transition-colors duration-300">{t('contact')}</span>
+              <span className="relative z-10 text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all duration-300">{t('contact')}</span>
               <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
             </Link>
           </nav>
@@ -276,21 +276,21 @@ hover:shadow-md hover:scale-105 active:scale-95">
                   <Link href="/services?category=digital-marketing" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center p-3 sm:p-4 min-h-[54px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition group w-full mb-1`}>
                     <img src="/icon/services-icon/digital_marketing_promotion.png" alt="Digital Marketing" className="w-10 h-10 rounded-md object-cover shadow-sm flex-shrink-0 group-hover:scale-105 transition" loading="lazy" decoding="async" />
                     <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
-                      <h4 className="text-[15px] font-bold text-brand-white group-hover:text-brand-pink transition">{t('digitalMarketingHeader')}</h4>
+                      <h4 className="text-[15px] font-bold text-brand-white text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all">{t('digitalMarketingHeader')}</h4>
                     </div>
                   </Link>
 
                   <Link href="/services?category=innovation-development" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center p-3 sm:p-4 min-h-[54px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition group w-full mb-1`}>
                     <img src="/icon/services-icon/creative_digital_design.png" alt="Innovation & Development" className="w-10 h-10 rounded-md object-cover shadow-sm flex-shrink-0 group-hover:scale-105 transition" loading="lazy" decoding="async" />
                     <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
-                      <h4 className="text-[15px] font-bold text-brand-white group-hover:text-brand-pink transition">{t('innovationHeader')}</h4>
+                      <h4 className="text-[15px] font-bold text-brand-white text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all">{t('innovationHeader')}</h4>
                     </div>
                   </Link>
 
                   <Link href="/services?category=real-estate" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center p-3 sm:p-4 min-h-[54px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition group w-full`}>
                     <img src="/icon/services-icon/real_estate_marketing.png" alt="Real Estate" className="w-10 h-10 rounded-md object-cover shadow-sm flex-shrink-0 group-hover:scale-105 transition" loading="lazy" decoding="async" />
                     <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
-                      <h4 className="text-[15px] font-bold text-brand-white group-hover:text-brand-pink transition">{t('realEstateHeader')}</h4>
+                      <h4 className="text-[15px] font-bold text-brand-white text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all">{t('realEstateHeader')}</h4>
                     </div>
                   </Link>
                 </div>
