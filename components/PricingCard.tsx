@@ -105,7 +105,8 @@ export default function PricingCard({ title, titleKey, price, oldPrice, features
         {features.length > 5 && (
           <button 
             onClick={(e) => { e.stopPropagation(); setIsExpanded(!isExpanded); }}
-            className="w-full flex items-center justify-center gap-2 mt-4 mb-2 py-2 text-sm font-bold text-brand-white bg-brand-pink hover:opacity-90 rounded-xl transition-all duration-300 group shadow-md"
+            style={{ backgroundColor: '#FF4D6D', backgroundImage: 'none' }}
+            className="w-full flex items-center justify-center gap-2 mt-4 mb-2 py-2 text-sm font-bold text-white hover:opacity-90 rounded-xl transition-all duration-300 group shadow-md"
           >
             <span>
               {isExpanded 
