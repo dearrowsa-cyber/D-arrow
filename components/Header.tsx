@@ -44,26 +44,27 @@ export default memo(function Header() {
 
           {/* Desktop Navigation - Hidden on tablet and below */}
           <nav className="hidden lg:flex gap-1 items-center flex-1 justify-center px-4">
-            <Link href="/" className="relative hover:text-brand-pink transition duration-300 !text-white !text-xl font-medium px-3 py-2 rounded-lg group">{t('home')}<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] group-hover:w-full transition-all duration-300"></span></Link>
+            <Link href="/" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
+              <span className="relative z-10 group-hover:text-brand-pink transition-colors duration-300">{t('home')}</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
+            </Link>
+
             <div className="relative" onMouseEnter={() => { if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current); setServicesOpen(true); }} onMouseLeave={() => { closeTimeoutRef.current = window.setTimeout(() => setServicesOpen(false),200 ); }}>
-<Link
-  href="/services"
-  className="relative flex items-center gap-2
-             bg-transparent hover:bg-transparent 
-              !text-white hover:text-brand-orange 
-             transition duration-300 
-             !text-lg 
-             px-0 py-0 
-             border-none outline-none 
-             group"
-  style={{ textTransform: 'none' }}
->
-  {t('solutions')}
-  <span className="absolute bottom-0 left-0 w-0 h-0.5 
-                   bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] 
-                   group-hover:w-full transition-all duration-300">
-  </span>
-</Link>
+              <Link
+                href="/services"
+                className="relative flex items-center justify-center gap-2
+                           bg-transparent hover:bg-transparent 
+                            !text-white hover:text-brand-orange 
+                           transition-all duration-300 
+                           !text-xl font-medium 
+                           px-4 py-2 rounded-xl
+                           border-none outline-none 
+                           group overflow-hidden"
+                style={{ textTransform: 'none' }}
+              >
+                <span className="relative z-10 group-hover:text-brand-pink transition-colors duration-300">{t('solutions')}</span>
+                <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
+              </Link>
               {/* Enhanced dropdown - 3 featured columns with brand colors */}
              <div
   onMouseEnter={() => { if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current); }}
@@ -172,13 +173,30 @@ export default memo(function Header() {
 </div>
             </div>
 
-            <Link href="/pricing" className="relative hover:!text-brand-pink transition duration-300 !text-white !text-xl font-medium px-3 py-2 rounded-lg group">{t('packages')}<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] group-hover:w-full transition-all duration-300"></span></Link>
-            <Link href="/why-us" className="relative hover:!text-brand-pink transition duration-300 !text-white !text-xl font-medium px-3 py-2 rounded-lg group">{t('ourCommitment')}<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] group-hover:w-full transition-all duration-300"></span></Link>
+            <Link href="/pricing" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
+              <span className="relative z-10 group-hover:text-brand-pink transition-colors duration-300">{t('packages')}</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
+            </Link>
             
-            <Link href="/provisions" className="relative hover:!text-brand-pink transition duration-300 !text-white !text-xl font-medium px-3 py-2 rounded-lg group">{t('portfolio')}<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] group-hover:w-full transition-all duration-300"></span></Link>
-            <Link href="/blog" className="relative hover:!text-brand-pink transition duration-300 !text-white !text-xl font-medium px-3 py-2 rounded-lg group">{t('blog')}<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] group-hover:w-full transition-all duration-300"></span></Link>
+            <Link href="/why-us" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
+              <span className="relative z-10 group-hover:text-brand-pink transition-colors duration-300">{t('ourCommitment')}</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
+            </Link>
             
-            <Link href="/contact" className="relative hover:text-brand-pink transition duration-300 !text-white !text-xl font-medium px-3 py-2 rounded-lg group">{t('contact')}<span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] group-hover:w-full transition-all duration-300"></span></Link>
+            <Link href="/provisions" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
+              <span className="relative z-10 group-hover:text-brand-pink transition-colors duration-300">{t('portfolio')}</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
+            </Link>
+            
+            <Link href="/blog" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
+              <span className="relative z-10 group-hover:text-brand-pink transition-colors duration-300">{t('blog')}</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
+            </Link>
+            
+            <Link href="/contact" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
+              <span className="relative z-10 group-hover:text-brand-pink transition-colors duration-300">{t('contact')}</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
+            </Link>
           </nav>
 
           <div className="flex items-center gap-2 sm:gap-2 flex-shrink-0">
