@@ -105,17 +105,18 @@ export default function PricingCard({ title, titleKey, price, oldPrice, features
         {features.length > 5 && (
           <button 
             onClick={(e) => { e.stopPropagation(); setIsExpanded(!isExpanded); }}
-            style={{ backgroundColor: '#FF4D6D', backgroundImage: 'none' }}
-            className="w-full flex items-center justify-center gap-2 mt-4 mb-2 py-2 text-sm font-bold text-white hover:opacity-90 rounded-xl transition-all duration-300 group shadow-md"
+            style={{ backgroundColor: '#FFFFFF', backgroundImage: 'none' }}
+            className="w-full flex items-center justify-center gap-2 mt-4 mb-2 py-2 text-sm font-bold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02]"
           >
-            <span>
+            <span className="brand-gradient-text">
               {isExpanded 
                 ? (lang === 'ar' ? 'عرض أقل' : 'Show Less') 
                 : (lang === 'ar' ? 'قراءة المزيد' : 'Read More')}
             </span>
             <svg 
               className={`w-4 h-4 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
-              fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
+              fill="none" viewBox="0 0 24 24" strokeWidth={2.5}
+              style={{ stroke: '#FF4D6D' }}
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
