@@ -309,19 +309,6 @@ export default function CustomServicesInquiryModal({ isOpen, onClose }: CustomSe
                 <span className='!text-white'>{t('projectDetails')}</span>
               </h3>
               <div className="space-y-4">
-                <select
-                  name="budget"
-                  value={formData.budget}
-                  onChange={handleInputChange}
-                  className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 text-gray-900 focus:border-brand-pink focus:outline-none transition focus:bg-white"
-                >
-                  <option value="">{t('selectBudgetRangeOptional')}</option>
-                  <option value="Under 1000 SAR">{t('budget_under_1000')}</option>
-                  <option value="1000 - 5000 SAR">{t('budget_1000_5000')}</option>
-                  <option value="5000 - 10000 SAR">{t('budget_5000_10000')}</option>
-                  <option value="10000 - 25000 SAR">{t('budget_10000_25000')}</option>
-                  <option value="25000+ SAR">{t('budget_25000_plus')}</option>
-                </select>
 
                 <select
                   name="timeline"

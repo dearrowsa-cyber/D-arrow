@@ -16,6 +16,7 @@ export default function PricingPage() {
   const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
   const [isPricingInquiryOpen, setIsPricingInquiryOpen] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState('');
+  const [selectedPrice, setSelectedPrice] = useState('');
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<'marketing' | 'development'>('marketing');
   const { t, lang } = useLanguage();
@@ -439,6 +440,7 @@ export default function PricingPage() {
                           setIsCustomModalOpen(true);
                         } else {
                           setSelectedPackage(plan.title);
+                          setSelectedPrice(plan.price);
                           setIsPricingInquiryOpen(true);
                         }
                       }}
@@ -460,6 +462,7 @@ export default function PricingPage() {
           isOpen={isPricingInquiryOpen} 
           onClose={() => setIsPricingInquiryOpen(false)}
           packageName={selectedPackage}
+          packagePrice={selectedPrice}
         />
 
         

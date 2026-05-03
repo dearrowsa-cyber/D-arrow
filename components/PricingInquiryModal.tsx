@@ -8,9 +8,10 @@ interface PricingInquiryModalProps {
   isOpen: boolean;
   onClose: () => void;
   packageName: string;
+  packagePrice?: string;
 }
 
-export default function PricingInquiryModal({ isOpen, onClose, packageName }: PricingInquiryModalProps) {
+export default function PricingInquiryModal({ isOpen, onClose, packageName, packagePrice }: PricingInquiryModalProps) {
   const { t } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
@@ -131,9 +132,17 @@ export default function PricingInquiryModal({ isOpen, onClose, packageName }: Pr
         ) : (
           <form onSubmit={handleSubmit} className="p-8 space-y-6">
             {/* Selected Package Display */}
-            <div className="bg-[#14162E] border border-pink-200 rounded-lg p-4">
-              <p className="text-sm text-pink-900 font-semibold\">{t('selectedPackageLabel')}</p>
-              <p className="text-lg font-bold text-brand-pink\">{packageName}</p>
+            <div className="bg-[#14162E] border border-pink-200 rounded-lg p-4 flex justify-between items-center">
+              <div>
+                <p className="text-sm text-pink-900 font-semibold">{t('selectedPackageLabel')}</p>
+                <p className="text-lg font-bold text-brand-pink">{packageName}</p>
+              </div>
+              {packagePrice && (
+                <div className="text-right">
+                  <p className="text-sm text-gray-400 font-semibold">{t('packagePriceLabel', 'السعر')}</p>
+                  <p className="text-lg font-bold text-white">{packagePrice}</p>
+                </div>
+              )}
             </div>
             
             {/* Advanced Honeypot - Offscreen instead of display: none */}
@@ -202,19 +211,7 @@ export default function PricingInquiryModal({ isOpen, onClose, packageName }: Pr
                   {t('projectDetails')}
                 </h3>
               <div className="space-y-4">
-                <select
-                  name="budget"
-                  value={formData.budget}
-                  onChange={handleInputChange}
-                  className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 !text-gray-900 focus:border-brand-pink focus:outline-none transition focus:bg-white"
-                >
-                  <option value="">{t('selectBudgetRangeOptional')}</option>
-                  <option value="Under 1000 SAR">{t('budget_under_1000')}</option>
-                  <option value="1000 - 5000 SAR">{t('budget_1000_5000')}</option>
-                  <option value="5000 - 10000 SAR">{t('budget_5000_10000')}</option>
-                  <option value="10000 - 25000 SAR">{t('budget_10000_25000')}</option>
-                  <option value="25000+ SAR">{t('budget_25000_plus')}</option>
-                </select>
+              <div className="space-y-4">
 
                 <select
                   name="timeline"
