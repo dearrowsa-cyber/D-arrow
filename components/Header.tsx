@@ -44,26 +44,17 @@ export default memo(function Header() {
 
           {/* Desktop Navigation - Hidden on tablet and below */}
           <nav className="hidden lg:flex gap-1 items-center flex-1 justify-center px-4">
-            <Link href="/" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
-              <span className="relative z-10 text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all duration-300">{t('home')}</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
+            <Link href="/" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
+              <span className="nav-text">{t('home')}</span>
             </Link>
 
             <div className="relative" onMouseEnter={() => { if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current); setServicesOpen(true); }} onMouseLeave={() => { closeTimeoutRef.current = window.setTimeout(() => setServicesOpen(false),200 ); }}>
               <Link
                 href="/services"
-                className="relative flex items-center justify-center gap-2
-                           bg-transparent hover:bg-transparent 
-                            !text-white hover:text-brand-orange 
-                           transition-all duration-300 
-                           !text-xl font-medium 
-                           px-4 py-2 rounded-xl
-                           border-none outline-none 
-                           group overflow-hidden"
+                className="nav-link-hover flex items-center justify-center gap-2 !text-xl font-medium px-4 py-2"
                 style={{ textTransform: 'none' }}
               >
-                <span className="relative z-10 text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all duration-300">{t('solutions')}</span>
-                <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
+                <span className="nav-text">{t('solutions')}</span>
               </Link>
               {/* Enhanced dropdown - 3 featured columns with brand colors */}
              <div
@@ -92,6 +83,7 @@ export default memo(function Header() {
       href="/services?category=digital-marketing"
       onClick={() => setServicesOpen(false)}
       className={`
+        dropdown-item-hover
         flex ${lang === 'ar' ? 'flex-row-reverse' : ''}
         items-center gap-3
         p-2.5
@@ -99,16 +91,15 @@ export default memo(function Header() {
         !text-white
         hover:bg-[rgba(255,77,109,0.15)]
         transition
-        group
       `}
     >
       <img
         src="/icon/services-icon/digital_marketing_promotion.png"
         alt="Digital Marketing"
-        className="w-14 h-10 rounded-md object-cover flex-shrink-0 transition group-hover:scale-105"
+        className="w-14 h-10 rounded-md object-cover flex-shrink-0 transition hover:scale-105"
       />
       <div className={lang === 'ar' ? 'text-right' : ''}>
-        <h4 className="text-sm font-semibold text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all">
+        <h4 className="text-sm font-semibold">
           {t('digitalMarketingHeader')}
         </h4>
         
@@ -120,22 +111,22 @@ export default memo(function Header() {
       href="/services?category=innovation-development"
       onClick={() => setServicesOpen(false)}
       className={`
+        dropdown-item-hover
         flex ${lang === 'ar' ? 'flex-row-reverse' : ''}
         items-center gap-3
         p-2.5
         rounded-md
         hover:bg-[rgba(255,77,109,0.15)]
         transition
-        group
       `}
     >
       <img
         src="/icon/services-icon/creative_digital_design.png"
         alt="Innovation & Development"
-        className="w-14 h-10 rounded-md object-cover flex-shrink-0 transition group-hover:scale-105"
+        className="w-14 h-10 rounded-md object-cover flex-shrink-0 transition hover:scale-105"
       />
       <div className={lang === 'ar' ? 'text-right' : ''}>
-        <h4 className="text-sm font-semibold text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all">
+        <h4 className="text-sm font-semibold">
           {t('innovationHeader')}
         </h4>
        
@@ -147,22 +138,22 @@ export default memo(function Header() {
       href="/services?category=real-estate"
       onClick={() => setServicesOpen(false)}
       className={`
+        dropdown-item-hover
         flex ${lang === 'ar' ? 'flex-row-reverse' : ''}
         items-center gap-3
         p-2.5
         rounded-md
         hover:bg-[rgba(255,77,109,0.15)]
         transition
-        group
       `}
     >
       <img
         src="/icon/services-icon/real_estate_marketing.png"
         alt="Real Estate"
-        className="w-14 h-10 rounded-md object-cover flex-shrink-0 transition group-hover:scale-105"
+        className="w-14 h-10 rounded-md object-cover flex-shrink-0 transition hover:scale-105"
       />
       <div className={lang === 'ar' ? 'text-right' : ''}>
-        <h4 className="text-sm font-semibold text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all">
+        <h4 className="text-sm font-semibold">
           {t('realEstateHeader')}
         </h4>
         
@@ -173,29 +164,24 @@ export default memo(function Header() {
 </div>
             </div>
 
-            <Link href="/pricing" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
-              <span className="relative z-10 text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all duration-300">{t('packages')}</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
+            <Link href="/pricing" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
+              <span className="nav-text">{t('packages')}</span>
             </Link>
             
-            <Link href="/why-us" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
-              <span className="relative z-10 text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all duration-300">{t('ourCommitment')}</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
+            <Link href="/why-us" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
+              <span className="nav-text">{t('ourCommitment')}</span>
             </Link>
             
-            <Link href="/provisions" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
-              <span className="relative z-10 text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all duration-300">{t('portfolio')}</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
+            <Link href="/provisions" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
+              <span className="nav-text">{t('portfolio')}</span>
             </Link>
             
-            <Link href="/blog" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
-              <span className="relative z-10 text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all duration-300">{t('blog')}</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
+            <Link href="/blog" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
+              <span className="nav-text">{t('blog')}</span>
             </Link>
             
-            <Link href="/contact" className="relative flex items-center justify-center transition-all duration-300 !text-white !text-xl font-medium px-4 py-2 rounded-xl group overflow-hidden">
-              <span className="relative z-10 text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all duration-300">{t('contact')}</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100 transition-all duration-300 rounded-xl border border-white/5 backdrop-blur-sm"></span>
+            <Link href="/contact" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
+              <span className="nav-text">{t('contact')}</span>
             </Link>
           </nav>
 
@@ -273,24 +259,24 @@ hover:shadow-md hover:scale-105 active:scale-95">
               <div 
                 className={`${servicesOpen ? 'max-h-[500px] opacity-100 mt-2 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300 ease-in-out relative w-full bg-[#14162E]/40 border-l-2 border-brand-pink rounded-r-lg z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
                 <div className="flex flex-col gap-2 p-2">
-                  <Link href="/services?category=digital-marketing" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center p-3 sm:p-4 min-h-[54px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition group w-full mb-1`}>
-                    <img src="/icon/services-icon/digital_marketing_promotion.png" alt="Digital Marketing" className="w-10 h-10 rounded-md object-cover shadow-sm flex-shrink-0 group-hover:scale-105 transition" loading="lazy" decoding="async" />
+                  <Link href="/services?category=digital-marketing" onClick={() => setServicesOpen(false)} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center p-3 sm:p-4 min-h-[54px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full mb-1`}>
+                    <img src="/icon/services-icon/digital_marketing_promotion.png" alt="Digital Marketing" className="w-10 h-10 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
                     <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
-                      <h4 className="text-[15px] font-bold text-brand-white text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all">{t('digitalMarketingHeader')}</h4>
+                      <h4 className="text-[15px] font-bold">{t('digitalMarketingHeader')}</h4>
                     </div>
                   </Link>
 
-                  <Link href="/services?category=innovation-development" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center p-3 sm:p-4 min-h-[54px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition group w-full mb-1`}>
-                    <img src="/icon/services-icon/creative_digital_design.png" alt="Innovation & Development" className="w-10 h-10 rounded-md object-cover shadow-sm flex-shrink-0 group-hover:scale-105 transition" loading="lazy" decoding="async" />
+                  <Link href="/services?category=innovation-development" onClick={() => setServicesOpen(false)} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center p-3 sm:p-4 min-h-[54px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full mb-1`}>
+                    <img src="/icon/services-icon/creative_digital_design.png" alt="Innovation & Development" className="w-10 h-10 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
                     <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
-                      <h4 className="text-[15px] font-bold text-brand-white text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all">{t('innovationHeader')}</h4>
+                      <h4 className="text-[15px] font-bold">{t('innovationHeader')}</h4>
                     </div>
                   </Link>
 
-                  <Link href="/services?category=real-estate" onClick={() => setServicesOpen(false)} className={`flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center p-3 sm:p-4 min-h-[54px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition group w-full`}>
-                    <img src="/icon/services-icon/real_estate_marketing.png" alt="Real Estate" className="w-10 h-10 rounded-md object-cover shadow-sm flex-shrink-0 group-hover:scale-105 transition" loading="lazy" decoding="async" />
+                  <Link href="/services?category=real-estate" onClick={() => setServicesOpen(false)} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center p-3 sm:p-4 min-h-[54px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full`}>
+                    <img src="/icon/services-icon/real_estate_marketing.png" alt="Real Estate" className="w-10 h-10 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
                     <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
-                      <h4 className="text-[15px] font-bold text-brand-white text-white group-hover:text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] transition-all">{t('realEstateHeader')}</h4>
+                      <h4 className="text-[15px] font-bold">{t('realEstateHeader')}</h4>
                     </div>
                   </Link>
                 </div>

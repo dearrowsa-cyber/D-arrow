@@ -137,6 +137,62 @@
   background-clip: text;
 }
 
+/* Nav Link Hover — gradient text + glass pill */
+.nav-link-hover {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.nav-link-hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 77, 109, 0.12) 0%, rgba(255, 154, 60, 0.12) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0.75rem;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(4px);
+}
+
+.nav-link-hover:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.nav-link-hover > .nav-text {
+  position: relative;
+  z-index: 10;
+  background: transparent;
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: var(--brand-white);
+  background-clip: initial;
+  transition: all 0.3s ease;
+}
+
+.nav-link-hover:hover > .nav-text {
+  background: linear-gradient(135deg, var(--brand-pink) 0%, var(--brand-gradient-mid) 50%, var(--brand-orange) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Dropdown item hover — gradient text */
+.dropdown-item-hover h4 {
+  transition: all 0.3s ease;
+  -webkit-text-fill-color: var(--brand-white);
+}
+
+.dropdown-item-hover:hover h4 {
+  background: linear-gradient(135deg, var(--brand-pink) 0%, var(--brand-gradient-mid) 50%, var(--brand-orange) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* Grid Background */
 .grid-background {
   position: relative;
