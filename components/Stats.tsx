@@ -6,8 +6,8 @@ import { useLanguage } from './LanguageProvider';
 const stats = [
   { value: 2, key: 'yearsOfExperience' },
   { value: 8, key: 'teamMembers' },
-  { value: 5, key: 'projectsCompleted' },
-  { value: 5, key: 'satisfiedCustomers' },
+  { value: 105, key: 'projectsCompleted' },
+  { value: 102, key: 'satisfiedCustomers' },
 ];
 
 const CounterNumber = ({ value }: { value: number }) => {
