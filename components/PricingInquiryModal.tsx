@@ -12,7 +12,7 @@ interface PricingInquiryModalProps {
 }
 
 export default function PricingInquiryModal({ isOpen, onClose, packageName, packagePrice }: PricingInquiryModalProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -139,7 +139,7 @@ export default function PricingInquiryModal({ isOpen, onClose, packageName, pack
               </div>
               {packagePrice && (
                 <div className="text-right">
-                  <p className="text-sm text-gray-400 font-semibold">{t('packagePriceLabel', 'السعر')}</p>
+                  <p className="text-sm text-gray-400 font-semibold">{lang === 'ar' ? 'السعر' : 'Price'}</p>
                   <p className="text-lg font-bold text-white">{packagePrice}</p>
                 </div>
               )}
@@ -211,8 +211,6 @@ export default function PricingInquiryModal({ isOpen, onClose, packageName, pack
                   {t('projectDetails')}
                 </h3>
               <div className="space-y-4">
-              <div className="space-y-4">
-
                 <select
                   name="timeline"
                   value={formData.timeline}
