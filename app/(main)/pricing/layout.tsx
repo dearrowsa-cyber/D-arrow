@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'الأسعار والباقات',
     description: 'باقات تسويق رقمي احترافية تبدأ من 2,950 ريال سعودي. اختر الباقة المناسبة لعملك.',
     url: 'https://d-arrow.com/pricing',
-    images: [{ url: 'https://d-arrow.com/DR-LOGO.png', width: 1200, height: 630, alt: 'D Arrow Pricing' }],
+    images: [{ url: 'https://d-arrow.com/og-image.jpg', width: 1200, height: 630, alt: 'D Arrow Pricing' }],
   },
   alternates: { canonical: 'https://d-arrow.com/pricing' },
 };

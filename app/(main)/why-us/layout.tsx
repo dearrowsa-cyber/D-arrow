@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'لماذا تختارنا',
     description: 'اكتشف لماذا D Arrow هي الخيار الأمثل لاحتياجاتك في التسويق الرقمي.',
     url: 'https://d-arrow.com/why-us',
-    images: [{ url: 'https://d-arrow.com/DR-LOGO.png', width: 1200, height: 630, alt: 'D Arrow Why Us' }],
+    images: [{ url: 'https://d-arrow.com/og-image.jpg', width: 1200, height: 630, alt: 'D Arrow Why Us' }],
   },
   alternates: { canonical: 'https://d-arrow.com/why-us' },
 };

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'كيف نعمل',
     description: 'عملية عمل منظمة وشفافة لضمان نجاح مشروعك الرقمي من البداية إلى النهاية.',
     url: 'https://d-arrow.com/process',
-    images: [{ url: 'https://d-arrow.com/DR-LOGO.png', width: 1200, height: 630, alt: 'D Arrow Process' }],
+    images: [{ url: 'https://d-arrow.com/og-image.jpg', width: 1200, height: 630, alt: 'D Arrow Process' }],
   },
   alternates: { canonical: 'https://d-arrow.com/process' },
 };

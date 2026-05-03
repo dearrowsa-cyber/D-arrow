@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'تواصل معنا',
     description: 'تواصل مع فريق D Arrow واحصل على استشارة مجانية لمشروعك الرقمي.',
     url: 'https://d-arrow.com/contact',
-    images: [{ url: 'https://d-arrow.com/DR-LOGO.png', width: 1200, height: 630, alt: 'D Arrow Contact' }],
+    images: [{ url: 'https://d-arrow.com/og-image.jpg', width: 1200, height: 630, alt: 'D Arrow Contact' }],
   },
   alternates: { canonical: 'https://d-arrow.com/contact' },
 };

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'أعمالنا ومشاريعنا',
     description: 'اكتشف مشاريعنا الناجحة في التسويق الرقمي وتصميم المواقع.',
     url: 'https://d-arrow.com/provisions',
-    images: [{ url: 'https://d-arrow.com/DR-LOGO.png', width: 1200, height: 630, alt: 'D Arrow Portfolio' }],
+    images: [{ url: 'https://d-arrow.com/og-image.jpg', width: 1200, height: 630, alt: 'D Arrow Portfolio' }],
   },
   alternates: { canonical: 'https://d-arrow.com/provisions' },
 };

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     title: 'خدماتنا',
     description: 'خدمات تسويق رقمي متكاملة تشمل SEO وتصميم المواقع وإدارة السوشيال ميديا',
     url: 'https://d-arrow.com/services',
-    images: [{ url: 'https://d-arrow.com/DR-LOGO.png', width: 1200, height: 630, alt: 'D Arrow Services' }],
+    images: [{ url: 'https://d-arrow.com/og-image.jpg', width: 1200, height: 630, alt: 'D Arrow Services' }],
   },
   alternates: { canonical: 'https://d-arrow.com/services' },
 };

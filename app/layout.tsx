@@ -55,10 +55,10 @@ export const metadata: Metadata = {
     description: 'وكالة دي آرو للتسويق الرقمي - حلول تسويقية متكاملة تشمل SEO وتصميم المواقع وإدارة السوشيال ميديا في السعودية.',
     images: [
       {
-        url: 'https://d-arrow.com/DR-LOGO.png',
+        url: 'https://d-arrow.com/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'D Arrow Logo',
+        alt: 'D Arrow Digital Marketing',
       },
     ],
   },
@@ -66,16 +66,18 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'D Arrow - Digital Marketing Agency',
     description: 'Transform your business with D Arrow\'s digital marketing solutions',
-    images: ['https://d-arrow.com/DR-LOGO.png'],
+    images: ['https://d-arrow.com/og-image.jpg'],
   },
   icons: {
     icon: [
-      { url: "/DR-LOGO.png", sizes: "16x16", type: "image/png" },
-      { url: "/DR-LOGO.png", sizes: "32x32", type: "image/png" },
-      { url: "/DR-LOGO.png", sizes: "48x48", type: "image/png" },
+      { url: "/icon-square.png", sizes: "16x16", type: "image/png" },
+      { url: "/icon-square.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-square.png", sizes: "48x48", type: "image/png" },
+      { url: "/icon-square.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-square.png", sizes: "512x512", type: "image/png" },
     ],
-    shortcut: "/DR-LOGO.png",
-    apple: "/DR-LOGO.png",
+    shortcut: "/icon-square.png",
+    apple: "/icon-square.png",
   },
   alternates: {
     canonical: 'https://d-arrow.com',

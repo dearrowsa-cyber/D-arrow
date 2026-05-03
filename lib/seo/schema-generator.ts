@@ -5,7 +5,7 @@ export function generateOrganizationSchema() {
     "@id": "https://d-arrow.com",
     "name": "D Arrow Digital",
     "url": "https://d-arrow.com",
-    "logo": "https://d-arrow.com/DR-LOGO.png",
+    "logo": "https://d-arrow.com/icon-square.png",
     "description": "Award-winning digital marketing agency providing comprehensive digital solutions including SEO, web design, branding, and marketing.",
     "contactPoint": [
       {
@@ -39,7 +39,7 @@ export function generateArticleSchema(data: {
     "@type": "Article",
     "headline": data.title,
     "description": data.description,
-    "image": data.imageUrl || "https://d-arrow.com/DR-LOGO.png",
+    "image": data.imageUrl || "https://d-arrow.com/icon-square.png",
     "author": {
       "@type": "Organization",
       "name": data.authorName || "D Arrow Digital"
@@ -49,7 +49,7 @@ export function generateArticleSchema(data: {
       "name": "D Arrow Digital",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://d-arrow.com/DR-LOGO.png"
+        "url": "https://d-arrow.com/icon-square.png"
       }
     },
     "datePublished": data.datePublished || new Date().toISOString(),

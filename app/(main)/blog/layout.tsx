@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     title: 'المدونة',
     description: 'أحدث المقالات والنصائح في عالم التسويق الرقمي من فريق D Arrow.',
     url: 'https://d-arrow.com/blog',
-    images: [{ url: 'https://d-arrow.com/DR-LOGO.png', width: 1200, height: 630, alt: 'D Arrow Blog' }],
+    images: [{ url: 'https://d-arrow.com/og-image.jpg', width: 1200, height: 630, alt: 'D Arrow Blog' }],
   },
   alternates: { canonical: 'https://d-arrow.com/blog' },
 };
