@@ -7,6 +7,22 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.d-arrow.com',
+          },
+        ],
+        destination: 'https://d-arrow.com/:path*',
+        permanent: true,
+      },
+    ];
+  },
+  
   images: {
     unoptimized: false,
     remotePatterns: [
