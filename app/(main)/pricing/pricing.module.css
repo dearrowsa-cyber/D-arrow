@@ -261,7 +261,9 @@
 }
 
 .ctaButton:hover {
-  background: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-gradient-mid) 50%, var(--brand-pink) 100%);
+  background: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-gradient-mid) 50%, var(--brand-pink) 100%) !important;
+  color: var(--brand-white) !important;
+  -webkit-text-fill-color: var(--brand-white) !important;
   box-shadow: 0 12px 40px rgba(255, 77, 109, 0.4);
   transform: translateY(-3px) scale(1.02);
 }
@@ -276,7 +278,9 @@
 }
 
 .featured .ctaButton:hover {
-  background: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-gradient-mid) 50%, var(--brand-pink) 100%);
+  background: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-gradient-mid) 50%, var(--brand-pink) 100%) !important;
+  color: var(--brand-white) !important;
+  -webkit-text-fill-color: var(--brand-white) !important;
   box-shadow: 0 15px 50px rgba(255, 77, 109, 0.5);
   transform: translateY(-3px) scale(1.02);
 }
