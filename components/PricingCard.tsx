@@ -4,6 +4,7 @@ import styles from '@/app/(main)/pricing/pricing.module.css';
 import Image from 'next/image';
 import { useLanguage } from './LanguageProvider';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 interface PricingCardProps {
   title?: string;
@@ -18,7 +19,8 @@ interface PricingCardProps {
 }
 
 export default function PricingCard({ title, titleKey, price, oldPrice, features, cta, featured = false, icon, isCustom = false }: PricingCardProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
+  const [isExpanded, setIsExpanded] = useState(false);
   const resolvedTitle = titleKey ? t(titleKey) : title || '';
   const Icon = () => {
     if (!icon) return null;
@@ -38,9 +40,9 @@ export default function PricingCard({ title, titleKey, price, oldPrice, features
 
       <div className={styles.cardBody}>
         <h3 className={styles.cardTitle}>{resolvedTitle}</h3>
-        <p className={styles.cardPrice}>
+        <div className="flex flex-col gap-1 mb-4">
           {oldPrice && (
-            <span className="text-gray-400 line-through text-[1.2rem] md:text-[1.4rem] font-bold inline-block align-middle me-3 opacity-60">
+            <span className="text-gray-400 line-through text-[1.1rem] font-bold opacity-60">
               {(() => {
                 const parts = oldPrice.split(/(SAR)/g);
                 return parts.map((part, i) => (
@@ -61,34 +63,36 @@ export default function PricingCard({ title, titleKey, price, oldPrice, features
               })()}
             </span>
           )}
-          {isCustom ? (
-            <span>{price}</span>
-          ) : (
-            (() => {
-              const parts = price.split(/(SAR)/g);
-              return parts.map((part, i) => (
-                part === 'SAR' ? (
-                  <span key={i} className="inline-block align-middle" style={{ lineHeight: 0 }}>
-                    <Image
-                      src="/riyal.png"
-                      alt="SAR"
-                      width={40}
-                      height={26}
-                      style={{ display: 'inline-block', verticalAlign: 'text-top', transform: 'translateY(-6px)' }}
-                    />
-                  </span>
-                ) : (
-                  <span key={i}>{part}</span>
-                )
-              ));
-            })()
-          )}
-        </p>
+          <p className={`${styles.cardPrice} !mb-0`}>
+            {isCustom ? (
+              <span>{price}</span>
+            ) : (
+              (() => {
+                const parts = price.split(/(SAR)/g);
+                return parts.map((part, i) => (
+                  part === 'SAR' ? (
+                    <span key={i} className="inline-block align-middle" style={{ lineHeight: 0 }}>
+                      <Image
+                        src="/riyal.png"
+                        alt="SAR"
+                        width={40}
+                        height={26}
+                        style={{ display: 'inline-block', verticalAlign: 'text-top', transform: 'translateY(-6px)' }}
+                      />
+                    </span>
+                  ) : (
+                    <span key={i}>{part}</span>
+                  )
+                ));
+              })()
+            )}
+          </p>
+        </div>
 
         <div className={styles.divider} />
 
         <ul className={styles.featureList}>
-          {features.map((feature, index) => (
+          {(isExpanded ? features : features.slice(0, 5)).map((feature, index) => (
             <li key={index} className={styles.featureItem}>
               <span className={styles.check} aria-hidden>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 6L9 17l-5-5" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -97,6 +101,17 @@ export default function PricingCard({ title, titleKey, price, oldPrice, features
             </li>
           ))}
         </ul>
+        
+        {features.length > 5 && (
+          <button 
+            onClick={(e) => { e.stopPropagation(); setIsExpanded(!isExpanded); }}
+            className="text-sm font-medium text-[#FF4D6D] mt-2 mb-4 hover:underline flex items-center gap-1"
+          >
+            {isExpanded 
+              ? (lang === 'ar' ? 'عرض أقل' : 'Show Less') 
+              : (lang === 'ar' ? 'قراءة المزيد' : 'Read More')}
+          </button>
+        )}
 
         <motion.button 
           className={styles.ctaButton}
