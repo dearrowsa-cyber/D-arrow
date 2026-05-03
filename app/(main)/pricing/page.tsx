@@ -176,12 +176,15 @@ export default function PricingPage() {
         {
           title: t('pricingBasic'),
           price: t('pricingBasicPrice'),
+          oldPrice: t('pricingBasicOldPrice'),
           features: [
             t('pricingBasicFeature1'),
             t('pricingBasicFeature2'),
             t('pricingBasicFeature3'),
             t('pricingBasicFeature4'),
             t('pricingBasicFeature5'),
+            t('pricingBasicFeature6'),
+            t('pricingBasicFeature7'),
           ],
           cta: t('pricingCta'),
           icon: '/icon/update/basic2.png',
@@ -189,6 +192,7 @@ export default function PricingPage() {
         {
           title: t('pricingGrowth'),
           price: t('pricingGrowthPrice'),
+          oldPrice: t('pricingGrowthOldPrice'),
           features: [
             t('pricingGrowthFeature1'),
             t('pricingGrowthFeature2'),
@@ -197,6 +201,8 @@ export default function PricingPage() {
             t('pricingGrowthFeature5'),
             t('pricingGrowthFeature6'),
             t('pricingGrowthFeature7'),
+            t('pricingGrowthFeature8'),
+            t('pricingGrowthFeature9'),
           ],
           cta: t('pricingCta'),
           featured: true,
@@ -205,6 +211,7 @@ export default function PricingPage() {
         {
           title: t('pricingProfessional'),
           price: t('pricingProfessionalPrice'),
+          oldPrice: t('pricingProfessionalOldPrice'),
           features: [
             t('pricingProfessionalFeature1'),
             t('pricingProfessionalFeature2'),
@@ -213,6 +220,9 @@ export default function PricingPage() {
             t('pricingProfessionalFeature5'),
             t('pricingProfessionalFeature6'),
             t('pricingProfessionalFeature7'),
+            t('pricingProfessionalFeature8'),
+            t('pricingProfessionalFeature9'),
+            t('pricingProfessionalFeature10'),
           ],
           cta: t('pricingCta'),
           icon: '/icon/update/professional2.png',
@@ -227,6 +237,8 @@ export default function PricingPage() {
             t('pricingCustomFeature4'),
             t('pricingCustomFeature5'),
             t('pricingCustomFeature6'),
+            t('pricingCustomFeature7'),
+            t('pricingCustomFeature8'),
           ],
           cta: t('pricingCta'),
           icon: '/icon/update/custom2.png',

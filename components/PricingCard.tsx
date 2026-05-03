@@ -9,6 +9,7 @@ interface PricingCardProps {
   title?: string;
   titleKey?: string;
   price: string;
+  oldPrice?: string;
   features: string[];
   cta: string;
   featured?: boolean;
@@ -16,7 +17,7 @@ interface PricingCardProps {
   isCustom?: boolean;
 }
 
-export default function PricingCard({ title, titleKey, price, features, cta, featured = false, icon, isCustom = false }: PricingCardProps) {
+export default function PricingCard({ title, titleKey, price, oldPrice, features, cta, featured = false, icon, isCustom = false }: PricingCardProps) {
   const { t } = useLanguage();
   const resolvedTitle = titleKey ? t(titleKey) : title || '';
   const Icon = () => {
@@ -37,7 +38,29 @@ export default function PricingCard({ title, titleKey, price, features, cta, fea
 
       <div className={styles.cardBody}>
         <h3 className={styles.cardTitle}>{resolvedTitle}</h3>
-        <p className={styles.cardPrice}>{/* render price and replace "SAR" with image */}
+        <p className={styles.cardPrice}>
+          {oldPrice && (
+            <span className="text-gray-400 line-through text-[1.2rem] md:text-[1.4rem] font-bold inline-block align-middle me-3 opacity-60">
+              {(() => {
+                const parts = oldPrice.split(/(SAR)/g);
+                return parts.map((part, i) => (
+                  part === 'SAR' ? (
+                    <span key={`old-${i}`} className="inline-block align-middle" style={{ lineHeight: 0 }}>
+                      <Image
+                        src="/riyal.png"
+                        alt="SAR"
+                        width={24}
+                        height={16}
+                        style={{ display: 'inline-block', verticalAlign: 'text-top', transform: 'translateY(-2px)' }}
+                      />
+                    </span>
+                  ) : (
+                    <span key={`old-${i}`}>{part}</span>
+                  )
+                ));
+              })()}
+            </span>
+          )}
           {isCustom ? (
             <span>{price}</span>
           ) : (
