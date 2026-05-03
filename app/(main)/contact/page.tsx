@@ -43,23 +43,40 @@ export default function ContactPage() {
       }, 500);
       return;
     }
+    
     setError(null);
     setSubmitting(true);
+    
+    // Construct WhatsApp message
+    const text = `*طلب تواصل جديد من الموقع*
+*الاسم:* ${formData.name}
+*البريد الإلكتروني:* ${formData.email || 'غير محدد'}
+*رقم الهاتف:* ${formData.phone}
+*الشركة:* ${formData.company || 'غير محدد'}
+*الخدمة:* ${formData.service || 'غير محدد'}
+
+*الرسالة:*
+${formData.message || 'لا توجد رسالة'}`;
+
+    const baseUrl = social?.whatsapp || `https://wa.me/${dynamicPhone.replace(/[^0-9]/g, '')}`;
+    const separator = baseUrl.includes('?') ? '&' : '?';
+    const whatsappUrl = `${baseUrl}${separator}text=${encodeURIComponent(text)}`;
+
     try {
+      // Fire and forget email API call as backup
       const apiBase = process.env.NEXT_PUBLIC_CONTACT_API_URL;
       const endpoint = apiBase ? `${apiBase.replace(/\/$/, '')}/contact` : '/api/contact';
-      const res = await fetch(endpoint, {
+      fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
-      });
-      const json = await res.json();
-      if (json.ok) {
-        setSubmitted(true);
-        setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '', website_url: '' });
-      } else {
-        setError(json.error || 'Failed to send message');
-      }
+      }).catch(console.error);
+
+      // Redirect user to WhatsApp
+      window.open(whatsappUrl, '_blank');
+      
+      setSubmitted(true);
+      setFormData({ name: '', email: '', phone: '', company: '', service: '', message: '', website_url: '' });
     } catch (err) {
       console.error(err);
       setError('Network error');
