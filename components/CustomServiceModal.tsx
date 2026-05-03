@@ -10,7 +10,7 @@ interface CustomServiceModalProps {
 }
 
 export default function CustomServiceModal({ isOpen, onClose }: CustomServiceModalProps) {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -278,17 +278,17 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
             <div className="flex gap-4 pt-4">
               <button
                 type="submit"
-                disabled={!formData.name || !formData.email || !formData.services.length || !formData.description}
+                disabled={!formData.name || !formData.email || !formData.services.length || !formData.description || submitted}
                 className="flex-1 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] hover:from-[#FF9A3C] hover:to-[#FF6F4F] text-white font-bold py-3 rounded-lg transition shadow-lg hover:shadow-pink-500/50 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Get Custom Quote
+                {submitted ? (lang === 'ar' ? 'جاري الإرسال...' : 'Sending...') : (lang === 'ar' ? 'طلب عرض السعر' : 'Get Custom Quote')}
               </button>
               <button
                 type="button"
                 onClick={onClose}
                 className="px-6 py-3 border border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 rounded-lg transition bg-gray-50 hover:bg-gray-100"
               >
-                Cancel
+                {lang === 'ar' ? 'إلغاء' : 'Cancel'}
               </button>
             </div>
           </form>
