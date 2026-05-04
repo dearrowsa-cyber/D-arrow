@@ -181,6 +181,13 @@
 }
 
 /* Dropdown item hover — gradient text */
+.dropdown-item-hover,
+.dropdown-item-hover h4 {
+  text-decoration: none !important;
+  border-bottom: none !important;
+  box-shadow: none;
+}
+
 .dropdown-item-hover h4 {
   transition: all 0.3s ease;
   -webkit-text-fill-color: var(--brand-white);
