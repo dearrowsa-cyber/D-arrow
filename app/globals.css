@@ -69,6 +69,17 @@
     box-sizing: border-box;
   }
 
+  /* Kill all link underlines in header/nav */
+  header a,
+  nav a,
+  .nav-link-hover,
+  .dropdown-item-hover {
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-underline-offset: unset !important;
+    border-bottom: none !important;
+  }
+
   html {
     width: 100%;
     overflow-x: hidden;
