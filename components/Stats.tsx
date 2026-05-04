@@ -5,7 +5,6 @@ import { useLanguage } from './LanguageProvider';
 
 const stats = [
   { value: 2, key: 'yearsOfExperience' },
-  { value: 8, key: 'teamMembers' },
   { value: 105, key: 'projectsCompleted' },
   { value: 102, key: 'satisfiedCustomers' },
 ];
