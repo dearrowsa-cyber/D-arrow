@@ -19,6 +19,7 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
     services: [] as string[],
     description: '',
     website_url: '',
+    budget: '',
   });
 
   const [submitted, setSubmitted] = useState(false);
@@ -69,7 +70,7 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
     return '<img src="/icon/update/select3.png" alt="User Icon" className="w-7 h-10 pt-2" />';
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -94,7 +95,7 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
       setTimeout(() => {
         setSubmitted(false);
         onClose();
-        setFormData({ name: '', email: '', phone: '', company: '', services: [], description: '', website_url: '' });
+        setFormData({ name: '', email: '', phone: '', company: '', services: [], description: '', website_url: '', budget: '' });
       }, 2000);
       return;
     }
@@ -122,6 +123,7 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
             services: [],
             description: '',
             website_url: '',
+            budget: '',
           });
         }, 2000);
       }
@@ -254,6 +256,19 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
                 <span className="text-pink-600 mr-2"><img src="/icon/update/reporting3.png" alt="User Icon" className="w-7 h-10 pt-2" /></span>
                 {t('projectDetails')}
               </h3>
+              <select
+                name="budget"
+                value={formData.budget}
+                onChange={handleInputChange}
+                className="w-full bg-gray-50 border border-gray-300 rounded-lg px-4 py-3 !text-gray-900 focus:border-pink-600 focus:outline-none transition mb-4 focus:bg-white"
+                dir={lang === 'ar' ? 'rtl' : 'ltr'}
+              >
+                <option value="">{lang === 'ar' ? 'اختر نطاق الميزانية (اختياري)' : 'Select Budget Range (Optional)'}</option>
+                <option value="under_5000">{lang === 'ar' ? 'أقل من 5,000 ريال' : 'Under 5,000 SAR'}</option>
+                <option value="5000_10000">{lang === 'ar' ? '5,000 - 10,000 ريال' : '5,000 - 10,000 SAR'}</option>
+                <option value="10000_25000">{lang === 'ar' ? '10,000 - 25,000 ريال' : '10,000 - 25,000 SAR'}</option>
+                <option value="above_25000">{lang === 'ar' ? 'أكثر من 25,000 ريال' : 'Above 25,000 SAR'}</option>
+              </select>
               <textarea
                 name="description"
                 placeholder={t('additionalInfoPlaceholder')}
