@@ -255,9 +255,9 @@
 }
 
 .featureItem span:last-child {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  line-height: 1.4;
+  unicode-bidi: isolate;
 }
 
 .check { 
