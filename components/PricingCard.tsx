@@ -31,6 +31,11 @@ export default function PricingCard({ title, titleKey, price, oldPrice, features
 
   return (
     <div className={`${styles.pricingCard} ${featured ? styles.featured : ''}`}>
+      {!isCustom && (
+        <div className={styles.limitedBadge}>
+          {lang === 'ar' ? 'عرض خاص لفترة محدودة' : 'Limited Time Offer'}
+        </div>
+      )}
       <div className={styles.cardTop}>
         <div className={styles.iconWrap} aria-hidden>
           <Icon />
