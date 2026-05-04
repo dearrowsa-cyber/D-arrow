@@ -110,7 +110,6 @@ const Stats = () => {
     // Map stat keys to siteData.stats keys
     const keyMap: Record<string, string> = {
       yearsOfExperience: 'yearsExperience',
-      teamMembers: 'teamMembers',
       projectsCompleted: 'projectsCompleted',
       satisfiedCustomers: 'satisfiedCustomers',
     };
@@ -133,7 +132,7 @@ const Stats = () => {
       >
         {/* Stats cards */}
         <div 
-          className="grid grid-cols-1 text-white sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 mt-16"
+          className="grid grid-cols-1 text-white sm:grid-cols-3 gap-6 lg:gap-8 mt-16 max-w-5xl mx-auto"
         >
           {dynamicStats.map((s, idx) => (
             <StatCard key={idx} value={s.value} label={t(s.key)} index={idx} />
