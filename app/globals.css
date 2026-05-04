@@ -177,18 +177,16 @@
 .nav-link-hover > .nav-text {
   position: relative;
   z-index: 10;
-  background: transparent;
-  -webkit-background-clip: initial;
-  -webkit-text-fill-color: var(--brand-white);
-  background-clip: initial;
-  transition: all 0.3s ease;
+  color: var(--brand-white);
+  transition: color 0.3s ease;
 }
 
 .nav-link-hover:hover > .nav-text {
   background: linear-gradient(135deg, var(--brand-pink) 0%, var(--brand-gradient-mid) 50%, var(--brand-orange) 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 /* Dropdown item hover — gradient text */
@@ -200,15 +198,16 @@
 }
 
 .dropdown-item-hover h4 {
-  transition: all 0.3s ease;
-  -webkit-text-fill-color: var(--brand-white);
+  color: var(--brand-white);
+  transition: color 0.3s ease;
 }
 
 .dropdown-item-hover:hover h4 {
   background: linear-gradient(135deg, var(--brand-pink) 0%, var(--brand-gradient-mid) 50%, var(--brand-orange) 100%);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 /* Grid Background */
@@ -551,20 +550,7 @@ header nav a:hover {
   color: #FF4D6D;
 }
 
-header nav a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(135deg, var(--brand-pink), var(--brand-orange));
-  transition: width 0.3s ease;
-}
 
-header nav a:hover::after {
-  width: 100%;
-}
 
 /* Arabic Typography Styles - Brand Compliant */
 html.lang-ar h1,
