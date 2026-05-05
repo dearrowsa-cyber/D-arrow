@@ -7,6 +7,15 @@ export function openWhatsApp(message: string) {
   window.open(url, '_blank');
 }
 
+// Send automatic WhatsApp notification to company via server-side API (no client action needed)
+export function sendAutoNotification(type: string, data: Record<string, unknown>) {
+  fetch('/api/whatsapp-notify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type, data }),
+  }).catch(console.error); // fire-and-forget
+}
+
 export function buildPricingInquiryMessage(data: {
   name: string;
   phone: string;

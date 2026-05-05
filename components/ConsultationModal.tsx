@@ -28,7 +28,18 @@ export default function ConsultationModal({ isOpen, onClose }: ConsultationModal
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const { openWhatsApp, buildConsultationMessage } = await import('@/utils/whatsapp');
+    const { openWhatsApp, buildConsultationMessage, sendAutoNotification } = await import('@/utils/whatsapp');
+    
+    // Auto-notify company via WhatsApp API (no client action needed)
+    sendAutoNotification('consultation', {
+      name: formData.name,
+      phone: formData.phone,
+      service: formData.service,
+      date: formData.date,
+      time: formData.time,
+    });
+    
+    // Also open WhatsApp for the client
     const message = buildConsultationMessage({
       name: formData.name,
       phone: formData.phone,

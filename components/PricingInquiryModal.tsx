@@ -76,7 +76,15 @@ export default function PricingInquiryModal({ isOpen, onClose, packageName, pack
       }).catch(console.error);
 
       // Send to WhatsApp
-      const { openWhatsApp, buildPricingInquiryMessage } = await import('@/utils/whatsapp');
+      const { openWhatsApp, buildPricingInquiryMessage, sendAutoNotification } = await import('@/utils/whatsapp');
+      
+      // Auto-notify company via WhatsApp API
+      sendAutoNotification('pricing', {
+        name: formData.name, phone: formData.phone, email: formData.email,
+        company: formData.company, packageName, packagePrice,
+        timeline: formData.timeline, additionalInfo: formData.additionalInfo,
+      });
+      
       const message = buildPricingInquiryMessage({
         name: formData.name,
         phone: formData.phone,

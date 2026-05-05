@@ -115,8 +115,17 @@ export default function CustomServicesInquiryModal({ isOpen, onClose }: CustomSe
       }).catch(console.error);
 
       // Send to WhatsApp
-      const { openWhatsApp, buildCustomServicesMessage } = await import('@/utils/whatsapp');
+      const { openWhatsApp, buildCustomServicesMessage, sendAutoNotification } = await import('@/utils/whatsapp');
       const serviceNames = selectedServices.map(s => t(s.labelKey as string) || s.label || s.id);
+      
+      // Auto-notify company via WhatsApp API
+      sendAutoNotification('custom-services', {
+        name: formData.name, phone: formData.phone, email: formData.email,
+        company: formData.company, services: serviceNames,
+        totalAmount: selectedServices.reduce((sum, s) => sum + (s.price || 0), 0),
+        timeline: formData.timeline, additionalInfo: formData.additionalInfo,
+      });
+      
       const message = buildCustomServicesMessage({
         name: formData.name,
         phone: formData.phone,

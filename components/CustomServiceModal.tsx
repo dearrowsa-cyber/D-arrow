@@ -112,15 +112,22 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
       }).catch(console.error);
 
       // Send to WhatsApp
-      const { openWhatsApp, buildCustomServicesMessage } = await import('@/utils/whatsapp');
+      const { openWhatsApp, buildCustomServicesMessage, sendAutoNotification } = await import('@/utils/whatsapp');
       const serviceNames = formData.services.map(id => {
-        // Try to find the service name from all categories
         for (const [, categoryServices] of Object.entries(services)) {
           const svc = categoryServices.find(s => s.id === id);
           if (svc) return t(svc.titleKey);
         }
         return id;
       });
+      
+      // Auto-notify company via WhatsApp API
+      sendAutoNotification('custom-services', {
+        name: formData.name, phone: formData.phone, email: formData.email,
+        company: formData.company, services: serviceNames,
+        additionalInfo: formData.description,
+      });
+      
       const message = buildCustomServicesMessage({
         name: formData.name,
         phone: formData.phone,

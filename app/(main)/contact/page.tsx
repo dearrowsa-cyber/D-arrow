@@ -74,6 +74,13 @@ ${formData.message || 'لا توجد رسالة'}`;
         body: JSON.stringify(formData),
       }).catch(console.error);
 
+      // Auto-notify company via WhatsApp API
+      const { sendAutoNotification } = await import('@/utils/whatsapp');
+      sendAutoNotification('contact', {
+        name: formData.name, phone: formData.phone, email: formData.email,
+        company: formData.company, service: formData.service, message: formData.message,
+      });
+
       // Redirect user to WhatsApp
       window.open(whatsappUrl, '_blank');
       
