@@ -266,19 +266,29 @@ body:has(.admin-login-page) footer {
   border: none;
   text-decoration: none;
   text-transform: none !important;
+  background-clip: border-box !important;
+  -webkit-background-clip: border-box !important;
 }
 
 .admin-btn-primary {
-  background: linear-gradient(135deg, #FF4D6D, #FF9A3C);
+  background: linear-gradient(135deg, #FF4D6D, #FF9A3C) !important;
   color: #FFFFFF !important;
   -webkit-text-fill-color: #FFFFFF !important;
   box-shadow: 0 4px 16px rgba(255, 77, 109, 0.3);
+}
+
+.admin-btn-primary * {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
 }
 
 .admin-btn-primary:hover {
   transform: translateY(-1px);
   box-shadow: 0 8px 24px rgba(255, 77, 109, 0.4);
   background: linear-gradient(135deg, #FF4D6D, #FF9A3C) !important;
+  color: #FFFFFF !important;
   -webkit-text-fill-color: #FFFFFF !important;
 }
 
@@ -286,6 +296,7 @@ body:has(.admin-login-page) footer {
   transform: translateY(1px);
   background: linear-gradient(135deg, #E63E5C, #E68A36) !important;
   box-shadow: 0 2px 8px rgba(255, 77, 109, 0.4);
+  color: #FFFFFF !important;
   -webkit-text-fill-color: #FFFFFF !important;
 }
 
@@ -296,14 +307,23 @@ body:has(.admin-login-page) footer {
   border: 1px solid rgba(255, 77, 109, 0.4);
 }
 
+.admin-btn-secondary * {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+}
+
 .admin-btn-secondary:hover {
   background: rgba(255, 77, 109, 0.3);
+  color: #FFFFFF !important;
   -webkit-text-fill-color: #FFFFFF !important;
 }
 
 .admin-btn-secondary:active {
   transform: translateY(1px);
   background: rgba(255, 77, 109, 0.4);
+  color: #FFFFFF !important;
   -webkit-text-fill-color: #FFFFFF !important;
 }
 
@@ -314,8 +334,16 @@ body:has(.admin-login-page) footer {
   border: 1px solid rgba(239, 68, 68, 0.4);
 }
 
+.admin-btn-danger * {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+}
+
 .admin-btn-danger:hover {
   background: rgba(239, 68, 68, 0.3);
+  color: #FFFFFF !important;
   -webkit-text-fill-color: #FFFFFF !important;
 }
 
