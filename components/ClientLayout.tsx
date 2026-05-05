@@ -67,6 +67,31 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
     htmlElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
   }, [lang]);
 
+  // Convert Arabic-Indic digits (٠١٢٣٤٥٦٧٨٩) to Western digits (0123456789) in all inputs
+  useEffect(() => {
+    const arabicToEnglish = (str: string) =>
+      str.replace(/[٠-٩]/g, (d) => String.fromCharCode(d.charCodeAt(0) - 0x0660 + 48))
+         .replace(/[۰-۹]/g, (d) => String.fromCharCode(d.charCodeAt(0) - 0x06F0 + 48));
+
+    const handleInput = (e: Event) => {
+      const target = e.target as HTMLInputElement | HTMLTextAreaElement;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) {
+        const converted = arabicToEnglish(target.value);
+        if (converted !== target.value) {
+          const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+            target.tagName === 'INPUT' ? HTMLInputElement.prototype : HTMLTextAreaElement.prototype,
+            'value'
+          )?.set;
+          nativeInputValueSetter?.call(target, converted);
+          target.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      }
+    };
+
+    document.addEventListener('input', handleInput, true);
+    return () => document.removeEventListener('input', handleInput, true);
+  }, []);
+
   return (
     <>
       <AnimatePresence>
