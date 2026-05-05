@@ -96,7 +96,6 @@ export default function RichTextEditor({ value, onChange, dir = 'ltr', placehold
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5) !important;
           border-radius: 8px !important;
           z-index: 50 !important;
-          left: 15px !important; /* Ensure it stays in view */
         }
         .rich-text-container .ql-tooltip input[type="text"] {
           background-color: #1a1f3a !important;
