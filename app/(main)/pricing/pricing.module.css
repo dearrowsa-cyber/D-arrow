@@ -238,8 +238,7 @@
   margin-bottom: 1rem;
   flex: 1 1 auto;
   min-height: 0;
-  overflow-y: auto;
-  max-height: 280px;
+  overflow-y: visible;
   padding-right: 0.25rem;
   margin-top: 0.5rem;
 }
@@ -401,7 +400,7 @@
   .cardTitle { font-size: 1.125rem }
   .cardPrice { font-size:1.25rem }
   .featureList {
-    max-height: 300px;
+    max-height: none;
   }
 
   .ctaButton {
@@ -418,7 +417,7 @@
     max-height: none;
   }
   .featureList {
-    max-height: 250px;
+    max-height: none;
   }
 
   .ctaButton {
@@ -432,7 +431,7 @@
   }
 
   .featureList {
-    max-height: 150px;
+    max-height: none;
   }
 
   .featureItem {
@@ -458,7 +457,7 @@
 @media (min-width: 768px) and (max-width: 1023px) {
   .pricingCard {
     min-height: 560px;
-    height: 560px;
+    height: auto;
     padding: 1rem;
   }
   .cardTitle { font-size: 1.25rem }
@@ -469,7 +468,7 @@
 @media (min-width: 1024px) {
   .pricingCard {
     min-height: 700px;
-    height: 700px;
+    height: auto;
   }
 }
 
