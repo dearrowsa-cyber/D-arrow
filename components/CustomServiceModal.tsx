@@ -101,32 +101,52 @@ export default function CustomServiceModal({ isOpen, onClose }: CustomServiceMod
     }
     
     try {
-      const response = await fetch('/api/contact', {
+      // Fire-and-forget API backup
+      fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...formData,
           isCustomService: true,
         }),
-      });
+      }).catch(console.error);
 
-      if (response.ok) {
-        setSubmitted(true);
-        setTimeout(() => {
-          setSubmitted(false);
-          onClose();
-          setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            company: '',
-            services: [],
-            description: '',
-            website_url: '',
-            budget: '',
-          });
-        }, 2000);
-      }
+      // Send to WhatsApp
+      const { openWhatsApp, buildCustomServicesMessage } = await import('@/utils/whatsapp');
+      const serviceNames = formData.services.map(id => {
+        // Try to find the service name from all categories
+        for (const [, categoryServices] of Object.entries(services)) {
+          const svc = categoryServices.find(s => s.id === id);
+          if (svc) return t(svc.titleKey);
+        }
+        return id;
+      });
+      const message = buildCustomServicesMessage({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        company: formData.company,
+        services: serviceNames,
+        additionalInfo: formData.description,
+        lang,
+      });
+      openWhatsApp(message);
+
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        onClose();
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          services: [],
+          description: '',
+          website_url: '',
+          budget: '',
+        });
+      }, 2000);
     } catch (error) {
       console.error('Error submitting form:', error);
     }

@@ -25,20 +25,19 @@ export default function ConsultationModal({ isOpen, onClose }: ConsultationModal
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Format the message for WhatsApp
-    const message = lang === 'ar' 
-      ? `مرحباً، أود حجز استشارة مجانية:%0A%0Aالاسم: ${formData.name}%0Aرقم الجوال: ${formData.phone}%0Aالخدمة المطلوبة: ${formData.service}%0Aالتاريخ المفضل: ${formData.date}%0Aالوقت المفضل: ${formData.time}`
-      : `Hello, I would like to schedule a free consultation:%0A%0AName: ${formData.name}%0APhone: ${formData.phone}%0AService: ${formData.service}%0APreferred Date: ${formData.date}%0APreferred Time: ${formData.time}`;
-      
-    // D-Arrow WhatsApp Number
-    const whatsappNumber = "966500466349";
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
-    
-    // Open WhatsApp in new tab
-    window.open(whatsappUrl, '_blank');
+    const { openWhatsApp, buildConsultationMessage } = await import('@/utils/whatsapp');
+    const message = buildConsultationMessage({
+      name: formData.name,
+      phone: formData.phone,
+      service: formData.service,
+      date: formData.date,
+      time: formData.time,
+      lang,
+    });
+    openWhatsApp(message);
     onClose();
   };
 

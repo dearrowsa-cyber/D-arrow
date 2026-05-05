@@ -68,34 +68,44 @@ export default function PricingInquiryModal({ isOpen, onClose, packageName, pack
     setSubmitting(true);
 
     try {
-      const response = await fetch('/api/pricing', {
+      // Fire-and-forget API backup
+      fetch('/api/pricing', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
+      }).catch(console.error);
+
+      // Send to WhatsApp
+      const { openWhatsApp, buildPricingInquiryMessage } = await import('@/utils/whatsapp');
+      const message = buildPricingInquiryMessage({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        company: formData.company,
+        packageName,
+        packagePrice,
+        timeline: formData.timeline,
+        additionalInfo: formData.additionalInfo,
+        lang,
       });
+      openWhatsApp(message);
 
-      const result = await response.json();
-
-      if (result.ok) {
-        setSubmitted(true);
-        setTimeout(() => {
-          setSubmitted(false);
-          onClose();
-          setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            company: '',
-            selectedPackage: packageName,
-            budget: '',
-            timeline: '',
-            additionalInfo: '',
-            website_url: '',
-          });
-        }, 2000);
-      } else {
-        setError(result.error || 'Failed to submit inquiry');
-      }
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        onClose();
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          selectedPackage: packageName,
+          budget: '',
+          timeline: '',
+          additionalInfo: '',
+          website_url: '',
+        });
+      }, 2000);
     } catch (err) {
       console.error('Error submitting form:', err);
       setError('Network error. Please try again.');

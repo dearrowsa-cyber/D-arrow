@@ -161,7 +161,8 @@ export default function CustomPackagePage() {
     setSubmitting(true);
 
     try {
-      const response = await fetch('/api/pricing', {
+      // Fire-and-forget API backup
+      fetch('/api/pricing', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -171,29 +172,39 @@ export default function CustomPackagePage() {
           selectedPackage: 'Custom Services Package',
           isCustomServicesInquiry: true,
         }),
+      }).catch(console.error);
+
+      // Send to WhatsApp
+      const { openWhatsApp, buildCustomServicesMessage } = await import('@/utils/whatsapp');
+      const serviceNames = selectedServices.map(s => t(s.titleKey));
+      const message = buildCustomServicesMessage({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        company: formData.company,
+        services: serviceNames,
+        totalAmount: selectedServices.reduce((sum, s) => sum + (s.price || 0), 0),
+        timeline: formData.timeline,
+        additionalInfo: formData.additionalInfo,
+        lang,
       });
+      openWhatsApp(message);
 
-      const result = await response.json();
-
-      if (result.ok) {
-        setSubmitted(true);
-        setTimeout(() => {
-          setSubmitted(false);
-          setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            company: '',
-            budget: '',
-            timeline: '',
-            additionalInfo: '',
-            botField: '',
-          });
-          setSelectedServices([]);
-        }, 2000);
-      } else {
-        setError(result.error || 'Failed to submit inquiry');
-      }
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          company: '',
+          budget: '',
+          timeline: '',
+          additionalInfo: '',
+          botField: '',
+        });
+        setSelectedServices([]);
+      }, 2000);
     } catch (err) {
       console.error('Error submitting form:', err);
       setError('Network error. Please try again.');
