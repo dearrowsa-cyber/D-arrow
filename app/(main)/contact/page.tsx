@@ -5,11 +5,13 @@ import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
 
 import { useLanguage } from '@/components/LanguageProvider';
 import Image from 'next/image';
+import ConsultationModal from '@/components/ConsultationModal';
 
 export default function ContactPage() {
   const { t, lang, siteData } = useLanguage();
   const contact = siteData?.contact;
   const social = siteData?.social;
+  const [isModalOpen, setIsModalOpen] = useState(false);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -499,11 +501,16 @@ ${formData.message || 'لا توجد رسالة'}`;
           <p className="text-xl text-white dark:text-gray-400 mb-8 max-w-2xl mx-auto">
             {t('readyToGrowDesc')}
           </p>
-          <button className="bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] hover:from-[#FF9A3C] hover:to-[#FF6F4F] text-white px-12 py-4 rounded-lg font-bold text-lg transition duration-300 shadow-xl hover:shadow-2xl hover:shadow-brand-pink/50">
+          <button onClick={() => setIsModalOpen(true)} className="bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] hover:from-[#FF9A3C] hover:to-[#FF6F4F] text-white px-12 py-4 rounded-lg font-bold text-lg transition duration-300 shadow-xl hover:shadow-2xl hover:shadow-brand-pink/50 cursor-pointer">
             {t('scheduleConsultation')}
           </button>
         </div>
       </section>
+
+      <ConsultationModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </div>
   );
 }

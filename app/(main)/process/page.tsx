@@ -5,6 +5,7 @@ import Link from 'next/link';
 import styles from '../pricing/pricing.module.css';
 import { useLanguage } from '@/components/LanguageProvider';
 import Image from 'next/image';
+import ConsultationModal from '@/components/ConsultationModal';
 
 const processSteps = [
   {
@@ -36,6 +37,7 @@ const processSteps = [
 export default function ProcessPage() {
   const { t, lang, siteData } = useLanguage();
   const pageData = siteData;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
 
   return (
@@ -163,15 +165,20 @@ export default function ProcessPage() {
             {t('readyToGetStartedDesc')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/contact" className="bg-gradient-to-r from-brand-pink to-brand-orange hover:from-[rgba(255,77,109,0.9)] hover:to-[rgba(255,154,60,0.9)] text-white px-8 py-4 rounded-lg font-semibold text-lg transition shadow-lg hover:shadow-brand-pink/50 inline-block text-center">
+            <button onClick={() => setIsModalOpen(true)} className="bg-gradient-to-r from-brand-pink to-brand-orange hover:from-[rgba(255,77,109,0.9)] hover:to-[rgba(255,154,60,0.9)] text-white px-8 py-4 rounded-lg font-semibold text-lg transition shadow-lg hover:shadow-brand-pink/50 inline-block text-center cursor-pointer">
               {t('scheduleConsultation')}
-            </Link>
+            </button>
             <Link href="/services" className="border border-brand-pink/50 hover:border-brand-pink text-brand-orange px-8 py-4 rounded-lg font-semibold text-lg transition inline-block text-center">
               {t('viewOurServices')}
             </Link>
           </div>
         </div>
       </section>
+
+      <ConsultationModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </main>
   );
 }
