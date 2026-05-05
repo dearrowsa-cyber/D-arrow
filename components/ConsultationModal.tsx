@@ -117,14 +117,14 @@ export default function ConsultationModal({ isOpen, onClose }: ConsultationModal
                   name="service"
                   value={formData.service}
                   onChange={handleChange}
-                  className="w-full bg-[#0B0D1F] border border-[rgba(255,77,109,0.2)] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-colors"
+                  className="w-full bg-[#0B0D1F] border border-[rgba(255,77,109,0.2)] rounded-lg px-4 py-3 text-white focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-colors appearance-none"
                 >
-                  <option value={lang === 'ar' ? 'تحسين محركات البحث (SEO)' : 'SEO'}>{lang === 'ar' ? 'تحسين محركات البحث (SEO)' : 'SEO'}</option>
-                  <option value={lang === 'ar' ? 'تطوير المواقع' : 'Web Development'}>{lang === 'ar' ? 'تطوير المواقع' : 'Web Development'}</option>
-                  <option value={lang === 'ar' ? 'إدارة السوشيال ميديا' : 'Social Media Management'}>{lang === 'ar' ? 'إدارة السوشيال ميديا' : 'Social Media Management'}</option>
-                  <option value={lang === 'ar' ? 'هوية العلامة التجارية' : 'Branding Identity'}>{lang === 'ar' ? 'هوية العلامة التجارية' : 'Branding Identity'}</option>
-                  <option value={lang === 'ar' ? 'الإعلانات الممولة (PPC)' : 'PPC Advertising'}>{lang === 'ar' ? 'الإعلانات الممولة (PPC)' : 'PPC Advertising'}</option>
-                  <option value={lang === 'ar' ? 'أخرى' : 'Other'}>{lang === 'ar' ? 'أخرى' : 'Other'}</option>
+                  <option className="bg-[#0B0D1F] text-white" value={lang === 'ar' ? 'تحسين محركات البحث (SEO)' : 'SEO'}>{lang === 'ar' ? 'تحسين محركات البحث (SEO)' : 'SEO'}</option>
+                  <option className="bg-[#0B0D1F] text-white" value={lang === 'ar' ? 'تطوير المواقع' : 'Web Development'}>{lang === 'ar' ? 'تطوير المواقع' : 'Web Development'}</option>
+                  <option className="bg-[#0B0D1F] text-white" value={lang === 'ar' ? 'إدارة السوشيال ميديا' : 'Social Media Management'}>{lang === 'ar' ? 'إدارة السوشيال ميديا' : 'Social Media Management'}</option>
+                  <option className="bg-[#0B0D1F] text-white" value={lang === 'ar' ? 'هوية العلامة التجارية' : 'Branding Identity'}>{lang === 'ar' ? 'هوية العلامة التجارية' : 'Branding Identity'}</option>
+                  <option className="bg-[#0B0D1F] text-white" value={lang === 'ar' ? 'الإعلانات الممولة (PPC)' : 'PPC Advertising'}>{lang === 'ar' ? 'الإعلانات الممولة (PPC)' : 'PPC Advertising'}</option>
+                  <option className="bg-[#0B0D1F] text-white" value={lang === 'ar' ? 'أخرى' : 'Other'}>{lang === 'ar' ? 'أخرى' : 'Other'}</option>
                 </select>
               </div>
 
