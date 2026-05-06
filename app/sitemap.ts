@@ -1,6 +1,4 @@
 import { MetadataRoute } from 'next';
-import fs from 'fs';
-import path from 'path';
 import prisma from '@/lib/prisma';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -18,25 +16,31 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${baseUrl}/blog`, lastModified, changeFrequency: 'daily', priority: 0.9 },
   ];
 
+  // Fetch blog posts from DB
   try {
-    const dataDir = path.join(process.cwd(), 'public', 'data');
-    const blogPath = path.join(dataDir, 'blog-posts.json');
-    if (fs.existsSync(blogPath)) {
-      const blogData = JSON.parse(fs.readFileSync(blogPath, 'utf-8'));
-      if (blogData.posts && Array.isArray(blogData.posts)) {
-        const publishedPosts = blogData.posts.filter((post: any) => post.status === 'published');
-        publishedPosts.forEach((post: any) => {
-          routes.push({
-            url: `${baseUrl}/blog/${post.id}`,
-            lastModified: new Date(post.date || new Date()),
-            changeFrequency: 'weekly',
-            priority: 0.8,
-          });
+    const blogPosts = await prisma.blogPost.findMany({
+      where: { status: 'published' },
+      select: { id: true, slug: true, updatedAt: true },
+    });
+
+    blogPosts.forEach((post) => {
+      // Use slug if available, otherwise fall back to post id
+      const postPath = post.slug
+        ? (post.slug.startsWith('/') ? post.slug : `/${post.slug}`)
+        : `/blog/${post.id}`;
+      const fullUrl = `${baseUrl}${postPath}`;
+      // Avoid duplicates
+      if (!routes.find(r => r.url === fullUrl)) {
+        routes.push({
+          url: fullUrl,
+          lastModified: post.updatedAt,
+          changeFrequency: 'weekly',
+          priority: 0.8,
         });
       }
-    }
+    });
   } catch (error) {
-    console.error('Error generating dynamic blog routes for sitemap:', error);
+    console.error('Error generating blog post routes for sitemap:', error);
   }
 
   // Merge DB SeoMeta URLs

@@ -26,6 +26,7 @@ export default function EditPostPage() {
     id: '',
     title: '',
     titleAr: '',
+    slug: '',
     content: '',
     contentAr: '',
     excerpt: '',
@@ -51,6 +52,7 @@ export default function EditPostPage() {
           id: post.id,
           title: post.title || '',
           titleAr: post.titleAr || '',
+          slug: post.slug || '',
           content: post.content || '',
           contentAr: post.contentAr || '',
           excerpt: post.excerpt || '',
@@ -288,6 +290,11 @@ export default function EditPostPage() {
           {/* Settings */}
           <div className="admin-card">
             <h4 style={{ color: '#E6E6EA', fontSize: 15, margin: '0 0 16px' }}>الإعدادات</h4>
+            <div style={{ marginBottom: 16 }}>
+              <label className="admin-label">رابط المقالة (Slug)</label>
+              <input className="admin-input" placeholder="مثال: /blog/my-article-title" value={form.slug} onChange={e => updateField('slug', e.target.value)} dir="ltr" />
+              <p style={{ fontSize: 12, color: '#6B7280', marginTop: 4 }}>يُستخدم في الـ Sitemap — اتركه فارغاً لاستخدام الرابط التلقائي</p>
+            </div>
             <div style={{ marginBottom: 16 }}>
               <label className="admin-label">الفئة</label>
               <select className="admin-select" value={form.category} onChange={e => updateField('category', e.target.value)}>

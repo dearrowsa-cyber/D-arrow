@@ -122,6 +122,7 @@ model BlogPost {
   id          String   @id @default(cuid())
   title       String
   titleAr     String?
+  slug        String?  @unique // رابط المقالة المخصص — يُستخدم في الـ sitemap والـ URL
   content     String
   contentAr   String?
   excerpt     String?

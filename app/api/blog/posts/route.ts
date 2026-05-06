@@ -42,6 +42,7 @@ export async function POST(req: NextRequest) {
       data: {
         title: newPost.title || '',
         titleAr: newPost.titleAr || '',
+        slug: newPost.slug || null,
         content: newPost.content || '',
         contentAr: newPost.contentAr || '',
         excerpt: newPost.excerpt || (newPost.content ? newPost.content.substring(0, 150) : ''),
