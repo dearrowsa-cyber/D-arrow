@@ -138,3 +138,93 @@ model BlogPost {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+// =============================================
+// E-COMMERCE STORE MODELS
+// =============================================
+
+model Product {
+  id              String   @id @default(cuid())
+  name            String
+  nameAr          String?
+  slug            String   @unique
+  description     String?
+  descriptionAr   String?
+  price           Float
+  salePrice       Float?
+  currency        String   @default("SAR")
+  images          String?  // JSON array of image URLs
+  category        String   @default("General")
+  categoryAr      String?
+  type            String   @default("digital") // digital, service, template, course
+  downloadUrl     String?  // URL or file path for digital products
+  features        String?  // JSON array of feature strings
+  featuresAr      String?  // JSON array of Arabic feature strings
+  status          String   @default("published") // published, draft
+  featured        Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  reviews         ProductReview[]
+  orderItems      OrderItem[]
+}
+
+model Order {
+  id              String   @id @default(cuid())
+  orderNumber     String   @unique
+  customerName    String
+  customerEmail   String
+  customerPhone   String?
+  subtotal        Float
+  discount        Float    @default(0)
+  total           Float
+  couponCode      String?
+  paymentMethod   String   @default("bank_transfer") // stripe, bank_transfer, mada, stc_pay, tabby, tamara
+  paymentStatus   String   @default("pending") // pending, paid, failed, refunded
+  paymentIntentId String?  // Stripe payment intent ID
+  status          String   @default("pending") // pending, processing, completed, cancelled
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  items           OrderItem[]
+}
+
+model OrderItem {
+  id              String   @id @default(cuid())
+  orderId         String
+  order           Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId       String
+  product         Product  @relation(fields: [productId], references: [id])
+  productName     String
+  price           Float
+  quantity        Int      @default(1)
+  total           Float
+  createdAt       DateTime @default(now())
+}
+
+model Coupon {
+  id              String    @id @default(cuid())
+  code            String    @unique
+  type            String    @default("percentage") // percentage, fixed
+  value           Float     // discount value (e.g., 10 for 10% or 50 for 50 SAR)
+  minOrder        Float?    // minimum order amount
+  maxUses         Int?      // max number of uses (null = unlimited)
+  usedCount       Int       @default(0)
+  expiresAt       DateTime?
+  active          Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model ProductReview {
+  id              String   @id @default(cuid())
+  productId       String
+  product         Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  customerName    String
+  customerEmail   String?
+  rating          Int      // 1-5
+  comment         String?
+  approved        Boolean  @default(false)
+  createdAt       DateTime @default(now())
+}

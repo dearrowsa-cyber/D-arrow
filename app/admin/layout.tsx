@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import './admin.css';
-import { LayoutDashboard, FileText, Globe, DollarSign, LogOut, Menu, X, Image, Search, Tags, ArrowRightLeft, Bot, Code, Map } from 'lucide-react';
+import { LayoutDashboard, FileText, Globe, DollarSign, LogOut, Menu, X, Image, Search, Tags, ArrowRightLeft, Bot, Code, Map, ShoppingBag, Package, Ticket, Star } from 'lucide-react';
 
 const navItems = [
   { href: '/admin', label: 'لوحة التحكم', icon: LayoutDashboard },
@@ -18,6 +18,13 @@ const navItems = [
   { href: '/admin/seo/robots', label: 'Robots.txt', icon: Bot },
   { href: '/admin/seo/schema', label: 'Schema', icon: Code },
   { href: '/admin/seo/sitemap', label: 'خريطة الموقع', icon: Map },
+];
+
+const storeNavItems = [
+  { href: '/admin/store/products', label: 'المنتجات', icon: Package },
+  { href: '/admin/store/orders', label: 'الطلبات', icon: ShoppingBag },
+  { href: '/admin/store/coupons', label: 'الكوبونات', icon: Ticket },
+  { href: '/admin/store/reviews', label: 'التقييمات', icon: Star },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -122,6 +129,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               key={item.href}
               href={item.href}
               className={`admin-nav-item ${pathname === item.href ? 'active' : ''}`}
+              onClick={() => setSidebarOpen(false)}
+            >
+              <item.icon size={20} />
+              {item.label}
+            </Link>
+          ))}
+          
+          <div className="admin-nav-section">المتجر الإلكتروني</div>
+          {storeNavItems.map(item => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`admin-nav-item ${pathname === item.href || pathname?.startsWith(item.href + '/') ? 'active' : ''}`}
               onClick={() => setSidebarOpen(false)}
             >
               <item.icon size={20} />
