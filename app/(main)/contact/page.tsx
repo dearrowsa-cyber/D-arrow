@@ -425,8 +425,8 @@ ${formData.message || 'لا توجد رسالة'}`;
                 <p className="text-white dark:text-gray-400 mb-4">
                   {t('contactFormResponseText')}
                 </p>
-                <div className="inline-block bg-amber-500/20 px-4 py-2 rounded-lg text-amber-400 font-semibold text-sm">
-                  Average Response: 2 hours
+                <div className="inline-block bg-brand-orange px-4 py-2 rounded-lg text-white font-semibold text-sm shadow-brand">
+                  {t('averageResponse')}
                 </div>
               </div>
             </div>

@@ -667,6 +667,7 @@ const translations: Translations = {
   visionFeature2Title: { en: 'Economic Empowerment', ar: 'التمكين الاقتصادي' },
   visionFeature2Desc: { en: 'Supporting local enterprises to innovate and thrive in the modern digital age.', ar: 'دعم وتمكين الشركات المحلية للابتكار والازدهار في العصر الرقمي الحديث.' },
   visionCTA: { en: 'Join Our Journey', ar: 'شاركنا رحلة النجاح' },
+  averageResponse: { en: 'Average Response: 2 hours', ar: 'متوسط الرد: ساعتين' },
 };
 
 const defaultLang: Lang = 'ar';
