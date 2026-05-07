@@ -139,6 +139,14 @@ export default function EditPostPage() {
       showToast('يرجى إدخال عنوان المقال', 'error');
       return;
     }
+
+    // Auto-generate slug if empty
+    let finalSlug = form.slug;
+    if (!finalSlug) {
+      const base = form.title || form.titleAr || 'post';
+      finalSlug = base.toLowerCase().replace(/[^\w\u0621-\u064A\s]/gi, '').replace(/\s+/g, '-');
+    }
+
     setSaving(true);
     const finalStatus = statusOverride || form.status;
     try {
@@ -147,6 +155,7 @@ export default function EditPostPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...form,
+          slug: finalSlug,
           status: finalStatus,
         }),
       });

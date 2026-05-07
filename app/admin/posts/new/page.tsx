@@ -106,6 +106,13 @@ export default function NewPostPage() {
       return;
     }
 
+    // Auto-generate slug if empty
+    let finalSlug = form.slug;
+    if (!finalSlug) {
+      const base = form.title || form.titleAr || 'post';
+      finalSlug = base.toLowerCase().replace(/[^\w\u0621-\u064A\s]/gi, '').replace(/\s+/g, '-');
+    }
+
     setSaving(true);
     try {
       const res = await fetch('/api/blog/posts', {
@@ -113,6 +120,7 @@ export default function NewPostPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...form,
+          slug: finalSlug,
           status: asDraft ? 'draft' : 'published',
         }),
       });
