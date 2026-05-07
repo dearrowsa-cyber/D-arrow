@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { sendWhatsAppNotification, buildOrderNotification } from '@/lib/whatsapp-api';
+import { sendEmail } from '@/lib/email';
+import { generateOrderConfirmationEmail } from '@/lib/store-emails';
 
 // Get all orders
 export async function GET() {
@@ -90,6 +93,38 @@ export async function POST(req: NextRequest) {
       },
       include: { items: true },
     });
+
+    // Send WhatsApp Notification
+    try {
+      const message = buildOrderNotification({
+        orderNumber: order.orderNumber,
+        customerName: order.customerName,
+        customerEmail: order.customerEmail,
+        customerPhone: order.customerPhone || undefined,
+        total: order.total,
+        items: orderItems.map(item => ({
+          productName: item.productName,
+          quantity: item.quantity,
+          price: item.price,
+        })),
+        paymentMethod: order.paymentMethod,
+      });
+      await sendWhatsAppNotification(message);
+    } catch (waError) {
+      console.error('Failed to send WhatsApp notification for order:', waError);
+    }
+
+    // Send Confirmation Email
+    try {
+      const html = generateOrderConfirmationEmail(order);
+      await sendEmail({
+        to: order.customerEmail,
+        subject: `تأكيد الطلب رقم ${order.orderNumber} - دي آرو`,
+        html,
+      });
+    } catch (emailError) {
+      console.error('Failed to send confirmation email for order:', emailError);
+    }
 
     return NextResponse.json({ success: true, message: 'تم إنشاء الطلب بنجاح', order });
   } catch (error) {

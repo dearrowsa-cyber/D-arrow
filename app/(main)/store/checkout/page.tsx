@@ -64,20 +64,50 @@ export default function CheckoutPage() {
   if (orderComplete) {
     return (
       <section style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '120px 24px' }}>
-        <div style={{ maxWidth: 500, textAlign: 'center' }}>
+        <div style={{ maxWidth: 600, textAlign: 'center', width: '100%' }}>
           <div style={{ width: 80, height: 80, borderRadius: '50%', background: 'rgba(34,197,94,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 24px' }}>
             <Check size={40} style={{ color: '#22C55E' }} />
           </div>
           <h1 style={{ fontSize: 28, fontWeight: 700, color: '#E6E6EA', marginBottom: 8 }}>تم استلام طلبك بنجاح!</h1>
           <p style={{ color: '#9CA3AF', fontSize: 16, marginBottom: 24 }}>رقم الطلب: <span style={{ color: '#FF4D6D', fontWeight: 700 }}>{orderComplete.orderNumber}</span></p>
-          <div style={{ background: 'rgba(20,22,46,0.6)', border: '1px solid rgba(255,77,109,0.1)', borderRadius: 16, padding: 24, textAlign: 'right', marginBottom: 24 }}>
-            <p style={{ color: '#D1D5DB', fontSize: 14, lineHeight: 1.8, margin: 0 }}>
-              {paymentMethod === 'bank_transfer' ? 'سنتواصل معك قريباً لإتمام عملية الدفع عبر التحويل البنكي.' : 'سيتم معالجة الدفع وإرسال تأكيد على بريدك الإلكتروني.'}
-            </p>
+          
+          <div style={{ background: 'rgba(20,22,46,0.6)', border: '1px solid rgba(255,77,109,0.1)', borderRadius: 20, padding: 32, textAlign: 'right', marginBottom: 32 }}>
+            {paymentMethod === 'bank_transfer' ? (
+              <>
+                <h3 style={{ color: '#FF4D6D', marginBottom: 16, fontSize: 18 }}>تعليمات التحويل البنكي:</h3>
+                <p style={{ color: '#D1D5DB', fontSize: 15, lineHeight: 1.8, marginBottom: 20 }}>
+                  يرجى تحويل مبلغ <strong>{orderComplete.total.toLocaleString()} ر.س</strong> إلى أحد الحسابات التالية، ثم إرسال صورة التحويل عبر الواتساب مع ذكر رقم الطلب.
+                </p>
+                <div style={{ background: 'rgba(11,13,31,0.4)', padding: 16, borderRadius: 12, border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div style={{ marginBottom: 12 }}>
+                    <div style={{ fontSize: 13, color: '#9CA3AF' }}>بنك الراجحي:</div>
+                    <div style={{ fontSize: 16, color: '#E6E6EA', fontWeight: 600 }}>SA84 8000 0000 0000 0000 0000</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 13, color: '#9CA3AF' }}>اسم المستفيد:</div>
+                    <div style={{ fontSize: 16, color: '#E6E6EA', fontWeight: 600 }}>شركة دي آرو للتسويق</div>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <h3 style={{ color: '#FF4D6D', marginBottom: 16, fontSize: 18 }}>الدفع عبر البطاقة (Stripe):</h3>
+                <p style={{ color: '#D1D5DB', fontSize: 15, lineHeight: 1.8, marginBottom: 20 }}>
+                  يمكنك الآن إتمام عملية الدفع بأمان عبر بوابة Stripe.
+                </p>
+                <button 
+                  onClick={() => window.location.href = `/api/store/checkout/stripe?orderId=${orderComplete.id}`}
+                  style={{ width: '100%', padding: '14px', borderRadius: 12, background: '#635bff', color: 'white', border: 'none', fontWeight: 700, fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}
+                >
+                  <CreditCard size={20} /> دفع الآن عبر Stripe
+                </button>
+              </>
+            )}
           </div>
+
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
             <Link href="/store" style={{ padding: '14px 32px', borderRadius: 12, background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', textDecoration: 'none', fontWeight: 600 }}>متابعة التسوق</Link>
-            <Link href="/" style={{ padding: '14px 32px', borderRadius: 12, border: '1px solid rgba(255,77,109,0.3)', color: '#FF4D6D', textDecoration: 'none', fontWeight: 600 }}>الصفحة الرئيسية</Link>
+            <Link href="/" style={{ padding: '14px 32px', borderRadius: 12, border: '1px solid rgba(255,77,109,0.3)', color: '#FF4D6D', textDecoration: 'none', fontWeight: 600 }}>الرئيسية</Link>
           </div>
         </div>
       </section>

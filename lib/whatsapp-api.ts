@@ -155,3 +155,31 @@ export function buildConsultationNotification(data: {
 
 🌐 _تم الإرسال من موقع D-Arrow_`;
 }
+
+export function buildOrderNotification(data: {
+  orderNumber: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone?: string;
+  total: number;
+  items: { productName: string; quantity: number; price: number }[];
+  paymentMethod: string;
+}) {
+  const itemsList = data.items.map(i => `  📦 ${i.productName} (x${i.quantity})`).join('\n');
+  const paymentMethodAr = data.paymentMethod === 'stripe' ? 'بطاقة ائتمان (Stripe)' : 'تحويل بنكي';
+  
+  return `🛍️ *طلب جديد من المتجر*
+  
+🔢 *رقم الطلب:* ${data.orderNumber}
+👤 *العميل:* ${data.customerName}
+📱 *الجوال:* ${data.customerPhone || 'غير محدد'}
+📧 *الإيميل:* ${data.customerEmail}
+
+📋 *المنتجات:*
+${itemsList}
+
+💰 *الإجمالي:* ${data.total.toLocaleString()} ر.س
+💳 *طريقة الدفع:* ${paymentMethodAr}
+
+🌐 _تم الإرسال من موقع D-Arrow_`;
+}
