@@ -211,6 +211,7 @@ export default function PostsListPage() {
                     </span>
                   </td>
                   <td>
+                    <div style={{ display: 'flex', gap: 8 }}>
                       {post.status === 'draft' && (
                         <button
                           className="admin-btn admin-btn-sm"
