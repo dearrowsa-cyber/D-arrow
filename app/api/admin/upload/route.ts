@@ -38,8 +38,12 @@ export async function POST(req: NextRequest) {
       size: file.size,
       type: file.type,
     });
-  } catch (error) {
-    console.error('Upload error:', error);
-    return NextResponse.json({ success: false, error: 'فشل في رفع الملف' }, { status: 500 });
+  } catch (error: any) {
+    console.error('Upload error details:', error);
+    return NextResponse.json({ 
+      success: false, 
+      error: 'فشل في رفع الملف',
+      debug: error.message || 'Unknown error'
+    }, { status: 500 });
   }
 }
