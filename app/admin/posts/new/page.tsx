@@ -153,8 +153,8 @@ export default function NewPostPage() {
           <button className="admin-btn admin-btn-secondary" onClick={() => handleSubmit(true)} disabled={saving}>
             حفظ كمسودة
           </button>
-          <button className="admin-btn admin-btn-primary" onClick={() => handleSubmit(false)} disabled={saving}>
-            {saving ? 'جاري الحفظ...' : <><Save size={16} /> نشر المقال</>}
+          <button className="admin-btn admin-btn-primary" onClick={() => handleSubmit(false)} disabled={saving} style={{ background: 'linear-gradient(90deg, #10B981, #059669)', border: 'none' }}>
+            {saving ? 'جاري النشر...' : 'نشر المقال الآن'}
           </button>
         </div>
       </div>

@@ -211,7 +211,30 @@ export default function PostsListPage() {
                     </span>
                   </td>
                   <td>
-                    <div style={{ display: 'flex', gap: 8 }}>
+                      {post.status === 'draft' && (
+                        <button
+                          className="admin-btn admin-btn-sm"
+                          style={{ background: 'rgba(16,185,129,0.1)', color: '#10B981', border: '1px solid rgba(16,185,129,0.2)' }}
+                          onClick={async () => {
+                            try {
+                              const res = await fetch('/api/blog/posts', {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ id: post.id, status: 'published' }),
+                              });
+                              if (res.ok) {
+                                setPosts(prev => prev.map(p => p.id === post.id ? { ...p, status: 'published' } : p));
+                                showToast('تم نشر المقال بنجاح', 'success');
+                              }
+                            } catch {
+                              showToast('حدث خطأ أثناء النشر', 'error');
+                            }
+                          }}
+                          title="نشر الآن"
+                        >
+                          نشر
+                        </button>
+                      )}
                       <Link
                         href={`/admin/posts/${post.id}`}
                         className="admin-btn admin-btn-ghost admin-btn-sm"

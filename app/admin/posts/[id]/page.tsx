@@ -134,24 +134,25 @@ export default function EditPostPage() {
     }
   };
 
-  const handleSubmit = async (asDraft = false) => {
+  const handleSubmit = async (statusOverride?: 'published' | 'draft') => {
     if (!form.title && !form.titleAr) {
       showToast('يرجى إدخال عنوان المقال', 'error');
       return;
     }
     setSaving(true);
+    const finalStatus = statusOverride || form.status;
     try {
       const res = await fetch('/api/blog/posts', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...form,
-          status: asDraft ? 'draft' : form.status,
+          status: finalStatus,
         }),
       });
       const data = await res.json();
       if (data.success) {
-        showToast('تم تحديث المقال بنجاح', 'success');
+        showToast(finalStatus === 'published' ? 'تم نشر المقال بنجاح' : 'تم حفظ التعديلات بنجاح', 'success');
         setTimeout(() => router.push('/admin/posts'), 1000);
       } else {
         showToast(data.error || 'فشل في تحديث المقال', 'error');
@@ -187,12 +188,25 @@ export default function EditPostPage() {
           <h2 style={{ fontSize: 24, fontWeight: 700, color: '#E6E6EA', margin: 0 }}>تعديل المقال</h2>
         </div>
         <div style={{ display: 'flex', gap: 12 }}>
-          <button className="admin-btn admin-btn-secondary" onClick={() => handleSubmit(true)} disabled={saving}>
-            حفظ كمسودة
-          </button>
-          <button className="admin-btn admin-btn-primary" onClick={() => handleSubmit(false)} disabled={saving}>
-            {saving ? 'جاري الحفظ...' : <><Save size={16} /> حفظ التعديلات</>}
-          </button>
+          {form.status === 'draft' ? (
+            <>
+              <button className="admin-btn admin-btn-secondary" onClick={() => handleSubmit('draft')} disabled={saving}>
+                حفظ كمسودة
+              </button>
+              <button className="admin-btn admin-btn-primary" onClick={() => handleSubmit('published')} disabled={saving} style={{ background: 'linear-gradient(90deg, #10B981, #059669)', border: 'none' }}>
+                {saving ? 'جاري النشر...' : 'نشر المقال الآن'}
+              </button>
+            </>
+          ) : (
+            <>
+              <button className="admin-btn admin-btn-ghost" onClick={() => handleSubmit('draft')} disabled={saving} style={{ color: '#9CA3AF' }}>
+                تحويل لمسودة
+              </button>
+              <button className="admin-btn admin-btn-primary" onClick={() => handleSubmit('published')} disabled={saving}>
+                {saving ? 'جاري الحفظ...' : <><Save size={16} /> حفظ التعديلات</>}
+              </button>
+            </>
+          )}
         </div>
       </div>
 
