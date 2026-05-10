@@ -194,12 +194,31 @@ export default function PostsListPage() {
                       </div>
                     )}
                   </td>
-                  <td>
-                    <div style={{ fontWeight: 600, color: '#E6E6EA', marginBottom: 2 }}>
+                  <td style={{ maxWidth: 300 }}>
+                    <div style={{ 
+                      fontWeight: 600, 
+                      color: '#E6E6EA', 
+                      marginBottom: 2,
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis'
+                    }}>
                       {post.titleAr || post.title}
                     </div>
                     {post.titleAr && post.title && (
-                      <div style={{ fontSize: 12, color: '#6B7280' }}>{post.title}</div>
+                      <div style={{ 
+                        fontSize: 12, 
+                        color: '#6B7280',
+                        display: '-webkit-box',
+                        WebkitLineClamp: 1,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis'
+                      }}>
+                        {post.title}
+                      </div>
                     )}
                   </td>
                   <td><span className="admin-badge admin-badge-info">{post.category}</span></td>
