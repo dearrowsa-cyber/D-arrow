@@ -39,18 +39,29 @@ const TITLE_TO_ID: Record<string, string> = {
 };
 
 function resolveServiceId(service: any, index: number): string {
+  console.log('Resolving ID for service:', service.titleKey || service.title?.en);
+  
   // 1. Already has id
-  if (service.id) return service.id;
+  if (service.id && service.id !== 'undefined') return service.id;
+  
   // 2. Has titleKey (hardcoded services)
-  if (service.titleKey) return service.titleKey.replace('_title', '');
+  if (service.titleKey) {
+    const id = service.titleKey.replace('_title', '');
+    if (id && id !== 'undefined') return id;
+  }
+  
   // 3. Match from English title (dynamic siteData services)
   const enTitle = (service.title?.en || '').toLowerCase().trim();
   if (enTitle && TITLE_TO_ID[enTitle]) return TITLE_TO_ID[enTitle];
+  
   // 4. Partial match
   for (const [key, id] of Object.entries(TITLE_TO_ID)) {
     if (enTitle.includes(key) || key.includes(enTitle)) return id;
   }
-  return `service-${index}`;
+  
+  const fallbackId = `service-${index}`;
+  console.warn('Fallback ID generated:', fallbackId);
+  return fallbackId;
 }
 
 export default function ServicesPage() {

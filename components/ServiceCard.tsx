@@ -220,8 +220,8 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
         >
           <Link
             href={`/services/${(() => {
-              if ((service as any).id) return (service as any).id;
-              if (service.titleKey) return service.titleKey.replace('_title', '');
+              const id = (service as any).id || (service.titleKey ? service.titleKey.replace('_title', '') : '');
+              if (id && id !== 'undefined') return id;
               
               // Fallback mapping for dynamic siteData
               const enTitle = ((service as any).title?.en || '').toLowerCase();
@@ -236,7 +236,7 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
               if (enTitle.includes('seo')) return 'dm_seo';
               
               if (enTitle.includes('appraisal')) return 're_appraisal';
-              if (enTitle.includes('real estate marketing')) return 're_marketing';
+              if (enTitle.includes('marketing')) return 're_marketing';
               if (enTitle.includes('property management') || enTitle.includes('sales')) return 're_management';
               if (enTitle.includes('photography')) return 're_photography';
               if (enTitle.includes('image creation')) return 're_project_images';

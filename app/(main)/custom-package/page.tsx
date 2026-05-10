@@ -95,8 +95,14 @@ export default function CustomPackagePage() {
     // Get service from URL if provided
     if (searchParams && typeof window !== 'undefined') {
       const serviceParam = searchParams.get('service');
-      if (serviceParam) {
-        const serviceInfo = SERVICES_MAP.find(s => s.titleKey === serviceParam || s.id === serviceParam);
+      if (serviceParam && serviceParam !== 'undefined') {
+        // Try to find by id, titleKey, or English title
+        const serviceInfo = SERVICES_MAP.find(s => 
+          s.id === serviceParam || 
+          s.titleKey === serviceParam || 
+          s.titleKey.replace('_title', '') === serviceParam
+        );
+        
         if (serviceInfo) {
           setSelectedServices([{
             id: serviceInfo.id,

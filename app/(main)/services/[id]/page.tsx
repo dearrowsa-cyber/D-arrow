@@ -299,18 +299,26 @@ const DETAILED_SERVICES: Record<string, any> = {
 export default function ServiceDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { lang, t } = useLanguage();
   const resolvedParams = use(params);
-  const serviceId = resolvedParams.id;
+  const serviceId = resolvedParams?.id;
   const [mounted, setMounted] = useState(false);
   
   useEffect(() => {
     setMounted(true);
-  }, []);
+    console.log('Service Detail Page Mounted. ID:', serviceId);
+  }, [serviceId]);
 
-  const serviceData = DETAILED_SERVICES[serviceId];
+  const serviceData = serviceId ? DETAILED_SERVICES[serviceId] : null;
 
-  if (mounted && serviceId && !serviceData) {
+  if (mounted && serviceId && serviceId !== 'undefined' && !serviceData) {
+    console.warn(`Service data not found for ID: ${serviceId}. Redirecting to custom-package.`);
     // If the service is not in our detailed list, we fallback to custom-package for now
     window.location.href = `/custom-package?service=${serviceId}`;
+    return null;
+  }
+
+  if (mounted && (serviceId === 'undefined' || !serviceId)) {
+    console.error('Invalid service ID provided. Redirecting back to services.');
+    window.location.href = '/services';
     return null;
   }
 
