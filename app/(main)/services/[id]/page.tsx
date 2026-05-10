@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Check, ArrowRight, ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 const DETAILED_SERVICES: Record<string, any> = {
@@ -296,15 +297,16 @@ const DETAILED_SERVICES: Record<string, any> = {
   }
 };
 
-export default function ServiceDetailsPage({ params }: { params: { id: string } }) {
+export default function ServiceDetailsPage() {
   const { lang, t } = useLanguage();
+  const params = useParams();
   const [mounted, setMounted] = useState(false);
   
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const serviceId = params.id;
+  const serviceId = params.id as string;
   const serviceData = DETAILED_SERVICES[serviceId];
 
   if (!serviceData && mounted) {
