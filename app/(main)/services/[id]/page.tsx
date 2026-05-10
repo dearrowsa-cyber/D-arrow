@@ -5,8 +5,7 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Check, ArrowRight, ArrowLeft } from 'lucide-react';
 import { notFound } from 'next/navigation';
-import { useParams } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 
 const DETAILED_SERVICES: Record<string, any> = {
   dm_smm: {
@@ -297,19 +296,19 @@ const DETAILED_SERVICES: Record<string, any> = {
   }
 };
 
-export default function ServiceDetailsPage() {
+export default function ServiceDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { lang, t } = useLanguage();
-  const params = useParams();
+  const resolvedParams = use(params);
+  const serviceId = resolvedParams.id;
   const [mounted, setMounted] = useState(false);
   
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const serviceId = params.id as string;
   const serviceData = DETAILED_SERVICES[serviceId];
 
-  if (!serviceData && mounted) {
+  if (mounted && serviceId && !serviceData) {
     // If the service is not in our detailed list, we fallback to custom-package for now
     window.location.href = `/custom-package?service=${serviceId}`;
     return null;

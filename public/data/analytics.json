@@ -1,12 +1,16 @@
 {
-  "totalVisitors": 21,
-  "todayViews": 14,
+  "totalVisitors": 27,
+  "todayViews": 6,
   "pageViews": {
     "/": 16,
-    "/blog": 2,
+    "/blog": 3,
     "/blog/123": 1,
     "/blog/cmog6f88m0000iizx792fjazo": 1,
-    "/contact": 1
+    "/contact": 1,
+    "/services/dm_smm": 2,
+    "/pricing": 1,
+    "/services": 1,
+    "/services/dm_marketing": 1
   },
-  "lastResetDate": "2026-04-30"
+  "lastResetDate": "2026-05-10"
 }
