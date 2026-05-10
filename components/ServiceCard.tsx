@@ -219,7 +219,7 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
           whileTap="tap"
         >
           <Link
-            href={`/custom-package?service=${service.titleKey}`}
+            href={`/services/${(service as any).id || service.titleKey.replace('_title', '')}`}
             className={styles.ctaButton}
           >
             {(service as any).title || t(service.titleKey)}
