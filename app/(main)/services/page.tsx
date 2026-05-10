@@ -10,6 +10,49 @@ import ServiceCard from '@/components/ServiceCard';
 import AnimatedServicesShowcase from '@/components/AnimatedServicesShowcase';
 import { useSearchParams } from 'next/navigation';
 
+// Map English titles from siteData to the service IDs used in DETAILED_SERVICES
+const TITLE_TO_ID: Record<string, string> = {
+  'social media accounts management': 'dm_smm',
+  'digital marketing': 'dm_marketing',
+  'visual production': 'dm_visual',
+  'influencer marketing': 'dm_influencer',
+  'creative content': 'dm_content',
+  'exhibitions and conferences management': 'dm_exhibitions',
+  'advertisements': 'dm_advertising',
+  'marketing consultation': 'dm_consultation',
+  'seo & sro': 'dm_seo',
+  // Innovation & Development
+  'apps design and development': 'id_apps',
+  'website design and development': 'id_website',
+  'branding design & development': 'id_branding',
+  'software design and development': 'id_software',
+  'cloud services': 'id_cloud',
+  // Real Estate
+  'real estate appraisal': 're_appraisal',
+  'real estate marketing': 're_marketing',
+  'property management and sales': 're_management',
+  'professional photography & representation': 're_photography',
+  'advertising campaign management': 're_campaign',
+  'real estate project image creation': 're_project_images',
+  'current image evaluation & enhancement': 're_current_eval',
+  'real estate project naming': 're_project_naming',
+};
+
+function resolveServiceId(service: any, index: number): string {
+  // 1. Already has id
+  if (service.id) return service.id;
+  // 2. Has titleKey (hardcoded services)
+  if (service.titleKey) return service.titleKey.replace('_title', '');
+  // 3. Match from English title (dynamic siteData services)
+  const enTitle = (service.title?.en || '').toLowerCase().trim();
+  if (enTitle && TITLE_TO_ID[enTitle]) return TITLE_TO_ID[enTitle];
+  // 4. Partial match
+  for (const [key, id] of Object.entries(TITLE_TO_ID)) {
+    if (enTitle.includes(key) || key.includes(enTitle)) return id;
+  }
+  return `service-${index}`;
+}
+
 export default function ServicesPage() {
   const { t, lang, siteData } = useLanguage();
   const [expandedCategory, setExpandedCategory] = useState('digital-marketing');
@@ -379,6 +422,7 @@ export default function ServicesPage() {
                // Normalization to handle both the old hardcoded structure (titleKey, descKey) and the new dynamic structure (title.en, title.ar)
                const normalizedService = {
                  ...service,
+                 id: resolveServiceId(service, index),
                  title: service.title?.[lang] || t(service.titleKey),
                  description: service.description?.[lang] || t(service.descKey),
                };
