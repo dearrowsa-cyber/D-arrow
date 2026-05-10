@@ -447,8 +447,9 @@ export default function ServiceDetailsPage({ params }: { params: Promise<{ id: s
             className="flex justify-center mt-10"
           >
             <Link 
-              href={`/custom-package?service=${serviceId}`}
-              className="bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-[0_0_20px_rgba(255,154,60,0.4)] transition-all transform hover:-translate-y-1"
+              href="/pricing"
+              className="bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] !text-white px-10 py-4 rounded-xl font-bold text-lg hover:shadow-[0_0_20px_rgba(255,154,60,0.4)] transition-all transform hover:-translate-y-1 inline-block"
+              style={{ color: '#ffffff' }}
             >
               {isArabic ? 'اطلب الخدمة الآن' : 'Request Service Now'}
             </Link>
