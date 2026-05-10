@@ -219,7 +219,38 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
           whileTap="tap"
         >
           <Link
-            href={`/services/${(service as any).id || (service.titleKey ? service.titleKey.replace('_title', '') : `service-${index}`)}`}
+            href={`/services/${(() => {
+              if ((service as any).id) return (service as any).id;
+              if (service.titleKey) return service.titleKey.replace('_title', '');
+              
+              // Fallback mapping for dynamic siteData
+              const enTitle = ((service as any).title?.en || '').toLowerCase();
+              if (enTitle.includes('social media')) return 'dm_smm';
+              if (enTitle.includes('digital marketing')) return 'dm_marketing';
+              if (enTitle.includes('visual')) return 'dm_visual';
+              if (enTitle.includes('influencer')) return 'dm_influencer';
+              if (enTitle.includes('content')) return 'dm_content';
+              if (enTitle.includes('exhibition')) return 'dm_exhibitions';
+              if (enTitle.includes('advertising') || enTitle.includes('campaign')) return 'dm_advertising';
+              if (enTitle.includes('consultation')) return 'dm_consultation';
+              if (enTitle.includes('seo')) return 'dm_seo';
+              
+              if (enTitle.includes('appraisal')) return 're_appraisal';
+              if (enTitle.includes('real estate marketing')) return 're_marketing';
+              if (enTitle.includes('property management') || enTitle.includes('sales')) return 're_management';
+              if (enTitle.includes('photography')) return 're_photography';
+              if (enTitle.includes('image creation')) return 're_project_images';
+              if (enTitle.includes('evaluation')) return 're_current_eval';
+              if (enTitle.includes('naming')) return 're_project_naming';
+              
+              if (enTitle.includes('app') && !enTitle.includes('appraisal')) return 'id_apps';
+              if (enTitle.includes('website') || enTitle.includes('web')) return 'id_website';
+              if (enTitle.includes('branding')) return 'id_branding';
+              if (enTitle.includes('software')) return 'id_software';
+              if (enTitle.includes('cloud')) return 'id_cloud';
+
+              return `service-${index}`;
+            })()}`}
             className={styles.ctaButton}
           >
             {(service as any).title || t(service.titleKey)}
