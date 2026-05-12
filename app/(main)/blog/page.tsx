@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import prisma from '@/lib/prisma';
 import BlogClient from '@/components/BlogClient';
+import { Suspense } from 'react';
 
 export const metadata: Metadata = {
   title: 'المدونة | D Arrow',
@@ -34,5 +35,9 @@ export default async function BlogPage() {
     console.error('Error fetching blog posts for listing:', error);
   }
 
-  return <BlogClient initialPosts={posts} />;
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#0a0e27] pt-32 text-center text-white">Loading blog...</div>}>
+      <BlogClient initialPosts={posts} />
+    </Suspense>
+  );
 }
