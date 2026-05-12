@@ -668,6 +668,22 @@ const translations: Translations = {
   visionFeature2Desc: { en: 'Supporting local enterprises to innovate and thrive in the modern digital age.', ar: 'دعم وتمكين الشركات المحلية للابتكار والازدهار في العصر الرقمي الحديث.' },
   visionCTA: { en: 'Join Our Journey', ar: 'شاركنا رحلة النجاح' },
   averageResponse: { en: 'Average Response: 2 hours', ar: 'متوسط الرد: ساعتين' },
+
+  // Social Media LP
+  smmLP_heroTitle: { en: 'Transform Your Social Presence into a Revenue Machine', ar: 'حوّل تواجدك الاجتماعي إلى آلة لتوليد الأرباح' },
+  smmLP_heroSub: { en: 'Expert management, data-driven strategies, and creative content that drives engagement and real sales.', ar: 'إدارة خبيرة، استراتيجيات مبنية على البيانات، ومحتوى إبداعي يحقق التفاعل والمبيعات الحقيقية.' },
+  smmLP_cta: { en: 'Get My Free Strategy Call', ar: 'احصل على استشارة مجانية' },
+  smmLP_resultsTitle: { en: 'Amazing Campaign Results', ar: 'نتائج حملات مذهلة' },
+  smmLP_resultsSub: { en: 'See how we helped our clients scale their business through strategic social media management.', ar: 'شاهد كيف ساعدنا عملائنا على تنمية أعمالهم من خلال إدارة استراتيجية لوسائل التواصل الاجتماعي.' },
+  smmLP_feature1Title: { en: 'Strategic Planning', ar: 'تخطيط استراتيجي' },
+  smmLP_feature1Desc: { en: 'We don\'t just post; we build a comprehensive strategy aligned with your business goals.', ar: 'نحن لا ننشر فقط؛ بل نبني استراتيجية شاملة تتماشى مع أهداف عملك.' },
+  smmLP_feature2Title: { en: 'Creative Production', ar: 'إنتاج إبداعي' },
+  smmLP_feature2Desc: { en: 'High-quality visuals and copy that capture attention and build brand authority.', ar: 'مرئيات ونصوص عالية الجودة تجذب الانتباه وتبني سلطة علامتك التجارية.' },
+  smmLP_feature3Title: { en: 'Growth Analytics', ar: 'تحليلات النمو' },
+  smmLP_feature3Desc: { en: 'Constant monitoring and optimization to ensure your ad spend delivers maximum ROI.', ar: 'مراقبة وتحسين مستمر لضمان تحقيق أقصى عائد على الإنفاق الإعلاني.' },
+  smmLP_caseStudy1: { en: '320% Growth in Engagement', ar: 'نمو بنسبة 320٪ في التفاعل' },
+  smmLP_caseStudy2: { en: '4.5x ROI on Paid Ads', ar: 'عائد استثماري 4.5 ضعف على الإعلانات' },
+  smmLP_caseStudy3: { en: 'Brand Identity Reinvented', ar: 'إعادة ابتكار الهوية البصرية' },
 };
 
 const defaultLang: Lang = 'ar';
