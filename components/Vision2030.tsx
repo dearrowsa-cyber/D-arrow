@@ -50,7 +50,7 @@ export default function Vision2030() {
                   </div>
                   <h4 className="text-white font-semibold text-lg">{t('visionFeature1Title')}</h4>
                 </div>
-                <p className="text-sm text-gray-400 pl-15">{t('visionFeature1Desc')}</p>
+                <p className={`text-sm text-gray-400 ${lang === 'ar' ? 'pr-15' : 'pl-15'}`}>{t('visionFeature1Desc')}</p>
               </div>
               
               <div className="flex flex-col gap-3">
@@ -62,7 +62,7 @@ export default function Vision2030() {
                   </div>
                   <h4 className="text-white font-semibold text-lg">{t('visionFeature2Title')}</h4>
                 </div>
-                <p className="text-sm text-gray-400 pl-15">{t('visionFeature2Desc')}</p>
+                <p className={`text-sm text-gray-400 ${lang === 'ar' ? 'pr-15' : 'pl-15'}`}>{t('visionFeature2Desc')}</p>
               </div>
             </div>
 

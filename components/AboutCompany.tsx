@@ -68,7 +68,7 @@ export default function AboutCompany() {
                   </div>
                   <h4 className="text-white font-semibold">{t('aboutFeature1Title')}</h4>
                 </div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 pl-13">{t('aboutFeature1Desc')}</p>
+                <p className={`text-sm text-gray-500 dark:text-gray-400 ${lang === 'ar' ? 'pr-13' : 'pl-13'}`}>{t('aboutFeature1Desc')}</p>
               </div>
               
               <div className="flex flex-col gap-2">
@@ -80,7 +80,7 @@ export default function AboutCompany() {
                   </div>
                   <h4 className="text-white font-semibold">{t('aboutFeature2Title')}</h4>
                 </div>
-                <p className="text-sm text-gray-500 dark:text-gray-400 pl-13">{t('aboutFeature2Desc')}</p>
+                <p className={`text-sm text-gray-500 dark:text-gray-400 ${lang === 'ar' ? 'pr-13' : 'pl-13'}`}>{t('aboutFeature2Desc')}</p>
               </div>
             </div>
 
