@@ -9,7 +9,7 @@ export default function AboutCompany() {
   return (
     <section className="relative py-16 lg:py-24 overflow-hidden border-b border-gray-800/50">
       <div className="w-full max-w-7xl mx-auto px-6 md:px-12">
-        <div className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${lang === 'ar' ? '' : ''}`}>
+        <div className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${lang === 'ar' ? 'lg:flex-row-reverse' : ''}`}>
           
           {/* Image Side */}
           <motion.div 
@@ -41,7 +41,7 @@ export default function AboutCompany() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             viewport={{ once: true }}
-            className={`w-full lg:w-1/2 flex flex-col ${lang === 'ar' ? 'text-right items-end' : 'text-left items-start'}`}
+            className={`w-full lg:w-1/2 flex flex-col ${lang === 'ar' ? 'text-right items-start' : 'text-left items-start'}`}
             dir={lang === 'ar' ? 'rtl' : 'ltr'}
           >
             <div className="inline-block px-4 py-1.5 rounded-full bg-brand-pink/10 border border-brand-pink/20 mb-6">

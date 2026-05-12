@@ -23,7 +23,7 @@ export default function Vision2030() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true }}
-            className={`w-full lg:w-1/2 flex flex-col ${lang === 'ar' ? 'text-right items-end' : 'text-left items-start'}`}
+            className={`w-full lg:w-1/2 flex flex-col ${lang === 'ar' ? 'text-right items-start' : 'text-left items-start'}`}
             dir={lang === 'ar' ? 'rtl' : 'ltr'}
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-pink/10 border border-brand-pink/20 mb-6">
