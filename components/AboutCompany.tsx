@@ -9,7 +9,7 @@ export default function AboutCompany() {
   return (
     <section className="relative py-16 lg:py-24 overflow-hidden border-b border-gray-800/50">
       <div className="w-full max-w-7xl mx-auto px-6 md:px-12">
-        <div className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${lang === 'ar' ? 'lg:flex-row-reverse' : ''}`}>
+        <div className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${lang === 'ar' ? '' : ''}`}>
           
           {/* Image Side */}
           <motion.div 
@@ -60,7 +60,7 @@ export default function AboutCompany() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full mb-10">
               <div className="flex flex-col gap-2">
-                <div className={`flex items-center gap-3 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+                <div className={`flex items-center gap-3`}>
                   <div className="w-10 h-10 rounded-lg bg-brand-orange/10 flex items-center justify-center border border-brand-orange/20 flex-shrink-0">
                     <svg className="w-5 h-5 text-brand-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -68,11 +68,11 @@ export default function AboutCompany() {
                   </div>
                   <h4 className="text-white font-semibold">{t('aboutFeature1Title')}</h4>
                 </div>
-                <p className={`text-sm text-gray-500 dark:text-gray-400 ${lang === 'ar' ? 'pr-13' : 'pl-13'}`}>{t('aboutFeature1Desc')}</p>
+                <p className={`text-sm text-gray-500 dark:text-gray-400 ${lang === 'ar' ? 'pr-13 text-right' : 'pl-13 text-left'}`}>{t('aboutFeature1Desc')}</p>
               </div>
               
               <div className="flex flex-col gap-2">
-                <div className={`flex items-center gap-3 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+                <div className={`flex items-center gap-3`}>
                   <div className="w-10 h-10 rounded-lg bg-brand-pink/10 flex items-center justify-center border border-brand-pink/20 flex-shrink-0">
                     <svg className="w-5 h-5 text-brand-pink" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -80,7 +80,7 @@ export default function AboutCompany() {
                   </div>
                   <h4 className="text-white font-semibold">{t('aboutFeature2Title')}</h4>
                 </div>
-                <p className={`text-sm text-gray-500 dark:text-gray-400 ${lang === 'ar' ? 'pr-13' : 'pl-13'}`}>{t('aboutFeature2Desc')}</p>
+                <p className={`text-sm text-gray-500 dark:text-gray-400 ${lang === 'ar' ? 'pr-13 text-right' : 'pl-13 text-left'}`}>{t('aboutFeature2Desc')}</p>
               </div>
             </div>
 

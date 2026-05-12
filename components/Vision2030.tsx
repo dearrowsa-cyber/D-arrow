@@ -42,7 +42,7 @@ export default function Vision2030() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full mb-10">
               <div className="flex flex-col gap-3">
-                <div className={`flex items-center gap-3 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+                <div className={`flex items-center gap-3`}>
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-orange/20 to-brand-pink/20 flex items-center justify-center border border-brand-orange/20 flex-shrink-0">
                     <svg className="w-6 h-6 text-brand-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -50,11 +50,11 @@ export default function Vision2030() {
                   </div>
                   <h4 className="text-white font-semibold text-lg">{t('visionFeature1Title')}</h4>
                 </div>
-                <p className={`text-sm text-gray-400 ${lang === 'ar' ? 'pr-15' : 'pl-15'}`}>{t('visionFeature1Desc')}</p>
+                <p className={`text-sm text-gray-400 ${lang === 'ar' ? 'pr-15 text-right' : 'pl-15 text-left'}`}>{t('visionFeature1Desc')}</p>
               </div>
               
               <div className="flex flex-col gap-3">
-                <div className={`flex items-center gap-3 ${lang === 'ar' ? 'flex-row-reverse' : ''}`}>
+                <div className={`flex items-center gap-3`}>
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-orange/20 to-brand-pink/20 flex items-center justify-center border border-brand-orange/20 flex-shrink-0">
                     <svg className="w-6 h-6 text-brand-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -62,7 +62,7 @@ export default function Vision2030() {
                   </div>
                   <h4 className="text-white font-semibold text-lg">{t('visionFeature2Title')}</h4>
                 </div>
-                <p className={`text-sm text-gray-400 ${lang === 'ar' ? 'pr-15' : 'pl-15'}`}>{t('visionFeature2Desc')}</p>
+                <p className={`text-sm text-gray-400 ${lang === 'ar' ? 'pr-15 text-right' : 'pl-15 text-left'}`}>{t('visionFeature2Desc')}</p>
               </div>
             </div>
 
