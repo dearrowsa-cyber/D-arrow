@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ArrowRight, Upload, X, Save } from 'lucide-react';
+import { ArrowRight, Upload, X, Save, Tag } from 'lucide-react';
 import Link from 'next/link';
 import RichTextEditor from '@/components/admin/RichTextEditor';
 
@@ -35,8 +35,10 @@ export default function EditPostPage() {
     categoryAr: '',
     author: 'D-Arrow',
     imageUrl: '',
+    tags: [] as string[],
     status: 'published',
   });
+  const [tagInput, setTagInput] = useState('');
 
   useEffect(() => {
     fetchPost();
@@ -61,6 +63,7 @@ export default function EditPostPage() {
           categoryAr: post.categoryAr || '',
           author: post.author || 'D-Arrow',
           imageUrl: post.imageUrl || '',
+          tags: Array.isArray(post.tags) ? post.tags : (post.tags ? JSON.parse(post.tags) : []),
           status: post.status || 'published',
         });
       } else {
@@ -332,6 +335,66 @@ export default function EditPostPage() {
               <label className="admin-label">الكاتب</label>
               <input className="admin-input" value={form.author} onChange={e => updateField('author', e.target.value)} />
             </div>
+            {/* Tags */}
+            <div style={{ marginBottom: 16 }}>
+              <label className="admin-label"><Tag size={14} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: 6 }} />الوسوم (Tags)</label>
+              <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+                <input
+                  className="admin-input"
+                  placeholder="أضف وسم..."
+                  value={tagInput}
+                  onChange={e => setTagInput(e.target.value)}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      const tag = tagInput.trim();
+                      if (tag && !form.tags.includes(tag)) {
+                        setForm(prev => ({ ...prev, tags: [...prev.tags, tag] }));
+                      }
+                      setTagInput('');
+                    }
+                  }}
+                  dir="auto"
+                  style={{ flex: 1 }}
+                />
+                <button
+                  type="button"
+                  className="admin-btn admin-btn-sm"
+                  style={{ background: 'rgba(255,77,109,0.15)', color: '#FF4D6D', border: '1px solid rgba(255,77,109,0.3)', padding: '6px 12px', flexShrink: 0 }}
+                  onClick={() => {
+                    const tag = tagInput.trim();
+                    if (tag && !form.tags.includes(tag)) {
+                      setForm(prev => ({ ...prev, tags: [...prev.tags, tag] }));
+                    }
+                    setTagInput('');
+                  }}
+                >
+                  +
+                </button>
+              </div>
+              {form.tags.length > 0 && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {form.tags.map((tag, i) => (
+                    <span key={i} style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 4,
+                      background: 'linear-gradient(135deg, rgba(255,77,109,0.15), rgba(255,154,60,0.1))',
+                      border: '1px solid rgba(255,77,109,0.25)',
+                      color: '#FF9A3C', padding: '4px 10px', borderRadius: 20,
+                      fontSize: 13, fontWeight: 500,
+                    }}>
+                      {tag}
+                      <button
+                        onClick={() => setForm(prev => ({ ...prev, tags: prev.tags.filter((_, idx) => idx !== i) }))}
+                        style={{ background: 'none', border: 'none', color: '#FF4D6D', cursor: 'pointer', padding: 0, lineHeight: 1, fontSize: 16 }}
+                      >
+                        ×
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+
             <div>
               <label className="admin-label">الحالة</label>
               <select className="admin-select" value={form.status} onChange={e => updateField('status', e.target.value)}>

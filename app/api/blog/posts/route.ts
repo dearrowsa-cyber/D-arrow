@@ -4,9 +4,15 @@ import prisma from '@/lib/prisma';
 // Get all blog posts
 export async function GET(req: NextRequest) {
   try {
-    const posts = await prisma.blogPost.findMany({
+    const rawPosts = await prisma.blogPost.findMany({
       orderBy: { createdAt: 'desc' },
     });
+
+    // Parse tags JSON string to array
+    const posts = rawPosts.map(post => ({
+      ...post,
+      tags: post.tags ? JSON.parse(post.tags) : [],
+    }));
     
     return NextResponse.json({
       success: true,
@@ -54,6 +60,7 @@ export async function POST(req: NextRequest) {
         time: newPost.time || new Date().toTimeString().split(' ')[0],
         readTime: newPost.readTime || Math.ceil(((newPost.content || newPost.contentAr || '').split(' ').length) / 200),
         imageUrl: newPost.imageUrl || null,
+        tags: newPost.tags ? JSON.stringify(newPost.tags) : null,
         status: newPost.status || 'published',
       }
     });
@@ -83,6 +90,11 @@ export async function PUT(req: NextRequest) {
 
     // Remove id from updates object as it shouldn't be updated
     const { id, createdAt, updatedAt, ...updateData } = updates;
+
+    // Serialize tags array to JSON string if present
+    if (updateData.tags && Array.isArray(updateData.tags)) {
+      updateData.tags = JSON.stringify(updateData.tags);
+    }
 
     const post = await prisma.blogPost.update({
       where: { id: updates.id },

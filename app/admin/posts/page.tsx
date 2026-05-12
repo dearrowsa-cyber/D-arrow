@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { Plus, Search, Trash2, Edit, Eye, FileText } from 'lucide-react';
+import { Plus, Search, Trash2, Edit, Eye, FileText, Tag } from 'lucide-react';
 
 interface Post {
   id: string;
@@ -15,6 +15,7 @@ interface Post {
   author: string;
   readTime: number;
   imageUrl?: string;
+  tags?: string[];
 }
 
 export default function PostsListPage() {
@@ -24,6 +25,7 @@ export default function PostsListPage() {
   const [search, setSearch] = useState('');
   const [filterCategory, setFilterCategory] = useState('all');
   const [filterStatus, setFilterStatus] = useState<string>(searchParams.get('status') || 'all');
+  const [filterTag, setFilterTag] = useState('all');
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
 
@@ -70,11 +72,14 @@ export default function PostsListPage() {
 
   const categories = ['all', ...new Set(posts.map(p => p.category))];
 
+  const allTags = Array.from(new Set(posts.flatMap(p => p.tags || [])));
+
   const filteredPosts = posts.filter(p => {
     const matchSearch = (p.title + (p.titleAr || '')).toLowerCase().includes(search.toLowerCase());
     const matchCategory = filterCategory === 'all' || p.category === filterCategory;
     const matchStatus = filterStatus === 'all' || (filterStatus === 'draft' ? p.status === 'draft' : p.status !== 'draft');
-    return matchSearch && matchCategory && matchStatus;
+    const matchTag = filterTag === 'all' || (p.tags && p.tags.includes(filterTag));
+    return matchSearch && matchCategory && matchStatus && matchTag;
   });
 
   if (loading) {
@@ -160,6 +165,19 @@ export default function PostsListPage() {
               <option key={c} value={c}>{c}</option>
             ))}
           </select>
+          {allTags.length > 0 && (
+            <select
+              className="admin-select"
+              value={filterTag}
+              onChange={e => setFilterTag(e.target.value)}
+              style={{ width: 'auto', minWidth: 140 }}
+            >
+              <option value="all">كل الوسوم</option>
+              {allTags.map(tag => (
+                <option key={tag} value={tag}>{tag}</option>
+              ))}
+            </select>
+          )}
         </div>
       </div>
 
@@ -172,6 +190,7 @@ export default function PostsListPage() {
                 <th style={{ width: 50 }}></th>
                 <th>العنوان</th>
                 <th>الفئة</th>
+                <th>الوسوم</th>
                 <th>التاريخ</th>
                 <th>الكاتب</th>
                 <th>الحالة</th>
@@ -222,6 +241,22 @@ export default function PostsListPage() {
                     )}
                   </td>
                   <td><span className="admin-badge admin-badge-info">{post.category}</span></td>
+                  <td>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, maxWidth: 200 }}>
+                      {(post.tags && post.tags.length > 0) ? post.tags.map((tag, i) => (
+                        <span key={i} style={{
+                          background: 'linear-gradient(135deg, rgba(255,77,109,0.12), rgba(255,154,60,0.08))',
+                          border: '1px solid rgba(255,77,109,0.2)',
+                          color: '#FF9A3C', padding: '2px 8px', borderRadius: 12,
+                          fontSize: 11, fontWeight: 500, whiteSpace: 'nowrap',
+                        }}>
+                          {tag}
+                        </span>
+                      )) : (
+                        <span style={{ color: '#4B5563', fontSize: 12 }}>—</span>
+                      )}
+                    </div>
+                  </td>
                   <td style={{ color: '#9CA3AF', fontSize: 13 }}>{post.date}</td>
                   <td style={{ color: '#9CA3AF', fontSize: 13 }}>{post.author}</td>
                   <td>
