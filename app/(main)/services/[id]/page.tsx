@@ -414,7 +414,7 @@ export default function ServiceDetailsPage({ params }: { params: Promise<{ id: s
                     <div>
                       {desc ? (
                         <>
-                          <strong className="text-brand-orange block mb-1 text-lg">{title}:</strong>
+                          <strong className="brand-gradient-text block mb-1 text-xl">{title}:</strong>
                           <span className="text-gray-300 leading-relaxed block">{desc}</span>
                         </>
                       ) : (
@@ -434,7 +434,7 @@ export default function ServiceDetailsPage({ params }: { params: Promise<{ id: s
             viewport={{ once: true }}
             className="text-center mt-12 py-8 border-t border-white/10"
           >
-            <p className="text-xl md:text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-orange">
+            <p className="text-xl md:text-2xl font-bold brand-gradient-text">
               {content.footer}
             </p>
           </motion.div>
