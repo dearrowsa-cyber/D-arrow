@@ -480,8 +480,8 @@ export default function ServicesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -5, boxShadow: '0 10px 30px rgba(251, 146, 60, 0.2)' }}
-                className="p-6 border border-gray-800 rounded-lg text-center hover:border-amber-500/50 transition"
+                whileHover={{ y: -5, boxShadow: '0 10px 30px rgba(255, 77, 109, 0.2)' }}
+                className="p-6 border border-gray-800 rounded-lg text-center hover:border-brand-pink/50 transition"
               >
                 <motion.div
                   className="mb-3"
@@ -538,7 +538,7 @@ export default function ServicesPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link href="/pricing" className="border border-amber-500/50 hover:border-amber-500 text-amber-400 px-8 py-4 rounded-lg font-semibold text-lg transition inline-block text-center">
+              <Link href="/pricing" className="border border-brand-pink/50 hover:border-brand-pink text-brand-pink px-8 py-4 rounded-lg font-semibold text-lg transition inline-block text-center">
                 {t('viewPricing')}
               </Link>
             </motion.div>

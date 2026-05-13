@@ -132,7 +132,7 @@ export default function PricingCard({ title, titleKey, price, oldPrice, features
           className={styles.ctaButton}
           whileHover={{ 
             scale: 1.05,
-            boxShadow: '0 8px 20px rgba(251, 191, 36, 0.3)'
+            boxShadow: '0 8px 20px rgba(255, 77, 109, 0.3)'
           }}
           whileTap={{ scale: 0.98 }}
           transition={{ type: 'spring', stiffness: 400, damping: 17 }}

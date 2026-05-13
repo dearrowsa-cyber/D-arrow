@@ -161,7 +161,7 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
 
       {/* --- BOTTOM: TEXT CONTENT AREA --- */}
       <div className={`${styles.cardBody} flex flex-col flex-grow p-4 pt-9 md:p-6 md:pt-12 relative z-10 bg-[#0A0D1E]`}>
-        <motion.h3 variants={itemVariants} className="text-base md:text-xl font-bold text-white mb-1 md:mb-2 group-hover:text-amber-400 transition-colors duration-300">
+        <motion.h3 variants={itemVariants} className="text-base md:text-xl font-bold text-white mb-1 md:mb-2 group-hover:text-brand-pink transition-colors duration-300">
           {(service as any).title || t(service.titleKey)}
         </motion.h3>
 

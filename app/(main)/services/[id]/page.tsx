@@ -353,7 +353,7 @@ export default function ServiceDetailsPage({ params }: { params: Promise<{ id: s
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-200"
+            className="text-4xl md:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-brand-orange"
           >
             {content.headline}
           </motion.h1>
@@ -373,7 +373,7 @@ export default function ServiceDetailsPage({ params }: { params: Promise<{ id: s
       <div className="max-w-4xl mx-auto px-6 py-16">
         <Link 
           href="/services" 
-          className="inline-flex items-center gap-2 text-amber-500 hover:text-amber-400 mb-10 transition font-medium"
+          className="inline-flex items-center gap-2 text-brand-pink hover:text-brand-orange mb-10 transition font-medium"
         >
           {isArabic ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
           {t('backToServices') || (isArabic ? 'العودة إلى الخدمات' : 'Back to Services')}
@@ -407,14 +407,14 @@ export default function ServiceDetailsPage({ params }: { params: Promise<{ id: s
                 return (
                   <li key={idx} className="flex gap-4">
                     <div className="flex-shrink-0 mt-1">
-                      <div className="w-6 h-6 rounded-full bg-gradient-to-r from-amber-500 to-amber-300 flex items-center justify-center">
+                      <div className="w-6 h-6 rounded-full bg-gradient-to-r from-brand-pink to-brand-orange flex items-center justify-center">
                         <Check size={14} className="text-[#0A0D1E] font-bold" />
                       </div>
                     </div>
                     <div>
                       {desc ? (
                         <>
-                          <strong className="text-amber-400 block mb-1 text-lg">{title}:</strong>
+                          <strong className="text-brand-orange block mb-1 text-lg">{title}:</strong>
                           <span className="text-gray-300 leading-relaxed block">{desc}</span>
                         </>
                       ) : (

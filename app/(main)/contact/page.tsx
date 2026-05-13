@@ -217,12 +217,12 @@ ${formData.message || 'لا توجد رسالة'}`;
                 <div
                   key={index}
                   onClick={clickAction}
-                  className={`group p-6 border text-white border-brand-pink/30 rounded-xl !bg-[#14162E] hover:bg-gradient-to-br hover:from-[rgba(255,77,109,0.15)] hover:to-[rgba(255,77,109,0.05)] transition-all duration-300 hover:!border-brand-pink hover:shadow-[0_0_30px_rgba(255,77,109,0.3)] text-center transform hover:scale-105 hover:-translate-y-2 ${cursor}`}
+                  className={`group p-6 border text-white border-brand-pink/30 rounded-xl !bg-[#14162E] hover:bg-gradient-to-br hover:from-[rgba(255,77,109,0.15)] hover:to-[rgba(255,77,109,0.05)] transition-all duration-300 hover:!border-brand-pink hover:shadow-[0_8px_20px_rgba(255,77,109,0.3)] text-center transform hover:scale-105 hover:-translate-y-2 ${cursor}`}
                 >
                   <div className="inline-flex w-16 h-16 items-center justify-center mb-4 transition-all duration-300 group-hover:scale-110">
                     <Icon stroke="url(#brand-gradient)" className="w-10 h-10 transition-transform duration-300 group-hover:scale-110" />
                   </div>
-                  <h3 className="text-lg text-white font-semibold mb-2 group-hover:text-brand-pink transition-colors duration-300">{t(info.titleKey)}</h3>
+                  <h3 className="text-base md:text-xl font-bold text-white mb-1 md:mb-2 group-hover:text-brand-pink transition-colors duration-300">{t(info.titleKey)}</h3>
                   <p className="text-white font-medium mb-1 group-hover:text-brand-pink transition-colors duration-300" dir={info.titleKey === 'contactPhone' ? 'ltr' : 'auto'}><bdi>{info.content}</bdi></p>
                   <p className="text-sm text-gray-400 group-hover:text-white transition-colors duration-300">{t(info.subtextKey)}</p>
                 </div>
@@ -398,23 +398,23 @@ ${formData.message || 'لا توجد رسالة'}`;
                 <h3 className="text-2xl font-bold mb-4 text-black dark:text-white">{t('whyChooseUsTitle')}</h3>
                 <ul className="space-y-4 text-black dark:text-white">
                   <li className="flex gap-3 items-start">
-                    <span className="text-amber-500 font-bold mt-1">✓</span>
+                    <span className="text-brand-pink font-bold mt-1">✓</span>
                     <span className='text-white dark:text-white'>{t('feature_expertTeam_desc')}</span>
                   </li>
                   <li className="flex gap-3 items-start">
-                    <span className="text-amber-500 font-bold mt-1">✓</span>
+                    <span className="text-brand-pink font-bold mt-1">✓</span>
                     <span className='text-white'>{t('contactEmailSubtext')}</span>
                   </li>
                   <li className="flex gap-3 items-start">
-                    <span className="text-amber-500 font-bold mt-1">✓</span>
+                    <span className="text-brand-pink font-bold mt-1">✓</span>
                     <span className='text-white'>{t('feature_custom_desc')}</span>
                   </li>
                   <li className="flex gap-3 items-start">
-                    <span className="text-amber-500 font-bold mt-1">✓</span>
+                    <span className="text-brand-pink font-bold mt-1">✓</span>
                     <span className='text-white'>{t('transparentPricingText')}</span>
                   </li>
                   <li className="flex gap-3 items-start">
-                    <span className="text-amber-500 font-bold mt-1">✓</span>
+                    <span className="text-brand-pink font-bold mt-1">✓</span>
                     <span className='text-white'>{t('feature_proven_desc')}</span>
                   </li>
                 </ul>

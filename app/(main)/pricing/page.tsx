@@ -398,7 +398,7 @@ export default function PricingPage() {
           {/* Category selector (show only selected category) */}
           <div className="flex justify-center gap-4 mt-6 text-center">
             <motion.button
-              className={`px-4 sm:px-6 py-2 rounded-full  text-sm sm:text-base ${selectedCategory === 'marketing' ? 'bg-amber-400 text-black' : 'bg-gray-700 text-black'}`}
+              className={`px-4 sm:px-6 py-2 rounded-full  text-sm sm:text-base ${selectedCategory === 'marketing' ? 'bg-brand-pink text-white' : 'bg-gray-700 text-black'}`}
               onClick={() => setSelectedCategory('marketing')}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -407,7 +407,7 @@ export default function PricingPage() {
               {t('marketingPackages')}
             </motion.button>
             <motion.button
-              className={`px-4 sm:px-6 py-2 rounded-full  text-sm sm:text-base ${selectedCategory === 'development' ? 'bg-amber-400 text-black' : 'bg-gray-700 text-black'}`}
+              className={`px-4 sm:px-6 py-2 rounded-full  text-sm sm:text-base ${selectedCategory === 'development' ? 'bg-brand-pink text-white' : 'bg-gray-700 text-black'}`}
               onClick={() => setSelectedCategory('development')}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -486,7 +486,7 @@ export default function PricingPage() {
               { icon: '/icon/mainicons1/transparent10.png', titleKey: 'feature_revisions_title', descKey: 'feature_revisions_desc' },
               { icon: '/icon/update/premium-quality.png', titleKey: 'feature_premium_title', descKey: 'feature_premium_desc' },
             ].map((feature, i) => (
-              <div key={i} className="p-6 border border-gray-800 rounded-lg text-center hover:border-amber-500/50 transition">
+              <div key={i} className="p-6 border border-gray-800 rounded-lg text-center hover:border-brand-pink/50 transition">
                 <div className="mb-3"><img src={feature.icon} alt={t(feature.titleKey)} className={styles.iconImage} /></div>
                 <h3 className="font-semibold mb-2 text-white dark:text-white">{t(feature.titleKey)}</h3>
                 <p className="text-white dark:text-gray-400 text-sm">{t(feature.descKey)}</p>
@@ -503,10 +503,10 @@ export default function PricingPage() {
           
           <div className="space-y-6">
             {faqs.map((faq, index) => (
-              <details key={index} className="group p-6 border border-gray-800 rounded-lg hover:border-amber-500/50 transition cursor-pointer">
+              <details key={index} className="group p-6 border border-gray-800 rounded-lg hover:border-brand-pink/50 transition cursor-pointer">
                 <summary className="flex justify-between items-center font-semibold text-lg text-black dark:text-white">
                   <span className='text-white'>{faq.question}</span>
-                  <span className="text-amber-500 group-open:rotate-180 transition">▼</span>
+                  <span className="text-brand-pink group-open:rotate-180 transition">▼</span>
                 </summary>
                 <p className="text-white dark:text-gray-400 mt-4 leading-relaxed">{faq.answer}</p>
               </details>
@@ -537,7 +537,7 @@ export default function PricingPage() {
               whileTap={{ scale: 0.95 }}
               transition={{ type: 'spring', stiffness: 400, damping: 17 }}
             >
-              <Link href="/" className="border border-amber-500/50 hover:border-amber-500 text-amber-400 px-8 py-4 rounded-lg font-semibold text-lg transition inline-block text-center">
+              <Link href="/" className="border border-brand-pink/50 hover:border-brand-pink text-brand-pink px-8 py-4 rounded-lg font-semibold text-lg transition inline-block text-center">
                 {t('viewPortfolio')}
               </Link>
             </motion.div>
