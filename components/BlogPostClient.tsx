@@ -27,7 +27,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0e27] to-[#14162E] pt-32 pb-20">
-      <div className="container mx-auto px-4 md:px-6 lg:px-12 max-w-4xl" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+      <div className="container mx-auto px-4 md:px-6 lg:px-12 max-w-5xl" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
         
         {/* Back Button */}
         <Link href="/blog" className="inline-flex items-center gap-2 text-gray-400 hover:text-white mb-8 transition-colors">
@@ -47,7 +47,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
               </span>
             ))}
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
             {title}
           </h1>
           
