@@ -58,6 +58,11 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
     return new Date(dateStr).toLocaleDateString(lang === 'ar' ? 'ar-SA' : 'en-US', options);
   };
 
+  const stripHtml = (html: string) => {
+    if (!html) return '';
+    return html.replace(/<[^>]*>?/gm, '');
+  };
+
   const getDisplayText = (enText: string, arText: string | undefined) => {
     return lang === 'ar' ? (arText || enText) : enText;
   };
@@ -68,7 +73,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
         
         {/* Header Section */}
         <div className="mb-12 text-center" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
+          <h1 className="text-3xl md:text-5xl font-bold text-white mb-4">
             {t('blogTitle')}
           </h1>
           <p className="text-xl text-gray-400">
@@ -148,7 +153,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
 
                     {/* Excerpt */}
                     <p className="text-gray-400 text-sm mb-4 line-clamp-3">
-                      {getDisplayText(post.excerpt, post.excerptAr) || getDisplayText(post.content, post.contentAr).substring(0, 150) + '...'}
+                      {getDisplayText(post.excerpt, post.excerptAr) || stripHtml(getDisplayText(post.content, post.contentAr)).substring(0, 150) + '...'}
                     </p>
 
                     {/* Footer */}
