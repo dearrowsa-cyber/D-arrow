@@ -1,5 +1,5 @@
-
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* Gilroy Font Family - English Primary/Headlines */
 @font-face {
