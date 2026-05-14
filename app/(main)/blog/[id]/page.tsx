@@ -4,9 +4,10 @@ import BlogPostClient from '@/components/BlogPostClient';
 import { notFound } from 'next/navigation';
 
 // Generate dynamic SEO metadata for each blog post
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   try {
-    const post = await prisma.blogPost.findUnique({ where: { id: params.id } });
+    const { id } = await params;
+    const post = await prisma.blogPost.findUnique({ where: { id } });
     if (!post) return { title: 'مقال غير موجود | D Arrow' };
 
     const title = post.titleAr || post.title;
@@ -54,11 +55,12 @@ export async function generateMetadata({ params }: { params: { id: string } }): 
   }
 }
 
-export default async function BlogPostPage({ params }: { params: { id: string } }) {
+export default async function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
   let post: any = null;
 
   try {
-    const rawPost = await prisma.blogPost.findUnique({ where: { id: params.id } });
+    const { id } = await params;
+    const rawPost = await prisma.blogPost.findUnique({ where: { id } });
     if (!rawPost) return notFound();
 
     post = {
