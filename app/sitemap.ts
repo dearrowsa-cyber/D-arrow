@@ -6,7 +6,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
 
   const routes: MetadataRoute.Sitemap = [
-    { url: baseUrl, lastModified, changeFrequency: 'daily', priority: 1 },
+    { url: `${baseUrl}/`, lastModified, changeFrequency: 'daily', priority: 1 },
     { url: `${baseUrl}/services`, lastModified, changeFrequency: 'weekly', priority: 0.9 },
     { url: `${baseUrl}/pricing`, lastModified, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/why-us`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
@@ -28,7 +28,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const postPath = post.slug
         ? (post.slug.startsWith('/') ? post.slug : `/${post.slug}`)
         : `/blog/${post.id}`;
-      const fullUrl = `${baseUrl}${postPath}`;
+      // Encode URI to handle Arabic characters and spaces
+      const fullUrl = encodeURI(`${baseUrl}${postPath}`);
       // Avoid duplicates
       if (!routes.find(r => r.url === fullUrl)) {
         routes.push({
@@ -50,7 +51,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
     
     seoEntries.forEach(entry => {
-      const fullUrl = `${baseUrl}${entry.slug.startsWith('/') ? entry.slug : '/' + entry.slug}`;
+      // Avoid duplication of the root URL from SeoMeta
+      if (entry.slug === '' || entry.slug === '/') return;
+      
+      const fullUrl = encodeURI(`${baseUrl}${entry.slug.startsWith('/') ? entry.slug : '/' + entry.slug}`);
       const exists = routes.find(r => r.url === fullUrl);
       if (!exists) {
         routes.push({
