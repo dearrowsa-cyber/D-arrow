@@ -37,6 +37,8 @@ export default function EditPostPage() {
     imageUrl: '',
     tags: [] as string[],
     status: 'published',
+    date: '',
+    time: '',
   });
   const [tagInput, setTagInput] = useState('');
 
@@ -65,6 +67,8 @@ export default function EditPostPage() {
           imageUrl: post.imageUrl || '',
           tags: Array.isArray(post.tags) ? post.tags : (post.tags ? JSON.parse(post.tags) : []),
           status: post.status || 'published',
+          date: post.date || '',
+          time: post.time ? post.time.slice(0, 5) : '',
         });
       } else {
         showToast('المقال غير موجود', 'error');
@@ -334,6 +338,27 @@ export default function EditPostPage() {
             <div style={{ marginBottom: 16 }}>
               <label className="admin-label">الكاتب</label>
               <input className="admin-input" value={form.author} onChange={e => updateField('author', e.target.value)} />
+            </div>
+            
+            <div style={{ marginBottom: 16, display: 'flex', gap: 12 }}>
+              <div style={{ flex: 1 }}>
+                <label className="admin-label">تاريخ النشر</label>
+                <input
+                  type="date"
+                  className="admin-input"
+                  value={form.date}
+                  onChange={e => updateField('date', e.target.value)}
+                />
+              </div>
+              <div style={{ flex: 1 }}>
+                <label className="admin-label">وقت النشر</label>
+                <input
+                  type="time"
+                  className="admin-input"
+                  value={form.time}
+                  onChange={e => updateField('time', e.target.value)}
+                />
+              </div>
             </div>
             {/* Tags */}
             <div style={{ marginBottom: 16 }}>

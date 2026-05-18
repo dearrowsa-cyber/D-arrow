@@ -34,6 +34,8 @@ export default function NewPostPage() {
     imageUrl: '',
     tags: [] as string[],
     status: 'published',
+    date: new Date().toISOString().split('T')[0],
+    time: new Date().toTimeString().split(' ')[0].slice(0, 5),
   });
   const [tagInput, setTagInput] = useState('');
 
@@ -370,6 +372,27 @@ export default function NewPostPage() {
                 value={form.author}
                 onChange={e => updateField('author', e.target.value)}
               />
+            </div>
+
+            <div style={{ marginBottom: 16, display: 'flex', gap: 12 }}>
+              <div style={{ flex: 1 }}>
+                <label className="admin-label">تاريخ النشر</label>
+                <input
+                  type="date"
+                  className="admin-input"
+                  value={form.date}
+                  onChange={e => updateField('date', e.target.value)}
+                />
+              </div>
+              <div style={{ flex: 1 }}>
+                <label className="admin-label">وقت النشر</label>
+                <input
+                  type="time"
+                  className="admin-input"
+                  value={form.time}
+                  onChange={e => updateField('time', e.target.value)}
+                />
+              </div>
             </div>
 
             {/* Tags */}
