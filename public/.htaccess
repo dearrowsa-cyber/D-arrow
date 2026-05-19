@@ -66,6 +66,14 @@
     Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 </IfModule>
 
+# Do not apply security headers to sitemap and robots.txt to prevent Google Search Console HTML reading errors
+<FilesMatch "^(sitemap\.xml|robots\.txt)$">
+    Header unset X-Content-Type-Options
+    Header unset Content-Security-Policy
+    Header unset X-Frame-Options
+    Header unset X-XSS-Protection
+</FilesMatch>
+
 # ============================================================================
 # Rewrite Rules (for Next.js static export)
 # ============================================================================
