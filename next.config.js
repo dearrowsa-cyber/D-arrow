@@ -49,9 +49,9 @@ const nextConfig = {
   
   // LiteSpeed-style aggressive caching headers
   headers: async () => [
-    // Security headers for all routes
+    // Security headers for all routes (exclude sitemap.xml and robots.txt)
     {
-      source: '/:path*',
+      source: '/((?!sitemap\\.xml|robots\\.txt).*)',
       headers: [
         { key: 'X-Content-Type-Options', value: 'nosniff' },
         { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
