@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { FileText, Globe, DollarSign, Plus, TrendingUp, Clock, BarChart3, Activity } from 'lucide-react';
+import { FileText, Globe, DollarSign, Plus, TrendingUp, Clock, BarChart3, Activity, ShoppingBag, Package, Star } from 'lucide-react';
 
 interface DashboardStats {
   totalPosts: number;
@@ -15,7 +15,12 @@ export default function AdminDashboardPage() {
   const [stats, setStats] = useState<DashboardStats>({
     totalPosts: 0, publishedPosts: 0, draftPosts: 0, lastUpdated: null,
   });
-  const [analytics, setAnalytics] = useState<any>({ totalVisitors: 0, todayViews: 0, topPages: [] });
+  const [analytics, setAnalytics] = useState<any>({
+    totalVisitors: 0,
+    todayViews: 0,
+    topPages: [],
+    store: { totalOrders: 0, totalRevenue: 0, totalProducts: 0, totalCoupons: 0, pendingReviews: 0 }
+  });
   const [recentPosts, setRecentPosts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -191,6 +196,59 @@ export default function AdminDashboardPage() {
             </div>
             <h4 style={{ color: '#E6E6EA', fontSize: 16, margin: '0 0 4px' }}>إدارة الأسعار</h4>
             <p style={{ color: '#6B7280', fontSize: 13, margin: 0 }}>تعديل باقات الأسعار</p>
+          </div>
+        </Link>
+      </div>
+
+      {/* E-Commerce Store Stats */}
+      <h3 style={{ fontSize: 18, fontWeight: 600, color: '#E6E6EA', margin: '32px 0 16px' }}>إحصائيات المتجر الإلكتروني</h3>
+      <div className="admin-grid-4" style={{ marginBottom: 32 }}>
+        <div className="admin-stat-card" style={{ background: 'rgba(34,197,94,0.03)' }}>
+          <div className="admin-stat-icon green">
+            <DollarSign size={24} />
+          </div>
+          <div className="admin-stat-value" style={{ color: '#22C55E' }}>
+            {analytics.store?.totalRevenue?.toFixed(0) || 0} <span style={{ fontSize: 14, fontWeight: 500 }}>ر.س</span>
+          </div>
+          <div className="admin-stat-label">المبيعات المدفوعة</div>
+        </div>
+
+        <Link href="/admin/store/orders" style={{ textDecoration: 'none' }}>
+          <div className="admin-stat-card" style={{ cursor: 'pointer', background: 'rgba(59,130,246,0.03)' }}>
+            <div className="admin-stat-icon blue">
+              <ShoppingBag size={24} />
+            </div>
+            <div className="admin-stat-value">{analytics.store?.totalOrders || 0}</div>
+            <div className="admin-stat-label">الطلبات الواردة</div>
+          </div>
+        </Link>
+
+        <Link href="/admin/store/products" style={{ textDecoration: 'none' }}>
+          <div className="admin-stat-card" style={{ cursor: 'pointer', background: 'rgba(255,77,109,0.03)' }}>
+            <div className="admin-stat-icon pink">
+              <Package size={24} />
+            </div>
+            <div className="admin-stat-value">{analytics.store?.totalProducts || 0}</div>
+            <div className="admin-stat-label">المنتجات المعروضة</div>
+          </div>
+        </Link>
+
+        <Link href={analytics.store?.pendingReviews > 0 ? '/admin/store/reviews' : '/admin/store/coupons'} style={{ textDecoration: 'none' }}>
+          <div className="admin-stat-card" style={{ 
+            cursor: 'pointer', 
+            background: analytics.store?.pendingReviews > 0 ? 'rgba(234,179,8,0.05)' : 'rgba(255,154,60,0.03)',
+            border: analytics.store?.pendingReviews > 0 ? '1px solid rgba(234,179,8,0.3)' : undefined
+          }}>
+            <div className={`admin-stat-icon ${analytics.store?.pendingReviews > 0 ? 'warning' : 'orange'}`} style={{
+              background: analytics.store?.pendingReviews > 0 ? 'rgba(234,179,8,0.15)' : undefined,
+              color: analytics.store?.pendingReviews > 0 ? '#EAB308' : undefined
+            }}>
+              <Star size={24} />
+            </div>
+            <div className="admin-stat-value">{analytics.store?.pendingReviews > 0 ? analytics.store.pendingReviews : (analytics.store?.totalCoupons || 0)}</div>
+            <div className="admin-stat-label">
+              {analytics.store?.pendingReviews > 0 ? 'تقييمات بانتظار الموافقة ⚠️' : 'الكوبونات النشطة'}
+            </div>
           </div>
         </Link>
       </div>

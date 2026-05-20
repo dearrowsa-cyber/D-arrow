@@ -7,10 +7,17 @@ export default function RedirectsManager() {
   const [redirects, setRedirects] = useState<any[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ sourceUrl: '', destinationUrl: '', type: 301, enabled: true });
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
 
   useEffect(() => {
     fetchRedirects();
   }, []);
+
+  const showToast = (msg: string, type: string) => {
+    setToast({ msg, type });
+    setTimeout(() => setToast(null), 3000);
+  };
 
   const fetchRedirects = async () => {
     const res = await fetch('/api/admin/seo/redirects', {
@@ -21,29 +28,68 @@ export default function RedirectsManager() {
   };
 
   const handleSave = async () => {
-    await fetch('/api/admin/seo/redirects', {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('admin_token')}` 
-      },
-      body: JSON.stringify(formData)
-    });
-    setShowModal(false);
-    fetchRedirects();
+    try {
+      const res = await fetch('/api/admin/seo/redirects', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('admin_token')}` 
+        },
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('تم حفظ إعادة التوجيه بنجاح', 'success');
+        setShowModal(false);
+        setFormData({ sourceUrl: '', destinationUrl: '', type: 301, enabled: true });
+        fetchRedirects();
+      } else {
+        showToast(data.error || 'فشل حفظ إعادة التوجيه', 'error');
+      }
+    } catch {
+      showToast('حدث خطأ أثناء حفظ التوجيه', 'error');
+    }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Delete redirect?')) return;
-    await fetch(`/api/admin/seo/redirects/${id}`, {
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` }
-    });
-    fetchRedirects();
+  const handleDelete = async () => {
+    if (!deleteId) return;
+    try {
+      const res = await fetch(`/api/admin/seo/redirects/${deleteId}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` }
+      });
+      const data = await res.json();
+      if (data.success) {
+        setRedirects(prev => prev.filter(r => r.id !== deleteId));
+        showToast('تم حذف إعادة التوجيه بنجاح', 'success');
+      } else {
+        showToast('فشل حذف إعادة التوجيه', 'error');
+      }
+    } catch {
+      showToast('حدث خطأ أثناء حذف التوجيه', 'error');
+    }
+    setDeleteId(null);
   };
 
   return (
     <div className="admin-content">
+      {toast && <div className={`admin-toast admin-toast-${toast.type}`}>{toast.msg}</div>}
+
+      {deleteId && (
+        <div className="admin-overlay" style={{ zIndex: 9999 }}>
+          <div className="admin-dialog">
+            <h3 style={{ color: '#E6E6EA', margin: '0 0 12px' }}>هل أنت متأكد؟</h3>
+            <p style={{ color: '#9CA3AF', margin: '0 0 24px', fontSize: 14 }}>
+              سيتم حذف رابط إعادة التوجيه هذا نهائياً.
+            </p>
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+              <button className="admin-btn admin-btn-ghost" onClick={() => setDeleteId(null)}>إلغاء</button>
+              <button className="admin-btn admin-btn-danger" onClick={handleDelete}>تأكيد الحذف</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <h2>إدارة إعادة التوجيه (Redirects)</h2>
         <button className="admin-btn admin-btn-primary" onClick={() => setShowModal(true)}>
@@ -76,7 +122,7 @@ export default function RedirectsManager() {
                 </td>
                 <td>{r.hitCount}</td>
                 <td>
-                  <button onClick={() => handleDelete(r.id)} className="admin-btn admin-btn-danger admin-btn-sm">
+                  <button onClick={() => setDeleteId(r.id)} className="admin-btn admin-btn-danger admin-btn-sm">
                     <Trash2 size={14} />
                   </button>
                 </td>

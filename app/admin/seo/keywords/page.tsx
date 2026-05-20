@@ -10,10 +10,17 @@ export default function KeywordRankTracker() {
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
   const [showImport, setShowImport] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
   
   const [filterGroup, setFilterGroup] = useState('');
   const [filterStarred, setFilterStarred] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+
+  const showToast = (msg: string, type: string) => {
+    setToast({ msg, type });
+    setTimeout(() => setToast(null), 3000);
+  };
 
   const fetchKeywords = () => {
     const params = new URLSearchParams();
@@ -44,13 +51,13 @@ export default function KeywordRankTracker() {
       });
       const result = await res.json();
       if (result.success) {
-        alert(`تم مزامنة ${result.synced} كلمة بنجاح!`);
+        showToast(`تم مزامنة ${result.synced} كلمة بنجاح!`, 'success');
         fetchKeywords();
       } else {
-        alert(result.error || 'فشلت المزامنة');
+        showToast(result.error || 'فشلت المزامنة', 'error');
       }
     } catch (e) {
-      alert('خطأ أثناء المزامنة');
+      showToast('خطأ أثناء المزامنة', 'error');
     }
     setSyncing(false);
   };
@@ -67,19 +74,47 @@ export default function KeywordRankTracker() {
     fetchKeywords();
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('هل أنت متأكد من حذف هذه الكلمة؟')) return;
-    await fetch(`/api/admin/seo/keywords/${id}`, {
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` }
-    });
-    fetchKeywords();
+  const handleDelete = async () => {
+    if (!deleteId) return;
+    try {
+      const res = await fetch(`/api/admin/seo/keywords/${deleteId}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` }
+      });
+      const result = await res.json();
+      if (result.success) {
+        showToast('تم حذف الكلمة بنجاح', 'success');
+        fetchKeywords();
+      } else {
+        showToast(result.error || 'فشل حذف الكلمة', 'error');
+      }
+    } catch {
+      showToast('حدث خطأ أثناء حذف الكلمة', 'error');
+    }
+    setDeleteId(null);
   };
 
   if (loading) return <div className="admin-content">جاري تحميل المتتبع...</div>;
 
   return (
     <div className="admin-content">
+      {toast && <div className={`admin-toast admin-toast-${toast.type}`}>{toast.msg}</div>}
+
+      {deleteId && (
+        <div className="admin-overlay" style={{ zIndex: 9999 }}>
+          <div className="admin-dialog">
+            <h3 style={{ color: '#E6E6EA', margin: '0 0 12px' }}>هل أنت متأكد؟</h3>
+            <p style={{ color: '#9CA3AF', margin: '0 0 24px', fontSize: 14 }}>
+              سيتم حذف الكلمة المفتاحية المستهدفة هذه نهائياً من قائمة التتبع.
+            </p>
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+              <button className="admin-btn admin-btn-ghost" onClick={() => setDeleteId(null)}>إلغاء</button>
+              <button className="admin-btn admin-btn-danger" onClick={handleDelete}>تأكيد الحذف</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <div>
           <h2 style={{ margin: '0 0 8px' }}>متتبع الكلمات المفتاحية (Rank Tracker)</h2>
@@ -201,7 +236,7 @@ export default function KeywordRankTracker() {
                     <Link href={`/admin/seo/keywords/${kw.id}`} className="admin-btn admin-btn-secondary admin-btn-sm">
                       <Activity size={14} /> تفاصيل
                     </Link>
-                    <button onClick={() => handleDelete(kw.id)} className="admin-btn admin-btn-danger admin-btn-sm">
+                    <button onClick={() => setDeleteId(kw.id)} className="admin-btn admin-btn-danger admin-btn-sm">
                       <Trash2 size={14} />
                     </button>
                   </div>

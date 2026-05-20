@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Eye, ChevronDown } from 'lucide-react';
 
 const STATUS_MAP: Record<string, { label: string; class: string }> = {
@@ -106,8 +106,8 @@ export default function AdminOrdersPage() {
             </thead>
             <tbody>
               {orders.map(order => (
-                <>
-                  <tr key={order.id}>
+                <React.Fragment key={order.id}>
+                  <tr>
                     <td style={{ fontWeight: 700, color: '#FF4D6D' }}>{order.orderNumber}</td>
                     <td>
                       <div style={{ fontWeight: 600, color: '#E6E6EA' }}>{order.customerName}</div>
@@ -146,7 +146,7 @@ export default function AdminOrdersPage() {
                     </td>
                   </tr>
                   {expandedId === order.id && (
-                    <tr key={`${order.id}-details`}>
+                    <tr>
                       <td colSpan={8} style={{ background: 'rgba(11,13,31,0.4)', padding: 20 }}>
                         <h4 style={{ color: '#E6E6EA', margin: '0 0 12px', fontSize: 14 }}>تفاصيل الطلب</h4>
                         {order.items?.map((item: any, i: number) => (
@@ -160,7 +160,7 @@ export default function AdminOrdersPage() {
                       </td>
                     </tr>
                   )}
-                </>
+                </React.Fragment>
               ))}
             </tbody>
           </table>

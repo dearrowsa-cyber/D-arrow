@@ -13,6 +13,12 @@ export default function SeoMetaEditor({ params }: { params: Promise<{ id: string
   const [analysisResult, setAnalysisResult] = useState<any>(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
+
+  const showToast = (msg: string, type: string) => {
+    setToast({ msg, type });
+    setTimeout(() => setToast(null), 3000);
+  };
 
   useEffect(() => {
     if (!isNew) {
@@ -33,23 +39,30 @@ export default function SeoMetaEditor({ params }: { params: Promise<{ id: string
     const url = isNew ? '/api/admin/seo/meta' : `/api/admin/seo/meta/${id}`;
     const method = isNew ? 'POST' : 'PUT';
 
-    const res = await fetch(url, {
-      method,
-      headers: { 
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('admin_token')}` 
-      },
-      body: JSON.stringify(data)
-    });
-    
-    const result = await res.json();
-    setSaving(false);
+    try {
+      const res = await fetch(url, {
+        method,
+        headers: { 
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('admin_token')}` 
+        },
+        body: JSON.stringify(data)
+      });
+      
+      const result = await res.json();
+      setSaving(false);
 
-    if (result.success) {
-      alert('Saved successfully!');
-      if (isNew) router.push('/admin/seo/meta');
-    } else {
-      alert('Error: ' + result.error);
+      if (result.success) {
+        showToast('تم حفظ التغييرات بنجاح!', 'success');
+        if (isNew) {
+          setTimeout(() => router.push('/admin/seo/meta'), 1000);
+        }
+      } else {
+        showToast('خطأ: ' + result.error, 'error');
+      }
+    } catch {
+      setSaving(false);
+      showToast('حدث خطأ أثناء الحفظ', 'error');
     }
   };
 
@@ -83,6 +96,8 @@ export default function SeoMetaEditor({ params }: { params: Promise<{ id: string
 
   return (
     <div className="admin-content">
+      {toast && <div className={`admin-toast admin-toast-${toast.type}`}>{toast.msg}</div>}
+
       <h2 style={{ marginBottom: '32px' }}>{isNew ? 'إضافة بيانات سيو' : 'تعديل بيانات السيو'}</h2>
       
       <div className="admin-grid-2" style={{ gridTemplateColumns: '2fr 1fr' }}>

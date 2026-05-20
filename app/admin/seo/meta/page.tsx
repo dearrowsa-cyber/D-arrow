@@ -8,10 +8,17 @@ export default function SeoMetaList() {
   const [items, setItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
 
   useEffect(() => {
     fetchItems();
   }, []);
+
+  const showToast = (msg: string, type: string) => {
+    setToast({ msg, type });
+    setTimeout(() => setToast(null), 3000);
+  };
 
   const fetchItems = () => {
     fetch('/api/admin/seo/meta', {
@@ -19,7 +26,6 @@ export default function SeoMetaList() {
     })
       .then(res => res.json())
       .then(res => {
-        // Handle both standard array response and `{success: true, data: []}` structure
         if (Array.isArray(res)) {
           setItems(res);
         } else if (res.success) {
@@ -44,30 +50,58 @@ export default function SeoMetaList() {
       });
       const data = await res.json();
       if (data.success) {
-        alert(`تم مزامنة ${data.syncedCount} صفحة بنجاح!`);
+        showToast(`تم مزامنة ${data.syncedCount} صفحة بنجاح!`, 'success');
         fetchItems();
       } else {
-        alert('فشلت عملية المزامنة.');
+        showToast('فشلت عملية المزامنة.', 'error');
       }
     } catch (e) {
-      alert('خطأ أثناء المزامنة.');
+      showToast('خطأ أثناء المزامنة.', 'error');
     }
     setSyncing(false);
   };
 
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure?')) return;
-    await fetch(`/api/admin/seo/meta/${id}`, {
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` }
-    });
-    fetchItems();
+  const handleDelete = async () => {
+    if (!deleteId) return;
+    try {
+      const res = await fetch(`/api/admin/seo/meta/${deleteId}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` }
+      });
+      const data = await res.json();
+      if (data.success) {
+        setItems(prev => prev.filter(item => item.id !== deleteId));
+        showToast('تم حذف السجل بنجاح', 'success');
+      } else {
+        showToast('فشل في حذف السجل', 'error');
+      }
+    } catch {
+      showToast('حدث خطأ أثناء الحذف', 'error');
+    }
+    setDeleteId(null);
   };
 
   if (loading) return <div className="admin-content">Loading...</div>;
 
   return (
     <div className="admin-content">
+      {toast && <div className={`admin-toast admin-toast-${toast.type}`}>{toast.msg}</div>}
+
+      {deleteId && (
+        <div className="admin-modal-backdrop">
+          <div className="admin-modal">
+            <h3 style={{ color: '#E6E6EA', margin: '0 0 12px' }}>هل أنت متأكد؟</h3>
+            <p style={{ color: '#9CA3AF', margin: '0 0 24px', fontSize: 14 }}>
+              سيتم حذف سجل بيانات السيو هذا نهائياً. لا يمكن التراجع عن هذا الإجراء.
+            </p>
+            <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
+              <button className="admin-btn admin-btn-ghost" onClick={() => setDeleteId(null)}>إلغاء</button>
+              <button className="admin-btn admin-btn-danger" onClick={handleDelete}>تأكيد الحذف</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
         <h2>بيانات السيو (SEO Meta)</h2>
         <div style={{ display: 'flex', gap: '12px' }}>
@@ -118,7 +152,7 @@ export default function SeoMetaList() {
                       <Link href={`/admin/seo/meta/${item.id}`} className="admin-btn admin-btn-secondary admin-btn-sm">
                         <Edit2 size={14} />
                       </Link>
-                      <button onClick={() => handleDelete(item.id)} className="admin-btn admin-btn-danger admin-btn-sm">
+                      <button onClick={() => setDeleteId(item.id)} className="admin-btn admin-btn-danger admin-btn-sm">
                         <Trash2 size={14} />
                       </button>
                     </div>
