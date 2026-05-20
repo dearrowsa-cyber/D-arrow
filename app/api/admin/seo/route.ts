@@ -24,8 +24,8 @@ export async function POST(req: NextRequest) {
     }
 
     const apiKey = process.env.ZAI_API_KEY;
-    if (!apiKey) {
-      return NextResponse.json({ error: 'ZAI_API_KEY is missing' }, { status: 500 });
+    if (!apiKey || apiKey === 'YOUR_API_KEY_HERE' || apiKey.trim() === '') {
+      return NextResponse.json({ error: 'ZAI_API_KEY is missing or not configured' }, { status: 500 });
     }
 
     const systemPrompt = language === 'ar' 

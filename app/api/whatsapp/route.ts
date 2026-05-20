@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
     const apiKey = process.env.ZAI_API_KEY;
     let replyText = 'عذراً، حصل خطأ تقني. تقدر تتواصل معنا على info@d-arrow.com أو تزور موقعنا d-arrow.com 🙏';
 
-    if (apiKey) {
+    if (apiKey && apiKey !== 'YOUR_API_KEY_HERE' && apiKey.trim() !== '') {
       try {
         const controller = new AbortController();
         const timer = setTimeout(() => controller.abort(), 10000);
