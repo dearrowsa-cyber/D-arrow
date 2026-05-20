@@ -192,7 +192,7 @@ export default function SeoDashboard() {
 
         {aiAnalysis && (
           <div style={{ background: '#111827', padding: '24px', borderRadius: '8px', marginBottom: '24px', borderLeft: '4px solid #8B5CF6' }}>
-            <div className="ai-markdown" dangerouslySetInnerHTML={{ __html: aiAnalysis.replace(/\n/g, '<br/>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+            <div className="ai-markdown" dangerouslySetInnerHTML={{ __html: renderMarkdown(aiAnalysis) }} />
           </div>
         )}
 
@@ -260,6 +260,36 @@ export default function SeoDashboard() {
       `}</style>
     </div>
   );
+}
+
+function renderMarkdown(text: string): string {
+  let html = text;
+  
+  // Replace headers (###, ##)
+  html = html.replace(/^### (.*?)$/gm, '<h4 style="color: #E5E7EB; margin-top: 16px; margin-bottom: 8px; font-weight: 600;">$1</h4>');
+  html = html.replace(/^## (.*?)$/gm, '<h3 style="color: #F3F4F6; margin-top: 20px; margin-bottom: 10px; font-weight: 700;">$1</h3>');
+  
+  // Replace list items starting with '-' or '*'
+  html = html.replace(/^\s*[-*]\s+(.*?)$/gm, '<li style="margin-left: 20px; margin-bottom: 6px; list-style-type: disc; color: #D1D5DB;">$1</li>');
+  
+  // Replace bold text (**text**)
+  html = html.replace(/\*\*(.*?)\*\*/g, '<strong style="color: #A78BFA; font-weight: bold;">$1</strong>');
+  
+  // Replace inline code (`code`)
+  html = html.replace(/`(.*?)`/g, '<code style="background: #1F2937; padding: 2px 6px; border-radius: 4px; color: #F472B6; font-family: monospace; font-size: 0.9em;">$1</code>');
+  
+  // Split into lines and wrap normal text paragraphs
+  const lines = html.split('\n');
+  const processedLines = lines.map(line => {
+    const trimmed = line.trim();
+    if (!trimmed) return '';
+    if (trimmed.startsWith('<h') || trimmed.startsWith('<li')) {
+      return trimmed;
+    }
+    return `<p style="margin-bottom: 12px; line-height: 1.6; color: #D1D5DB;">${trimmed}</p>`;
+  });
+  
+  return processedLines.filter(p => p !== '').join('');
 }
 
 function StarIcon(props: any) {
