@@ -182,13 +182,13 @@ export default function RootLayout({
               offers: {
                 '@type': 'AggregateOffer',
                 priceCurrency: 'SAR',
-                offerCount: '20+',
+                offerCount: 20,
                 url: 'https://d-arrow.com/pricing',
               },
               numberOfEmployees: {
                 '@type': 'QuantitativeValue',
-                minValue: '10',
-                maxValue: '50',
+                minValue: 10,
+                maxValue: 50,
               },
               knowsAbout: [
                 'Digital Marketing',
@@ -229,8 +229,8 @@ export default function RootLayout({
               },
               geo: {
                 '@type': 'GeoCoordinates',
-                latitude: '26.1889',
-                longitude: '49.5961',
+                latitude: 26.1889,
+                longitude: 49.5961,
               },
               openingHoursSpecification: {
                 '@type': 'OpeningHoursSpecification',
@@ -258,10 +258,10 @@ export default function RootLayout({
               ],
               aggregateRating: {
                 '@type': 'AggregateRating',
-                ratingValue: '4.8',
-                ratingCount: '500+',
-                bestRating: '5',
-                worstRating: '1',
+                ratingValue: 4.8,
+                ratingCount: 500,
+                bestRating: 5,
+                worstRating: 1,
               },
             }),
           }}
