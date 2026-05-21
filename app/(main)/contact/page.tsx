@@ -159,8 +159,8 @@ ${formData.message || 'لا توجد رسالة'}`;
             priceRange: '$$',
             aggregateRating: {
               '@type': 'AggregateRating',
-              ratingValue: '4.9',
-              reviewCount: '500',
+              ratingValue: 4.9,
+              reviewCount: 500,
             },
           }),
         }}

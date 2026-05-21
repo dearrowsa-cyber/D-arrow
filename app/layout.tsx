@@ -260,10 +260,10 @@ export default function RootLayout({
               ],
               aggregateRating: {
                 '@type': 'AggregateRating',
-                ratingValue: '4.8',
-                ratingCount: '500',
-                bestRating: '5',
-                worstRating: '1',
+                ratingValue: 4.8,
+                ratingCount: 500,
+                bestRating: 5,
+                worstRating: 1,
               },
             }),
           }}
