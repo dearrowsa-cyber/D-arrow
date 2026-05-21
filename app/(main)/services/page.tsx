@@ -335,7 +335,9 @@ export default function ServicesPage() {
             'offers': {
               '@type': 'AggregateOffer',
               'priceCurrency': 'SAR',
-              'offerCount': '16',
+              'offerCount': 16,
+              'lowPrice': 800,
+              'highPrice': 50000,
             },
           }),
         }}

@@ -183,6 +183,8 @@ export default function RootLayout({
                 '@type': 'AggregateOffer',
                 priceCurrency: 'SAR',
                 offerCount: 20,
+                lowPrice: 800,
+                highPrice: 50000,
                 url: 'https://d-arrow.com/pricing',
               },
               numberOfEmployees: {
