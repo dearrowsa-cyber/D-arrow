@@ -58,3 +58,5 @@ Thumbs.db
 /public/*.webm
 # Allow the hero video to be deployed
 !/public/main-video.mp4
+
+.vercel

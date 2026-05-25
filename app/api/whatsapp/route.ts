@@ -155,9 +155,7 @@ export async function POST(req: NextRequest) {
 // Log WhatsApp conversations via email
 async function logConversation(from: string, userMsg: string, botReply: string) {
   try {
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : 'http://localhost:3000';
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
 
     await fetch(`${baseUrl}/api/chat-log`, {
       method: 'POST',

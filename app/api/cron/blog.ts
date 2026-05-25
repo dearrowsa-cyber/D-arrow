@@ -11,9 +11,7 @@ export default async function handler(req: NextRequest) {
     console.log('⏰ Vercel Cron: Blog Auto-Post Job Started');
 
     // Call the blog schedule endpoint
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : 'https://www.d-arrow.com/';
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://d-arrow.com';
 
     const response = await fetch(`${baseUrl}/api/blog/schedule`, {
       method: 'POST',
