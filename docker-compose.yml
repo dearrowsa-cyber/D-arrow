@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  d-arrow-db:
+    image: postgres:16-alpine
+    container_name: d-arrow-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "pASr4uyvk2rYLNW"
+      POSTGRES_DB: postgres
+    volumes:
+      - d_arrow_postgres_data:/var/lib/postgresql/data
+    networks:
+      - d_arrow_internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  d-arrow-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: d-arrow-app
+    restart: unless-stopped
+    depends_on:
+      d-arrow-db:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:3031:3000"
+    environment:
+      DATABASE_URL: "postgres://postgres:pASr4uyvk2rYLNW@d-arrow-db:5432/postgres"
+      PORT: "3000"
+      HOST: "0.0.0.0"
+      NODE_ENV: "production"
+    networks:
+      - d_arrow_internal
+    volumes:
+      - d_arrow_uploads:/app/public/uploads
+
+networks:
+  d_arrow_internal:
+
+volumes:
+  d_arrow_postgres_data:
+  d_arrow_uploads:
