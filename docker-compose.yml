@@ -3,7 +3,7 @@ version: '3.8'
 services:
   d-arrow-db:
     image: postgres:16-alpine
-    container_name: d-arrow-db
+    container_name: d-arrow-db-new
     restart: unless-stopped
     environment:
       POSTGRES_USER: postgres
@@ -23,7 +23,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: d-arrow-app
+    container_name: d-arrow-app-new
     restart: unless-stopped
     depends_on:
       d-arrow-db:
@@ -31,7 +31,6 @@ services:
     ports:
       - "127.0.0.1:3031:3000"
     environment:
-      DATABASE_URL: "postgres://postgres:pASr4uyvk2rYLNW@d-arrow-db:5432/postgres"
       PORT: "3000"
       HOST: "0.0.0.0"
       NODE_ENV: "production"
