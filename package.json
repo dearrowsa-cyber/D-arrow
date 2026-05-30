@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "analyze": "cross-env ANALYZE=true next build",
-    "postinstall": "prisma generate && prisma db push"
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
