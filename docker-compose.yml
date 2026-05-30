@@ -1,47 +1,53 @@
 version: '3.8'
 
 services:
-  d-arrow-db:
-    image: postgres:16-alpine
-    container_name: d-arrow-db-new
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: "pASr4uyvk2rYLNW"
-      POSTGRES_DB: postgres
-    volumes:
-      - d_arrow_postgres_data:/var/lib/postgresql/data
-    networks:
-      - d_arrow_internal
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   d-arrow-app:
     build:
       context: .
       dockerfile: Dockerfile
     container_name: d-arrow-app-new
     restart: unless-stopped
-    depends_on:
-      d-arrow-db:
-        condition: service_healthy
     ports:
       - "127.0.0.1:3031:3000"
     environment:
       PORT: "3000"
       HOST: "0.0.0.0"
       NODE_ENV: "production"
-    networks:
-      - d_arrow_internal
+      NEXT_PUBLIC_APP_URL: "${NEXT_PUBLIC_APP_URL}"
+      NEXT_PUBLIC_API_URL: "${NEXT_PUBLIC_API_URL}"
+      NEXT_PUBLIC_CHATBOT_ENABLED: "${NEXT_PUBLIC_CHATBOT_ENABLED}"
+      DATABASE_URL: "${DATABASE_URL}"
+      POSTGRES_URL: "${POSTGRES_URL}"
+      POSTGRES_PRISMA_URL: "${POSTGRES_PRISMA_URL}"
+      POSTGRES_URL_NON_POOLING: "${POSTGRES_URL_NON_POOLING}"
+      DATABASE_URL_UNPOOLED: "${DATABASE_URL_UNPOOLED}"
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_HOST: "${POSTGRES_HOST}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DATABASE: "${POSTGRES_DATABASE}"
+      PGDATABASE: "${PGDATABASE}"
+      PGHOST: "${PGHOST}"
+      PGPASSWORD: "${PGPASSWORD}"
+      PGUSER: "${PGUSER}"
+      NEON_PROJECT_ID: "${NEON_PROJECT_ID}"
+      CONTACT_RECIPIENT: "${CONTACT_RECIPIENT}"
+      SMTP_HOST: "${SMTP_HOST}"
+      SMTP_PORT: "${SMTP_PORT}"
+      SMTP_USER: "${SMTP_USER}"
+      SMTP_PASS: "${SMTP_PASS}"
+      SMTP_FROM: "${SMTP_FROM}"
+      SMTP_SECURE: "${SMTP_SECURE}"
+      SMTP_REJECT_UNAUTHORIZED: "${SMTP_REJECT_UNAUTHORIZED}"
+      ZAI_API_KEY: "${ZAI_API_KEY}"
+      ZAI_API_BASE: "${ZAI_API_BASE}"
+      ZAI_MODEL: "${ZAI_MODEL}"
+      NEXT_PUBLIC_N8N_WEBHOOK_URL: "${NEXT_PUBLIC_N8N_WEBHOOK_URL}"
+      CRON_SECRET: "${CRON_SECRET}"
+      BLOG_API_SECRET_KEY: "${BLOG_API_SECRET_KEY}"
+      ADMIN_PASSWORD: "${ADMIN_PASSWORD}"
+      JWT_SECRET: "${JWT_SECRET}"
     volumes:
       - d_arrow_uploads:/app/public/uploads
 
-networks:
-  d_arrow_internal:
-
 volumes:
-  d_arrow_postgres_data:
   d_arrow_uploads:
