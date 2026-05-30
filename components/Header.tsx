@@ -176,6 +176,10 @@ export default memo(function Header() {
               <span className="nav-text">{t('portfolio')}</span>
             </Link>
             
+            <Link href="/store" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
+              <span className="nav-text">{lang === 'ar' ? 'المتجر' : 'Store'}</span>
+            </Link>
+            
             <Link href="/blog" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
               <span className="nav-text">{t('blog')}</span>
             </Link>
@@ -287,6 +291,7 @@ hover:shadow-md hover:scale-105 active:scale-95">
             <Link href="/why-us" onClick={() => handleNavClick('/why-us')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] text-soft-white font-medium  !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('ourCommitment')}</Link>
             
             <Link href="/provisions" onClick={() => handleNavClick('/provisions')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('portfolio')}</Link>
+            <Link href="/store" onClick={() => handleNavClick('/store')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{lang === 'ar' ? 'المتجر' : 'Store'}</Link>
             <Link href="/blog" onClick={() => handleNavClick('/blog')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('blog')}</Link>
             
             <Link href="/contact" onClick={() => handleNavClick('/contact')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] text-soft-white font-medium  !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('contact')}</Link>
