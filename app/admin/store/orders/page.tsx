@@ -157,6 +157,18 @@ export default function AdminOrdersPage() {
                         ))}
                         {order.couponCode && <div style={{ marginTop: 8, fontSize: 13, color: '#22C55E' }}>كوبون: {order.couponCode}</div>}
                         {order.customerPhone && <div style={{ marginTop: 4, fontSize: 13, color: '#9CA3AF' }}>هاتف: {order.customerPhone}</div>}
+                        
+                        <div style={{ marginTop: 16 }}>
+                          <h4 style={{ color: '#E6E6EA', margin: '0 0 8px', fontSize: 14 }}>ملاحظات الطلب (بيانات السيرفر أو روابط التحميل)</h4>
+                          <p style={{ fontSize: 12, color: '#9CA3AF', marginBottom: 8 }}>ستظهر هذه الملاحظات للعميل في صفحة التتبع.</p>
+                          <textarea
+                            className="admin-input"
+                            defaultValue={order.notes || ''}
+                            onBlur={e => updateStatus(order.id, 'notes', e.target.value)}
+                            placeholder="اكتب بيانات الدخول أو رابط التحميل هنا. سيتم حفظها تلقائياً عند النقر خارج المربع."
+                            style={{ minHeight: 80, width: '100%', padding: 12, fontSize: 14, background: 'rgba(0,0,0,0.2)' }}
+                          />
+                        </div>
                       </td>
                     </tr>
                   )}
