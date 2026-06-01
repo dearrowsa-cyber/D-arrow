@@ -47,7 +47,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
               </span>
             ))}
           </div>
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-2xl md:text-3xl font-bold text-white mb-6 leading-relaxed">
             {title}
           </h1>
           
