@@ -46,9 +46,13 @@ export default function SeoDashboard() {
         body: JSON.stringify({ errors: data.allErrors })
       });
       const result = await res.json();
-      setAiAnalysis(result.analysis || 'حدث خطأ أثناء التحليل.');
-    } catch (error) {
-      setAiAnalysis('حدث خطأ أثناء الاتصال بالخادم.');
+      if (result.success && result.analysis) {
+        setAiAnalysis(result.analysis);
+      } else {
+        setAiAnalysis(`حدث خطأ أثناء التحليل: ${result.error || result.debug || 'Unknown error'}`);
+      }
+    } catch (error: any) {
+      setAiAnalysis(`حدث خطأ أثناء الاتصال بالخادم: ${error.message}`);
     }
     setAnalyzing(false);
   };

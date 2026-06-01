@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     const { errors } = await req.json();
 
     if (!errors || !Array.isArray(errors) || errors.length === 0) {
-      return NextResponse.json({ error: 'No errors provided for analysis.' }, { status: 400 });
+      return NextResponse.json({ success: false, error: 'No errors provided for analysis.' }, { status: 400 });
     }
 
     const apiKey = process.env.ZAI_API_KEY;
@@ -17,6 +17,7 @@ export async function POST(req: NextRequest) {
       // Mock response if API key is not set or is placeholder
       await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate delay
       return NextResponse.json({
+        success: true,
         analysis: `⚠️ **تنبيه:** مفتاح \`ZAI_API_KEY\` غير مهيأ في ملف الإعدادات (\`.env.local\`). لتفعيل التحليل الفعلي، يرجى كتابة المفتاح الصحيح لـ Zhipu AI.\n\nهذا مجرد **تحليل تجريبي (Mock)** بناءً على الأخطاء المرسلة:\n\n### 1. تحسين الكلمات المفتاحية\nلاحظنا غياب الكلمة المفتاحية في العنوان والوصف لعدة صفحات. **يجب عليك:**\n- إضافة الكلمة المستهدفة في أول 150 كلمة.\n- كتابة وصف (Meta Description) جذاب بين 120 و 160 حرف.\n\n### 2. محتوى الصفحات\nهناك صفحات محتواها قصير جداً (أقل من 300 كلمة). \n- قم بإضافة تفاصيل أكثر تفيد الزائر لتجنب عقوبات "Helpful Content Update".\n\n### 3. تحسين الصور\nأغلب الصور لا تحتوي على \`Alt Text\`. \n- قم بالدخول للمقالات وإضافة نصوص بديلة (Alt Tags) لتحسين الظهور في بحث الصور.`
       });
     }
@@ -50,22 +51,22 @@ export async function POST(req: NextRequest) {
       if (!response.ok) {
         const errorText = await response.text();
         console.error('ZAI API Error:', errorText);
-        return NextResponse.json({ error: 'Failed to fetch AI analysis.' }, { status: 500 });
+        return NextResponse.json({ success: false, error: 'Failed to fetch AI analysis.', debug: errorText }, { status: 500 });
       }
 
       const data = await response.json();
       const text = data.choices?.[0]?.message?.content || 'No analysis generated.';
 
-      return NextResponse.json({ analysis: text });
+      return NextResponse.json({ success: true, analysis: text });
     } catch (fetchError: any) {
       clearTimeout(timeout);
       console.error('ZAI API Fetch Error:', fetchError);
-      return NextResponse.json({ error: fetchError.name === 'AbortError' ? 'AI request timed out' : 'Failed to reach AI service' }, { status: 504 });
+      return NextResponse.json({ success: false, error: fetchError.name === 'AbortError' ? 'AI request timed out' : 'Failed to reach AI service' }, { status: 504 });
     }
 
 
-  } catch (error) {
+  } catch (error: any) {
     console.error('AI Analysis API Error:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'Internal Server Error', debug: error.message }, { status: 500 });
   }
 }
