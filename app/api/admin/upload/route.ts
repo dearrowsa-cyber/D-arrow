@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile } from 'fs/promises';
+import { writeFile, mkdir } from 'fs/promises';
 import { join } from 'path';
 
 export async function POST(req: NextRequest) {
@@ -30,12 +30,19 @@ export async function POST(req: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     
-    const path = join(process.cwd(), 'public', 'uploads', uniqueName);
+    const uploadDir = join(process.cwd(), 'public', 'uploads');
+    try {
+      await mkdir(uploadDir, { recursive: true });
+    } catch (e) {
+      // Ignore if exists
+    }
+
+    const path = join(uploadDir, uniqueName);
     await writeFile(path, buffer);
 
     return NextResponse.json({
       success: true,
-      url: `/${filename}`,
+      url: `/api/uploads/${uniqueName}`,
       filename: filename,
       size: file.size,
       type: file.type,
