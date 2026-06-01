@@ -30,7 +30,7 @@ const defaultPricingData = {
     {
       id: 'growth',
       name: { en: 'Growth', ar: 'النمو' },
-      price: '5,500',
+      price: '7,500',
       currency: 'SAR',
       period: { en: '/month', ar: '/شهرياً' },
       features: [
@@ -45,7 +45,7 @@ const defaultPricingData = {
     {
       id: 'professional',
       name: { en: 'Professional', ar: 'احترافي' },
-      price: '7,000',
+      price: '9,000',
       currency: 'SAR',
       period: { en: '/month', ar: '/شهرياً' },
       features: [
