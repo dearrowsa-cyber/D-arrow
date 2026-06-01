@@ -3,6 +3,8 @@ import prisma from '@/lib/prisma';
 import BlogPostClient from '@/components/BlogPostClient';
 import { notFound } from 'next/navigation';
 
+export const dynamic = 'force-dynamic';
+
 // Generate dynamic SEO metadata for each blog post
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   try {
