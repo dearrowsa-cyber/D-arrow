@@ -76,7 +76,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
 
         {/* Post Content - Rich Text Rendering */}
         <div 
-          className="prose prose-invert max-w-none break-words prose-headings:text-white prose-a:text-[#FF4D6D] hover:prose-a:text-[#FF9A3C] prose-img:rounded-xl prose-img:max-w-full w-full overflow-hidden"
+          className="prose prose-invert max-w-none break-words prose-headings:text-white prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-h4:text-base prose-p:text-base prose-a:text-[#FF4D6D] hover:prose-a:text-[#FF9A3C] prose-img:rounded-xl prose-img:max-w-full w-full overflow-hidden"
           dangerouslySetInnerHTML={{ __html: content }}
         />
 
