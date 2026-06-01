@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: d-arrow-app-new
+    user: "root"
     restart: unless-stopped
     ports:
       - "127.0.0.1:3031:3000"
