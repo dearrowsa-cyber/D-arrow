@@ -71,6 +71,12 @@ export async function POST(req: NextRequest) {
             const parsed = JSON.parse(jsonStr);
             return NextResponse.json({ success: true, seo: parsed });
           }
+        } else {
+          const errData = await response.text();
+          console.error(`ZhipuAI Error with ${model}: HTTP ${response.status} - ${errData}`);
+          return NextResponse.json({ 
+            error: `API Key Error or API Issue. Details: HTTP ${response.status} - ${errData}` 
+          }, { status: response.status });
         }
       } catch (e) {
         console.error(`Error with ${model}:`, e);

@@ -110,7 +110,7 @@ export default function EditPostPage() {
         updateField(lang === 'ar' ? 'excerptAr' : 'excerpt', data.seo.description);
         showToast('تم تحسين الـ SEO بنجاح!', 'success');
       } else {
-        showToast('فشل في تحسين الـ SEO', 'error');
+        showToast(data.error || 'فشل في تحسين الـ SEO', 'error');
       }
     } catch (e) {
       showToast('حدث خطأ أثناء الاتصال بالذكاء الاصطناعي', 'error');
