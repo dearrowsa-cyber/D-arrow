@@ -132,10 +132,10 @@ export default function EditPostPage() {
         updateField('imageUrl', data.url);
         showToast('تم رفع الصورة', 'success');
       } else {
-        showToast(data.error || 'فشل في رفع الصورة', 'error');
+        showToast(data.error || data.debug || 'فشل في رفع الصورة', 'error');
       }
-    } catch {
-      showToast('خطأ في رفع الصورة', 'error');
+    } catch (e: any) {
+      showToast(`خطأ في رفع الصورة: ${e.message}`, 'error');
     } finally {
       setUploading(false);
     }

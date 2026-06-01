@@ -35,7 +35,7 @@ export default function PostsListPage() {
 
   const fetchPosts = async () => {
     try {
-      const res = await fetch('/api/blog/posts');
+      const res = await fetch('/api/blog/posts', { cache: 'no-store' });
       const data = await res.json();
       const sorted = (data.posts || []).sort((a: Post, b: Post) =>
         new Date(b.date).getTime() - new Date(a.date).getTime()

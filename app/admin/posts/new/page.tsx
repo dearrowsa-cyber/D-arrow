@@ -59,10 +59,10 @@ export default function NewPostPage() {
         updateField('imageUrl', data.url);
         showToast('تم رفع الصورة بنجاح', 'success');
       } else {
-        showToast(data.error || 'فشل في رفع الصورة', 'error');
+        showToast(data.error || data.debug || 'فشل في رفع الصورة', 'error');
       }
-    } catch {
-      showToast('حدث خطأ في رفع الصورة', 'error');
+    } catch (e: any) {
+      showToast(`حدث خطأ في الرفع: ${e.message}`, 'error');
     } finally {
       setUploading(false);
     }
