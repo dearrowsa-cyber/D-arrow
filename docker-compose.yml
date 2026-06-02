@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: d-arrow-app:v1.1
     container_name: d-arrow-app-new
     user: "root"
     restart: unless-stopped
