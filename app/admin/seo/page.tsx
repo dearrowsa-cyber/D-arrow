@@ -67,8 +67,9 @@ export default function SeoDashboard() {
       </div>
 
       {errorMsg && (
-        <div style={{ padding: '16px', background: '#dc2626', color: '#fff', borderRadius: '8px', marginBottom: '24px' }}>
-          <strong>خطأ في جلب البيانات:</strong> {errorMsg}
+        <div style={{ padding: '16px', background: 'rgba(239, 68, 68, 0.15)', color: '#EF4444', borderRadius: '12px', marginBottom: '24px', border: '1px solid rgba(239, 68, 68, 0.3)', display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <AlertTriangle size={20} />
+          <div><strong>خطأ في جلب البيانات:</strong> {errorMsg}</div>
         </div>
       )}
 
@@ -214,7 +215,11 @@ export default function SeoDashboard() {
             </ul>
           </div>
         ) : (
-          <div style={{ textAlign: 'center', padding: '32px', color: '#6B7280' }}>لا توجد أخطاء حالياً. عمل رائع!</div>
+          <div style={{ textAlign: 'center', padding: '40px', color: '#6B7280' }}>
+            <div style={{ fontSize: '48px', marginBottom: '12px' }}>✅</div>
+            <p style={{ fontSize: '16px', margin: 0 }}>لا توجد أخطاء حالياً — عمل رائع!</p>
+            <p style={{ fontSize: '13px', color: '#4B5563', margin: '8px 0 0' }}>قم بإجراء فحص SEO جديد من صفحة &quot;إدارة بيانات SEO&quot; لتحديث البيانات.</p>
+          </div>
         )}
       </div>
 

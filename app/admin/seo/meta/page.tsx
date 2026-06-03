@@ -119,12 +119,12 @@ export default function SeoMetaList() {
         <table className="admin-table">
           <thead>
             <tr>
-              <th>URL Slug</th>
-              <th>SEO Title</th>
-              <th>Score</th>
-              <th>Focus Keyword</th>
-              <th>Robots</th>
-              <th>Actions</th>
+              <th>الرابط (URL Slug)</th>
+              <th>عنوان السيو</th>
+              <th>النتيجة</th>
+              <th>الكلمة المفتاحية</th>
+              <th>الفهرسة</th>
+              <th>إجراءات</th>
             </tr>
           </thead>
           <tbody>
@@ -142,7 +142,7 @@ export default function SeoMetaList() {
                         {score}/100
                       </span>
                     ) : (
-                      <span className="admin-badge admin-badge-info">Unanalyzed</span>
+                      <span className="admin-badge admin-badge-info">غير مفحوص</span>
                     )}
                   </td>
                   <td>{item.focusKeyword || '-'}</td>
@@ -162,7 +162,9 @@ export default function SeoMetaList() {
             })}
             {items.length === 0 && (
               <tr>
-                <td colSpan={6} style={{ textAlign: 'center', padding: '32px', color: '#9CA3AF' }}>No SEO records found. Click "Sync Pages" to populate.</td>
+                <td colSpan={6} style={{ textAlign: 'center', padding: '48px', color: '#9CA3AF' }}>
+                  <p style={{ margin: '0 0 8px' }}>لا توجد سجلات SEO. اضغط &quot;مزامنة الصفحات&quot; لتحميل بيانات السيو لجميع صفحات الموقع.</p>
+                </td>
               </tr>
             )}
           </tbody>

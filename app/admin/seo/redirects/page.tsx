@@ -112,12 +112,12 @@ export default function RedirectsManager() {
           <tbody>
             {redirects.map(r => (
               <tr key={r.id}>
-                <td style={{ color: '#EF4444' }}>{r.sourceUrl}</td>
-                <td style={{ color: '#22C55E' }}>{r.destinationUrl}</td>
+                <td style={{ color: '#EF4444', direction: 'ltr', textAlign: 'right' }}>{r.sourceUrl}</td>
+                <td style={{ color: '#22C55E', direction: 'ltr', textAlign: 'right' }}>{r.destinationUrl}</td>
                 <td><span className="admin-badge admin-badge-info">{r.type}</span></td>
                 <td>
                   <span className={`admin-badge ${r.enabled ? 'admin-badge-success' : 'admin-badge-warning'}`}>
-                    {r.enabled ? 'Active' : 'Disabled'}
+                    {r.enabled ? 'نشط' : 'معطل'}
                   </span>
                 </td>
                 <td>{r.hitCount}</td>
@@ -128,6 +128,13 @@ export default function RedirectsManager() {
                 </td>
               </tr>
             ))}
+            {redirects.length === 0 && (
+              <tr>
+                <td colSpan={6} style={{ textAlign: 'center', padding: '48px', color: '#9CA3AF' }}>
+                  <p style={{ margin: '0 0 8px' }}>لا توجد تحويلات حالياً. اضغط &quot;إضافة توجيه&quot; لإنشاء تحويل جديد.</p>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
@@ -135,26 +142,26 @@ export default function RedirectsManager() {
       {showModal && (
         <div className="admin-overlay" style={{ zIndex: 9999 }}>
           <div className="admin-dialog">
-            <h3 style={{ marginBottom: '24px' }}>Add Redirect</h3>
+            <h3 style={{ marginBottom: '24px' }}>إضافة تحويل جديد</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               <div>
-                <label className="admin-label">Source URL (e.g. /old-page)</label>
-                <input type="text" className="admin-input" value={formData.sourceUrl} onChange={e => setFormData({...formData, sourceUrl: e.target.value})} />
+                <label className="admin-label">الرابط القديم (مثال: /old-page)</label>
+                <input type="text" className="admin-input" value={formData.sourceUrl} onChange={e => setFormData({...formData, sourceUrl: e.target.value})} dir="ltr" />
               </div>
               <div>
-                <label className="admin-label">Destination URL</label>
-                <input type="text" className="admin-input" value={formData.destinationUrl} onChange={e => setFormData({...formData, destinationUrl: e.target.value})} />
+                <label className="admin-label">الرابط الجديد</label>
+                <input type="text" className="admin-input" value={formData.destinationUrl} onChange={e => setFormData({...formData, destinationUrl: e.target.value})} dir="ltr" />
               </div>
               <div>
-                <label className="admin-label">Type</label>
+                <label className="admin-label">نوع التحويل</label>
                 <select className="admin-select" value={formData.type} onChange={e => setFormData({...formData, type: parseInt(e.target.value)})}>
-                  <option value={301}>301 Permanent</option>
-                  <option value={302}>302 Temporary</option>
+                  <option value={301}>301 دائم (Permanent)</option>
+                  <option value={302}>302 مؤقت (Temporary)</option>
                 </select>
               </div>
               <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px', marginTop: '24px' }}>
-                <button className="admin-btn admin-btn-ghost" onClick={() => setShowModal(false)}>Cancel</button>
-                <button className="admin-btn admin-btn-primary" onClick={handleSave}>Save</button>
+                <button className="admin-btn admin-btn-ghost" onClick={() => setShowModal(false)}>إلغاء</button>
+                <button className="admin-btn admin-btn-primary" onClick={handleSave}>حفظ</button>
               </div>
             </div>
           </div>
