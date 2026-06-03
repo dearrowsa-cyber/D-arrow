@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Activity, AlertTriangle, FileText, Settings, Navigation, Search, Database, Bot, TrendingUp, Sparkles } from 'lucide-react';
+import { Activity, AlertTriangle, FileText, Settings, Navigation, Search, Database, Bot, TrendingUp, Sparkles, Wand2, CheckCircle } from 'lucide-react';
 import SeoScoreGauge from '@/components/seo/SeoScoreGauge';
 
 export default function SeoDashboard() {
@@ -11,6 +11,8 @@ export default function SeoDashboard() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
+  const [autoFixing, setAutoFixing] = useState(false);
+  const [autoFixResult, setAutoFixResult] = useState<any>(null);
 
   useEffect(() => {
     fetch('/api/admin/seo/dashboard', {
@@ -55,6 +57,27 @@ export default function SeoDashboard() {
       setAiAnalysis(`حدث خطأ أثناء الاتصال بالخادم: ${error.message}`);
     }
     setAnalyzing(false);
+  };
+
+  const handleAutoFix = async () => {
+    if (!confirm('هل أنت متأكد أنك تريد البدء في إصلاح محتوى الموقع تلقائياً؟ هذه العملية قد تستغرق بعض الوقت.')) return;
+    setAutoFixing(true);
+    setAutoFixResult(null);
+    try {
+      const res = await fetch('/api/admin/seo/smart-fix', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` }
+      });
+      const result = await res.json();
+      setAutoFixResult(result);
+      if (result.success) {
+        // Refresh data to show cleared errors
+        setTimeout(() => window.location.reload(), 3000);
+      }
+    } catch (error: any) {
+      setAutoFixResult({ success: false, error: error.message });
+    }
+    setAutoFixing(false);
   };
 
   if (loading) return <div className="admin-content">Loading SEO Dashboard...</div>;
@@ -227,6 +250,55 @@ export default function SeoDashboard() {
             <div style={{ fontSize: '48px', marginBottom: '12px' }}>✅</div>
             <p style={{ fontSize: '16px', margin: 0 }}>لا توجد أخطاء حالياً — عمل رائع!</p>
             <p style={{ fontSize: '13px', color: '#4B5563', margin: '8px 0 0' }}>قم بإجراء فحص SEO جديد من صفحة &quot;إدارة بيانات SEO&quot; لتحديث البيانات.</p>
+          </div>
+        )}
+      </div>
+
+      {/* Advanced Auto-Fixer Section */}
+      <div className="admin-card" style={{ marginBottom: '32px', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px', flexWrap: 'wrap', gap: '16px' }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+              <Wand2 color="#10B981" size={28} />
+              <h3 style={{ margin: 0, color: '#10B981' }}>مُصلح السيو المتقدم (Advanced Auto-Fixer)</h3>
+            </div>
+            <p style={{ color: '#9CA3AF', margin: 0 }}>أداة ذكية لإصلاح الصور، تحسين العناوين، وضبط الكلمات المفتاحية في المقالات والمنتجات أوتوماتيكياً.</p>
+          </div>
+          <button 
+            className="admin-btn"
+            style={{ backgroundColor: '#10B981', color: '#FFF', border: 'none' }}
+            onClick={handleAutoFix}
+            disabled={autoFixing}
+          >
+            {autoFixing ? (
+              <><span className="spin" style={{ display: 'inline-block', marginRight: '8px' }}>↻</span> جاري الإصلاح...</>
+            ) : (
+              <><Wand2 size={18} /> تنفيذ الإصلاحات آلياً</>
+            )}
+          </button>
+        </div>
+
+        {autoFixResult && (
+          <div style={{ marginTop: '16px', padding: '16px', borderRadius: '8px', background: autoFixResult.success ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)', border: `1px solid ${autoFixResult.success ? '#10B981' : '#EF4444'}` }}>
+            {autoFixResult.success ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <CheckCircle color="#10B981" size={24} />
+                <div>
+                  <strong style={{ display: 'block', color: '#10B981', marginBottom: '4px' }}>تمت عملية الإصلاح بنجاح!</strong>
+                  <p style={{ margin: 0, color: '#D1D5DB', fontSize: '14px' }}>
+                    تم إصلاح {autoFixResult.stats?.fixedPosts || 0} مقال، و {autoFixResult.stats?.fixedProducts || 0} منتج، و {autoFixResult.stats?.fixedPages || 0} صفحة. يتم الآن تحديث البيانات...
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <AlertTriangle color="#EF4444" size={24} />
+                <div>
+                  <strong style={{ display: 'block', color: '#EF4444', marginBottom: '4px' }}>فشلت عملية الإصلاح</strong>
+                  <p style={{ margin: 0, color: '#D1D5DB', fontSize: '14px' }}>{autoFixResult.error}</p>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
