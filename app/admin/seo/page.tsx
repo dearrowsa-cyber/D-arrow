@@ -305,36 +305,36 @@ export default function SeoDashboard() {
 
       <h3 style={{ marginBottom: '24px' }}>أدوات السيو المتقدمة</h3>
       <div className="admin-grid-3">
-        <Link href="/admin/seo/meta" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className="admin-card" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
+        <Link href="/admin/seo/meta" className="group" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className="admin-card group-hover:border-brand-pink" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
             <Search size={32} color="#3B82F6" style={{ margin: '0 auto 16px' }} />
             <h4 style={{ color: '#E6E6EA' }}>إدارة بيانات SEO</h4>
             <p style={{ fontSize: '13px', margin: 0, color: '#9CA3AF' }}>تعديل العناوين، الأوصاف، والكلمات المفتاحية</p>
           </div>
         </Link>
-        <Link href="/admin/seo/keywords" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className="admin-card" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
+        <Link href="/admin/seo/keywords" className="group" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className="admin-card group-hover:border-brand-pink" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
             <Activity size={32} color="#8B5CF6" style={{ margin: '0 auto 16px' }} />
             <h4 style={{ color: '#E6E6EA' }}>متتبع الكلمات المفتاحية</h4>
             <p style={{ fontSize: '13px', margin: 0, color: '#9CA3AF' }}>تتبع ترتيبك في جوجل، النقرات، والظهور</p>
           </div>
         </Link>
-        <Link href="/admin/seo/redirects" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className="admin-card" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
+        <Link href="/admin/seo/redirects" className="group" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className="admin-card group-hover:border-brand-pink" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
             <Navigation size={32} color="#F59E0B" style={{ margin: '0 auto 16px' }} />
             <h4 style={{ color: '#E6E6EA' }}>إعادة التوجيه (Redirects)</h4>
             <p style={{ fontSize: '13px', margin: 0, color: '#9CA3AF' }}>إدارة تحويلات 301 و 302 للحفاظ على الزيارات</p>
           </div>
         </Link>
-        <Link href="/admin/seo/schema" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className="admin-card" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
+        <Link href="/admin/seo/schema" className="group" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className="admin-card group-hover:border-brand-pink" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
             <Database size={32} color="#22C55E" style={{ margin: '0 auto 16px' }} />
             <h4 style={{ color: '#E6E6EA' }}>مخطط البيانات (Schema)</h4>
             <p style={{ fontSize: '13px', margin: 0, color: '#9CA3AF' }}>إضافة Rich Snippets لجوجل (مقالات، منتجات)</p>
           </div>
         </Link>
-        <Link href="/admin/seo/robots" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className="admin-card" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
+        <Link href="/admin/seo/robots" className="group" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className="admin-card group-hover:border-brand-pink" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
             <Settings size={32} color="#EF4444" style={{ margin: '0 auto 16px' }} />
             <h4 style={{ color: '#E6E6EA' }}>ملف Robots.txt</h4>
             <p style={{ fontSize: '13px', margin: 0, color: '#9CA3AF' }}>التحكم في زواحف محركات البحث</p>
