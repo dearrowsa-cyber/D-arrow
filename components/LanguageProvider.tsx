@@ -314,7 +314,7 @@ const translations: Translations = {
   
   // Pricing Card - Basic Plan
   pricingBasic: { en: 'Basic', ar: 'باقة الأساس' },
-  pricingBasicPrice: { en: '2,950 SAR', ar: '2,950 ريال سعودي' },
+  pricingBasicPrice: { en: '3,500 SAR', ar: '3,500 ريال سعودي' },
   pricingBasicOldPrice: { en: '3,800 SAR', ar: '3,800 ريال سعودي' },
   pricingBasicFeature1: { en: '8 posts/month + 4 interactive story designs', ar: '8 منشورات شهرياً + 4 تصاميم ستوري تفاعلية.' },
   pricingBasicFeature2: { en: 'Creative content aligned with brand identity', ar: 'كتابة محتوى إبداعي متوافق مع هوية العلامة التجارية.' },
@@ -326,7 +326,7 @@ const translations: Translations = {
   
   // Pricing Card - Growth Plan
   pricingGrowth: { en: 'Growth', ar: 'باقة النمو' },
-  pricingGrowthPrice: { en: '6,000 SAR', ar: '6,000 ريال سعودي' },
+  pricingGrowthPrice: { en: '7,500 SAR', ar: '7,500 ريال سعودي' },
   pricingGrowthOldPrice: { en: '6,500 SAR', ar: '6,500 ريال سعودي' },
   pricingGrowthFeature1: { en: '12 posts/month + full content calendar', ar: '12 منشور شهرياً + بناء تقويم محتوى معتمد مسبقاً.' },
   pricingGrowthFeature2: { en: '4 short trending videos (Reels/TikTok)', ar: 'إنتاج ومونتاج 4 فيديوهات قصيرة (Reels/TikTok) تريند.' },
@@ -341,7 +341,7 @@ const translations: Translations = {
   
   // Pricing Card - Professional Plan
   pricingProfessional: { en: 'Professional', ar: 'باقة الاحتراف' },
-  pricingProfessionalPrice: { en: '7,500 SAR', ar: '7,500 ريال سعودي' },
+  pricingProfessionalPrice: { en: '9,000 SAR', ar: '9,000 ريال سعودي' },
   pricingProfessionalOldPrice: { en: '8,500 SAR', ar: '8,500 ريال سعودي' },
   pricingProfessionalFeature1: { en: 'Full content management (up to 20 posts/videos)', ar: 'إدارة محتوى شاملة (حتى 20 منشور/فيديو شهرياً).' },
   pricingProfessionalFeature2: { en: 'Advanced paid ads strategy (Google, Meta, Snap)', ar: 'بناء استراتيجية إعلانات ممولة متقدمة (Google Ads, Meta, Snapchat).' },
