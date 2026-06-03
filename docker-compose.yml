@@ -1,11 +1,11 @@
 version: '3.8'
 
 services:
-  d-arrow-app-v3:
+  d-arrow-app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: d-arrow-app-v3
+    container_name: d-arrow-app-new
     user: "root"
     restart: unless-stopped
     ports:

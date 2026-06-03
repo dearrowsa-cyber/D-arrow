@@ -58,15 +58,15 @@ async function run() {
     }
     console.log(`Found stack: ${stack.Name} (ID: ${stack.Id})`);
 
-    // Force update the stack with pullImage = true and clear cache
-    console.log('Forcing stack update and pull...');
+    // Force update the stack - pullImage must be FALSE since we build locally
+    console.log('Forcing stack rebuild (no pull, build from source)...');
     const updateRes = await fetchJSON(`${base}/stacks/${stack.Id}/git/redeploy?endpointId=${endpointId}`, {
       method: 'PUT',
       headers,
       body: JSON.stringify({
         env: stack.Env || [],
         prune: true,
-        pullImage: true
+        pullImage: false
       })
     });
     
