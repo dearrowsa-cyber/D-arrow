@@ -646,5 +646,29 @@ section {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
+}
+
+/* Override massive typography for Blog Posts specifically */
+.blog-post-container h1.main-title {
+  font-size: clamp(24px, 4vw, 36px) !important;
+  line-height: 1.6 !important;
+}
+
+.blog-post-content h1 {
+  font-size: clamp(22px, 3vw, 28px) !important;
+  line-height: 1.6 !important;
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.blog-post-content h2 {
+  font-size: clamp(20px, 2.5vw, 24px) !important;
+  line-height: 1.6 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.blog-post-content h3 {
+  font-size: clamp(18px, 2vw, 20px) !important;
+  line-height: 1.6 !important;
 }

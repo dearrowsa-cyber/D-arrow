@@ -26,7 +26,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
   const tags: string[] = Array.isArray(post.tags) ? post.tags : [];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#0a0e27] to-[#14162E] pt-32 pb-20">
+    <div className="min-h-screen bg-gradient-to-b from-[#0a0e27] to-[#14162E] pt-32 pb-20 blog-post-container">
       <div className="container mx-auto px-4 md:px-6 lg:px-12 max-w-5xl" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
         
         {/* Back Button */}
@@ -47,7 +47,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
               </span>
             ))}
           </div>
-          <h1 className="text-xl md:text-2xl font-bold text-white mb-6 leading-[1.8]">
+          <h1 className="main-title font-bold text-white mb-6">
             {title}
           </h1>
           
@@ -76,7 +76,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
 
         {/* Post Content - Rich Text Rendering */}
         <div 
-          className="prose prose-invert max-w-none break-words prose-headings:text-white prose-h1:text-2xl prose-h2:text-xl prose-h3:text-lg prose-h4:text-base prose-p:text-base prose-a:text-[#FF4D6D] hover:prose-a:text-[#FF9A3C] prose-img:rounded-xl prose-img:max-w-full w-full overflow-hidden"
+          className="blog-post-content prose prose-invert max-w-none break-words prose-headings:text-white prose-p:text-base prose-a:text-[#FF4D6D] hover:prose-a:text-[#FF9A3C] prose-img:rounded-xl prose-img:max-w-full w-full overflow-hidden"
           dangerouslySetInnerHTML={{ __html: content }}
         />
 
