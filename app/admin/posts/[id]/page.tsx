@@ -254,6 +254,26 @@ export default function EditPostPage() {
                 <div style={{ marginBottom: 20 }}>
                   <textarea className="admin-textarea" placeholder="وصف ميتا (Meta Description)" value={form.excerptAr} onChange={e => updateField('excerptAr', e.target.value)} style={{ minHeight: 80 }} dir="rtl" />
                 </div>
+                <div style={{ marginBottom: 20, display: 'flex', gap: 12, background: 'rgba(255, 255, 255, 0.02)', padding: '16px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <div style={{ flex: 1 }}>
+                    <label className="admin-label">تاريخ النشر (قابل للتعديل)</label>
+                    <input
+                      type="date"
+                      className="admin-input"
+                      value={form.date}
+                      onChange={e => updateField('date', e.target.value)}
+                    />
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <label className="admin-label">وقت النشر</label>
+                    <input
+                      type="time"
+                      className="admin-input"
+                      value={form.time}
+                      onChange={e => updateField('time', e.target.value)}
+                    />
+                  </div>
+                </div>
                 <div>
                   <label className="admin-label">المحتوى بالعربية</label>
                   <RichTextEditor value={form.contentAr} onChange={(val) => updateField('contentAr', val)} dir="rtl" />
@@ -340,26 +360,6 @@ export default function EditPostPage() {
               <input className="admin-input" value={form.author} onChange={e => updateField('author', e.target.value)} />
             </div>
             
-            <div style={{ marginBottom: 16, display: 'flex', gap: 12 }}>
-              <div style={{ flex: 1 }}>
-                <label className="admin-label">تاريخ النشر</label>
-                <input
-                  type="date"
-                  className="admin-input"
-                  value={form.date}
-                  onChange={e => updateField('date', e.target.value)}
-                />
-              </div>
-              <div style={{ flex: 1 }}>
-                <label className="admin-label">وقت النشر</label>
-                <input
-                  type="time"
-                  className="admin-input"
-                  value={form.time}
-                  onChange={e => updateField('time', e.target.value)}
-                />
-              </div>
-            </div>
             {/* Tags */}
             <div style={{ marginBottom: 16 }}>
               <label className="admin-label"><Tag size={14} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: 6 }} />الوسوم (Tags)</label>
