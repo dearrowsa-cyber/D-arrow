@@ -131,7 +131,11 @@ export default function SeoDashboard() {
                   </tr>
                 ))
               ) : (
-                <tr><td colSpan={3} style={{ textAlign: 'center', color: '#6B7280' }}>لا توجد بيانات متاحة</td></tr>
+                <tr>
+                  <td colSpan={3} style={{ textAlign: 'center', color: '#9CA3AF', padding: '32px' }}>
+                    <p style={{ margin: 0 }}>لا توجد بيانات متاحة حالياً</p>
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>
@@ -164,7 +168,11 @@ export default function SeoDashboard() {
                   </tr>
                 ))
               ) : (
-                <tr><td colSpan={3} style={{ textAlign: 'center', color: '#6B7280' }}>لا توجد بيانات متاحة</td></tr>
+                <tr>
+                  <td colSpan={3} style={{ textAlign: 'center', color: '#9CA3AF', padding: '32px' }}>
+                    <p style={{ margin: 0 }}>لا توجد بيانات متاحة حالياً</p>
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>
