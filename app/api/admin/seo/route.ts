@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const MODELS = ['glm-4-flash', 'glm-4v-flash'];
 const API_URL = 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
-const TIMEOUT_MS = 15000;
+const TIMEOUT_MS = 60000;
 
 async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number): Promise<Response> {
   const controller = new AbortController();

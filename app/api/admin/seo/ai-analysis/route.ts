@@ -22,13 +22,14 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Prepare prompt
-    const errorList = errors.map((e: any) => `- Page: ${e.page} -> Issue: ${e.error}`).join('\n');
+    // Prepare prompt (limit to top 20 errors to prevent massive prompts)
+    const topErrors = errors.slice(0, 20);
+    const errorList = topErrors.map((e: any) => `- Page: ${e.page} -> Issue: ${e.error}`).join('\n');
     const prompt = `أنت خبير SEO محترف. قم بتحليل قائمة الأخطاء التالية من موقعنا، واكتب خطة عمل من 3 خطوات واضحة (باللغة العربية) لحلها. اجعل الرد منسقاً باستخدام Markdown. لا تقم بشرح الأخطاء خطأ بخطأ، بل أعطني استراتيجية عامة ومركزة لإصلاح أهم المشاكل.\n\nالأخطاء:\n${errorList}`;
 
-    // Fetch with timeout helper
+    // Fetch with timeout helper (60 seconds)
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 15000);
+    const timeout = setTimeout(() => controller.abort(), 60000);
 
     // Call Zhipu AI (GLM) API
     try {
