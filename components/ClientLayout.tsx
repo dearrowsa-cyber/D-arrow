@@ -8,6 +8,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Analytics from '@/components/Analytics';
 import CookieConsent from '@/components/CookieConsent';
+import WhatsAppWidget from '@/components/WhatsAppWidget';
 
 // Lazy load ChatBot (contains heavy Three.js 3D engine)
 const ChatBot = dynamic(() => import('@/components/ChatBot'), {
@@ -108,6 +109,9 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       </div>
 
       {showChatBot && <ChatBot />}
+      
+      {/* Delayed rendering for WhatsApp to improve performance */}
+      {showChatBot && <WhatsAppWidget />}
       
       <CookieConsent />
       <Analytics />
