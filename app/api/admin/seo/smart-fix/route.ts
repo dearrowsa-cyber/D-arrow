@@ -48,13 +48,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'ZAI_API_KEY is missing.' }, { status: 400 });
     }
 
-    // Find up to 5 SeoMeta records that need fixing (missing title, description, or focusKeyword)
+    // Find up to 5 SeoMeta records that need fixing based on missing fields OR existing audit log errors
     const targets = await prisma.seoMeta.findMany({
       where: {
         OR: [
           { title: null }, { title: '' },
           { description: null }, { description: '' },
-          { focusKeyword: null }, { focusKeyword: '' }
+          { focusKeyword: null }, { focusKeyword: '' },
+          { auditLogs: { some: { issuesCount: { gt: 0 } } } }
         ]
       },
       take: 5

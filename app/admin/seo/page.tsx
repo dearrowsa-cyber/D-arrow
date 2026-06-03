@@ -255,18 +255,18 @@ export default function SeoDashboard() {
       </div>
 
       {/* Advanced Auto-Fixer Section */}
-      <div className="admin-card" style={{ marginBottom: '32px', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
+      <div className="admin-card" style={{ marginBottom: '32px', border: '1px solid rgba(255, 77, 109, 0.3)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px', flexWrap: 'wrap', gap: '16px' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-              <Wand2 color="#10B981" size={28} />
-              <h3 style={{ margin: 0, color: '#10B981' }}>مُصلح السيو المتقدم (Advanced Auto-Fixer)</h3>
+              <Wand2 color="#FF4D6D" size={28} />
+              <h3 style={{ margin: 0, color: '#FF4D6D' }}>مُصلح السيو المتقدم (Advanced Auto-Fixer)</h3>
             </div>
             <p style={{ color: '#9CA3AF', margin: 0 }}>أداة ذكية لإصلاح الصور، تحسين العناوين، وضبط الكلمات المفتاحية في المقالات والمنتجات أوتوماتيكياً.</p>
           </div>
           <button 
             className="admin-btn"
-            style={{ backgroundColor: '#10B981', color: '#FFF', border: 'none' }}
+            style={{ backgroundColor: '#FF4D6D', color: '#FFF', border: 'none' }}
             onClick={handleAutoFix}
             disabled={autoFixing}
           >
@@ -279,12 +279,12 @@ export default function SeoDashboard() {
         </div>
 
         {autoFixResult && (
-          <div style={{ marginTop: '16px', padding: '16px', borderRadius: '8px', background: autoFixResult.success ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)', border: `1px solid ${autoFixResult.success ? '#10B981' : '#EF4444'}` }}>
+          <div style={{ marginTop: '16px', padding: '16px', borderRadius: '8px', background: autoFixResult.success ? 'rgba(255, 77, 109, 0.1)' : 'rgba(239, 68, 68, 0.1)', border: `1px solid ${autoFixResult.success ? '#FF4D6D' : '#EF4444'}` }}>
             {autoFixResult.success ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <CheckCircle color="#10B981" size={24} />
+                <CheckCircle color="#FF4D6D" size={24} />
                 <div>
-                  <strong style={{ display: 'block', color: '#10B981', marginBottom: '4px' }}>تمت عملية الإصلاح بنجاح!</strong>
+                  <strong style={{ display: 'block', color: '#FF4D6D', marginBottom: '4px' }}>تمت عملية الإصلاح بنجاح!</strong>
                   <p style={{ margin: 0, color: '#D1D5DB', fontSize: '14px' }}>
                     تم إصلاح {autoFixResult.stats?.fixedPosts || 0} مقال، و {autoFixResult.stats?.fixedProducts || 0} منتج، و {autoFixResult.stats?.fixedPages || 0} صفحة. يتم الآن تحديث البيانات...
                   </p>
@@ -305,39 +305,39 @@ export default function SeoDashboard() {
 
       <h3 style={{ marginBottom: '24px' }}>أدوات السيو المتقدمة</h3>
       <div className="admin-grid-3">
-        <Link href="/admin/seo/meta" style={{ textDecoration: 'none' }}>
-          <div className="admin-card" style={{ padding: '32px', textAlign: 'center' }}>
+        <Link href="/admin/seo/meta" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className="admin-card" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
             <Search size={32} color="#3B82F6" style={{ margin: '0 auto 16px' }} />
-            <h4>إدارة بيانات SEO</h4>
-            <p style={{ fontSize: '13px', margin: 0 }}>تعديل العناوين، الأوصاف، والكلمات المفتاحية</p>
+            <h4 style={{ color: '#E6E6EA' }}>إدارة بيانات SEO</h4>
+            <p style={{ fontSize: '13px', margin: 0, color: '#9CA3AF' }}>تعديل العناوين، الأوصاف، والكلمات المفتاحية</p>
           </div>
         </Link>
-        <Link href="/admin/seo/keywords" style={{ textDecoration: 'none' }}>
-          <div className="admin-card" style={{ padding: '32px', textAlign: 'center' }}>
+        <Link href="/admin/seo/keywords" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className="admin-card" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
             <Activity size={32} color="#8B5CF6" style={{ margin: '0 auto 16px' }} />
-            <h4>متتبع الكلمات المفتاحية</h4>
-            <p style={{ fontSize: '13px', margin: 0 }}>تتبع ترتيبك في جوجل، النقرات، والظهور</p>
+            <h4 style={{ color: '#E6E6EA' }}>متتبع الكلمات المفتاحية</h4>
+            <p style={{ fontSize: '13px', margin: 0, color: '#9CA3AF' }}>تتبع ترتيبك في جوجل، النقرات، والظهور</p>
           </div>
         </Link>
-        <Link href="/admin/seo/redirects" style={{ textDecoration: 'none' }}>
-          <div className="admin-card" style={{ padding: '32px', textAlign: 'center' }}>
+        <Link href="/admin/seo/redirects" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className="admin-card" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
             <Navigation size={32} color="#F59E0B" style={{ margin: '0 auto 16px' }} />
-            <h4>إعادة التوجيه (Redirects)</h4>
-            <p style={{ fontSize: '13px', margin: 0 }}>إدارة تحويلات 301 و 302 للحفاظ على الزيارات</p>
+            <h4 style={{ color: '#E6E6EA' }}>إعادة التوجيه (Redirects)</h4>
+            <p style={{ fontSize: '13px', margin: 0, color: '#9CA3AF' }}>إدارة تحويلات 301 و 302 للحفاظ على الزيارات</p>
           </div>
         </Link>
-        <Link href="/admin/seo/schema" style={{ textDecoration: 'none' }}>
-          <div className="admin-card" style={{ padding: '32px', textAlign: 'center' }}>
+        <Link href="/admin/seo/schema" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className="admin-card" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
             <Database size={32} color="#22C55E" style={{ margin: '0 auto 16px' }} />
-            <h4>مخطط البيانات (Schema)</h4>
-            <p style={{ fontSize: '13px', margin: 0 }}>إضافة Rich Snippets لجوجل (مقالات، منتجات)</p>
+            <h4 style={{ color: '#E6E6EA' }}>مخطط البيانات (Schema)</h4>
+            <p style={{ fontSize: '13px', margin: 0, color: '#9CA3AF' }}>إضافة Rich Snippets لجوجل (مقالات، منتجات)</p>
           </div>
         </Link>
-        <Link href="/admin/seo/robots" style={{ textDecoration: 'none' }}>
-          <div className="admin-card" style={{ padding: '32px', textAlign: 'center' }}>
+        <Link href="/admin/seo/robots" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className="admin-card" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
             <Settings size={32} color="#EF4444" style={{ margin: '0 auto 16px' }} />
-            <h4>ملف Robots.txt</h4>
-            <p style={{ fontSize: '13px', margin: 0 }}>التحكم في زواحف محركات البحث</p>
+            <h4 style={{ color: '#E6E6EA' }}>ملف Robots.txt</h4>
+            <p style={{ fontSize: '13px', margin: 0, color: '#9CA3AF' }}>التحكم في زواحف محركات البحث</p>
           </div>
         </Link>
       </div>
