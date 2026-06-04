@@ -13,7 +13,7 @@ const navItems = [
   { href: '/admin/pricing', label: 'الأسعار', icon: DollarSign },
   { href: '/admin/media', label: 'الوسائط', icon: Image },
   { href: '/admin/seo', label: 'لوحة SEO', icon: Search },
-  { href: '/admin/seo/meta', label: 'بيانات SEO', icon: Tags },
+  { href: '/admin/seo/meta', label: 'سيو الصفحات (العناوين والوصف)', icon: Tags },
   { href: '/admin/seo/redirects', label: 'التحويلات', icon: ArrowRightLeft },
   { href: '/admin/seo/robots', label: 'Robots.txt', icon: Bot },
   { href: '/admin/seo/schema', label: 'Schema', icon: Code },

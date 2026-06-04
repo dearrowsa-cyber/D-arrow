@@ -623,7 +623,9 @@ function SeoMetaPerPage({ showToast }: { showToast: (msg: string, type: string) 
         list.forEach((item: any) => {
           edits[item.id] = {
             title: item.title || '',
+            titleEn: item.titleEn || '',
             description: item.description || '',
+            descriptionEn: item.descriptionEn || '',
             focusKeyword: item.focusKeyword || '',
             robots: item.robots || 'index, follow',
           };
@@ -666,12 +668,47 @@ function SeoMetaPerPage({ showToast }: { showToast: (msg: string, type: string) 
 
   if (loadingSeo) return <div className="admin-card" style={{ textAlign: 'center', padding: '40px', color: '#9CA3AF' }}>جاري تحميل بيانات SEO...</div>;
 
+  const getPageName = (slug: string) => {
+    if (slug === '/') return 'الصفحة الرئيسية';
+    if (slug === '/services') return 'الخدمات (رئيسية)';
+    if (slug === '/pricing') return 'الأسعار';
+    if (slug === '/process') return 'آلية العمل';
+    if (slug === '/contact') return 'اتصل بنا';
+    if (slug === '/why-us') return 'لماذا نحن';
+    if (slug === '/custom-package') return 'باقة مخصصة';
+    if (slug === '/blog') return 'المدونة (رئيسية)';
+    if (slug === '/store') return 'المتجر (رئيسي)';
+    
+    if (slug.startsWith('/services/')) {
+      const s = slug.replace('/services/', '');
+      const serviceMap: any = {
+        dm_smm: 'إدارة السوشيال ميديا', dm_marketing: 'التسويق الرقمي', dm_visual: 'الإنتاج البصري', 
+        dm_influencer: 'التسويق عبر المؤثرين', dm_content: 'صناعة المحتوى', dm_exhibitions: 'تنظيم المعارض',
+        dm_advertising: 'الحملات الإعلانية', dm_consultation: 'الاستشارات التسويقية', dm_seo: 'تحسين محركات البحث SEO',
+        id_apps: 'تطبيقات الهواتف', id_website: 'برمجة المواقع', id_branding: 'الهوية البصرية',
+        id_software: 'البرمجيات الخاصة', id_cloud: 'الخدمات السحابية',
+        re_appraisal: 'التقييم العقاري', re_marketing: 'التسويق العقاري', re_management: 'إدارة الأملاك',
+        re_photography: 'التصوير العقاري', re_campaign: 'الحملات العقارية', re_project_images: 'تصوير المشاريع',
+        re_current_eval: 'تقييم الوضع الحالي', re_project_naming: 'تسمية المشاريع'
+      };
+      return `خدمة: ${serviceMap[s] || s}`;
+    }
+    
+    if (slug.startsWith('/blog/')) return `مقال: ${slug.replace('/blog/', '')}`;
+    if (slug.startsWith('/store/')) return `منتج: ${slug.replace('/store/', '')}`;
+
+    return slug;
+  };
+
   return (
     <div>
       {seoItems.map(item => (
         <div key={item.id} className="admin-card" style={{ marginBottom: '16px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-            <h4 style={{ margin: 0, color: '#3B82F6', direction: 'ltr', textAlign: 'right' }}>{item.slug}</h4>
+            <div>
+              <h4 style={{ margin: 0, color: '#3B82F6' }}>{getPageName(item.slug)}</h4>
+              <span style={{ fontSize: '12px', color: '#9CA3AF', direction: 'ltr', display: 'inline-block' }}>{item.slug}</span>
+            </div>
             <button
               className="admin-btn admin-btn-primary admin-btn-sm"
               onClick={() => handleSaveSeo(item.id)}
@@ -683,14 +720,51 @@ function SeoMetaPerPage({ showToast }: { showToast: (msg: string, type: string) 
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
             <div>
-              <label className="admin-label">عنوان السيو (SEO Title)</label>
+              <label className="admin-label">عنوان السيو بالعربي (Title AR)</label>
               <input
                 className="admin-input"
                 value={seoEdits[item.id]?.title || ''}
                 onChange={e => updateSeoField(item.id, 'title', e.target.value)}
-                placeholder="عنوان الصفحة لمحركات البحث"
+                placeholder="عنوان الصفحة لمحركات البحث بالعربي"
               />
             </div>
+            <div>
+              <label className="admin-label">عنوان السيو بالإنجليزي (Title EN)</label>
+              <input
+                className="admin-input"
+                value={seoEdits[item.id]?.titleEn || ''}
+                onChange={e => updateSeoField(item.id, 'titleEn', e.target.value)}
+                placeholder="SEO Title in English"
+                dir="ltr"
+              />
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
+            <div>
+              <label className="admin-label">الوصف بالعربي (Description AR)</label>
+              <textarea
+                className="admin-textarea"
+                value={seoEdits[item.id]?.description || ''}
+                onChange={e => updateSeoField(item.id, 'description', e.target.value)}
+                rows={2}
+                placeholder="وصف مختصر وجذاب يظهر في نتائج البحث"
+              />
+            </div>
+            <div>
+              <label className="admin-label">الوصف بالإنجليزي (Description EN)</label>
+              <textarea
+                className="admin-textarea"
+                value={seoEdits[item.id]?.descriptionEn || ''}
+                onChange={e => updateSeoField(item.id, 'descriptionEn', e.target.value)}
+                rows={2}
+                placeholder="Meta Description in English"
+                dir="ltr"
+              />
+            </div>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
             <div>
               <label className="admin-label">الكلمة المفتاحية (Focus Keyword)</label>
               <input
@@ -700,28 +774,15 @@ function SeoMetaPerPage({ showToast }: { showToast: (msg: string, type: string) 
                 placeholder="مثال: تسويق رقمي"
               />
             </div>
-          </div>
-
-          <div style={{ marginBottom: '12px' }}>
-            <label className="admin-label">الوصف (Meta Description)</label>
-            <textarea
-              className="admin-textarea"
-              value={seoEdits[item.id]?.description || ''}
-              onChange={e => updateSeoField(item.id, 'description', e.target.value)}
-              rows={2}
-              placeholder="وصف مختصر وجذاب يظهر في نتائج البحث"
-            />
-          </div>
-
-          <div>
-            <label className="admin-label">الفهرسة (Robots)</label>
-            <input
-              className="admin-input"
-              value={seoEdits[item.id]?.robots || ''}
-              onChange={e => updateSeoField(item.id, 'robots', e.target.value)}
-              placeholder="index, follow"
-              style={{ maxWidth: '300px' }}
-            />
+            <div>
+              <label className="admin-label">الفهرسة (Robots)</label>
+              <input
+                className="admin-input"
+                value={seoEdits[item.id]?.robots || ''}
+                onChange={e => updateSeoField(item.id, 'robots', e.target.value)}
+                placeholder="index, follow"
+              />
+            </div>
           </div>
         </div>
       ))}

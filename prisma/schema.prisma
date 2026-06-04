@@ -11,12 +11,22 @@ model SeoMeta {
   id              String   @id @default(cuid())
   slug            String   @unique
   title           String?
+  titleAr         String?
+  titleEn         String?
   description     String?
+  descriptionAr   String?
+  descriptionEn   String?
   focusKeyword    String?
+  focusKeywordAr  String?
+  focusKeywordEn  String?
   canonicalUrl    String?
   robots          String?  @default("index, follow") // e.g., "noindex, nofollow"
   ogTitle         String?
+  ogTitleAr       String?
+  ogTitleEn       String?
   ogDescription   String?
+  ogDescriptionAr String?
+  ogDescriptionEn String?
   ogImage         String?
   twitterCard     String?  @default("summary_large_image")
   schemaType      String?  @default("WebPage") // e.g., Article, Product, FAQ

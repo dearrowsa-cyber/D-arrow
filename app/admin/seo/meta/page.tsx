@@ -93,7 +93,9 @@ export default function SeoMetaList() {
       setExpandedId(item.id);
       setEditData({
         title: item.title || '',
+        titleEn: item.titleEn || '',
         description: item.description || '',
+        descriptionEn: item.descriptionEn || '',
         focusKeyword: item.focusKeyword || '',
         robots: item.robots || 'index, follow',
         canonicalUrl: item.canonicalUrl || '',
@@ -244,7 +246,7 @@ export default function SeoMetaList() {
                           {/* General SEO Fields */}
                           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
                             <div>
-                              <label className="admin-label">عنوان السيو (SEO Title) ({editData.title?.length || 0}/60)</label>
+                              <label className="admin-label">عنوان السيو بالعربي (Title AR) ({editData.title?.length || 0}/60)</label>
                               <input
                                 className="admin-input"
                                 value={editData.title || ''}
@@ -256,27 +258,47 @@ export default function SeoMetaList() {
                               </div>
                             </div>
                             <div>
-                              <label className="admin-label">الكلمة المفتاحية (Focus Keyword)</label>
+                              <label className="admin-label">عنوان السيو بالإنجليزي (Title EN) ({editData.titleEn?.length || 0}/60)</label>
                               <input
                                 className="admin-input"
-                                value={editData.focusKeyword || ''}
-                                onChange={e => setEditData({ ...editData, focusKeyword: e.target.value })}
-                                placeholder="مثال: تسويق رقمي"
+                                value={editData.titleEn || ''}
+                                onChange={e => setEditData({ ...editData, titleEn: e.target.value })}
+                                placeholder="SEO Title in English"
+                                dir="ltr"
                               />
+                              <div style={{ height: '3px', width: '100%', background: '#374151', marginTop: '4px', borderRadius: '2px' }}>
+                                <div style={{ height: '100%', width: `${Math.min(100, ((editData.titleEn?.length || 0) / 60) * 100)}%`, background: (editData.titleEn?.length || 0) > 60 ? '#EF4444' : (editData.titleEn?.length || 0) > 40 ? '#22C55E' : '#F59E0B', borderRadius: '2px', transition: 'all 0.3s' }} />
+                              </div>
                             </div>
                           </div>
 
-                          <div style={{ marginBottom: '20px' }}>
-                            <label className="admin-label">الوصف (Meta Description) ({editData.description?.length || 0}/160)</label>
-                            <textarea
-                              className="admin-textarea"
-                              value={editData.description || ''}
-                              onChange={e => setEditData({ ...editData, description: e.target.value })}
-                              rows={3}
-                              placeholder="وصف مختصر وجذاب يظهر في نتائج البحث"
-                            />
-                            <div style={{ height: '3px', width: '100%', background: '#374151', marginTop: '4px', borderRadius: '2px' }}>
-                              <div style={{ height: '100%', width: `${Math.min(100, ((editData.description?.length || 0) / 160) * 100)}%`, background: (editData.description?.length || 0) > 160 ? '#EF4444' : (editData.description?.length || 0) > 120 ? '#22C55E' : '#F59E0B', borderRadius: '2px', transition: 'all 0.3s' }} />
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
+                            <div>
+                              <label className="admin-label">الوصف بالعربي (Description AR) ({editData.description?.length || 0}/160)</label>
+                              <textarea
+                                className="admin-textarea"
+                                value={editData.description || ''}
+                                onChange={e => setEditData({ ...editData, description: e.target.value })}
+                                rows={3}
+                                placeholder="وصف مختصر وجذاب يظهر في نتائج البحث"
+                              />
+                              <div style={{ height: '3px', width: '100%', background: '#374151', marginTop: '4px', borderRadius: '2px' }}>
+                                <div style={{ height: '100%', width: `${Math.min(100, ((editData.description?.length || 0) / 160) * 100)}%`, background: (editData.description?.length || 0) > 160 ? '#EF4444' : (editData.description?.length || 0) > 120 ? '#22C55E' : '#F59E0B', borderRadius: '2px', transition: 'all 0.3s' }} />
+                              </div>
+                            </div>
+                            <div>
+                              <label className="admin-label">الوصف بالإنجليزي (Description EN) ({editData.descriptionEn?.length || 0}/160)</label>
+                              <textarea
+                                className="admin-textarea"
+                                value={editData.descriptionEn || ''}
+                                onChange={e => setEditData({ ...editData, descriptionEn: e.target.value })}
+                                rows={3}
+                                placeholder="Meta Description in English"
+                                dir="ltr"
+                              />
+                              <div style={{ height: '3px', width: '100%', background: '#374151', marginTop: '4px', borderRadius: '2px' }}>
+                                <div style={{ height: '100%', width: `${Math.min(100, ((editData.descriptionEn?.length || 0) / 160) * 100)}%`, background: (editData.descriptionEn?.length || 0) > 160 ? '#EF4444' : (editData.descriptionEn?.length || 0) > 120 ? '#22C55E' : '#F59E0B', borderRadius: '2px', transition: 'all 0.3s' }} />
+                              </div>
                             </div>
                           </div>
 
