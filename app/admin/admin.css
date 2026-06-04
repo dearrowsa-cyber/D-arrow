@@ -953,3 +953,112 @@ body:has(.admin-login-page) footer {
 @keyframes admin-spin {
   100% { transform: rotate(360deg); }
 }
+
+/* ============================================
+   LIGHT MODE overrides
+   ============================================ */
+.admin-layout.light-mode {
+  background: #F3F4F6 !important;
+  color: #111827 !important;
+}
+
+.admin-layout.light-mode .admin-sidebar {
+  background: rgba(255, 255, 255, 0.9);
+  border-right: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.admin-layout.light-mode .admin-topbar {
+  background: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.admin-layout.light-mode .admin-card,
+.admin-layout.light-mode .admin-modal,
+.admin-layout.light-mode .admin-table th,
+.admin-layout.light-mode .admin-table td {
+  background: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.05) !important;
+  color: #111827 !important;
+}
+
+.admin-layout.light-mode .admin-table th {
+  background: #F9FAFB !important;
+  color: #4B5563 !important;
+}
+
+.admin-layout.light-mode .admin-table tr:hover td {
+  background: rgba(255, 77, 109, 0.02) !important;
+}
+
+.admin-layout.light-mode .admin-nav-item {
+  color: #4B5563;
+}
+
+.admin-layout.light-mode .admin-nav-item:hover {
+  background: rgba(255, 77, 109, 0.08);
+  color: #111827;
+  -webkit-text-fill-color: #111827;
+}
+
+.admin-layout.light-mode .admin-nav-item.active {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+
+.admin-layout.light-mode .admin-input,
+.admin-layout.light-mode .admin-textarea,
+.admin-layout.light-mode .admin-select {
+  background: #F9FAFB;
+  border-color: #E5E7EB;
+  color: #111827;
+}
+
+.admin-layout.light-mode .admin-input:focus,
+.admin-layout.light-mode .admin-textarea:focus {
+  background: #FFFFFF;
+  border-color: #FF4D6D;
+  box-shadow: 0 0 0 3px rgba(255, 77, 109, 0.1);
+}
+
+.admin-layout.light-mode .admin-btn-secondary {
+  background: #F3F4F6;
+  color: #111827;
+  border-color: #E5E7EB;
+}
+
+.admin-layout.light-mode .admin-btn-secondary:hover {
+  background: #E5E7EB;
+}
+
+.admin-layout.light-mode .admin-btn-ghost {
+  color: #4B5563;
+}
+
+.admin-layout.light-mode .admin-btn-ghost:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #111827;
+}
+
+/* Fix inline styles in components that use hardcoded dark colors */
+.admin-layout.light-mode h2,
+.admin-layout.light-mode h3,
+.admin-layout.light-mode h4,
+.admin-layout.light-mode p[style*="color: #9CA3AF"],
+.admin-layout.light-mode p[style*="color: '#9CA3AF'"],
+.admin-layout.light-mode span[style*="color: #9CA3AF"],
+.admin-layout.light-mode span[style*="color: '#9CA3AF'"],
+.admin-layout.light-mode td[style*="color: #9CA3AF"],
+.admin-layout.light-mode td[style*="color: '#9CA3AF'"],
+.admin-layout.light-mode div[style*="color: #9CA3AF"],
+.admin-layout.light-mode div[style*="color: '#9CA3AF'"] {
+  color: #4B5563 !important;
+}
+
+.admin-layout.light-mode div[style*="background: '#1C1E26'"],
+.admin-layout.light-mode div[style*="background: #1C1E26"] {
+  background: #FFFFFF !important;
+}
+
+.admin-layout.light-mode div[style*="background: 'rgba(255, 77, 109, 0.03)'"] {
+  background: #FFF0F2 !important;
+}

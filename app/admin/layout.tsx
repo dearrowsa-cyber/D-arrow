@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import './admin.css';
-import { LayoutDashboard, FileText, Globe, DollarSign, LogOut, Menu, X, Image, Search, Tags, ArrowRightLeft, Bot, Code, Map, ShoppingBag, Package, Ticket, Star } from 'lucide-react';
+import { LayoutDashboard, FileText, Globe, DollarSign, LogOut, Menu, X, Image, Search, Tags, ArrowRightLeft, Bot, Code, Map, ShoppingBag, Package, Ticket, Star, Sun, Moon } from 'lucide-react';
 
 const navItems = [
   { href: '/admin', label: 'لوحة التحكم', icon: LayoutDashboard },
@@ -33,6 +33,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('admin_theme');
+    if (savedTheme === 'light') setTheme('light');
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    localStorage.setItem('admin_theme', newTheme);
+  };
 
 
   useEffect(() => {
@@ -99,7 +111,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (!isAuth) return null;
 
   return (
-    <div className="admin-layout">
+    <div className={`admin-layout ${theme === 'light' ? 'light-mode' : ''}`}>
       {/* FORCE HIDE GLOBAL CHROME */}
       <style suppressHydrationWarning>{`
         header, footer, canvas, .network-background { display: none !important; }
@@ -180,7 +192,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               {navItems.find(n => n.href === pathname)?.label || 'لوحة التحكم'}
             </h1>
           </div>
-          <div className="admin-topbar-actions">
+          <div className="admin-topbar-actions" style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <button
+              onClick={toggleTheme}
+              style={{
+                background: 'transparent', border: '1px solid rgba(255, 77, 109, 0.2)', 
+                borderRadius: '50%', width: 36, height: 36, display: 'flex', 
+                alignItems: 'center', justifyContent: 'center', color: '#FF4D6D',
+                cursor: 'pointer'
+              }}
+              title={theme === 'dark' ? 'تفعيل الوضع النهاري' : 'تفعيل الوضع الليلي'}
+            >
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
             <span style={{ fontSize: 13, color: '#6B7280' }}>
               مرحباً، Admin
             </span>
