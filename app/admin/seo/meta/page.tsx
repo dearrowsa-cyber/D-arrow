@@ -137,6 +137,38 @@ export default function SeoMetaList() {
 
   if (loading) return <div className="admin-content">Loading...</div>;
 
+  const getPageName = (slug: string) => {
+    if (slug === '/') return 'الصفحة الرئيسية';
+    if (slug === '/services') return 'الخدمات (رئيسية)';
+    if (slug === '/pricing') return 'الأسعار';
+    if (slug === '/process') return 'آلية العمل';
+    if (slug === '/contact') return 'اتصل بنا';
+    if (slug === '/why-us') return 'لماذا نحن';
+    if (slug === '/custom-package') return 'باقة مخصصة';
+    if (slug === '/blog') return 'المدونة (رئيسية)';
+    if (slug === '/store') return 'المتجر (رئيسي)';
+    
+    if (slug.startsWith('/services/')) {
+      const s = slug.replace('/services/', '');
+      const serviceMap: any = {
+        dm_smm: 'إدارة السوشيال ميديا', dm_marketing: 'التسويق الرقمي', dm_visual: 'الإنتاج البصري', 
+        dm_influencer: 'التسويق عبر المؤثرين', dm_content: 'صناعة المحتوى', dm_exhibitions: 'تنظيم المعارض',
+        dm_advertising: 'الحملات الإعلانية', dm_consultation: 'الاستشارات التسويقية', dm_seo: 'تحسين محركات البحث SEO',
+        id_apps: 'تطبيقات الهواتف', id_website: 'برمجة المواقع', id_branding: 'الهوية البصرية',
+        id_software: 'البرمجيات الخاصة', id_cloud: 'الخدمات السحابية',
+        re_appraisal: 'التقييم العقاري', re_marketing: 'التسويق العقاري', re_management: 'إدارة الأملاك',
+        re_photography: 'التصوير العقاري', re_campaign: 'الحملات العقارية', re_project_images: 'تصوير المشاريع',
+        re_current_eval: 'تقييم الوضع الحالي', re_project_naming: 'تسمية المشاريع'
+      };
+      return `خدمة: ${serviceMap[s] || s}`;
+    }
+    
+    if (slug.startsWith('/blog/')) return `مقال: ${slug.replace('/blog/', '')}`;
+    if (slug.startsWith('/store/')) return `منتج: ${slug.replace('/store/', '')}`;
+
+    return slug;
+  };
+
   return (
     <div className="admin-content">
       {toast && <div className={`admin-toast admin-toast-${toast.type}`}>{toast.msg}</div>}
@@ -174,6 +206,7 @@ export default function SeoMetaList() {
           <thead>
             <tr>
               <th>الرابط (URL Slug)</th>
+              <th>اسم الصفحة</th>
               <th>عنوان السيو</th>
               <th>الوصف</th>
               <th>النتيجة</th>
@@ -191,7 +224,8 @@ export default function SeoMetaList() {
               return (
                 <React.Fragment key={item.id}>
                   <tr style={{ cursor: 'pointer' }} onClick={() => toggleExpand(item)}>
-                    <td style={{ color: '#3B82F6', fontWeight: 500, direction: 'ltr', textAlign: 'right' }}>{item.slug}</td>
+                    <td style={{ color: '#9CA3AF', fontSize: '13px', direction: 'ltr', textAlign: 'right' }}>{item.slug}</td>
+                    <td style={{ color: '#3B82F6', fontWeight: 500 }}>{getPageName(item.slug)}</td>
                     <td style={{ maxWidth: '200px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title || <span style={{ color: '#EF4444' }}>— فارغ</span>}</td>
                     <td style={{ maxWidth: '200px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: '#9CA3AF' }}>{item.description || <span style={{ color: '#EF4444' }}>— فارغ</span>}</td>
                     <td>
@@ -224,7 +258,7 @@ export default function SeoMetaList() {
                   {/* Inline Edit Panel */}
                   {isExpanded && (
                     <tr>
-                      <td colSpan={7} style={{ padding: 0, background: 'rgba(255, 77, 109, 0.03)' }}>
+                      <td colSpan={8} style={{ padding: 0, background: 'rgba(255, 77, 109, 0.03)' }}>
                         <div style={{ padding: '24px', borderTop: '2px solid rgba(255, 77, 109, 0.2)', borderBottom: '2px solid rgba(255, 77, 109, 0.2)' }}>
                           {/* Header */}
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
@@ -365,7 +399,7 @@ export default function SeoMetaList() {
             })}
             {items.length === 0 && (
               <tr>
-                <td colSpan={7} style={{ textAlign: 'center', padding: '48px', color: '#9CA3AF' }}>
+                <td colSpan={8} style={{ textAlign: 'center', padding: '48px', color: '#9CA3AF' }}>
                   <p style={{ margin: '0 0 8px' }}>لا توجد سجلات SEO. اضغط &quot;مزامنة الصفحات&quot; لتحميل بيانات السيو لجميع صفحات الموقع.</p>
                 </td>
               </tr>
