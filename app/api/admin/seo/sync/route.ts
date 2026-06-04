@@ -21,7 +21,13 @@ export async function POST(req: NextRequest) {
       '/why-us',
       '/custom-package',
       '/blog',
-      '/store'
+      '/store',
+      // Services
+      '/services/dm_smm', '/services/dm_marketing', '/services/dm_visual', '/services/dm_influencer',
+      '/services/dm_content', '/services/dm_exhibitions', '/services/dm_advertising', '/services/dm_consultation', '/services/dm_seo',
+      '/services/id_apps', '/services/id_website', '/services/id_branding', '/services/id_software', '/services/id_cloud',
+      '/services/re_appraisal', '/services/re_marketing', '/services/re_management', '/services/re_photography',
+      '/services/re_campaign', '/services/re_project_images', '/services/re_current_eval', '/services/re_project_naming'
     ];
 
     // Dynamically fetch all Blog Posts from the database
