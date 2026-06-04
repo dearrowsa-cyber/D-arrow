@@ -20,24 +20,35 @@ export async function POST(req: NextRequest) {
       '/contact',
       '/why-us',
       '/custom-package',
-      '/blog'
+      '/blog',
+      '/store'
     ];
 
-    // Attempt to parse blog posts
+    // Dynamically fetch all Blog Posts from the database
     try {
-      const blogPath = path.join(process.cwd(), 'public', 'data', 'blog-posts.json');
-      if (fs.existsSync(blogPath)) {
-        const blogData = JSON.parse(fs.readFileSync(blogPath, 'utf8'));
-        if (blogData && Array.isArray(blogData.posts)) {
-          blogData.posts.forEach((post: any) => {
-            if (post.id) {
-              routes.push(`/blog/${post.id}`);
-            }
-          });
-        }
-      }
+      const posts = await prisma.blogPost.findMany({
+        where: { status: 'published' },
+        select: { id: true, slug: true }
+      });
+      posts.forEach(post => {
+        // Use slug if available, otherwise fallback to id
+        routes.push(`/blog/${post.slug || post.id}`);
+      });
     } catch (e) {
-      console.error('Failed to parse blog posts for SEO sync', e);
+      console.error('Failed to fetch blog posts for SEO sync', e);
+    }
+
+    // Dynamically fetch all Store Products from the database
+    try {
+      const products = await prisma.product.findMany({
+        where: { status: 'published' },
+        select: { slug: true }
+      });
+      products.forEach(product => {
+        routes.push(`/store/${product.slug}`);
+      });
+    } catch (e) {
+      console.error('Failed to fetch store products for SEO sync', e);
     }
 
     let syncedCount = 0;
