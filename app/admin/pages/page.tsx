@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Save, Globe, Phone, MapPin, Clock, Instagram, MessageCircle, Linkedin } from 'lucide-react';
+import { Save, Globe, Phone, MapPin, Clock, Instagram, MessageCircle, Linkedin, Search } from 'lucide-react';
 
 export default function PagesManagementPage() {
   const [data, setData] = useState<any>(null);
@@ -104,6 +104,7 @@ export default function PagesManagementPage() {
     { id: 'contact', label: 'معلومات الاتصال', icon: Phone },
     { id: 'footer', label: 'الفوتر', icon: Globe },
     { id: 'social', label: 'السوشيال ميديا', icon: Instagram },
+    { id: 'seoMeta', label: 'بيانات SEO لكل صفحة', icon: Search },
   ];
 
   const [generatingSeo, setGeneratingSeo] = useState<{ [key: string]: boolean }>({});
@@ -594,8 +595,141 @@ export default function PagesManagementPage() {
               ))}
             </div>
           )}
+          {/* SEO Meta per Page */}
+          {activeSection === 'seoMeta' && <SeoMetaPerPage showToast={showToast} />}
         </div>
       </div>
+    </div>
+  );
+}
+
+/* ====== Inline SEO Meta Per Page Component ====== */
+function SeoMetaPerPage({ showToast }: { showToast: (msg: string, type: string) => void }) {
+  const [seoItems, setSeoItems] = useState<any[]>([]);
+  const [loadingSeo, setLoadingSeo] = useState(true);
+  const [savingSeoId, setSavingSeoId] = useState<string | null>(null);
+  const [seoEdits, setSeoEdits] = useState<{ [id: string]: any }>({});
+
+  useEffect(() => {
+    fetch('/api/admin/seo/meta', {
+      headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` }
+    })
+      .then(res => res.json())
+      .then(res => {
+        const list = Array.isArray(res) ? res : res.data || [];
+        setSeoItems(list);
+        // Pre-populate edit state
+        const edits: any = {};
+        list.forEach((item: any) => {
+          edits[item.id] = {
+            title: item.title || '',
+            description: item.description || '',
+            focusKeyword: item.focusKeyword || '',
+            robots: item.robots || 'index, follow',
+          };
+        });
+        setSeoEdits(edits);
+        setLoadingSeo(false);
+      })
+      .catch(() => setLoadingSeo(false));
+  }, []);
+
+  const handleSaveSeo = async (id: string) => {
+    setSavingSeoId(id);
+    try {
+      const res = await fetch(`/api/admin/seo/meta/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('admin_token')}`
+        },
+        body: JSON.stringify(seoEdits[id])
+      });
+      const result = await res.json();
+      if (result.success) {
+        showToast('تم حفظ بيانات SEO بنجاح!', 'success');
+      } else {
+        showToast('خطأ: ' + result.error, 'error');
+      }
+    } catch {
+      showToast('حدث خطأ أثناء الحفظ', 'error');
+    }
+    setSavingSeoId(null);
+  };
+
+  const updateSeoField = (id: string, field: string, value: string) => {
+    setSeoEdits(prev => ({
+      ...prev,
+      [id]: { ...prev[id], [field]: value }
+    }));
+  };
+
+  if (loadingSeo) return <div className="admin-card" style={{ textAlign: 'center', padding: '40px', color: '#9CA3AF' }}>جاري تحميل بيانات SEO...</div>;
+
+  return (
+    <div>
+      {seoItems.map(item => (
+        <div key={item.id} className="admin-card" style={{ marginBottom: '16px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+            <h4 style={{ margin: 0, color: '#3B82F6', direction: 'ltr', textAlign: 'right' }}>{item.slug}</h4>
+            <button
+              className="admin-btn admin-btn-primary admin-btn-sm"
+              onClick={() => handleSaveSeo(item.id)}
+              disabled={savingSeoId === item.id}
+            >
+              <Save size={14} /> {savingSeoId === item.id ? 'جاري الحفظ...' : 'حفظ'}
+            </button>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px', marginBottom: '12px' }}>
+            <div>
+              <label className="admin-label">عنوان السيو (SEO Title)</label>
+              <input
+                className="admin-input"
+                value={seoEdits[item.id]?.title || ''}
+                onChange={e => updateSeoField(item.id, 'title', e.target.value)}
+                placeholder="عنوان الصفحة لمحركات البحث"
+              />
+            </div>
+            <div>
+              <label className="admin-label">الكلمة المفتاحية (Focus Keyword)</label>
+              <input
+                className="admin-input"
+                value={seoEdits[item.id]?.focusKeyword || ''}
+                onChange={e => updateSeoField(item.id, 'focusKeyword', e.target.value)}
+                placeholder="مثال: تسويق رقمي"
+              />
+            </div>
+          </div>
+
+          <div style={{ marginBottom: '12px' }}>
+            <label className="admin-label">الوصف (Meta Description)</label>
+            <textarea
+              className="admin-textarea"
+              value={seoEdits[item.id]?.description || ''}
+              onChange={e => updateSeoField(item.id, 'description', e.target.value)}
+              rows={2}
+              placeholder="وصف مختصر وجذاب يظهر في نتائج البحث"
+            />
+          </div>
+
+          <div>
+            <label className="admin-label">الفهرسة (Robots)</label>
+            <input
+              className="admin-input"
+              value={seoEdits[item.id]?.robots || ''}
+              onChange={e => updateSeoField(item.id, 'robots', e.target.value)}
+              placeholder="index, follow"
+              style={{ maxWidth: '300px' }}
+            />
+          </div>
+        </div>
+      ))}
+      {seoItems.length === 0 && (
+        <div className="admin-card" style={{ textAlign: 'center', padding: '40px', color: '#9CA3AF' }}>
+          لا توجد بيانات SEO بعد. قم بالذهاب إلى أدوات السيو ← مزامنة الصفحات أولاً.
+        </div>
+      )}
     </div>
   );
 }
