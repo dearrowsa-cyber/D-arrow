@@ -1,17 +1,9 @@
 import type { Metadata } from 'next';
 
-export const metadata: Metadata = {
-  title: 'الأسعار والباقات',
-  description: 'باقات تسويق رقمي احترافية تبدأ من 2,950 ريال. باقة الأساس، النمو، الاحتراف، والباقة المخصصة. حزم تطوير المواقع والتطبيقات. نتائج قابلة للقياس ودعم مخصص.',
-  keywords: 'أسعار تسويق رقمي, باقات تسويق, أسعار تصميم مواقع, باقات سوشيال ميديا, تسويق رقمي السعودية',
-  openGraph: {
-    title: 'الأسعار والباقات',
-    description: 'باقات تسويق رقمي احترافية تبدأ من 2,950 ريال سعودي. اختر الباقة المناسبة لعملك.',
-    url: 'https://d-arrow.com/pricing',
-    images: [{ url: 'https://d-arrow.com/og-image.jpg', width: 1200, height: 630, alt: 'D Arrow Pricing' }],
-  },
-  alternates: { canonical: 'https://d-arrow.com/pricing' },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { getSeoMetadata } = await import('@/lib/seo/metadata');
+  return getSeoMetadata('/pricing');
+}
 
 export default function PricingLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

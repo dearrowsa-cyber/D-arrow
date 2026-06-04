@@ -62,11 +62,15 @@ export async function getSeoMetadata(slug: string): Promise<Metadata> {
 
     if (!entry) return fallback;
 
+    // Prefer Arabic, then fallback to general title, then default
+    const titleToUse = entry.titleAr || entry.title;
+    const descriptionToUse = entry.descriptionAr || entry.description;
+
     // Merge: DB values override defaults; nullish DB fields keep default
     const metadata: Metadata = {
       ...fallback,
-      ...(entry.title && { title: entry.title }),
-      ...(entry.description && { description: entry.description }),
+      ...(titleToUse && { title: titleToUse }),
+      ...(descriptionToUse && { description: descriptionToUse }),
     };
 
     if (entry.canonicalUrl) {
@@ -88,14 +92,17 @@ export async function getSeoMetadata(slug: string): Promise<Metadata> {
       };
     }
 
-    if (entry.ogTitle || entry.ogDescription || entry.ogImage) {
+    if (entry.ogTitle || entry.ogDescription || entry.ogImage || entry.ogTitleAr || entry.ogDescriptionAr) {
+      const ogTitleToUse = entry.ogTitleAr || entry.ogTitle || titleToUse;
+      const ogDescToUse = entry.ogDescriptionAr || entry.ogDescription || descriptionToUse;
+      
       metadata.openGraph = {
         type: 'website',
-        locale: 'en_US',
+        locale: 'ar_SA',
         siteName: 'D Arrow - Digital Marketing Agency',
         url: `https://d-arrow.com${slug === '/' ? '' : slug}`,
-        ...(entry.ogTitle && { title: entry.ogTitle }),
-        ...(entry.ogDescription && { description: entry.ogDescription }),
+        ...(ogTitleToUse && { title: ogTitleToUse }),
+        ...(ogDescToUse && { description: ogDescToUse }),
         ...(entry.ogImage && {
           images: [{ url: entry.ogImage, width: 1200, height: 630 }],
         }),
@@ -103,10 +110,13 @@ export async function getSeoMetadata(slug: string): Promise<Metadata> {
     }
 
     if (entry.twitterCard) {
+      const ogTitleToUse = entry.ogTitleAr || entry.ogTitle || titleToUse;
+      const ogDescToUse = entry.ogDescriptionAr || entry.ogDescription || descriptionToUse;
+      
       metadata.twitter = {
         card: entry.twitterCard as any,
-        ...(entry.ogTitle && { title: entry.ogTitle }),
-        ...(entry.ogDescription && { description: entry.ogDescription }),
+        ...(ogTitleToUse && { title: ogTitleToUse }),
+        ...(ogDescToUse && { description: ogDescToUse }),
         ...(entry.ogImage && { images: [entry.ogImage] }),
       };
     }
