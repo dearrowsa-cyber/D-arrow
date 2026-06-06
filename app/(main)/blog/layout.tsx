@@ -1,17 +1,9 @@
 import type { Metadata } from 'next';
+import { getSeoMetadata } from '@/lib/seo/metadata';
 
-export const metadata: Metadata = {
-  title: 'المدونة',
-  description: 'مقالات ونصائح في التسويق الرقمي، تحسين محركات البحث، إدارة السوشيال ميديا، وأحدث اتجاهات التسويق الإلكتروني.',
-  keywords: 'مدونة تسويق رقمي, مقالات SEO, نصائح سوشيال ميديا, تسويق إلكتروني',
-  openGraph: {
-    title: 'المدونة',
-    description: 'أحدث المقالات والنصائح في عالم التسويق الرقمي من فريق D Arrow.',
-    url: 'https://d-arrow.com/blog',
-    images: [{ url: 'https://d-arrow.com/og-image.jpg', width: 1200, height: 630, alt: 'D Arrow Blog' }],
-  },
-  alternates: { canonical: 'https://d-arrow.com/blog' },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return getSeoMetadata('/blog');
+}
 
 export default function BlogLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;

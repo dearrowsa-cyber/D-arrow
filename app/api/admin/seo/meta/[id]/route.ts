@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { verifyToken } from '@/app/api/admin/auth/route';
@@ -71,6 +72,15 @@ export async function PUT(
       }
     });
 
+    if (updated.slug) {
+      try {
+        revalidatePath(updated.slug, 'page');
+        revalidatePath(updated.slug, 'layout');
+      } catch (e) {
+        console.warn('Cache revalidation failed:', e);
+      }
+    }
+
     return NextResponse.json({ success: true, data: updated });
   } catch (error: any) {
     if (error.code === 'P2002') {
@@ -86,9 +96,21 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params;
+    // Get slug before deleting so we can revalidate the page
+    const entry = await prisma.seoMeta.findUnique({ where: { id }, select: { slug: true } });
+    
     await prisma.seoMeta.delete({
       where: { id }
     });
+
+    if (entry?.slug) {
+      try {
+        revalidatePath(entry.slug, 'page');
+        revalidatePath(entry.slug, 'layout');
+      } catch (e) {
+        console.warn('Cache revalidation failed:', e);
+      }
+    }
 
     return NextResponse.json({ success: true });
   } catch (error) {

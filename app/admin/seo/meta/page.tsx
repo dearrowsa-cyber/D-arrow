@@ -92,6 +92,7 @@ export default function SeoMetaList() {
     } else {
       setExpandedId(item.id);
       setEditData({
+        slug: item.slug || '',
         title: item.title || '',
         titleEn: item.titleEn || '',
         description: item.description || '',

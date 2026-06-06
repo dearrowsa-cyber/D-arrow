@@ -1,3 +1,4 @@
+import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { analyzeContent } from '@/lib/seo/analyzer';
@@ -157,6 +158,14 @@ export async function POST(req: NextRequest) {
       } catch (err) {
         console.warn(`Failed to fetch ${slug} for SEO analysis during sync`, err);
         // Even if fetch fails, we created the SeoMeta entry
+      }
+    }
+    // Revalidate all synced pages so SEO changes appear immediately
+    for (const slug of routes) {
+      try {
+        revalidatePath(slug, 'page');
+      } catch (e) {
+        // ignore individual revalidation failures
       }
     }
 

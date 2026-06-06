@@ -5,7 +5,9 @@ import SocialPreview from './SocialPreview';
 interface FormData {
   slug: string;
   title: string;
+  titleEn: string;
   description: string;
+  descriptionEn: string;
   focusKeyword: string;
   canonicalUrl: string;
   robots: string;
@@ -27,7 +29,9 @@ export default function SeoMetaForm({ initialData = {}, onSave, isSaving = false
   const [formData, setFormData] = useState<FormData>({
     slug: initialData.slug || '',
     title: initialData.title || '',
+    titleEn: initialData.titleEn || '',
     description: initialData.description || '',
+    descriptionEn: initialData.descriptionEn || '',
     focusKeyword: initialData.focusKeyword || '',
     canonicalUrl: initialData.canonicalUrl || '',
     robots: initialData.robots || 'index, follow',
@@ -65,19 +69,37 @@ export default function SeoMetaForm({ initialData = {}, onSave, isSaving = false
               <input required type="text" name="slug" className="admin-input" value={formData.slug} onChange={handleChange} placeholder="/my-page" />
             </div>
             
-            <div>
-              <label className="admin-label">SEO Title ({formData.title.length}/60)</label>
-              <input type="text" name="title" className="admin-input" value={formData.title} onChange={handleChange} />
-              <div style={{ height: '4px', width: '100%', background: '#374151', marginTop: '4px', borderRadius: '2px' }}>
-                <div style={{ height: '100%', width: `${Math.min(100, (formData.title.length / 60) * 100)}%`, background: formData.title.length > 60 ? '#EF4444' : formData.title.length > 40 ? '#22C55E' : '#F59E0B', borderRadius: '2px', transition: 'all 0.3s' }} />
+            <div className="admin-grid-2">
+              <div>
+                <label className="admin-label">SEO Title AR ({formData.title.length}/60)</label>
+                <input type="text" name="title" className="admin-input" value={formData.title} onChange={handleChange} dir="rtl" />
+                <div style={{ height: '4px', width: '100%', background: '#374151', marginTop: '4px', borderRadius: '2px' }}>
+                  <div style={{ height: '100%', width: `${Math.min(100, (formData.title.length / 60) * 100)}%`, background: formData.title.length > 60 ? '#EF4444' : formData.title.length > 40 ? '#22C55E' : '#F59E0B', borderRadius: '2px', transition: 'all 0.3s' }} />
+                </div>
+              </div>
+              <div>
+                <label className="admin-label">SEO Title EN ({formData.titleEn.length}/60)</label>
+                <input type="text" name="titleEn" className="admin-input" value={formData.titleEn} onChange={handleChange} dir="ltr" />
+                <div style={{ height: '4px', width: '100%', background: '#374151', marginTop: '4px', borderRadius: '2px' }}>
+                  <div style={{ height: '100%', width: `${Math.min(100, (formData.titleEn.length / 60) * 100)}%`, background: formData.titleEn.length > 60 ? '#EF4444' : formData.titleEn.length > 40 ? '#22C55E' : '#F59E0B', borderRadius: '2px', transition: 'all 0.3s' }} />
+                </div>
               </div>
             </div>
 
-            <div>
-              <label className="admin-label">Meta Description ({formData.description.length}/160)</label>
-              <textarea name="description" className="admin-textarea" value={formData.description} onChange={handleChange} rows={3} />
-              <div style={{ height: '4px', width: '100%', background: '#374151', marginTop: '4px', borderRadius: '2px' }}>
-                <div style={{ height: '100%', width: `${Math.min(100, (formData.description.length / 160) * 100)}%`, background: formData.description.length > 160 ? '#EF4444' : formData.description.length > 120 ? '#22C55E' : '#F59E0B', borderRadius: '2px', transition: 'all 0.3s' }} />
+            <div className="admin-grid-2">
+              <div>
+                <label className="admin-label">Meta Description AR ({formData.description.length}/160)</label>
+                <textarea name="description" className="admin-textarea" value={formData.description} onChange={handleChange} rows={3} dir="rtl" />
+                <div style={{ height: '4px', width: '100%', background: '#374151', marginTop: '4px', borderRadius: '2px' }}>
+                  <div style={{ height: '100%', width: `${Math.min(100, (formData.description.length / 160) * 100)}%`, background: formData.description.length > 160 ? '#EF4444' : formData.description.length > 120 ? '#22C55E' : '#F59E0B', borderRadius: '2px', transition: 'all 0.3s' }} />
+                </div>
+              </div>
+              <div>
+                <label className="admin-label">Meta Description EN ({formData.descriptionEn.length}/160)</label>
+                <textarea name="descriptionEn" className="admin-textarea" value={formData.descriptionEn} onChange={handleChange} rows={3} dir="ltr" />
+                <div style={{ height: '4px', width: '100%', background: '#374151', marginTop: '4px', borderRadius: '2px' }}>
+                  <div style={{ height: '100%', width: `${Math.min(100, (formData.descriptionEn.length / 160) * 100)}%`, background: formData.descriptionEn.length > 160 ? '#EF4444' : formData.descriptionEn.length > 120 ? '#22C55E' : '#F59E0B', borderRadius: '2px', transition: 'all 0.3s' }} />
+                </div>
               </div>
             </div>
 

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { unstable_noStore as noStore } from 'next/cache';
 import prisma from '@/lib/prisma';
 
 /** Default metadata per slug — used as fallback when no DB entry exists */
@@ -48,6 +49,21 @@ const DEFAULTS: Record<string, Metadata> = {
     description: 'Design your custom digital marketing package with D Arrow. Mix and match services like SEO, web design, branding, and more.',
     keywords: 'custom marketing package, tailored marketing solutions, bespoke services',
   },
+  '/privacy': {
+    title: 'سياسة الخصوصية | D Arrow',
+    description: 'سياسة الخصوصية لموقع D Arrow للتسويق الرقمي. تعرف على كيفية جمع واستخدام وحماية بياناتك الشخصية.',
+    keywords: 'سياسة الخصوصية, حماية البيانات, D Arrow',
+  },
+  '/cookies': {
+    title: 'سياسة ملفات تعريف الارتباط | D Arrow',
+    description: 'سياسة ملفات تعريف الارتباط (الكوكيز) لموقع D Arrow. تعرف على أنواع الكوكيز المستخدمة وكيفية التحكم فيها.',
+    keywords: 'سياسة الكوكيز, ملفات تعريف الارتباط, D Arrow',
+  },
+  '/store': {
+    title: 'المتجر | D Arrow - منتجات وخدمات رقمية',
+    description: 'تصفح منتجاتنا وخدماتنا الرقمية الجاهزة. قوالب، أدوات تسويقية، وحلول رقمية احترافية.',
+    keywords: 'متجر رقمي, منتجات رقمية, أدوات تسويقية',
+  },
 };
 
 /**
@@ -55,6 +71,7 @@ const DEFAULTS: Record<string, Metadata> = {
  * falling back to hardcoded defaults when the slug has no DB entry.
  */
 export async function getSeoMetadata(slug: string): Promise<Metadata> {
+  noStore(); // Always fetch fresh SEO data from DB
   const fallback = DEFAULTS[slug] ?? {};
 
   try {
@@ -62,9 +79,10 @@ export async function getSeoMetadata(slug: string): Promise<Metadata> {
 
     if (!entry) return fallback;
 
-    // Prefer Arabic, then fallback to general title, then default
-    const titleToUse = entry.titleAr || entry.title;
-    const descriptionToUse = entry.descriptionAr || entry.description;
+    // Use title directly — it IS the Arabic title as edited from admin dashboard
+    // titleAr is a legacy field, only use as secondary fallback
+    const titleToUse = entry.title || entry.titleAr;
+    const descriptionToUse = entry.description || entry.descriptionAr;
 
     // Merge: DB values override defaults; nullish DB fields keep default
     const metadata: Metadata = {
@@ -92,10 +110,11 @@ export async function getSeoMetadata(slug: string): Promise<Metadata> {
       };
     }
 
-    if (entry.ogTitle || entry.ogDescription || entry.ogImage || entry.ogTitleAr || entry.ogDescriptionAr) {
-      const ogTitleToUse = entry.ogTitleAr || entry.ogTitle || titleToUse;
-      const ogDescToUse = entry.ogDescriptionAr || entry.ogDescription || descriptionToUse;
-      
+    // OpenGraph: use ogTitle > title, ogDescription > description
+    const ogTitleToUse = entry.ogTitle || entry.ogTitleAr || titleToUse;
+    const ogDescToUse = entry.ogDescription || entry.ogDescriptionAr || descriptionToUse;
+
+    if (ogTitleToUse || ogDescToUse || entry.ogImage) {
       metadata.openGraph = {
         type: 'website',
         locale: 'ar_SA',
@@ -110,9 +129,6 @@ export async function getSeoMetadata(slug: string): Promise<Metadata> {
     }
 
     if (entry.twitterCard) {
-      const ogTitleToUse = entry.ogTitleAr || entry.ogTitle || titleToUse;
-      const ogDescToUse = entry.ogDescriptionAr || entry.ogDescription || descriptionToUse;
-      
       metadata.twitter = {
         card: entry.twitterCard as any,
         ...(ogTitleToUse && { title: ogTitleToUse }),

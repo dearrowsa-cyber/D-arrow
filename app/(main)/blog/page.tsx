@@ -1,19 +1,6 @@
-import { Metadata } from 'next';
 import prisma from '@/lib/prisma';
 import BlogClient from '@/components/BlogClient';
 import { Suspense } from 'react';
-
-export const metadata: Metadata = {
-  title: 'المدونة | D Arrow',
-  description: 'اكتشف أحدث المقالات والنصائح في عالم التسويق الرقمي، تحسين محركات البحث SEO، وإدارة السوشيال ميديا من فريق دي آرو.',
-  keywords: 'مدونة تسويق رقمي, سيو, تحسين محركات البحث, سوشيال ميديا, دي آرو, D Arrow, blog, digital marketing, seo',
-  openGraph: {
-    title: 'المدونة | D Arrow',
-    description: 'مقالات تعليمية ونصائح احترافية في التسويق الرقمي.',
-    url: 'https://d-arrow.com/blog',
-    images: [{ url: 'https://d-arrow.com/og-image.jpg', width: 1200, height: 630, alt: 'D Arrow Blog' }],
-  },
-};
 
 export const dynamic = 'force-dynamic';
 
