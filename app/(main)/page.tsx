@@ -39,8 +39,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return getSeoMetadata('/');
 }
 
-// Enable ISR with 3600 seconds (1 hour) revalidation
-export const revalidate = 3600;
+// Enable ISR with 60 seconds (1 minute) revalidation to sync SEO metadata
+export const revalidate = 60;
 
 export default function Home() {
   return (
