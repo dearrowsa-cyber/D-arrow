@@ -177,8 +177,8 @@ export default function SeoMetaList() {
       {deleteId && (
         <div className="admin-modal-backdrop">
           <div className="admin-modal">
-            <h3 style={{ color: '#E6E6EA', margin: '0 0 12px' }}>هل أنت متأكد؟</h3>
-            <p style={{ color: '#9CA3AF', margin: '0 0 24px', fontSize: 14 }}>
+            <h3 className="admin-text-primary" style={{ margin: '0 0 12px' }}>هل أنت متأكد؟</h3>
+            <p className="admin-text-secondary" style={{ margin: '0 0 24px', fontSize: 14 }}>
               سيتم حذف سجل بيانات السيو هذا نهائياً. لا يمكن التراجع عن هذا الإجراء.
             </p>
             <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
@@ -225,10 +225,10 @@ export default function SeoMetaList() {
               return (
                 <React.Fragment key={item.id}>
                   <tr style={{ cursor: 'pointer' }} onClick={() => toggleExpand(item)}>
-                    <td style={{ color: '#9CA3AF', fontSize: '13px', direction: 'ltr', textAlign: 'right' }}>{item.slug}</td>
-                    <td style={{ color: '#3B82F6', fontWeight: 500 }}>{getPageName(item.slug)}</td>
-                    <td style={{ maxWidth: '200px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title || <span style={{ color: '#EF4444' }}>— فارغ</span>}</td>
-                    <td style={{ maxWidth: '200px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: '#9CA3AF' }}>{item.description || <span style={{ color: '#EF4444' }}>— فارغ</span>}</td>
+                    <td className="admin-text-secondary" style={{ fontSize: '13px', direction: 'ltr', textAlign: 'right' }}>{item.slug}</td>
+                    <td className="admin-text-info" style={{ fontWeight: 500 }}>{getPageName(item.slug)}</td>
+                    <td style={{ maxWidth: '200px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.title || <span className="admin-text-danger">— فارغ</span>}</td>
+                    <td className="admin-text-secondary" style={{ maxWidth: '200px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.description || <span className="admin-text-danger">— فارغ</span>}</td>
                     <td>
                       {score !== null ? (
                         <span className={`admin-badge ${score >= 80 ? 'admin-badge-success' : score >= 50 ? 'admin-badge-warning' : 'admin-badge-danger'}`}>
@@ -238,7 +238,7 @@ export default function SeoMetaList() {
                         <span className="admin-badge admin-badge-info">غير مفحوص</span>
                       )}
                     </td>
-                    <td>{item.focusKeyword || <span style={{ color: '#EF4444' }}>— فارغ</span>}</td>
+                    <td>{item.focusKeyword || <span className="admin-text-danger">— فارغ</span>}</td>
                     <td><span className="admin-badge admin-badge-info">{item.robots}</span></td>
                     <td>
                       <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
@@ -263,7 +263,7 @@ export default function SeoMetaList() {
                         <div style={{ padding: '24px', borderTop: '2px solid rgba(255, 77, 109, 0.2)', borderBottom: '2px solid rgba(255, 77, 109, 0.2)' }}>
                           {/* Header */}
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                            <h4 style={{ margin: 0, color: '#FF4D6D' }}>تعديل SEO لـ: {item.slug}</h4>
+                            <h4 className="admin-text-brand" style={{ margin: 0 }}>تعديل SEO لـ: {item.slug}</h4>
                             <div style={{ display: 'flex', gap: '8px' }}>
                               <button className="admin-btn admin-btn-ghost admin-btn-sm" onClick={() => { setExpandedId(null); setEditData({}); }}>
                                 <X size={14} /> إلغاء

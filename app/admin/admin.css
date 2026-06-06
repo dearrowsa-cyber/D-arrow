@@ -277,11 +277,8 @@ body:has(.admin-login-page) footer {
   box-shadow: 0 4px 16px rgba(255, 77, 109, 0.3);
 }
 
-.admin-btn-primary * {
+.admin-btn-primary svg {
   color: #FFFFFF !important;
-  -webkit-text-fill-color: #FFFFFF !important;
-  background: none !important;
-  -webkit-background-clip: unset !important;
 }
 
 .admin-btn-primary:hover {
@@ -307,11 +304,8 @@ body:has(.admin-login-page) footer {
   border: 1px solid rgba(255, 77, 109, 0.4);
 }
 
-.admin-btn-secondary * {
-  color: #FFFFFF !important;
-  -webkit-text-fill-color: #FFFFFF !important;
-  background: none !important;
-  -webkit-background-clip: unset !important;
+.admin-btn-secondary svg {
+  color: inherit !important;
 }
 
 .admin-btn-secondary:hover {
@@ -334,11 +328,8 @@ body:has(.admin-login-page) footer {
   border: 1px solid rgba(239, 68, 68, 0.4);
 }
 
-.admin-btn-danger * {
-  color: #FFFFFF !important;
-  -webkit-text-fill-color: #FFFFFF !important;
-  background: none !important;
-  -webkit-background-clip: unset !important;
+.admin-btn-danger svg {
+  color: inherit !important;
 }
 
 .admin-btn-danger:hover {
@@ -1038,6 +1029,30 @@ body:has(.admin-login-page) footer {
   background: rgba(0, 0, 0, 0.05);
   color: #111827;
 }
+
+.admin-layout.light-mode .admin-btn-danger {
+  background: rgba(239, 68, 68, 0.1);
+  color: #DC2626 !important;
+  -webkit-text-fill-color: #DC2626 !important;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.admin-layout.light-mode .admin-btn-danger:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+/* Semantic Colors */
+.admin-text-primary { color: #E6E6EA; }
+.admin-text-secondary { color: #9CA3AF; }
+.admin-text-brand { color: #FF4D6D; }
+.admin-text-danger { color: #EF4444; }
+.admin-text-info { color: #3B82F6; }
+
+.admin-layout.light-mode .admin-text-primary { color: #111827 !important; }
+.admin-layout.light-mode .admin-text-secondary { color: #4B5563 !important; }
+.admin-layout.light-mode .admin-text-brand { color: #FF4D6D !important; }
+.admin-layout.light-mode .admin-text-danger { color: #DC2626 !important; }
+.admin-layout.light-mode .admin-text-info { color: #2563EB !important; }
 
 /* Fix inline styles in components that use hardcoded dark colors */
 .admin-layout.light-mode h2,
