@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { motion } from 'framer-motion';
 import styles from '../pricing/pricing.module.css';
 import { useLanguage } from '@/components/LanguageProvider';
@@ -64,7 +64,7 @@ function resolveServiceId(service: any, index: number): string {
   return fallbackId;
 }
 
-export default function ServicesPage() {
+function ServicesContent() {
   const { t, lang, siteData } = useLanguage();
   const [expandedCategory, setExpandedCategory] = useState('digital-marketing');
   const searchParams = useSearchParams();
@@ -548,5 +548,13 @@ export default function ServicesPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function ServicesPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen py-12 text-center text-white">Loading services...</div>}>
+      <ServicesContent />
+    </Suspense>
   );
 }
