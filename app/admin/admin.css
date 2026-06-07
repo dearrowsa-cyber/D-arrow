@@ -949,110 +949,161 @@ body:has(.admin-login-page) footer {
    LIGHT MODE overrides
    ============================================ */
 .admin-layout.light-mode {
-  background: #F3F4F6 !important;
-  color: #111827 !important;
+  background: #F9FAFB !important;
+  color: #1F2937 !important;
 }
 
 .admin-layout.light-mode .admin-sidebar {
-  background: rgba(255, 255, 255, 0.9);
-  border-right: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.98);
+  border-right: 1px solid rgba(255, 77, 109, 0.1);
 }
 
 .admin-layout.light-mode .admin-topbar {
-  background: rgba(255, 255, 255, 0.8);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid rgba(255, 77, 109, 0.1);
 }
 
 .admin-layout.light-mode .admin-card,
+.admin-layout.light-mode .admin-stat-card,
 .admin-layout.light-mode .admin-modal,
 .admin-layout.light-mode .admin-table th,
 .admin-layout.light-mode .admin-table td {
   background: #FFFFFF !important;
-  border-color: rgba(0, 0, 0, 0.05) !important;
-  color: #111827 !important;
+  border-color: rgba(255, 77, 109, 0.1) !important;
+  color: #1F2937 !important;
+}
+
+.admin-layout.light-mode .admin-stat-card .admin-stat-value {
+  color: #1F2937;
+}
+
+.admin-layout.light-mode .admin-card:hover,
+.admin-layout.light-mode .admin-stat-card:hover {
+  box-shadow: 0 12px 40px rgba(255, 77, 109, 0.08);
 }
 
 .admin-layout.light-mode .admin-table th {
-  background: #F9FAFB !important;
-  color: #4B5563 !important;
+  background: rgba(255, 77, 109, 0.03) !important;
+  color: #FF4D6D !important;
+  font-weight: 700;
 }
 
 .admin-layout.light-mode .admin-table tr:hover td {
-  background: rgba(255, 77, 109, 0.02) !important;
+  background: rgba(255, 77, 109, 0.04) !important;
 }
 
 .admin-layout.light-mode .admin-nav-item {
-  color: #4B5563;
+  color: #6B7280;
 }
 
 .admin-layout.light-mode .admin-nav-item:hover {
-  background: rgba(255, 77, 109, 0.08);
-  color: #111827;
-  -webkit-text-fill-color: #111827;
+  background: rgba(255, 77, 109, 0.05);
+  color: #FF4D6D;
+  -webkit-text-fill-color: #FF4D6D;
 }
 
 .admin-layout.light-mode .admin-nav-item.active {
-  color: #FFFFFF !important;
-  -webkit-text-fill-color: #FFFFFF !important;
+  background: linear-gradient(135deg, rgba(255, 77, 109, 0.1), rgba(255, 154, 60, 0.1));
+  color: #FF4D6D !important;
+  -webkit-text-fill-color: #FF4D6D !important;
+  border-color: rgba(255, 77, 109, 0.3);
 }
 
 .admin-layout.light-mode .admin-input,
 .admin-layout.light-mode .admin-textarea,
 .admin-layout.light-mode .admin-select {
-  background: #F9FAFB;
-  border-color: #E5E7EB;
-  color: #111827;
+  background: #FFFFFF;
+  border-color: rgba(255, 77, 109, 0.2);
+  color: #1F2937;
 }
 
 .admin-layout.light-mode .admin-input:focus,
-.admin-layout.light-mode .admin-textarea:focus {
+.admin-layout.light-mode .admin-textarea:focus,
+.admin-layout.light-mode .admin-select:focus {
   background: #FFFFFF;
   border-color: #FF4D6D;
   box-shadow: 0 0 0 3px rgba(255, 77, 109, 0.1);
 }
 
 .admin-layout.light-mode .admin-btn-secondary {
-  background: #F3F4F6;
-  color: #111827;
-  border-color: #E5E7EB;
+  background: #FFFFFF;
+  color: #FF4D6D !important;
+  -webkit-text-fill-color: #FF4D6D !important;
+  border-color: rgba(255, 77, 109, 0.3);
 }
 
 .admin-layout.light-mode .admin-btn-secondary:hover {
-  background: #E5E7EB;
+  background: rgba(255, 77, 109, 0.05);
+  border-color: #FF4D6D;
 }
 
 .admin-layout.light-mode .admin-btn-ghost {
-  color: #4B5563;
+  color: #6B7280 !important;
+  -webkit-text-fill-color: #6B7280 !important;
 }
 
 .admin-layout.light-mode .admin-btn-ghost:hover {
-  background: rgba(0, 0, 0, 0.05);
-  color: #111827;
+  background: rgba(255, 77, 109, 0.05);
+  color: #FF4D6D !important;
+  -webkit-text-fill-color: #FF4D6D !important;
 }
 
 .admin-layout.light-mode .admin-btn-danger {
-  background: rgba(239, 68, 68, 0.1);
-  color: #DC2626 !important;
-  -webkit-text-fill-color: #DC2626 !important;
-  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.05);
+  color: #EF4444 !important;
+  -webkit-text-fill-color: #EF4444 !important;
+  border-color: rgba(239, 68, 68, 0.2);
 }
 
 .admin-layout.light-mode .admin-btn-danger:hover {
-  background: rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #EF4444;
+}
+
+.admin-layout.light-mode .admin-tabs {
+  background: #FFFFFF;
+  border-color: rgba(255, 77, 109, 0.1);
+}
+
+.admin-layout.light-mode .admin-tab {
+  color: #6B7280 !important;
+  -webkit-text-fill-color: #6B7280 !important;
+}
+
+.admin-layout.light-mode .admin-tab:hover {
+  color: #FF4D6D !important;
+  -webkit-text-fill-color: #FF4D6D !important;
+  background: rgba(255, 77, 109, 0.05);
+}
+
+.admin-layout.light-mode .admin-tab.active {
+  background: linear-gradient(135deg, rgba(255, 77, 109, 0.1), rgba(255, 154, 60, 0.1));
+  color: #FF4D6D !important;
+  -webkit-text-fill-color: #FF4D6D !important;
+  border-bottom-color: transparent !important;
+}
+
+.admin-layout.light-mode .admin-section-tab {
+  color: #6B7280;
+}
+
+.admin-layout.light-mode .admin-section-tab:hover {
+  background: rgba(255, 77, 109, 0.05);
+  color: #FF4D6D;
+}
+
+.admin-layout.light-mode .admin-section-tab.active {
+  background: rgba(255, 77, 109, 0.1);
+  color: #FF4D6D;
+  border-right-color: #FF4D6D;
 }
 
 /* Semantic Colors */
-.admin-text-primary { color: #E6E6EA; }
-.admin-text-secondary { color: #9CA3AF; }
-.admin-text-brand { color: #FF4D6D; }
-.admin-text-danger { color: #EF4444; }
-.admin-text-info { color: #3B82F6; }
-
-.admin-layout.light-mode .admin-text-primary { color: #111827 !important; }
-.admin-layout.light-mode .admin-text-secondary { color: #4B5563 !important; }
+.admin-layout.light-mode .admin-text-primary { color: #1F2937 !important; }
+.admin-layout.light-mode .admin-text-secondary { color: #6B7280 !important; }
 .admin-layout.light-mode .admin-text-brand { color: #FF4D6D !important; }
-.admin-layout.light-mode .admin-text-danger { color: #DC2626 !important; }
-.admin-layout.light-mode .admin-text-info { color: #2563EB !important; }
+.admin-layout.light-mode .admin-text-danger { color: #EF4444 !important; }
+.admin-layout.light-mode .admin-text-info { color: #3B82F6 !important; }
 
 /* Fix inline styles in components that use hardcoded dark colors */
 .admin-layout.light-mode h2,
@@ -1066,15 +1117,19 @@ body:has(.admin-login-page) footer {
 .admin-layout.light-mode td[style*="color: '#9CA3AF'"],
 .admin-layout.light-mode div[style*="color: #9CA3AF"],
 .admin-layout.light-mode div[style*="color: '#9CA3AF'"] {
-  color: #4B5563 !important;
+  color: #6B7280 !important;
 }
 
 .admin-layout.light-mode div[style*="background: '#1C1E26'"],
-.admin-layout.light-mode div[style*="background: #1C1E26"] {
+.admin-layout.light-mode div[style*="background: #1C1E26"],
+.admin-layout.light-mode div[style*="background: '#14162E'"],
+.admin-layout.light-mode div[style*="background: #14162E"] {
   background: #FFFFFF !important;
 }
 
 .admin-layout.light-mode div[style*="background: 'rgba(255, 77, 109, 0.03)'"] {
   background: #FFF0F2 !important;
 }
-.admin-layout.light-mode .admin-label { color: #4B5563 !important; } .admin-layout.light-mode .admin-tab { color: #4B5563 !important; } .admin-layout.light-mode .admin-tab.active { color: #DC2626 !important; border-bottom-color: #DC2626 !important; } .admin-layout.light-mode .admin-btn-secondary * { color: inherit !important; } .admin-layout.light-mode .admin-btn-danger * { color: inherit !important; } .admin-layout.light-mode .admin-table td { color: #111827 !important; } .admin-layout.light-mode .admin-text-secondary { color: #4B5563 !important; }
+.admin-layout.light-mode .admin-label { color: #6B7280 !important; } 
+.admin-layout.light-mode .admin-btn-secondary * { color: inherit !important; } 
+.admin-layout.light-mode .admin-btn-danger * { color: inherit !important; }

@@ -5,24 +5,23 @@ import { Plus, Trash2 } from 'lucide-react';
 import SchemaBuilder from '@/components/seo/SchemaBuilder';
 
 export default function SchemaManager() {
-  const [schemas, setSchemas] = useState<any[]>([]);
+  interface SchemaEntry {
+    id: string;
+    type: string;
+    jsonData: string;
+    slug: string;
+    updatedAt: string;
+  }
+
+  const [schemas, setSchemas] = useState<SchemaEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [showBuilder, setShowBuilder] = useState(false);
-  const [currentSchema, setCurrentSchema] = useState<any>({ type: 'Article', jsonData: '', slug: '/' });
+  const [currentSchema, setCurrentSchema] = useState<Partial<SchemaEntry>>({ type: 'Article', jsonData: '', slug: '/' });
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
   const [showSlugModal, setShowSlugModal] = useState(false);
   const [tempSaveData, setTempSaveData] = useState<{ type: string; jsonData: string } | null>(null);
   const [slugInput, setSlugInput] = useState('/');
-
-  useEffect(() => {
-    fetchSchemas();
-  }, []);
-
-  const showToast = (msg: string, type: string) => {
-    setToast({ msg, type });
-    setTimeout(() => setToast(null), 3000);
-  };
 
   const fetchSchemas = () => {
     fetch('/api/admin/seo/schema', {
@@ -33,6 +32,15 @@ export default function SchemaManager() {
         if (data.success) setSchemas(data.data);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    fetchSchemas();
+  }, []);
+
+  const showToast = (msg: string, type: string) => {
+    setToast({ msg, type });
+    setTimeout(() => setToast(null), 3000);
   };
 
   const handleSaveTrigger = (type: string, jsonData: string) => {

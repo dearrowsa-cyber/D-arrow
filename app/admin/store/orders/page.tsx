@@ -1,7 +1,30 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ShoppingBag, Eye, ChevronDown } from 'lucide-react';
+import { ShoppingBag, ChevronDown } from 'lucide-react';
+
+interface OrderItem {
+  productName: string;
+  quantity: number;
+  total: number;
+}
+
+interface Order {
+  id: string;
+  orderNumber: string;
+  customerName: string;
+  customerEmail: string;
+  customerPhone?: string;
+  total: number;
+  discount: number;
+  paymentMethod: string;
+  paymentStatus: string;
+  status: string;
+  createdAt: string;
+  items?: OrderItem[];
+  couponCode?: string;
+  notes?: string;
+}
 
 const STATUS_MAP: Record<string, { label: string; class: string }> = {
   pending: { label: 'قيد الانتظار', class: 'admin-badge-warning' },
@@ -18,7 +41,7 @@ const PAYMENT_MAP: Record<string, { label: string; class: string }> = {
 };
 
 export default function AdminOrdersPage() {
-  const [orders, setOrders] = useState<any[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -149,7 +172,7 @@ export default function AdminOrdersPage() {
                     <tr>
                       <td colSpan={8} style={{ background: 'rgba(11,13,31,0.4)', padding: 20 }}>
                         <h4 style={{ color: '#E6E6EA', margin: '0 0 12px', fontSize: 14 }}>تفاصيل الطلب</h4>
-                        {order.items?.map((item: any, i: number) => (
+                        {order.items?.map((item: OrderItem, i: number) => (
                           <div key={i} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                             <span style={{ color: '#D1D5DB' }}>{item.productName} × {item.quantity}</span>
                             <span style={{ color: '#E6E6EA', fontWeight: 600 }}>{item.total.toFixed(2)} ر.س</span>

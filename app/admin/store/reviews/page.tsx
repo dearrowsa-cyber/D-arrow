@@ -3,8 +3,18 @@
 import { useState, useEffect } from 'react';
 import { Star, Check, X, Trash2 } from 'lucide-react';
 
+interface Review {
+  id: string;
+  customerName: string;
+  rating: number;
+  comment?: string;
+  approved: boolean;
+  createdAt: string;
+  product?: { name: string; nameAr?: string };
+}
+
 export default function AdminReviewsPage() {
-  const [reviews, setReviews] = useState<any[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState<{msg:string;type:string}|null>(null);
   const [filter, setFilter] = useState<'all'|'pending'|'approved'>('all');

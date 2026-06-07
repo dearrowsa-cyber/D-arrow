@@ -3,8 +3,20 @@
 import { useState, useEffect } from 'react';
 import { Plus, Trash2, Ticket, Edit2 } from 'lucide-react';
 
+interface Coupon {
+  id: string;
+  code: string;
+  type: string;
+  value: number;
+  minOrder?: number;
+  maxUses?: number;
+  expiresAt?: string;
+  active: boolean;
+  usedCount: number;
+}
+
 export default function AdminCouponsPage() {
-  const [coupons, setCoupons] = useState<any[]>([]);
+  const [coupons, setCoupons] = useState<Coupon[]>([]);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState<{msg:string;type:string}|null>(null);
   const [showForm, setShowForm] = useState(false);
@@ -38,7 +50,7 @@ export default function AdminCouponsPage() {
     setDeleteId(null);
   };
 
-  const startEdit = (c:any) => {
+  const startEdit = (c: Coupon) => {
     setForm({code:c.code,type:c.type,value:String(c.value),minOrder:c.minOrder?String(c.minOrder):'',maxUses:c.maxUses?String(c.maxUses):'',expiresAt:c.expiresAt?new Date(c.expiresAt).toISOString().split('T')[0]:'',active:c.active});
     setEditId(c.id); setShowForm(true);
   };

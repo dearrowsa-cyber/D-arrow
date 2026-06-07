@@ -2,10 +2,27 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Plus, Edit, Trash2, Eye, Star, Package } from 'lucide-react';
+import { Plus, Edit, Trash2, Star, Package } from 'lucide-react';
+import Image from 'next/image';
+
+interface Product {
+  id: string;
+  name: string;
+  nameAr?: string;
+  slug: string;
+  category: string;
+  categoryAr?: string;
+  price: number;
+  salePrice?: number;
+  type: string;
+  status: string;
+  images: string;
+  reviews?: { rating: number }[];
+  _count?: { reviews: number; orderItems: number };
+}
 
 export default function AdminProductsPage() {
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
@@ -112,7 +129,7 @@ export default function AdminProductsPage() {
               {products.map(product => {
                 const images = product.images ? JSON.parse(product.images) : [];
                 const avgRating = product.reviews?.length
-                  ? (product.reviews.reduce((s: number, r: any) => s + r.rating, 0) / product.reviews.length).toFixed(1)
+                  ? (product.reviews.reduce((s: number, r: { rating: number }) => s + r.rating, 0) / product.reviews.length).toFixed(1)
                   : '—';
 
                 return (
@@ -120,7 +137,7 @@ export default function AdminProductsPage() {
                     <td>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                         {images[0] ? (
-                          <img src={images[0]} alt="" style={{ width: 48, height: 48, borderRadius: 8, objectFit: 'cover' }} />
+                          <Image src={images[0]} alt="Product Image" width={48} height={48} style={{ width: 48, height: 48, borderRadius: 8, objectFit: 'cover' }} unoptimized />
                         ) : (
                           <div style={{ width: 48, height: 48, borderRadius: 8, background: 'rgba(255,77,109,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <Package size={20} style={{ color: '#FF4D6D' }} />

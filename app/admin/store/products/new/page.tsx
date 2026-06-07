@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowRight, Save, Upload, X, Plus, Trash2 } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import RichTextEditor from '@/components/admin/RichTextEditor';
 
 const CATEGORIES = ['General', 'Digital Marketing', 'SEO', 'Design', 'Development', 'Templates', 'Courses', 'Tools'];
@@ -43,7 +44,7 @@ export default function NewProductPage() {
   const [features, setFeatures] = useState<string[]>(['']);
   const [featuresAr, setFeaturesAr] = useState<string[]>(['']);
 
-  const updateField = (key: string, value: any) => setForm(prev => ({ ...prev, [key]: value }));
+  const updateField = (key: string, value: string | boolean) => setForm(prev => ({ ...prev, [key]: value }));
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -189,7 +190,7 @@ export default function NewProductPage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 8 }}>
               {images.map((img, i) => (
                 <div key={i} style={{ position: 'relative', borderRadius: 8, overflow: 'hidden', border: '1px solid rgba(255,77,109,0.15)' }}>
-                  <img src={img} alt="" style={{ width: '100%', height: 100, objectFit: 'cover' }} />
+                  <Image src={img} alt="Product Image" width={100} height={100} style={{ width: '100%', height: 100, objectFit: 'cover' }} unoptimized />
                   <button onClick={() => removeImage(i)} style={{ position: 'absolute', top: 4, right: 4, width: 24, height: 24, borderRadius: '50%', background: 'rgba(239,68,68,0.9)', color: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12 }}>
                     <X size={12} />
                   </button>
