@@ -5,14 +5,31 @@ import Link from 'next/link';
 import { Activity, AlertTriangle, FileText, Settings, Navigation, Search, Database, Bot, TrendingUp, Sparkles, Wand2, CheckCircle } from 'lucide-react';
 import SeoScoreGauge from '@/components/seo/SeoScoreGauge';
 
+interface KeywordStat {
+  keyword: string;
+  position: number;
+  clicks: number;
+}
+
+interface SeoDashboardData {
+  avgScore: number;
+  totalIssues: number;
+  totalPages: number;
+  redirectsCount: number;
+  brandKeywords: KeywordStat[];
+  generalKeywords: KeywordStat[];
+  recentErrors: { page: string; error: string }[];
+  allErrors: string[];
+}
+
 export default function SeoDashboard() {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<SeoDashboardData | null>(null);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [autoFixing, setAutoFixing] = useState(false);
-  const [autoFixResult, setAutoFixResult] = useState<any>(null);
+  const [autoFixResult, setAutoFixResult] = useState<{ success: boolean; error?: string; stats?: { fixedPosts?: number; fixedProducts?: number; fixedPages?: number } } | null>(null);
 
   useEffect(() => {
     fetch('/api/admin/seo/dashboard', {
@@ -53,8 +70,8 @@ export default function SeoDashboard() {
       } else {
         setAiAnalysis(`حدث خطأ أثناء التحليل: ${result.error || result.debug || 'Unknown error'}`);
       }
-    } catch (error: any) {
-      setAiAnalysis(`حدث خطأ أثناء الاتصال بالخادم: ${error.message}`);
+    } catch (error: unknown) {
+      setAiAnalysis(`حدث خطأ أثناء الاتصال بالخادم: ${(error as Error).message}`);
     }
     setAnalyzing(false);
   };
@@ -74,8 +91,8 @@ export default function SeoDashboard() {
         // Refresh data to show cleared errors
         setTimeout(() => window.location.reload(), 3000);
       }
-    } catch (error: any) {
-      setAutoFixResult({ success: false, error: error.message });
+    } catch (error: unknown) {
+      setAutoFixResult({ success: false, error: (error as Error).message });
     }
     setAutoFixing(false);
   };
@@ -144,7 +161,7 @@ export default function SeoDashboard() {
             </thead>
             <tbody>
               {data?.brandKeywords?.length > 0 ? (
-                data.brandKeywords.map((kw: any, i: number) => (
+                data.brandKeywords.map((kw: KeywordStat, i: number) => (
                   <tr key={i}>
                     <td style={{ fontWeight: 500 }}>{kw.keyword}</td>
                     <td style={{ color: kw.position <= 3 ? '#10B981' : '#FFF' }}>
@@ -181,7 +198,7 @@ export default function SeoDashboard() {
             </thead>
             <tbody>
               {data?.generalKeywords?.length > 0 ? (
-                data.generalKeywords.map((kw: any, i: number) => (
+                data.generalKeywords.map((kw: KeywordStat, i: number) => (
                   <tr key={i}>
                     <td style={{ fontWeight: 500 }}>{kw.keyword}</td>
                     <td style={{ color: kw.position <= 10 ? '#10B981' : '#FFF' }}>
@@ -236,7 +253,7 @@ export default function SeoDashboard() {
           <div>
             <h4 style={{ marginBottom: '16px', color: '#E5E7EB' }}>أبرز الأخطاء الحالية:</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: '8px' }}>
-              {data.recentErrors.map((err: any, i: number) => (
+              {data.recentErrors.map((err: { page: string; error: string }, i: number) => (
                 <li key={i} style={{ background: '#1F2937', padding: '12px 16px', borderRadius: '6px', display: 'flex', gap: '12px', alignItems: 'center' }}>
                   <AlertTriangle size={16} color="#EF4444" style={{ flexShrink: 0 }} />
                   <span style={{ color: '#9CA3AF', fontSize: '14px', flexShrink: 0 }}>[{err.page}]</span>
@@ -381,7 +398,7 @@ function renderMarkdown(text: string): string {
   return processedLines.filter(p => p !== '').join('');
 }
 
-function StarIcon(props: any) {
+function StarIcon(props: { color?: string }) {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill={props.color || "currentColor"} xmlns="http://www.w3.org/2000/svg">
       <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />

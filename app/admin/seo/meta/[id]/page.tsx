@@ -5,12 +5,32 @@ import { useRouter } from 'next/navigation';
 import SeoMetaForm from '@/components/seo/SeoMetaForm';
 import SeoAnalysisPanel from '@/components/seo/SeoAnalysisPanel';
 
+interface SeoMeta {
+  id?: string;
+  slug?: string;
+  title?: string;
+  titleEn?: string;
+  description?: string;
+  descriptionEn?: string;
+  focusKeyword?: string;
+  robots?: string;
+  canonicalUrl?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+}
+
+interface SeoAnalysisResult {
+  score: number;
+  checks: { name: string; status: 'success' | 'warning' | 'error'; message: string }[];
+}
+
 export default function SeoMetaEditor({ params }: { params: Promise<{ id: string }> }) {
   const { id } = React.use(params);
   const isNew = id === 'new';
   const router = useRouter();
-  const [initialData, setInitialData] = useState<any>(null);
-  const [analysisResult, setAnalysisResult] = useState<any>(null);
+  const [initialData, setInitialData] = useState<SeoMeta | null>(null);
+  const [analysisResult, setAnalysisResult] = useState<SeoAnalysisResult | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
@@ -30,11 +50,12 @@ export default function SeoMetaEditor({ params }: { params: Promise<{ id: string
           if (res.success) setInitialData(res.data);
         });
     } else {
+      // eslint-disable-next-line
       setInitialData({});
     }
   }, [id, isNew]);
 
-  const handleSave = async (data: any) => {
+  const handleSave = async (data: SeoMeta) => {
     setSaving(true);
     const url = isNew ? '/api/admin/seo/meta' : `/api/admin/seo/meta/${id}`;
     const method = isNew ? 'POST' : 'PUT';
@@ -66,7 +87,7 @@ export default function SeoMetaEditor({ params }: { params: Promise<{ id: string
     }
   };
 
-  const runAnalysis = async (data: any) => {
+  const runAnalysis = async (data: SeoMeta) => {
     setAnalyzing(true);
     // In a real scenario we'd fetch the actual page content here.
     // For now we'll send a dummy content text to get basic checks working.

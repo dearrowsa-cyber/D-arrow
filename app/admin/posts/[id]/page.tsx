@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { ArrowRight, Upload, X, Save, Tag } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import RichTextEditor from '@/components/admin/RichTextEditor';
 
 const CATEGORIES = [
@@ -44,13 +45,14 @@ export default function EditPostPage() {
 
   useEffect(() => {
     fetchPost();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
   const fetchPost = async () => {
     try {
       const res = await fetch('/api/blog/posts');
       const data = await res.json();
-      const post = (data.posts || []).find((p: any) => p.id === postId);
+      const post = (data.posts || []).find((p: { id: string; title?: string; titleAr?: string; slug?: string; content?: string; contentAr?: string; excerpt?: string; excerptAr?: string; category?: string; categoryAr?: string; author?: string; imageUrl?: string; tags?: string[] | string; status?: string; date?: string; time?: string }) => p.id === postId);
       if (post) {
         setForm({
           id: post.id,
@@ -112,7 +114,7 @@ export default function EditPostPage() {
       } else {
         showToast(data.error || 'فشل في تحسين الـ SEO', 'error');
       }
-    } catch (e) {
+    } catch {
       showToast('حدث خطأ أثناء الاتصال بالذكاء الاصطناعي', 'error');
     } finally {
       setGeneratingSeo(false);
@@ -134,8 +136,8 @@ export default function EditPostPage() {
       } else {
         showToast(data.error || data.debug || 'فشل في رفع الصورة', 'error');
       }
-    } catch (e: any) {
-      showToast(`خطأ في رفع الصورة: ${e.message}`, 'error');
+    } catch (e: unknown) {
+      showToast(`خطأ في رفع الصورة: ${(e as Error).message}`, 'error');
     } finally {
       setUploading(false);
     }
@@ -314,7 +316,7 @@ export default function EditPostPage() {
             <h4 style={{ color: '#E6E6EA', fontSize: 15, margin: '0 0 16px' }}>صورة المقال</h4>
             {form.imageUrl ? (
               <div className="admin-upload-preview" style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', border: '1px solid rgba(255,77,109,0.15)' }}>
-                <img src={form.imageUrl} alt="Preview" style={{ width: '100%', height: 200, objectFit: 'cover' }} />
+                <Image src={form.imageUrl} alt="Preview" width={300} height={200} style={{ width: '100%', height: 200, objectFit: 'cover' }} unoptimized />
                 <button onClick={() => updateField('imageUrl', '')} style={{ position: 'absolute', top: 8, right: 8, width: 32, height: 32, borderRadius: '50%', background: 'rgba(239,68,68,0.9)', color: 'white', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <X size={16} />
                 </button>

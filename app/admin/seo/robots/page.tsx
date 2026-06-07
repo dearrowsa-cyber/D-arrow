@@ -3,8 +3,15 @@
 import { useEffect, useState } from 'react';
 import RobotsEditor from '@/components/seo/RobotsEditor';
 
+interface RobotRule {
+  id?: string;
+  userAgent: string;
+  allow?: string;
+  disallow?: string;
+}
+
 export default function RobotsManager() {
-  const [rules, setRules] = useState<any[]>([]);
+  const [rules, setRules] = useState<RobotRule[]>([]);
   const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
 
@@ -24,7 +31,7 @@ export default function RobotsManager() {
       });
   }, []);
 
-  const handleSave = async (updatedRules: any[]) => {
+  const handleSave = async (updatedRules: RobotRule[]) => {
     try {
       for (const rule of rules) {
         if (rule.id) {

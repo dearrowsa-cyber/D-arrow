@@ -6,10 +6,33 @@ import Link from 'next/link';
 import { ArrowLeft, Star, TrendingUp, MousePointerClick, Eye, Percent, Globe } from 'lucide-react';
 import KeywordPositionChart from '@/components/seo/KeywordPositionChart';
 
+interface RankingData {
+  date: string;
+  position: number;
+  clicks: number;
+  impressions: number;
+  ctr: number;
+}
+
+interface PageKeywordData {
+  id: string;
+  pageUrl: string;
+  position: number;
+  clicks: number;
+}
+
+interface KeywordDetailData {
+  keyword: string;
+  starred: boolean;
+  group?: string;
+  rankings: RankingData[];
+  pageKeywords: PageKeywordData[];
+}
+
 export default function KeywordDetail() {
   const params = useParams();
   const router = useRouter();
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<KeywordDetailData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -34,14 +57,14 @@ export default function KeywordDetail() {
   const latest = data.rankings?.[0] || { position: 0, clicks: 0, impressions: 0, ctr: 0 };
   
   // Format data for chart (reverse so chronological order)
-  const chartData = [...(data.rankings || [])].reverse().map((r: any) => ({
+  const chartData = [...(data.rankings || [])].reverse().map((r: RankingData) => ({
     date: r.date,
     position: r.position
   }));
 
   // Group pageKeywords by pageUrl to show current ranking pages
   const latestPageRankings = new Map();
-  data.pageKeywords?.forEach((pk: any) => {
+  data.pageKeywords?.forEach((pk: PageKeywordData) => {
     if (!latestPageRankings.has(pk.pageUrl)) {
       latestPageRankings.set(pk.pageUrl, pk); // Keep the first (latest) occurrence
     }
@@ -110,7 +133,7 @@ export default function KeywordDetail() {
                 </tr>
               </thead>
               <tbody>
-                {Array.from(latestPageRankings.values()).map((pk: any) => (
+                {Array.from(latestPageRankings.values()).map((pk: PageKeywordData) => (
                   <tr key={pk.id}>
                     <td style={{ color: '#3B82F6', direction: 'ltr', textAlign: 'left' }}>
                       <a href={pk.pageUrl} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', display: 'flex', alignItems: 'center', gap: '8px' }}>

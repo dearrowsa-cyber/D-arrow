@@ -3,26 +3,33 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Plus, Edit2, Search, Trash2, RefreshCw, Save, ChevronDown, ChevronUp, X } from 'lucide-react';
+import { Plus, Edit2, Trash2, RefreshCw, Save, ChevronUp, X } from 'lucide-react';
+
+interface SeoMeta {
+  id: string;
+  slug: string;
+  title?: string;
+  titleEn?: string;
+  description?: string;
+  descriptionEn?: string;
+  focusKeyword?: string;
+  robots?: string;
+  canonicalUrl?: string;
+  ogTitle?: string;
+  ogDescription?: string;
+  ogImage?: string;
+  auditLogs?: { score: number }[];
+}
 
 export default function SeoMetaList() {
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<SeoMeta[]>([]);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [editData, setEditData] = useState<any>({});
+  const [editData, setEditData] = useState<Partial<SeoMeta>>({});
   const [savingId, setSavingId] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchItems();
-  }, []);
-
-  const showToast = (msg: string, type: string) => {
-    setToast({ msg, type });
-    setTimeout(() => setToast(null), 3000);
-  };
 
   const fetchItems = () => {
     fetch('/api/admin/seo/meta', {
@@ -45,6 +52,17 @@ export default function SeoMetaList() {
       });
   };
 
+  useEffect(() => {
+    fetchItems();
+  }, []);
+
+  const showToast = (msg: string, type: string) => {
+    setToast({ msg, type });
+    setTimeout(() => setToast(null), 3000);
+  };
+
+
+
   const handleSync = async () => {
     setSyncing(true);
     try {
@@ -59,7 +77,7 @@ export default function SeoMetaList() {
       } else {
         showToast('فشلت عملية المزامنة.', 'error');
       }
-    } catch (e) {
+    } catch {
       showToast('خطأ أثناء المزامنة.', 'error');
     }
     setSyncing(false);
@@ -85,7 +103,7 @@ export default function SeoMetaList() {
     setDeleteId(null);
   };
 
-  const toggleExpand = (item: any) => {
+  const toggleExpand = (item: SeoMeta) => {
     if (expandedId === item.id) {
       setExpandedId(null);
       setEditData({});
@@ -151,7 +169,7 @@ export default function SeoMetaList() {
     
     if (slug.startsWith('/services/')) {
       const s = slug.replace('/services/', '');
-      const serviceMap: any = {
+      const serviceMap: Record<string, string> = {
         dm_smm: 'إدارة السوشيال ميديا', dm_marketing: 'التسويق الرقمي', dm_visual: 'الإنتاج البصري', 
         dm_influencer: 'التسويق عبر المؤثرين', dm_content: 'صناعة المحتوى', dm_exhibitions: 'تنظيم المعارض',
         dm_advertising: 'الحملات الإعلانية', dm_consultation: 'الاستشارات التسويقية', dm_seo: 'تحسين محركات البحث SEO',

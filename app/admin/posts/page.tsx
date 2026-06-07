@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { Plus, Search, Trash2, Edit, Eye, FileText, Tag } from 'lucide-react';
+import { Plus, Search, Trash2, Edit, FileText } from 'lucide-react';
+import Image from 'next/image';
 
 interface Post {
   id: string;
@@ -202,7 +203,7 @@ export default function PostsListPage() {
                 <tr key={post.id}>
                   <td>
                     {post.imageUrl ? (
-                      <img src={post.imageUrl} alt="" style={{ width: 40, height: 40, borderRadius: 8, objectFit: 'cover' }} />
+                      <Image src={post.imageUrl} alt="Post image" width={40} height={40} style={{ width: 40, height: 40, borderRadius: 8, objectFit: 'cover' }} unoptimized />
                     ) : (
                       <div style={{
                         width: 40, height: 40, borderRadius: 8,

@@ -3,21 +3,21 @@
 import { useEffect, useState } from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 
+interface Redirect {
+  id: string;
+  sourceUrl: string;
+  destinationUrl: string;
+  type: number;
+  enabled: boolean;
+  hitCount: number;
+}
+
 export default function RedirectsManager() {
-  const [redirects, setRedirects] = useState<any[]>([]);
+  const [redirects, setRedirects] = useState<Redirect[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ sourceUrl: '', destinationUrl: '', type: 301, enabled: true });
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
-
-  useEffect(() => {
-    fetchRedirects();
-  }, []);
-
-  const showToast = (msg: string, type: string) => {
-    setToast({ msg, type });
-    setTimeout(() => setToast(null), 3000);
-  };
 
   const fetchRedirects = async () => {
     const res = await fetch('/api/admin/seo/redirects', {
@@ -25,6 +25,16 @@ export default function RedirectsManager() {
     });
     const data = await res.json();
     if (data.success) setRedirects(data.data);
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line
+    fetchRedirects();
+  }, []);
+
+  const showToast = (msg: string, type: string) => {
+    setToast({ msg, type });
+    setTimeout(() => setToast(null), 3000);
   };
 
   const handleSave = async () => {

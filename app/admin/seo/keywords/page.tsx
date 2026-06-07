@@ -1,12 +1,29 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { Search, Star, Upload, RefreshCw, Trash2, Activity, ArrowUpRight, ArrowDownRight, Minus } from 'lucide-react';
 import KeywordImportModal from '@/components/seo/KeywordImportModal';
 
+interface KeywordData {
+  id: string;
+  keyword: string;
+  starred: boolean;
+  latestPosition: number | null;
+  positionChange: number;
+  latestClicks: number;
+  latestImpressions: number;
+  group?: string;
+}
+
+interface KeywordListResponse {
+  keywords: KeywordData[];
+  groups: string[];
+  total: number;
+}
+
 export default function KeywordRankTracker() {
-  const [data, setData] = useState<any>({ keywords: [], groups: [], total: 0 });
+  const [data, setData] = useState<KeywordListResponse>({ keywords: [], groups: [], total: 0 });
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
   const [showImport, setShowImport] = useState(false);
@@ -22,7 +39,7 @@ export default function KeywordRankTracker() {
     setTimeout(() => setToast(null), 3000);
   };
 
-  const fetchKeywords = () => {
+  const fetchKeywords = useCallback(() => {
     const params = new URLSearchParams();
     if (filterGroup) params.append('group', filterGroup);
     if (filterStarred) params.append('starred', 'true');
@@ -36,11 +53,11 @@ export default function KeywordRankTracker() {
         setData(res);
         setLoading(false);
       });
-  };
+  }, [filterGroup, filterStarred, searchQuery]);
 
   useEffect(() => {
     fetchKeywords();
-  }, [filterGroup, filterStarred, searchQuery]);
+  }, [fetchKeywords]);
 
   const handleSync = async () => {
     setSyncing(true);
@@ -56,7 +73,7 @@ export default function KeywordRankTracker() {
       } else {
         showToast(result.error || 'فشلت المزامنة', 'error');
       }
-    } catch (e) {
+    } catch {
       showToast('خطأ أثناء المزامنة', 'error');
     }
     setSyncing(false);
@@ -185,7 +202,7 @@ export default function KeywordRankTracker() {
             </tr>
           </thead>
           <tbody>
-            {data.keywords.map((kw: any) => (
+            {data.keywords.map((kw: KeywordData) => (
               <tr key={kw.id}>
                 <td>
                   <button 

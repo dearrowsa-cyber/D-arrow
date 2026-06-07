@@ -2,8 +2,9 @@
 
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowRight, Upload, X, Save, Eye, Tag } from 'lucide-react';
+import { ArrowRight, Upload, X, Tag } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import RichTextEditor from '@/components/admin/RichTextEditor';
 
 const CATEGORIES = [
@@ -18,7 +19,6 @@ export default function NewPostPage() {
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
   const [activeTab, setActiveTab] = useState<'ar' | 'en'>('ar');
   const [uploading, setUploading] = useState(false);
-  const [preview, setPreview] = useState(false);
 
   const [form, setForm] = useState({
     title: '',
@@ -61,8 +61,8 @@ export default function NewPostPage() {
       } else {
         showToast(data.error || data.debug || 'فشل في رفع الصورة', 'error');
       }
-    } catch (e: any) {
-      showToast(`حدث خطأ في الرفع: ${e.message}`, 'error');
+    } catch (e: unknown) {
+      showToast(`حدث خطأ في الرفع: ${(e as Error).message}`, 'error');
     } finally {
       setUploading(false);
     }
@@ -289,7 +289,7 @@ export default function NewPostPage() {
             <h4 style={{ color: '#E6E6EA', fontSize: 15, margin: '0 0 16px' }}>صورة المقال</h4>
             {form.imageUrl ? (
               <div className="admin-upload-preview">
-                <img src={form.imageUrl} alt="Preview" />
+                <Image src={form.imageUrl} alt="Preview" width={300} height={200} style={{ width: '100%', height: 'auto', borderRadius: 8 }} unoptimized />
                 <button
                   className="remove-btn"
                   onClick={() => updateField('imageUrl', '')}
