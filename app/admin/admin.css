@@ -946,145 +946,275 @@ body:has(.admin-login-page) footer {
 }
 
 /* ============================================
-   LIGHT MODE overrides
+   LIGHT MODE overrides — Nuclear approach
+   Forces ALL text dark, then restores specific colors
    ============================================ */
 .admin-layout.light-mode {
   background: #F9FAFB !important;
   color: #1F2937 !important;
 }
 
+/* ---- Global text color reset ---- */
+/* This overrides ALL inline style colors in one shot */
+.admin-layout.light-mode .admin-content *,
+.admin-layout.light-mode .admin-content {
+  color: #1F2937 !important;
+  -webkit-text-fill-color: #1F2937 !important;
+}
+
+/* Muted/secondary text (labels, descriptions, etc) */
+.admin-layout.light-mode .admin-stat-label,
+.admin-layout.light-mode .admin-label,
+.admin-layout.light-mode .admin-nav-section {
+  color: #6B7280 !important;
+  -webkit-text-fill-color: #6B7280 !important;
+}
+
+/* ---- Restore specific colored elements ---- */
+
+/* Badges keep their semantic colors */
+.admin-layout.light-mode .admin-badge-success,
+.admin-layout.light-mode .admin-badge-success * {
+  color: #16A34A !important;
+  -webkit-text-fill-color: #16A34A !important;
+}
+.admin-layout.light-mode .admin-badge-warning,
+.admin-layout.light-mode .admin-badge-warning * {
+  color: #CA8A04 !important;
+  -webkit-text-fill-color: #CA8A04 !important;
+}
+.admin-layout.light-mode .admin-badge-danger,
+.admin-layout.light-mode .admin-badge-danger * {
+  color: #DC2626 !important;
+  -webkit-text-fill-color: #DC2626 !important;
+}
+.admin-layout.light-mode .admin-badge-info,
+.admin-layout.light-mode .admin-badge-info * {
+  color: #2563EB !important;
+  -webkit-text-fill-color: #2563EB !important;
+}
+
+/* Stat icons keep their colors */
+.admin-layout.light-mode .admin-stat-icon.pink,
+.admin-layout.light-mode .admin-stat-icon.pink * {
+  color: #FF4D6D !important;
+  -webkit-text-fill-color: #FF4D6D !important;
+}
+.admin-layout.light-mode .admin-stat-icon.orange,
+.admin-layout.light-mode .admin-stat-icon.orange * {
+  color: #FF9A3C !important;
+  -webkit-text-fill-color: #FF9A3C !important;
+}
+.admin-layout.light-mode .admin-stat-icon.blue,
+.admin-layout.light-mode .admin-stat-icon.blue * {
+  color: #3B82F6 !important;
+  -webkit-text-fill-color: #3B82F6 !important;
+}
+.admin-layout.light-mode .admin-stat-icon.green,
+.admin-layout.light-mode .admin-stat-icon.green * {
+  color: #22C55E !important;
+  -webkit-text-fill-color: #22C55E !important;
+}
+
+/* Toast messages */
+.admin-layout.light-mode .admin-toast-success,
+.admin-layout.light-mode .admin-toast-success * {
+  color: #22C55E !important;
+  -webkit-text-fill-color: #22C55E !important;
+}
+.admin-layout.light-mode .admin-toast-error,
+.admin-layout.light-mode .admin-toast-error * {
+  color: #EF4444 !important;
+  -webkit-text-fill-color: #EF4444 !important;
+}
+
+/* ---- Sidebar ---- */
 .admin-layout.light-mode .admin-sidebar {
   background: rgba(255, 255, 255, 0.98);
   border-right: 1px solid rgba(255, 77, 109, 0.1);
 }
 
-.admin-layout.light-mode .admin-topbar {
-  background: rgba(255, 255, 255, 0.9);
-  border-bottom: 1px solid rgba(255, 77, 109, 0.1);
+.admin-layout.light-mode .admin-sidebar *,
+.admin-layout.light-mode .admin-sidebar {
+  -webkit-text-fill-color: unset !important;
 }
 
-.admin-layout.light-mode .admin-topbar-title {
-  color: #1F2937 !important;
-}
-
-.admin-layout.light-mode .admin-card,
-.admin-layout.light-mode .admin-stat-card,
-.admin-layout.light-mode .admin-modal,
-.admin-layout.light-mode .admin-table th,
-.admin-layout.light-mode .admin-table td {
-  background: #FFFFFF !important;
-  border-color: rgba(255, 77, 109, 0.1) !important;
-  color: #1F2937 !important;
-}
-
-.admin-layout.light-mode .admin-stat-card .admin-stat-value {
-  color: #1F2937 !important;
-}
-
-.admin-layout.light-mode .admin-stat-label {
-  color: #6B7280 !important;
-}
-
-.admin-layout.light-mode .admin-card:hover,
-.admin-layout.light-mode .admin-stat-card:hover {
-  box-shadow: 0 12px 40px rgba(255, 77, 109, 0.08);
-}
-
-.admin-layout.light-mode .admin-table th {
-  background: rgba(255, 77, 109, 0.03) !important;
-  color: #FF4D6D !important;
-  font-weight: 700;
-}
-
-.admin-layout.light-mode .admin-table tr:hover td {
-  background: rgba(255, 77, 109, 0.04) !important;
+.admin-layout.light-mode .admin-sidebar-logo span {
+  background: linear-gradient(135deg, #FF4D6D, #FF9A3C);
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text;
 }
 
 .admin-layout.light-mode .admin-nav-item {
   color: #4B5563 !important;
 }
 
+.admin-layout.light-mode .admin-nav-item svg {
+  color: #6B7280 !important;
+}
+
 .admin-layout.light-mode .admin-nav-item:hover {
-  background: rgba(255, 77, 109, 0.05);
+  background: rgba(255, 77, 109, 0.06);
+  color: #FF4D6D !important;
+}
+.admin-layout.light-mode .admin-nav-item:hover svg {
+  color: #FF4D6D !important;
+}
+
+.admin-layout.light-mode .admin-nav-item.active {
+  background: linear-gradient(135deg, rgba(255, 77, 109, 0.12), rgba(255, 154, 60, 0.08));
+  color: #FF4D6D !important;
+  border-color: rgba(255, 77, 109, 0.4);
+}
+.admin-layout.light-mode .admin-nav-item.active svg {
+  color: #FF4D6D !important;
+}
+
+/* ---- Top Bar ---- */
+.admin-layout.light-mode .admin-topbar {
+  background: rgba(255, 255, 255, 0.95);
+  border-bottom: 1px solid rgba(255, 77, 109, 0.1);
+}
+
+.admin-layout.light-mode .admin-topbar * {
+  color: #1F2937 !important;
+  -webkit-text-fill-color: #1F2937 !important;
+}
+
+.admin-layout.light-mode .admin-topbar .admin-topbar-actions span {
+  color: #6B7280 !important;
+  -webkit-text-fill-color: #6B7280 !important;
+}
+
+/* Theme toggle button keeps brand color */
+.admin-layout.light-mode .admin-topbar button[title] svg {
   color: #FF4D6D !important;
   -webkit-text-fill-color: #FF4D6D !important;
 }
 
-.admin-layout.light-mode .admin-nav-item.active {
-  background: linear-gradient(135deg, rgba(255, 77, 109, 0.1), rgba(255, 154, 60, 0.1));
+/* ---- Cards & Stat Cards ---- */
+.admin-layout.light-mode .admin-card,
+.admin-layout.light-mode .admin-stat-card,
+.admin-layout.light-mode .admin-dialog,
+.admin-layout.light-mode .admin-modal {
+  background: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+}
+
+.admin-layout.light-mode .admin-card:hover,
+.admin-layout.light-mode .admin-stat-card:hover {
+  border-color: rgba(255, 77, 109, 0.2) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* ---- Table ---- */
+.admin-layout.light-mode .admin-table th {
+  background: #FFF5F7 !important;
+  color: #FF4D6D !important;
+  -webkit-text-fill-color: #FF4D6D !important;
+  border-color: #FCE4EC !important;
+}
+
+.admin-layout.light-mode .admin-table td {
+  background: #FFFFFF !important;
+  border-color: #F3F4F6 !important;
+}
+
+.admin-layout.light-mode .admin-table tr:hover td {
+  background: #FFF5F7 !important;
+}
+
+/* ---- Buttons ---- */
+
+/* Primary - keeps gradient */
+.admin-layout.light-mode .admin-btn-primary,
+.admin-layout.light-mode .admin-btn-primary * {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+.admin-layout.light-mode .admin-btn-primary:hover,
+.admin-layout.light-mode .admin-btn-primary:hover * {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+
+/* Secondary */
+.admin-layout.light-mode .admin-btn-secondary,
+.admin-layout.light-mode .admin-btn-secondary * {
+  background: #FFFFFF;
   color: #FF4D6D !important;
   -webkit-text-fill-color: #FF4D6D !important;
   border-color: rgba(255, 77, 109, 0.3);
 }
-
-.admin-layout.light-mode .admin-nav-section {
-  color: #6B7280 !important;
+.admin-layout.light-mode .admin-btn-secondary:hover,
+.admin-layout.light-mode .admin-btn-secondary:hover * {
+  background: rgba(255, 77, 109, 0.06);
+  color: #E63E5C !important;
+  -webkit-text-fill-color: #E63E5C !important;
+  border-color: #FF4D6D;
 }
 
+/* Danger */
+.admin-layout.light-mode .admin-btn-danger,
+.admin-layout.light-mode .admin-btn-danger * {
+  background: rgba(239, 68, 68, 0.06);
+  color: #DC2626 !important;
+  -webkit-text-fill-color: #DC2626 !important;
+  border-color: rgba(239, 68, 68, 0.25);
+}
+.admin-layout.light-mode .admin-btn-danger:hover,
+.admin-layout.light-mode .admin-btn-danger:hover * {
+  background: rgba(239, 68, 68, 0.12);
+  color: #B91C1C !important;
+  -webkit-text-fill-color: #B91C1C !important;
+  border-color: #DC2626;
+}
+
+/* Ghost */
+.admin-layout.light-mode .admin-btn-ghost,
+.admin-layout.light-mode .admin-btn-ghost * {
+  color: #6B7280 !important;
+  -webkit-text-fill-color: #6B7280 !important;
+}
+.admin-layout.light-mode .admin-btn-ghost:hover,
+.admin-layout.light-mode .admin-btn-ghost:hover * {
+  background: rgba(255, 77, 109, 0.06);
+  color: #FF4D6D !important;
+  -webkit-text-fill-color: #FF4D6D !important;
+}
+
+/* ---- Form Inputs ---- */
 .admin-layout.light-mode .admin-input,
 .admin-layout.light-mode .admin-textarea,
 .admin-layout.light-mode .admin-select {
-  background: #FFFFFF;
-  border-color: rgba(255, 77, 109, 0.2);
-  color: #1F2937;
+  background: #FFFFFF !important;
+  border-color: #D1D5DB !important;
+  color: #1F2937 !important;
+  -webkit-text-fill-color: #1F2937 !important;
 }
 
 .admin-layout.light-mode .admin-input:focus,
 .admin-layout.light-mode .admin-textarea:focus,
 .admin-layout.light-mode .admin-select:focus {
+  border-color: #FF4D6D !important;
+  box-shadow: 0 0 0 3px rgba(255, 77, 109, 0.1) !important;
+}
+
+.admin-layout.light-mode .admin-input::placeholder {
+  color: #9CA3AF !important;
+  -webkit-text-fill-color: #9CA3AF !important;
+}
+
+.admin-layout.light-mode .admin-select option {
   background: #FFFFFF;
-  border-color: #FF4D6D;
-  box-shadow: 0 0 0 3px rgba(255, 77, 109, 0.1);
+  color: #1F2937;
 }
 
-.admin-layout.light-mode .admin-btn-secondary {
-  background: #FFFFFF;
-  color: #FF4D6D !important;
-  -webkit-text-fill-color: #FF4D6D !important;
-  border-color: rgba(255, 77, 109, 0.3);
-}
-
-.admin-layout.light-mode .admin-btn-secondary:hover {
-  background: rgba(255, 77, 109, 0.05);
-  border-color: #FF4D6D;
-  color: #FF4D6D !important;
-  -webkit-text-fill-color: #FF4D6D !important;
-}
-
-.admin-layout.light-mode .admin-btn-secondary:active {
-  background: rgba(255, 77, 109, 0.1);
-  color: #FF4D6D !important;
-  -webkit-text-fill-color: #FF4D6D !important;
-}
-
-.admin-layout.light-mode .admin-btn-ghost {
-  color: #6B7280 !important;
-  -webkit-text-fill-color: #6B7280 !important;
-}
-
-.admin-layout.light-mode .admin-btn-ghost:hover {
-  background: rgba(255, 77, 109, 0.05);
-  color: #FF4D6D !important;
-  -webkit-text-fill-color: #FF4D6D !important;
-}
-
-.admin-layout.light-mode .admin-btn-danger {
-  background: rgba(239, 68, 68, 0.05);
-  color: #EF4444 !important;
-  -webkit-text-fill-color: #EF4444 !important;
-  border-color: rgba(239, 68, 68, 0.2);
-}
-
-.admin-layout.light-mode .admin-btn-danger:hover {
-  background: rgba(239, 68, 68, 0.1);
-  border-color: #EF4444;
-  color: #EF4444 !important;
-  -webkit-text-fill-color: #EF4444 !important;
-}
-
+/* ---- Tabs ---- */
 .admin-layout.light-mode .admin-tabs {
   background: #FFFFFF;
-  border-color: rgba(255, 77, 109, 0.1);
+  border-color: #E5E7EB;
 }
 
 .admin-layout.light-mode .admin-tab {
@@ -1095,83 +1225,106 @@ body:has(.admin-login-page) footer {
 .admin-layout.light-mode .admin-tab:hover {
   color: #FF4D6D !important;
   -webkit-text-fill-color: #FF4D6D !important;
-  background: rgba(255, 77, 109, 0.05);
+  background: rgba(255, 77, 109, 0.04);
 }
 
 .admin-layout.light-mode .admin-tab.active {
-  background: linear-gradient(135deg, rgba(255, 77, 109, 0.1), rgba(255, 154, 60, 0.1));
+  background: rgba(255, 77, 109, 0.08);
   color: #FF4D6D !important;
   -webkit-text-fill-color: #FF4D6D !important;
-  border-bottom-color: transparent !important;
+  border-bottom-color: #FF4D6D !important;
 }
 
+/* Section tabs */
 .admin-layout.light-mode .admin-section-tab {
   color: #4B5563 !important;
+  -webkit-text-fill-color: #4B5563 !important;
 }
 
 .admin-layout.light-mode .admin-section-tab:hover {
-  background: rgba(255, 77, 109, 0.05);
+  background: rgba(255, 77, 109, 0.04);
   color: #FF4D6D !important;
+  -webkit-text-fill-color: #FF4D6D !important;
 }
 
 .admin-layout.light-mode .admin-section-tab.active {
-  background: rgba(255, 77, 109, 0.1);
+  background: rgba(255, 77, 109, 0.08);
   color: #FF4D6D !important;
+  -webkit-text-fill-color: #FF4D6D !important;
   border-right-color: #FF4D6D;
 }
 
-/* Semantic Colors */
-.admin-layout.light-mode .admin-text-primary { color: #1F2937 !important; }
-.admin-layout.light-mode .admin-text-secondary { color: #4B5563 !important; }
-.admin-layout.light-mode .admin-text-brand { color: #FF4D6D !important; }
-.admin-layout.light-mode .admin-text-danger { color: #EF4444 !important; }
-.admin-layout.light-mode .admin-text-info { color: #3B82F6 !important; }
-
-/* Fix inline styles in components that use hardcoded dark colors */
-.admin-layout.light-mode h1,
-.admin-layout.light-mode h2,
-.admin-layout.light-mode h3,
-.admin-layout.light-mode h4,
-.admin-layout.light-mode h5,
-.admin-layout.light-mode h6,
-.admin-layout.light-mode p {
-  color: #1F2937 !important;
-}
-
-.admin-layout.light-mode [style*="color: #9CA3AF"],
-.admin-layout.light-mode [style*="color: '#9CA3AF'"] {
+/* ---- Pagination ---- */
+.admin-layout.light-mode .admin-pagination button {
   color: #4B5563 !important;
+  -webkit-text-fill-color: #4B5563 !important;
+  border-color: #E5E7EB;
 }
 
-.admin-layout.light-mode [style*="color: #E6E6EA"],
-.admin-layout.light-mode [style*="color: '#E6E6EA'"],
-.admin-layout.light-mode [style*="color: #D1D5DB"],
-.admin-layout.light-mode [style*="color: '#D1D5DB'"],
-.admin-layout.light-mode [style*="color: #FFF"],
-.admin-layout.light-mode [style*="color: '#FFF'"],
-.admin-layout.light-mode [style*="color: white"],
-.admin-layout.light-mode [style*="color: 'white'"] {
-  color: #1F2937 !important;
+.admin-layout.light-mode .admin-pagination button:hover {
+  color: #FF4D6D !important;
+  -webkit-text-fill-color: #FF4D6D !important;
+  border-color: #FF4D6D;
 }
 
-.admin-layout.light-mode [style*="color: #6B7280"],
-.admin-layout.light-mode [style*="color: '#6B7280'"] {
-  color: #374151 !important;
+.admin-layout.light-mode .admin-pagination button.active {
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
 }
 
-.admin-layout.light-mode div[style*="background: '#1C1E26'"],
-.admin-layout.light-mode div[style*="background: #1C1E26"],
-.admin-layout.light-mode div[style*="background: '#14162E'"],
-.admin-layout.light-mode div[style*="background: #14162E"],
-.admin-layout.light-mode div[style*="background: #1F2937"],
-.admin-layout.light-mode div[style*="background: '#1F2937'"] {
+/* ---- Upload Zone ---- */
+.admin-layout.light-mode .admin-upload-zone {
+  background: #FAFAFA;
+  border-color: #D1D5DB;
+}
+
+.admin-layout.light-mode .admin-upload-zone:hover {
+  border-color: #FF4D6D;
+  background: #FFF5F7;
+}
+
+/* ---- Dialog/Modal/Overlay ---- */
+.admin-layout.light-mode .admin-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.admin-layout.light-mode .admin-dialog,
+.admin-layout.light-mode .admin-modal {
   background: #FFFFFF !important;
+  border-color: #E5E7EB !important;
 }
 
-.admin-layout.light-mode div[style*="background: 'rgba(255, 77, 109, 0.03)'"] {
-  background: #FFF0F2 !important;
+/* ---- Empty State ---- */
+.admin-layout.light-mode .admin-empty {
+  color: #9CA3AF !important;
+}
+.admin-layout.light-mode .admin-empty * {
+  color: inherit !important;
+  -webkit-text-fill-color: inherit !important;
 }
 
-.admin-layout.light-mode .admin-label { color: #4B5563 !important; } 
-.admin-layout.light-mode .admin-btn-secondary * { color: inherit !important; } 
-.admin-layout.light-mode .admin-btn-danger * { color: inherit !important; }
+/* ---- Inline dark backgrounds → white ---- */
+.admin-layout.light-mode div[style*="background"],
+.admin-layout.light-mode input[style*="background"] {
+  background: transparent !important;
+}
+
+/* Search input boxes */
+.admin-layout.light-mode div[style*="background"] input {
+  color: #1F2937 !important;
+  -webkit-text-fill-color: #1F2937 !important;
+}
+
+/* ---- Links ---- */
+.admin-layout.light-mode a[style*="color: inherit"] {
+  color: inherit !important;
+  -webkit-text-fill-color: inherit !important;
+}
+
+/* Blue links */
+.admin-layout.light-mode a[href*="http"]:not(.admin-btn) {
+  color: #2563EB !important;
+  -webkit-text-fill-color: #2563EB !important;
+}
+
+
