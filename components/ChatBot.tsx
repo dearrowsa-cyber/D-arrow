@@ -266,7 +266,7 @@ export default function ChatBot() {
         
         {/* Floating Welcome Message */}
         {!isOpen && (
-          <div className={`absolute top-1/2 -translate-y-1/2 whitespace-nowrap bg-gradient-to-r from-[#14162E] to-[#1a1c3e] border border-white/10 text-white px-4 py-2.5 rounded-2xl shadow-[0_0_20px_rgba(255,77,109,0.3)] text-sm flex items-center gap-2.5 ${isRTL ? 'left-[120%] rounded-bl-sm' : 'right-[120%] rounded-br-sm'} animate-float-gentle [animation-delay:0.5s] pointer-events-none transition-all duration-300 before:absolute before:content-[''] before:top-1/2 before:-translate-y-1/2 before:border-8 before:border-transparent ${isRTL ? 'before:border-r-[#14162E] before:-left-[15px]' : 'before:border-l-[#1a1c3e] before:-right-[15px]'}`}>
+          <div className={`absolute top-1/2 -translate-y-1/2 whitespace-nowrap bg-gradient-to-r from-[#14162E] to-[#1a1c3e] border border-white/10 text-white px-2 sm:px-4 py-1.5 sm:py-2.5 rounded-2xl shadow-[0_0_20px_rgba(255,77,109,0.3)] text-[10px] sm:text-sm flex items-center gap-1.5 sm:gap-2.5 ${isRTL ? 'left-[120%] rounded-bl-sm' : 'right-[120%] rounded-br-sm'} animate-float-gentle [animation-delay:0.5s] pointer-events-none transition-all duration-300 before:absolute before:content-[''] before:top-1/2 before:-translate-y-1/2 before:border-8 before:border-transparent ${isRTL ? 'before:border-r-[#14162E] before:-left-[15px]' : 'before:border-l-[#1a1c3e] before:-right-[15px]'}`}>
             <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
