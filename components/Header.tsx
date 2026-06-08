@@ -224,197 +224,6 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
               className="lg:hidden p-1 sm:p-2 text-white rounded flex-shrink-0 hover:text-[#FF4D6D] transition focus:outline-none"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle Menu"
-        <div className="flex justify-between items-center w-full gap-1 sm:gap-4">
-          <Link href="/" className="hover:opacity-90 transition duration-300 flex items-center flex-shrink-0 group">
-            <Image
-              src="/Darrow-1.png"
-              alt="D Arrow Logo"
-              width={120}
-              height={48}
-              priority
-              sizes="(max-width: 640px) 64px, (max-width: 768px) 120px, (max-width: 1024px) 96px, 128px"
-              className="object-contain rounded-3xl w-14 sm:w-30 md:w-24 lg:w-32 group-hover:drop-shadow-lg transition"
-            /><span className="text-sm md:text-base lg:text-lg font-semibold pl-1 sm:pl-3 pr-1 sm:pr-4 bg-white bg-clip-text text-transparent">{lang === 'ar' ? 'للتسويق' : 'For Marketing '}</span>
-          </Link>
-
-          {/* Desktop Navigation - Hidden on tablet and below */}
-          <nav className="hidden lg:flex gap-1 items-center flex-1 justify-center px-4">
-            <Link href="/" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
-              <span className="nav-text">{t('home')}</span>
-            </Link>
-
-            <div className="relative" onMouseEnter={() => { if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current); setServicesOpen(true); }} onMouseLeave={() => { closeTimeoutRef.current = window.setTimeout(() => setServicesOpen(false),200 ); }}>
-              <Link
-                href="/services"
-                className="nav-link-hover flex items-center justify-center gap-2 !text-xl font-medium px-4 py-2"
-                style={{ textTransform: 'none' }}
-              >
-                <span className="nav-text">{t('solutions')}</span>
-              </Link>
-              {/* Enhanced dropdown - 3 featured columns with brand colors */}
-             <div
-  onMouseEnter={() => { if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current); }}
-  onMouseLeave={() => { closeTimeoutRef.current = window.setTimeout(() => setServicesOpen(false), 200); }}
-  className={`
-    ${servicesOpen 
-      ? 'opacity-100 translate-y-0 visible pointer-events-auto' 
-      : 'opacity-0 -translate-y-2 invisible pointer-events-none'}
-    transition-all duration-200 ease-out
-    absolute ${lang === 'ar' ? 'right-0' : 'left-0'}
-    mt-2 w-[380px]
-    bg-[#14162E]
-    border border-gray-700
-    rounded-lg
-    shadow-xl
-    p-3
-    z-[999]
-  `}
-  dir={lang === 'ar' ? 'rtl' : 'ltr'}
->
-  <div className="flex flex-col gap-2">
-
-    {/* Digital Marketing */}
-    <Link
-      href="/services?category=digital-marketing"
-      onClick={() => setServicesOpen(false)}
-      className={`
-        dropdown-item-hover
-        flex ${lang === 'ar' ? 'flex-row-reverse' : ''}
-        items-center gap-3
-        p-2.5
-        rounded-md
-        !text-white
-        hover:bg-[rgba(255,77,109,0.15)]
-        transition
-      `}
-    >
-      <img
-        src="/icon/services-icon/digital_marketing_promotion.png"
-        alt="Digital Marketing"
-        className="w-14 h-10 rounded-md object-cover flex-shrink-0 transition hover:scale-105"
-      />
-      <div className={lang === 'ar' ? 'text-right' : ''}>
-        <h4 className="text-sm font-semibold">
-          {t('digitalMarketingHeader')}
-        </h4>
-        
-      </div>
-    </Link>
-
-    {/* Innovation & Development */}
-    <Link
-      href="/services?category=innovation-development"
-      onClick={() => setServicesOpen(false)}
-      className={`
-        dropdown-item-hover
-        flex ${lang === 'ar' ? 'flex-row-reverse' : ''}
-        items-center gap-3
-        p-2.5
-        rounded-md
-        hover:bg-[rgba(255,77,109,0.15)]
-        transition
-      `}
-    >
-      <img
-        src="/icon/services-icon/creative_digital_design.png"
-        alt="Innovation & Development"
-        className="w-14 h-10 rounded-md object-cover flex-shrink-0 transition hover:scale-105"
-      />
-      <div className={lang === 'ar' ? 'text-right' : ''}>
-        <h4 className="text-sm font-semibold">
-          {t('innovationHeader')}
-        </h4>
-       
-      </div>
-    </Link>
-
-    {/* Real Estate */}
-    <Link
-      href="/services?category=real-estate"
-      onClick={() => setServicesOpen(false)}
-      className={`
-        dropdown-item-hover
-        flex ${lang === 'ar' ? 'flex-row-reverse' : ''}
-        items-center gap-3
-        p-2.5
-        rounded-md
-        hover:bg-[rgba(255,77,109,0.15)]
-        transition
-      `}
-    >
-      <img
-        src="/icon/services-icon/real_estate_marketing.png"
-        alt="Real Estate"
-        className="w-14 h-10 rounded-md object-cover flex-shrink-0 transition hover:scale-105"
-      />
-      <div className={lang === 'ar' ? 'text-right' : ''}>
-        <h4 className="text-sm font-semibold">
-          {t('realEstateHeader')}
-        </h4>
-        
-      </div>
-    </Link>
-
-  </div>
-</div>
-            </div>
-
-            <Link href="/pricing" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
-              <span className="nav-text">{t('packages')}</span>
-            </Link>
-            
-            <Link href="/why-us" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
-              <span className="nav-text">{t('ourCommitment')}</span>
-            </Link>
-            
-            <Link href="/provisions" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
-              <span className="nav-text">{t('portfolio')}</span>
-            </Link>
-            
-            <Link href="/store" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
-              <span className="nav-text">{lang === 'ar' ? 'المتجر' : 'Store'}</span>
-            </Link>
-            
-            <Link href="/blog" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
-              <span className="nav-text">{t('blog')}</span>
-            </Link>
-            
-            <Link href="/contact" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
-              <span className="nav-text">{t('contact')}</span>
-            </Link>
-          </nav>
-
-          <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
-            <Link
-              href="/contact"
-              className="bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] 
-!text-white 
-px-2 sm:px-4 py-1.5 sm:py-2 min-h-[36px] sm:min-h-[44px] flex items-center justify-center
-hover:!bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C]
-text-[11px] sm:text-sm lg:text-lg 
-font-semibold 
-rounded-md 
-transition-all duration-300 
-hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap"
-            >
-              {t('getStarted')}
-            </Link>
-            
-            <button onClick={toggleLang} className=" bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] 
-!text-white 
-px-2 sm:px-3 py-1.5 sm:py-2 min-h-[36px] sm:min-h-[44px] flex items-center justify-center
-text-[11px] sm:text-sm lg:text-lg 
-font-semibold 
-rounded-md 
-transition-all duration-300 
-hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
-              {lang === 'ar' ? 'English' : 'العربية'}
-            </button>
-
-            <button 
-              className="lg:hidden p-1 sm:p-2 text-white rounded flex-shrink-0 hover:text-[#FF4D6D] transition focus:outline-none"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Toggle Menu"
             >
               <svg className="w-7 h-7 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
@@ -434,8 +243,8 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
                   onClick={() => handleNavClick('/services')}
                   className="flex-1 flex items-center gap-2 
                              bg-transparent hover:bg-transparent 
-                             text-white text-2xl font-medium 
-                             transition
+                             text-white text-2xl
+                             transition text-md font-medium 
                              px-4 py-3 min-h-[44px]
                              border-none outline-none"
                   style={{ textTransform: 'none' }}
@@ -452,10 +261,10 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
                 </button>
               </div>
 
-              {/* Enhanced dropdown - 3 featured columns with brand colors (Scaled Down for Mobile) */}
+              {/* Enhanced dropdown - 3 featured columns with brand colors (Original Version) */}
               <div 
                 className={`${servicesOpen ? 'max-h-[500px] opacity-100 mt-2 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300 ease-in-out relative w-full bg-[#14162E]/40 border-l-2 border-brand-pink rounded-r-lg z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-                <div className="flex flex-col gap-1 p-1">
+                <div className="flex flex-col gap-2 p-2">
                   <Link href="/services?category=digital-marketing" onClick={() => { setServicesOpen(false); handleNavClick('/services'); }} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-2 items-center p-2 min-h-[36px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full mb-1`}>
                     <img src="/icon/services-icon/digital_marketing_promotion.png" alt="Digital Marketing" className="w-6 h-6 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
                     <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
