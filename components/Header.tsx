@@ -29,7 +29,7 @@ export default memo(function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full bg-transparent backdrop-blur-[2px] min-h-[64px]">
       <div className="w-full px-2 sm:px-4 md:px-6 lg:px-12 py-3">
-        <div className="flex justify-between items-center w-full gap-4">
+        <div className="flex justify-between items-center w-full gap-1 sm:gap-4">
           <Link href="/" className="hover:opacity-90 transition duration-300 flex items-center flex-shrink-0 group">
             <Image
               src="/Darrow-1.png"
@@ -38,8 +38,8 @@ export default memo(function Header() {
               height={48}
               priority
               sizes="(max-width: 640px) 64px, (max-width: 768px) 120px, (max-width: 1024px) 96px, 128px"
-              className="object-contain rounded-3xl w-16 sm:w-30 md:w-24 lg:w-32 group-hover:drop-shadow-lg transition"
-            /><span className="text-lg sm:text-sm md:text-base lg:text-lg font-semibold pl-2 sm:pl-3 pl-4 pr-4 bg-white bg-clip-text text-transparent">{lang === 'ar' ? 'للتسويق' : 'For Marketing '}</span>
+              className="object-contain rounded-3xl w-14 sm:w-30 md:w-24 lg:w-32 group-hover:drop-shadow-lg transition"
+            /><span className="text-sm md:text-base lg:text-lg font-semibold pl-1 sm:pl-3 pr-1 sm:pr-4 bg-white bg-clip-text text-transparent">{lang === 'ar' ? 'للتسويق' : 'For Marketing '}</span>
           </Link>
 
           {/* Desktop Navigation - Hidden on tablet and below */}
@@ -189,18 +189,18 @@ export default memo(function Header() {
             </Link>
           </nav>
 
-          <div className="flex items-center gap-2 sm:gap-2 flex-shrink-0">
+          <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
             <Link
               href="/contact"
               className="bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] 
 !text-white 
-px-4 py-2 min-h-[44px] flex items-center justify-center
+px-2 sm:px-4 py-1.5 sm:py-2 min-h-[36px] sm:min-h-[44px] flex items-center justify-center
 hover:!bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C]
-text-xs sm:text-sm lg:text-lg 
+text-[11px] sm:text-sm lg:text-lg 
 font-semibold 
 rounded-md 
 transition-all duration-300 
-hover:shadow-md hover:scale-105 active:scale-95"
+hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap"
             >
               {t('getStarted')}
             </Link>
@@ -210,12 +210,12 @@ hover:shadow-md hover:scale-105 active:scale-95"
 
             <button onClick={toggleLang} className=" bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] 
 !text-white 
-px-3 py-2 min-h-[44px] flex items-center justify-center
-text-xs sm:text-sm lg:text-lg 
+px-2 sm:px-3 py-1.5 sm:py-2 min-h-[36px] sm:min-h-[44px] flex items-center justify-center
+text-[11px] sm:text-sm lg:text-lg 
 font-semibold 
 rounded-md 
 transition-all duration-300 
-hover:shadow-md hover:scale-105 active:scale-95">
+hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
               {lang === 'ar' ? 'English' : 'العربية'}
             </button>
 
