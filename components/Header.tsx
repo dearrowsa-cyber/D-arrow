@@ -235,20 +235,20 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
         {/* Mobile/Tablet Sidebar Menu */}
         {isMenuOpen && (
           <nav className="lg:hidden mt-4 space-y-2 pb-4 max-h-96 overflow-y-auto">
-            <Link href="/" onClick={() => handleNavClick('/')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition !text-md rounded-lg text-soft-white">{t('home')}</Link>
+            <Link href="/" onClick={() => handleNavClick('/')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-lg rounded-lg">{t('home')}</Link>
             <div className="relative" onMouseEnter={() => { if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current); setServicesOpen(true); }} onMouseLeave={() => { closeTimeoutRef.current = window.setTimeout(() => setServicesOpen(false), 100); }}>
-          <div className="flex w-full items-center justify-between">
-            <Link
-              href="/services"
-              onClick={() => handleNavClick('/services')}
-              className="flex-1 flex items-center gap-2 
-                         bg-transparent hover:bg-transparent 
-                         text-white text-lg
-                         transition text-md font-medium 
-                         px-4 py-3 min-h-[44px]
-                         border-none outline-none"
-              style={{ textTransform: 'none' }}
-            >
+              <div className="flex w-full items-center justify-between">
+                <Link
+                  href="/services"
+                  onClick={() => handleNavClick('/services')}
+                  className="flex-1 flex items-center gap-2 
+                             bg-transparent hover:bg-transparent 
+                             text-white text-lg font-medium 
+                             transition
+                             px-4 py-3 min-h-[44px]
+                             border-none outline-none"
+                  style={{ textTransform: 'none' }}
+                >
               {t('solutions')}
             </Link>
             <button
@@ -260,42 +260,42 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
               </svg>
             </button>
           </div>
-    {/* Enhanced dropdown - 3 featured columns with brand colors */}
+              {/* Enhanced dropdown - 3 featured columns with brand colors */}
               <div 
                 className={`${servicesOpen ? 'max-h-[500px] opacity-100 mt-2 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300 ease-in-out relative w-full bg-[#14162E]/40 border-l-2 border-brand-pink rounded-r-lg z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-                <div className="flex flex-col gap-2 p-2">
-                  <Link href="/services?category=digital-marketing" onClick={() => setServicesOpen(false)} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center p-3 sm:p-4 min-h-[54px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full mb-1`}>
-                    <img src="/icon/services-icon/digital_marketing_promotion.png" alt="Digital Marketing" className="w-10 h-10 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
+                <div className="flex flex-col gap-1 p-2">
+                  <Link href="/services?category=digital-marketing" onClick={() => setServicesOpen(false)} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-2.5 min-h-[44px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full`}>
+                    <img src="/icon/services-icon/digital_marketing_promotion.png" alt="Digital Marketing" className="w-8 h-8 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
                     <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
-                      <h4 className="text-[15px] font-bold">{t('digitalMarketingHeader')}</h4>
+                      <h4 className="text-[14px] font-bold text-white">{t('digitalMarketingHeader')}</h4>
                     </div>
                   </Link>
 
-                  <Link href="/services?category=innovation-development" onClick={() => setServicesOpen(false)} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center p-3 sm:p-4 min-h-[54px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full mb-1`}>
-                    <img src="/icon/services-icon/creative_digital_design.png" alt="Innovation & Development" className="w-10 h-10 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
+                  <Link href="/services?category=innovation-development" onClick={() => setServicesOpen(false)} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-2.5 min-h-[44px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full`}>
+                    <img src="/icon/services-icon/creative_digital_design.png" alt="Innovation & Development" className="w-8 h-8 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
                     <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
-                      <h4 className="text-[15px] font-bold">{t('innovationHeader')}</h4>
+                      <h4 className="text-[14px] font-bold text-white">{t('innovationHeader')}</h4>
                     </div>
                   </Link>
 
-                  <Link href="/services?category=real-estate" onClick={() => setServicesOpen(false)} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-4 items-center p-3 sm:p-4 min-h-[54px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full`}>
-                    <img src="/icon/services-icon/real_estate_marketing.png" alt="Real Estate" className="w-10 h-10 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
+                  <Link href="/services?category=real-estate" onClick={() => setServicesOpen(false)} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-2.5 min-h-[44px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full`}>
+                    <img src="/icon/services-icon/real_estate_marketing.png" alt="Real Estate" className="w-8 h-8 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
                     <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
-                      <h4 className="text-[15px] font-bold">{t('realEstateHeader')}</h4>
+                      <h4 className="text-[14px] font-bold text-white">{t('realEstateHeader')}</h4>
                     </div>
                   </Link>
                 </div>
               </div>
             </div>
 
-            <Link href="/pricing" onClick={() => handleNavClick('/pricing')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('packages')}</Link>
-            <Link href="/why-us" onClick={() => handleNavClick('/why-us')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] text-soft-white font-medium  !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('ourCommitment')}</Link>
+            <Link href="/pricing" onClick={() => handleNavClick('/pricing')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-lg rounded-lg">{t('packages')}</Link>
+            <Link href="/why-us" onClick={() => handleNavClick('/why-us')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-lg rounded-lg">{t('ourCommitment')}</Link>
             
-            <Link href="/provisions" onClick={() => handleNavClick('/provisions')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('portfolio')}</Link>
-            <Link href="/store" onClick={() => handleNavClick('/store')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{lang === 'ar' ? 'المتجر' : 'Store'}</Link>
-            <Link href="/blog" onClick={() => handleNavClick('/blog')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium text-soft-white !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('blog')}</Link>
+            <Link href="/provisions" onClick={() => handleNavClick('/provisions')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-lg rounded-lg">{t('portfolio')}</Link>
+            <Link href="/store" onClick={() => handleNavClick('/store')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-lg rounded-lg">{lang === 'ar' ? 'المتجر' : 'Store'}</Link>
+            <Link href="/blog" onClick={() => handleNavClick('/blog')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-lg rounded-lg">{t('blog')}</Link>
             
-            <Link href="/contact" onClick={() => handleNavClick('/contact')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] text-soft-white font-medium  !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-2xl rounded-lg">{t('contact')}</Link>
+            <Link href="/contact" onClick={() => handleNavClick('/contact')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-lg rounded-lg">{t('contact')}</Link>
           </nav>
         )}
       </div>
