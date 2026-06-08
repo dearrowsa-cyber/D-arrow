@@ -260,29 +260,18 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
               </svg>
             </button>
           </div>
-              {/* Enhanced dropdown - 3 featured columns with brand colors */}
+              {/* Mobile simplified dropdown - just text links */}
               <div 
-                className={`${servicesOpen ? 'max-h-[500px] opacity-100 mt-2 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300 ease-in-out relative w-full bg-[#14162E]/40 border-l-2 border-brand-pink rounded-r-lg z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-                <div className="flex flex-col gap-1 p-2">
-                  <Link href="/services?category=digital-marketing" onClick={() => setServicesOpen(false)} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-2.5 min-h-[44px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full`}>
-                    <img src="/icon/services-icon/digital_marketing_promotion.png" alt="Digital Marketing" className="w-8 h-8 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
-                    <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
-                      <h4 className="text-[14px] font-bold text-white">{t('digitalMarketingHeader')}</h4>
-                    </div>
+                className={`${servicesOpen ? 'max-h-[500px] opacity-100 mt-1 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300 ease-in-out relative w-full bg-transparent border-brand-pink z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+                <div className={`flex flex-col gap-1 py-1 ${lang === 'ar' ? 'pr-4 border-r-2' : 'pl-4 border-l-2'} border-brand-pink/50 ml-4 mr-4`}>
+                  <Link href="/services?category=digital-marketing" onClick={() => setServicesOpen(false)} className="px-3 py-2 text-md text-white/90 hover:text-brand-pink transition-colors font-medium">
+                    {t('digitalMarketingHeader')}
                   </Link>
-
-                  <Link href="/services?category=innovation-development" onClick={() => setServicesOpen(false)} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-2.5 min-h-[44px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full`}>
-                    <img src="/icon/services-icon/creative_digital_design.png" alt="Innovation & Development" className="w-8 h-8 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
-                    <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
-                      <h4 className="text-[14px] font-bold text-white">{t('innovationHeader')}</h4>
-                    </div>
+                  <Link href="/services?category=innovation-development" onClick={() => setServicesOpen(false)} className="px-3 py-2 text-md text-white/90 hover:text-brand-pink transition-colors font-medium">
+                    {t('innovationHeader')}
                   </Link>
-
-                  <Link href="/services?category=real-estate" onClick={() => setServicesOpen(false)} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-3 items-center p-2.5 min-h-[44px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full`}>
-                    <img src="/icon/services-icon/real_estate_marketing.png" alt="Real Estate" className="w-8 h-8 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
-                    <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
-                      <h4 className="text-[14px] font-bold text-white">{t('realEstateHeader')}</h4>
-                    </div>
+                  <Link href="/services?category=real-estate" onClick={() => setServicesOpen(false)} className="px-3 py-2 text-md text-white/90 hover:text-brand-pink transition-colors font-medium">
+                    {t('realEstateHeader')}
                   </Link>
                 </div>
               </div>
