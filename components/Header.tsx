@@ -221,11 +221,12 @@ hover:shadow-md hover:scale-105 active:scale-95">
 
             {/* Hamburger Menu Button - Visible on tablet and below */}
             <button 
-              className="lg:hidden p-1 text-soft-white rounded flex-shrink-0 hover:text-brand-pink transition"
+              className="lg:hidden p-1 sm:p-2 text-white rounded flex-shrink-0 hover:text-[#FF4D6D] transition focus:outline-none"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle Menu"
             >
-              <svg className="w-4 h-4 sm:w-2 sm:h-5 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+              <svg className="w-7 h-7 sm:w-8 sm:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
               </svg>
             </button>
           </div>
