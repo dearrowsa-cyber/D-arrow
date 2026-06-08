@@ -8,7 +8,7 @@ export default function WhatsAppWidget() {
   const isRTL = lang === 'ar';
 
   return (
-    <div className={`fixed bottom-6 z-40 w-16 h-16 rounded-full shadow-2xl transition-all hover:scale-110 active:scale-90 flex items-center justify-center !bg-transparent text-white ${isRTL ? 'right-6' : 'left-6'}`}>
+    <div className={`fixed bottom-24 z-40 w-16 h-16 rounded-full shadow-2xl transition-all hover:scale-110 active:scale-90 flex items-center justify-center !bg-transparent text-white ${isRTL ? 'right-6' : 'left-6'}`}>
       <a
         href="https://wa.me/966500466349"
         target="_blank"
