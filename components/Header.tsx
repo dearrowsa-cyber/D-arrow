@@ -263,26 +263,26 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
 
               {/* Enhanced dropdown - 3 featured columns with brand colors (Scaled Down for Mobile) */}
               <div 
-                className={`${servicesOpen ? 'max-h-[500px] opacity-100 mt-2 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300 ease-in-out relative w-full bg-[#14162E]/40 border-l-2 border-brand-pink rounded-r-lg z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+                className={`${servicesOpen ? 'max-h-[500px] opacity-100 mt-2 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300 ease-in-out relative w-full bg-[#14162E]/40 ${lang === 'ar' ? 'border-r-2 rounded-l-lg' : 'border-l-2 rounded-r-lg'} border-brand-pink z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
                 <div className="flex flex-col gap-1 p-1">
-                  <Link href="/services?category=digital-marketing" onClick={() => { setServicesOpen(false); handleNavClick('/services'); }} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-2 items-center p-2 min-h-[36px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full mb-1`}>
-                    <img src="/icon/services-icon/digital_marketing_promotion.png" alt="Digital Marketing" className="w-6 h-6 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
+                  <Link href="/services?category=digital-marketing" onClick={() => { setServicesOpen(false); handleNavClick('/services'); }} className="dropdown-item-hover flex gap-3 items-center p-2 min-h-[36px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full mb-1">
+                    <img src="/icon/services-icon/digital_marketing_promotion.png" alt="Digital Marketing" className="w-7 h-7 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
                     <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
-                      <h4 className="text-[13px] font-bold text-white">{t('digitalMarketingHeader')}</h4>
+                      <span className="text-sm font-bold text-white block">{t('digitalMarketingHeader')}</span>
                     </div>
                   </Link>
 
-                  <Link href="/services?category=innovation-development" onClick={() => { setServicesOpen(false); handleNavClick('/services'); }} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-2 items-center p-2 min-h-[36px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full mb-1`}>
-                    <img src="/icon/services-icon/creative_digital_design.png" alt="Innovation & Development" className="w-6 h-6 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
+                  <Link href="/services?category=innovation-development" onClick={() => { setServicesOpen(false); handleNavClick('/services'); }} className="dropdown-item-hover flex gap-3 items-center p-2 min-h-[36px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full mb-1">
+                    <img src="/icon/services-icon/creative_digital_design.png" alt="Innovation & Development" className="w-7 h-7 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
                     <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
-                      <h4 className="text-[13px] font-bold text-white">{t('innovationHeader')}</h4>
+                      <span className="text-sm font-bold text-white block">{t('innovationHeader')}</span>
                     </div>
                   </Link>
 
-                  <Link href="/services?category=real-estate" onClick={() => { setServicesOpen(false); handleNavClick('/services'); }} className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} gap-2 items-center p-2 min-h-[36px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full`}>
-                    <img src="/icon/services-icon/real_estate_marketing.png" alt="Real Estate" className="w-6 h-6 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
+                  <Link href="/services?category=real-estate" onClick={() => { setServicesOpen(false); handleNavClick('/services'); }} className="dropdown-item-hover flex gap-3 items-center p-2 min-h-[36px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full">
+                    <img src="/icon/services-icon/real_estate_marketing.png" alt="Real Estate" className="w-7 h-7 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
                     <div className={`${lang === 'ar' ? 'text-right' : 'text-left'} flex-1`}>
-                      <h4 className="text-[13px] font-bold text-white">{t('realEstateHeader')}</h4>
+                      <span className="text-sm font-bold text-white block">{t('realEstateHeader')}</span>
                     </div>
                   </Link>
                 </div>
