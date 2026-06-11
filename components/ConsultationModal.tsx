@@ -21,7 +21,9 @@ export default function ConsultationModal({ isOpen, onClose }: ConsultationModal
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+    // Prevent Arabic numbers by replacing them with English numbers
+    value = value.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString());
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 

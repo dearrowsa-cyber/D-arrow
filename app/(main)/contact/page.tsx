@@ -28,7 +28,9 @@ export default function ContactPage() {
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+    let { name, value } = e.target;
+    // Prevent Arabic numbers by replacing them with English numbers
+    value = value.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d).toString());
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
