@@ -23,6 +23,37 @@ export interface PortfolioProject {
 
 export const projects: PortfolioProject[] = [
   {
+    id: 'erp-crm-webapp',
+    slug: 'business-management-system',
+    logoUrl: '/portfolio/erp-1.png',
+    title: { en: 'Custom ERP & CRM Web Application', ar: 'تطبيق ويب شامل لإدارة الأعمال (ERP & CRM)' },
+    subtitle: { en: 'Business Management System', ar: 'نظام إدارة متكامل للشركات' },
+    description: {
+      en: 'A powerful, dark-themed web application designed to manage every aspect of a business. It features comprehensive modules for CRM, HR management, Task tracking, and Billing & Invoices, all accessible from a unified dashboard.',
+      ar: 'تطبيق ويب قوي ومتقدم مخصص لإدارة كافة جوانب الأعمال. يحتوي على وحدات متكاملة لإدارة علاقات العملاء (CRM)، الموارد البشرية (HR)، إدارة المهام والمشاريع، والفواتير والمدفوعات، وكل ذلك من خلال لوحة تحكم موحدة وذكية.'
+    },
+    imageUrl: '/portfolio/erp-1.png',
+    tags: {
+      en: 'Web App, CRM, ERP, Dashboard Design, SaaS',
+      ar: 'تطبيق ويب, لوحة تحكم, نظام إدارة, تصميم واجهات (UI/UX)'
+    } as any,
+    category: ['Web Development', 'UI/UX Design'],
+    challenge: {
+      en: 'Developing a centralized system that brings together multiple vital departments (Sales, HR, Projects, Finance) into a single interface without complicating the user experience.',
+      ar: 'تطوير نظام مركزي يجمع بين عدة أقسام حيوية (المبيعات، الموارد البشرية، المشاريع، المالية) في واجهة واحدة دون تعقيد تجربة المستخدم.'
+    },
+    solution: {
+      en: 'We designed a modern, dark-mode UI with distinct workspaces for each department. Interactive dashboards and real-time charts were implemented to monitor performance effortlessly.',
+      ar: 'قمنا بتصميم وتطوير واجهة مستخدم (UI) عصرية بنمط مظلم. تم تقسيم النظام إلى مساحات عمل مستقلة لتسهيل التنقل، مع إضافة لوحات معلومات (Dashboards) تفاعلية ورسوم بيانية حية لمتابعة الأداء لحظة بلحظة.'
+    },
+    results: [
+      { en: 'Improved internal operational efficiency', ar: 'تحسين كفاءة إدارة العمليات الداخلية وسرعة الإنجاز' },
+      { en: 'Reduced app-switching time', ar: 'توفير بيئة عمل موحدة وتقليل الحاجة للتنقل بين تطبيقات مختلفة' },
+      { en: 'Accurate data visualization', ar: 'تقديم رؤى تحليلية دقيقة لمتخذي القرار من خلال الرسوم البيانية' }
+    ],
+    gallery: ['/portfolio/erp-1.png', '/portfolio/erp-2.png', '/portfolio/erp-3.png']
+  },
+  {
     id: 'zarabie-social',
     slug: 'zarabie-social-media',
     logoUrl: '/portfolio/zarabie-1.jpeg',
