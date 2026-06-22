@@ -23,6 +23,37 @@ export interface PortfolioProject {
 
 export const projects: PortfolioProject[] = [
   {
+    id: 'fatima-lifecoach',
+    slug: 'fatima-life-coach',
+    logoUrl: '/portfolio/fatima-1.png',
+    title: { en: 'Design and Development of Fatima Life Coach Website', ar: 'تصميم وتطوير موقع فاطمة لايف كوتش للاستشارات والتدريب' },
+    subtitle: { en: 'Personal Branding & Coaching Platform', ar: 'منصة استشارات وتدريب شخصي' },
+    description: {
+      en: 'A personal branding website and coaching platform for Fatima, offering online courses, one-on-one session bookings, and personal development resources in an elegant and feminine design.',
+      ar: 'موقع شخصي ومنصة تدريب لفاطمة لايف كوتش، يقدم دورات تدريبية عبر الإنترنت، وحجز جلسات استشارية فردية، وموارد لتطوير الذات بتصميم أنيق وأنثوي.'
+    },
+    imageUrl: '/portfolio/fatima-1.png',
+    tags: {
+      en: 'Personal Branding, Coaching, E-Learning, Web Design',
+      ar: 'علامة تجارية شخصية, كوتشينج, تعليم إلكتروني, تصميم ويب'
+    } as any,
+    category: ['Web Design', 'Branding'],
+    challenge: {
+      en: 'Establishing a strong digital presence that conveys trust, empowerment, and professionalism, while integrating seamless booking and e-learning functionalities.',
+      ar: 'بناء تواجد رقمي قوي يعبر عن الثقة والتمكين والاحترافية، مع دمج أنظمة سلسة لحجز الجلسات وعرض الدورات التدريبية (التعليم الإلكتروني).'
+    },
+    solution: {
+      en: 'We created a visually stunning website using a soft lavender and gold color palette. We integrated an intuitive booking system and a structured online course catalog to streamline the user journey.',
+      ar: 'قمنا بإنشاء موقع جذاب بصرياً باستخدام لوحة ألوان ناعمة من اللافندر والذهبي. كما قمنا بدمج نظام حجز بديهي وفهرس منظم للدورات التدريبية لتسهيل رحلة المستخدم.'
+    },
+    results: [
+      { en: 'Enhanced personal brand image', ar: 'تعزيز صورة العلامة التجارية الشخصية والثقة الرقمية' },
+      { en: 'Increased session bookings and course enrollments', ar: 'زيادة في حجوزات الجلسات والتسجيل في الدورات' },
+      { en: 'Centralized platform for coaching services', ar: 'منصة مركزية متكاملة لتقديم خدمات الكوتشينج' }
+    ],
+    gallery: ['/portfolio/fatima-1.png', '/portfolio/fatima-2.png']
+  },
+  {
     id: 'oca-furniture',
     slug: 'oca-furniture-store',
     logoUrl: '/portfolio/oca-1.png',
