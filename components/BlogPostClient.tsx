@@ -4,6 +4,9 @@ import { useLanguage } from '@/components/LanguageProvider';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Calendar, Clock, User, Tag } from 'lucide-react';
 
+import ContentGate from '@/components/ContentGate';
+import DynamicCTA from '@/components/DynamicCTA';
+
 interface BlogPostClientProps {
   post: any;
 }
@@ -22,6 +25,7 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
 
   const title = getDisplayText(post.title, post.titleAr);
   const content = getDisplayText(post.content, post.contentAr);
+  const gatedContent = getDisplayText(post.gatedContent, post.gatedContentAr);
   const category = getDisplayText(post.category, post.categoryAr);
   const tags: string[] = Array.isArray(post.tags) ? post.tags : [];
 
@@ -79,6 +83,16 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
           className="blog-post-content prose prose-invert max-w-none break-words prose-headings:text-white prose-p:text-base prose-a:text-[#FF4D6D] hover:prose-a:text-[#FF9A3C] prose-img:rounded-xl prose-img:max-w-full w-full overflow-hidden"
           dangerouslySetInnerHTML={{ __html: content }}
         />
+
+        {/* Content Gate */}
+        {post.isGated && gatedContent && (
+          <ContentGate postSlug={post.slug} gatedContentHtml={gatedContent} />
+        )}
+
+        {/* Dynamic CTA */}
+        {post.ctaType && post.ctaType !== 'none' && (
+          <DynamicCTA type={post.ctaType} />
+        )}
 
         {/* Tags Footer */}
         {tags.length > 0 && (

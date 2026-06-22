@@ -64,6 +64,10 @@ export async function POST(req: NextRequest) {
         imageUrl: newPost.imageUrl || null,
         tags: newPost.tags ? JSON.stringify(newPost.tags) : null,
         status: newPost.status || 'published',
+        isGated: newPost.isGated || false,
+        ctaType: newPost.ctaType || 'default',
+        gatedContent: newPost.gatedContent || null,
+        gatedContentAr: newPost.gatedContentAr || null,
       }
     });
 

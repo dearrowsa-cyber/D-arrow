@@ -592,6 +592,13 @@ html.lang-ar li {
   font-weight: 900;
 }
 
+/* Fix for Arabic Bold text mapping */
+html.lang-ar strong,
+html.lang-ar b {
+  font-family: '29LT-Bukra', system-ui, sans-serif !important;
+  font-weight: 400 !important;
+}
+
 /* Performance Optimizations for Smooth Scrolling */
 
 /* GPU acceleration for sections - excluding hero video containment issues */

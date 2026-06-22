@@ -146,8 +146,24 @@ model BlogPost {
   imageUrl    String?
   tags        String?  // JSON array of tag strings e.g. '["seo","marketing"]'
   status      String   @default("published")
+  
+  // --- Lead Generation Engine ---
+  isGated         Boolean  @default(false)
+  gatedContent    String?  // The premium hidden content
+  gatedContentAr  String?  // The premium hidden content in Arabic
+  ctaType         String?  @default("default") // 'seo', 'smm', 'web', 'default', 'none'
+  
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model CapturedLead {
+  id          String   @id @default(cuid())
+  email       String
+  name        String?
+  phone       String?
+  source      String   // e.g. "blog_gated_content_slug"
+  createdAt   DateTime @default(now())
 }
 
 // =============================================

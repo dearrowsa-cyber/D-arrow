@@ -6,6 +6,8 @@ import { ArrowRight, Upload, X, Save, Tag } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import RichTextEditor from '@/components/admin/RichTextEditor';
+import AIWriterAssistant from '@/components/admin/AIWriterAssistant';
+import SEOScorer from '@/components/admin/SEOScorer';
 
 const CATEGORIES = [
   'Digital Marketing', 'AI & Technology', 'Innovation',
@@ -40,6 +42,10 @@ export default function EditPostPage() {
     status: 'published',
     date: '',
     time: '',
+    isGated: false,
+    ctaType: 'default',
+    gatedContent: '',
+    gatedContentAr: '',
   });
   const [tagInput, setTagInput] = useState('');
 
@@ -71,6 +77,10 @@ export default function EditPostPage() {
           status: post.status || 'published',
           date: post.date || '',
           time: post.time ? post.time.slice(0, 5) : '',
+          isGated: post.isGated || false,
+          ctaType: post.ctaType || 'default',
+          gatedContent: post.gatedContent || '',
+          gatedContentAr: post.gatedContentAr || '',
         });
       } else {
         showToast('المقال غير موجود', 'error');
@@ -278,8 +288,15 @@ export default function EditPostPage() {
                 </div>
                 <div>
                   <label className="admin-label">المحتوى بالعربية</label>
+                  <AIWriterAssistant content={form.contentAr} onContentChange={(val) => updateField('contentAr', val)} language="ar" />
                   <RichTextEditor value={form.contentAr} onChange={(val) => updateField('contentAr', val)} dir="rtl" />
                 </div>
+                {form.isGated && (
+                  <div style={{ marginTop: 20, padding: 16, border: '1px dashed #FF9A3C', borderRadius: 8, background: 'rgba(255, 154, 60, 0.05)' }}>
+                    <label className="admin-label" style={{ color: '#FF9A3C' }}>المحتوى المغلق (لجلب المشتركين) بالعربية</label>
+                    <RichTextEditor value={form.gatedContentAr} onChange={(val) => updateField('gatedContentAr', val)} dir="rtl" />
+                  </div>
+                )}
               </>
             ) : (
               <>
@@ -302,8 +319,15 @@ export default function EditPostPage() {
                 </div>
                 <div>
                   <label className="admin-label">Content</label>
+                  <AIWriterAssistant content={form.content} onContentChange={(val) => updateField('content', val)} language="en" />
                   <RichTextEditor value={form.content} onChange={(val) => updateField('content', val)} dir="ltr" />
                 </div>
+                {form.isGated && (
+                  <div style={{ marginTop: 20, padding: 16, border: '1px dashed #FF9A3C', borderRadius: 8, background: 'rgba(255, 154, 60, 0.05)' }}>
+                    <label className="admin-label" style={{ color: '#FF9A3C' }}>Gated Content (Lead Generation)</label>
+                    <RichTextEditor value={form.gatedContent} onChange={(val) => updateField('gatedContent', val)} dir="ltr" />
+                  </div>
+                )}
               </>
             )}
           </div>
@@ -341,7 +365,15 @@ export default function EditPostPage() {
 
           {/* Settings */}
           <div className="admin-card">
-            <h4 style={{ color: '#E6E6EA', fontSize: 15, margin: '0 0 16px' }}>الإعدادات</h4>
+            <h4 style={{ color: '#E6E6EA', fontSize: 15, margin: '0 0 16px' }}>الإعدادات وتقييم السيو</h4>
+
+            <SEOScorer 
+              title={form.titleAr || form.title} 
+              excerpt={form.excerptAr || form.excerpt} 
+              content={form.contentAr || form.content} 
+              tags={form.tags} 
+            />
+
             <div style={{ marginBottom: 16 }}>
               <label className="admin-label">رابط المقالة (Slug)</label>
               <input className="admin-input" placeholder="مثال: /blog/my-article-title" value={form.slug} onChange={e => updateField('slug', e.target.value)} dir="ltr" />
@@ -427,6 +459,35 @@ export default function EditPostPage() {
               <select className="admin-select" value={form.status} onChange={e => updateField('status', e.target.value)}>
                 <option value="published">منشور</option>
                 <option value="draft">مسودة</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Lead Generation Settings */}
+          <div className="admin-card">
+            <h4 style={{ color: '#E6E6EA', fontSize: 15, margin: '0 0 16px' }}>جلب العملاء (Lead Gen)</h4>
+            
+            <label className="admin-label" style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', marginBottom: 16 }}>
+              <input 
+                type="checkbox" 
+                checked={form.isGated} 
+                onChange={e => updateField('isGated', e.target.checked)} 
+                style={{ width: 18, height: 18, accentColor: '#FF4D6D' }}
+              />
+              تفعيل المحتوى المغلق (Gated Content)
+            </label>
+            <p style={{ fontSize: 12, color: '#9CA3AF', marginBottom: 16, marginTop: -8 }}>
+              سيتم إخفاء الجزء السفلي من المقال وطلب الإيميل من الزائر لفتحه.
+            </p>
+
+            <div>
+              <label className="admin-label">إعلان الخدمة (Dynamic CTA)</label>
+              <select className="admin-select" value={form.ctaType} onChange={e => updateField('ctaType', e.target.value)}>
+                <option value="default">الإعلان الافتراضي العام</option>
+                <option value="seo">إعلان خدمة السيو (SEO)</option>
+                <option value="smm">إعلان السوشيال ميديا (SMM)</option>
+                <option value="web">إعلان تصميم المواقع (Web)</option>
+                <option value="none">بدون إعلان</option>
               </select>
             </div>
           </div>
