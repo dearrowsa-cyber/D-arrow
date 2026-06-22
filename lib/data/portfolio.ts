@@ -23,6 +23,37 @@ export interface PortfolioProject {
 
 export const projects: PortfolioProject[] = [
   {
+    id: 'weber-burger',
+    slug: 'weber-burger',
+    logoUrl: '/portfolio/weber-1.png',
+    title: { en: 'Design and Development of Weber Burger Restaurant Website', ar: 'تصميم وتطوير موقع مطعم ويبر برجر الإلكتروني' },
+    subtitle: { en: 'Restaurant Website & Digital Menu', ar: 'موقع مطعم وقائمة طعام رقمية' },
+    description: {
+      en: 'A vibrant and appetizing website for Weber Burger restaurant in Al Khobar, featuring a digital menu with online ordering, location info, and delivery integration with major platforms.',
+      ar: 'موقع إلكتروني جذاب ومشهّي لمطعم ويبر برجر في الخبر، يتضمن قائمة طعام رقمية مع إمكانية الطلب أونلاين، ومعلومات الموقع، وربط التوصيل مع التطبيقات الرئيسية.'
+    },
+    imageUrl: '/portfolio/weber-1.png',
+    tags: {
+      en: 'Restaurant, Web Design, Digital Menu, F&B',
+      ar: 'مطاعم, تصميم ويب, قائمة رقمية, أغذية ومشروبات'
+    } as any,
+    category: ['Web Design', 'Branding'],
+    challenge: {
+      en: 'Creating a website that captures the bold and energetic brand identity of Weber Burger while providing a seamless digital menu and ordering experience for customers.',
+      ar: 'إنشاء موقع يعكس الهوية الجريئة والحيوية لعلامة ويبر برجر التجارية، مع توفير تجربة قائمة طعام رقمية سلسة وسهلة الطلب للعملاء.'
+    },
+    solution: {
+      en: 'We built a bold website using the brand\'s signature blue and yellow palette with playful illustrations. The digital menu showcases products with mouth-watering photography, pricing, and direct add-to-cart functionality.',
+      ar: 'قمنا ببناء موقع جريء باستخدام ألوان العلامة التجارية المميزة (الأزرق والأصفر) مع رسومات توضيحية مرحة. القائمة الرقمية تعرض المنتجات بصور احترافية شهية مع الأسعار وإمكانية الإضافة للسلة مباشرة.'
+    },
+    results: [
+      { en: 'Engaging digital presence reflecting brand personality', ar: 'تواجد رقمي جذاب يعكس شخصية العلامة التجارية' },
+      { en: 'Streamlined online ordering experience', ar: 'تجربة طلب أونلاين مبسطة وسلسة' },
+      { en: 'Integration with delivery apps (Jahez, HungerStation, The Chefz)', ar: 'ربط مع تطبيقات التوصيل (جاهز، هنقرستيشن، ذا شيفز)' }
+    ],
+    gallery: ['/portfolio/weber-1.png', '/portfolio/weber-2.png', '/portfolio/weber-3.png']
+  },
+  {
     id: 'fatima-lifecoach',
     slug: 'fatima-life-coach',
     logoUrl: '/portfolio/fatima-1.png',
