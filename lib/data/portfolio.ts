@@ -23,6 +23,37 @@ export interface PortfolioProject {
 
 export const projects: PortfolioProject[] = [
   {
+    id: 'oca-furniture',
+    slug: 'oca-furniture-store',
+    logoUrl: '/portfolio/oca-1.png',
+    title: { en: 'E-commerce Design and Development for OCA Furniture Store', ar: 'تصميم وتطوير متجر OCA الإلكتروني للأثاث المنزلي والمكتبي' },
+    subtitle: { en: 'Modern E-commerce Platform', ar: 'منصة تجارة إلكترونية حديثة' },
+    description: {
+      en: 'A comprehensive e-commerce platform for OCA Furniture, featuring a modern, user-friendly design, categorized product listings, and a seamless shopping experience for both home and office furniture.',
+      ar: 'منصة تجارة إلكترونية متكاملة لمتجر OCA للأثاث، تتميز بتصميم عصري وسهل الاستخدام، وتصنيف منظم للمنتجات، لتقديم تجربة تسوق سلسة لأثاث المنزل والمكتب والخزائن.'
+    },
+    imageUrl: '/portfolio/oca-1.png',
+    tags: {
+      en: 'E-commerce, UI/UX Design, Web Development, Furniture',
+      ar: 'تجارة إلكترونية, تصميم واجهة المستخدم, تطوير الويب, أثاث'
+    } as any,
+    category: ['Web Design', 'Marketing'],
+    challenge: {
+      en: 'The client needed an elegant and fast online store to showcase diverse furniture collections and safes, requiring intuitive navigation and categorization to handle a large inventory.',
+      ar: 'احتاج العميل إلى متجر إلكتروني أنيق وسريع لعرض مجموعات متنوعة من الأثاث والخزائن، مما تطلب نظام تنقل وتصنيف بديهي للتعامل مع مخزون كبير وعرضه بشكل جذاب.'
+    },
+    solution: {
+      en: 'We developed a visually appealing e-commerce site with soft color palettes that highlight the products. We implemented advanced filtering, clear product categorization, and highlighted core features like free delivery and customizable designs.',
+      ar: 'قمنا بتطوير متجر إلكتروني جذاب بصرياً بألوان هادئة تبرز جمال المنتجات. طبقنا نظام فلترة متقدم، وتصنيف واضح للمنتجات، مع إبراز المميزات التنافسية مثل التوصيل المجاني والتصاميم القابلة للتعديل.'
+    },
+    results: [
+      { en: 'Intuitive and modern shopping experience', ar: 'تجربة تسوق عصرية وبديهية تزيد من معدل البقاء في الموقع' },
+      { en: 'Streamlined product discovery and checkout', ar: 'تبسيط عملية اكتشاف المنتجات وإتمام الشراء' },
+      { en: 'Effective presentation of diverse product categories', ar: 'عرض فعّال وجذاب لمختلف فئات المنتجات' }
+    ],
+    gallery: ['/portfolio/oca-1.png', '/portfolio/oca-2.png', '/portfolio/oca-3.png']
+  },
+  {
     id: 'mathwaa',
     slug: 'mathwaa-association',
     logoUrl: '/portfolio/mathwaa-1.png',
