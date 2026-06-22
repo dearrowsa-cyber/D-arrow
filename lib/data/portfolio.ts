@@ -26,7 +26,7 @@ export const projects: PortfolioProject[] = [
     id: 'pro1',
     slug: 'al-syahaal-arabia',
     logoUrl: '/pro1.png',
-    title: { en: 'Al Syahaal Arabia', ar: 'السياحة العربية' },
+    title: { en: 'Design & Development of Al Syahaal Arabia Digital Magazine', ar: 'تصميم وتطوير مجلة السياحة العربية الرقمية' },
     subtitle: { en: 'Web Design & Content Strategy', ar: 'تصميم الويب واستراتيجية المحتوى' },
     description: {
       en: 'A digital magazine focused on tourism in the Arab world. We delivered a modern site with clear UX, curated content structure and SEO-friendly pages to attract organic visitors.',
@@ -57,7 +57,7 @@ export const projects: PortfolioProject[] = [
     id: 'beedco',
     slug: 'beedco',
     logoUrl: '/beedco-logo.png',
-    title: { en: 'Beedco', ar: 'بيدكو' },
+    title: { en: 'Development of the Comprehensive Digital Platform for Beedco', ar: 'تطوير المنصة الرقمية الشاملة لمؤسسة بيدكو' },
     subtitle: { en: 'Enterprise Digital Platform', ar: 'منصة رقمية للمؤسسات' },
     description: {
       en: 'An enterprise-level platform for construction management. We implemented a scalable UI, integrated module flows, and clear dashboards for operations teams.',
@@ -88,7 +88,7 @@ export const projects: PortfolioProject[] = [
     id: 'pro3',
     slug: 'new-age-maintenance-center',
     logoUrl: '/pro3.png',
-    title: { en: 'New Age Maintenance Center', ar: 'مركز صيانة العصر الجديد' },
+    title: { en: 'Digital Marketing Campaign for Lead Generation for New Age', ar: 'إدارة وتطوير الحملات التسويقية لمركز صيانة العصر الجديد' },
     subtitle: { en: 'Social Campaigns & Leads', ar: 'حملات تواصل وتوليد عملاء' },
     description: {
       en: 'Targeted social campaigns, creative assets and lead funnels. Campaigns brought higher engagement and a predictable pipeline of leads.',
