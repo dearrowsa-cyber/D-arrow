@@ -54,6 +54,37 @@ export const projects: PortfolioProject[] = [
     gallery: ['/portfolio/oca-1.png', '/portfolio/oca-2.png', '/portfolio/oca-3.png']
   },
   {
+    id: 'oca-branding',
+    slug: 'oca-visual-identity',
+    logoUrl: '/portfolio/oca-logo.png',
+    title: { en: 'OCA Furniture Store Visual Identity Design', ar: 'تصميم الهوية البصرية لمتجر OCA للأثاث' },
+    subtitle: { en: 'Branding & Logo Design', ar: 'تصميم الهوية والشعار' },
+    description: {
+      en: 'Complete visual identity design for OCA Furniture, including the logo, brand colors, typography, and visual guidelines. The design reflects the elegance and modernity of the furniture they sell.',
+      ar: 'تصميم هوية بصرية متكاملة لمتجر OCA للأثاث، تشمل تصميم الشعار، الألوان، الخطوط، والأدلة البصرية. يعكس التصميم الأناقة والحداثة للأثاث الذي يقدمونه.'
+    },
+    imageUrl: '/portfolio/oca-logo.png',
+    tags: {
+      en: 'Branding, Logo Design, Visual Identity',
+      ar: 'تصميم العلامة التجارية, تصميم الشعار, الهوية البصرية'
+    } as any,
+    category: ['Branding'],
+    challenge: {
+      en: 'Creating a memorable and modern brand identity that stands out in the competitive furniture market and accurately represents the company\'s high-quality products.',
+      ar: 'إنشاء هوية بصرية لا تُنسى وحديثة تبرز في سوق الأثاث التنافسي وتمثل منتجات الشركة عالية الجودة بدقة.'
+    },
+    solution: {
+      en: 'We designed a typographic logo that creatively integrates furniture elements into the letters, using a sophisticated color palette of orange and dark green.',
+      ar: 'قمنا بتصميم شعار طباعي يدمج بشكل إبداعي عناصر الأثاث في الحروف (مثل الكرسي والطاولة في حروف OCA)، باستخدام لوحة ألوان راقية من البرتقالي والأخضر الغامق.'
+    },
+    results: [
+      { en: 'Strong brand recognition', ar: 'تعرف قوي وسريع على العلامة التجارية' },
+      { en: 'Cohesive visual language across all platforms', ar: 'لغة بصرية متماسكة عبر جميع المنصات' },
+      { en: 'Increased trust and perceived value', ar: 'زيادة الثقة والقيمة المدركة للمنتجات' }
+    ],
+    gallery: ['/portfolio/oca-logo.png', '/portfolio/oca-logo.png', '/portfolio/oca-logo.png']
+  },
+  {
     id: 'mathwaa',
     slug: 'mathwaa-association',
     logoUrl: '/portfolio/mathwaa-1.png',
