@@ -65,18 +65,18 @@ const Portfolio = () => {
               >
                 <Link href={`/provisions/${project.slug}`} className="block h-full relative group">
                   <div className="flex flex-col h-full rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#14162E] to-[#0B0D1F] border border-brand-pink/20 transition-transform transform-gpu group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_rgba(255,77,109,0.15)]">
-                    <div className="relative h-60 md:h-64 bg-gray-100 dark:bg-[#0B0D1F] overflow-hidden">
+                    <div className="relative h-52 md:h-56 bg-gradient-to-br from-[#10122a] to-[#0B0D1F] overflow-hidden flex items-center justify-center p-4">
                       <Image 
                         src={project.imageUrl} 
                         alt={project.title[lang]} 
                         width={600} 
                         height={400} 
-                        className="object-cover object-top w-full h-full transition-transform duration-700 group-hover:scale-105" 
+                        className="object-contain w-full h-full transition-transform duration-700 group-hover:scale-105 rounded-lg" 
                         priority 
                         placeholder="blur" 
                         blurDataURL={DARK_BLUR} 
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#14162E] via-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-500" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#14162E] via-transparent opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none" />
                     </div>
 
                     <div className="p-6 md:p-8 bg-dark-navy text-white flex flex-col flex-grow">
