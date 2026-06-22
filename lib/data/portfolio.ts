@@ -56,14 +56,14 @@ export const projects: PortfolioProject[] = [
   {
     id: 'erp-crm-webapp',
     slug: 'business-management-system',
-    logoUrl: '/portfolio/erp-1.png',
+    logoUrl: '/portfolio/erp-logo.jpeg',
     title: { en: 'Custom ERP & CRM Web Application', ar: 'تطبيق ويب شامل لإدارة الأعمال (ERP & CRM)' },
     subtitle: { en: 'Business Management System', ar: 'نظام إدارة متكامل للشركات' },
     description: {
       en: 'A powerful, dark-themed web application designed to manage every aspect of a business. It features comprehensive modules for CRM, HR management, Task tracking, and Billing & Invoices, all accessible from a unified dashboard.',
       ar: 'تطبيق ويب قوي ومتقدم مخصص لإدارة كافة جوانب الأعمال. يحتوي على وحدات متكاملة لإدارة علاقات العملاء (CRM)، الموارد البشرية (HR)، إدارة المهام والمشاريع، والفواتير والمدفوعات، وكل ذلك من خلال لوحة تحكم موحدة وذكية.'
     },
-    imageUrl: '/portfolio/erp-1.png',
+    imageUrl: '/portfolio/erp-1.jpeg',
     tags: {
       en: 'Web App, CRM, ERP, Dashboard Design, SaaS',
       ar: 'تطبيق ويب, لوحة تحكم, نظام إدارة, تصميم واجهات (UI/UX)'
@@ -82,7 +82,7 @@ export const projects: PortfolioProject[] = [
       { en: 'Reduced app-switching time', ar: 'توفير بيئة عمل موحدة وتقليل الحاجة للتنقل بين تطبيقات مختلفة' },
       { en: 'Accurate data visualization', ar: 'تقديم رؤى تحليلية دقيقة لمتخذي القرار من خلال الرسوم البيانية' }
     ],
-    gallery: ['/portfolio/erp-1.png', '/portfolio/erp-2.png', '/portfolio/erp-3.png']
+    gallery: ['/portfolio/erp-1.jpeg', '/portfolio/erp-2.jpeg', '/portfolio/erp-3.jpeg']
   },
   {
     id: 'zarabie-social',
