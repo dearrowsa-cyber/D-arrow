@@ -88,8 +88,8 @@ const Portfolio = () => {
                             </div>
                           )}
                           <div>
-                            <h3 className="text-xl font-bold text-brand-orange line-clamp-1">{project.title[lang]}</h3>
-                            <p className="text-gray-300 text-xs mt-1">{project.subtitle[lang]}</p>
+                            <h3 className="text-lg md:text-xl font-bold text-brand-orange line-clamp-2 leading-tight" title={project.title[lang]}>{project.title[lang]}</h3>
+                            <p className="text-gray-300 text-xs mt-1.5">{project.subtitle[lang]}</p>
                           </div>
                         </div>
                       </div>

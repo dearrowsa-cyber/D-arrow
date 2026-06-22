@@ -23,7 +23,7 @@ export default function ClientProjectPage({ project }: { project: PortfolioProje
             src={project.imageUrl} 
             alt={project.title[lang]} 
             fill 
-            className="object-cover opacity-30 dark:opacity-20"
+            className="object-cover opacity-20 blur-md scale-110 mix-blend-overlay dark:mix-blend-normal"
             priority
             placeholder="blur"
             blurDataURL={DARK_BLUR}
@@ -53,10 +53,15 @@ export default function ClientProjectPage({ project }: { project: PortfolioProje
               ))}
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4 text-black dark:text-white">
+            <motion.h1 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-brand-pink via-brand-orange to-brand-pink bg-[length:200%_auto] animate-gradient"
+            >
               {project.title[lang]}
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 font-medium max-w-3xl mx-auto">
+            </motion.h1>
+            <p className="text-xl md:text-2xl text-gray-800 dark:text-gray-200 font-medium max-w-3xl mx-auto drop-shadow-sm">
               {project.subtitle[lang]}
             </p>
           </motion.div>
@@ -75,39 +80,67 @@ export default function ClientProjectPage({ project }: { project: PortfolioProje
         {/* Content Details */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
           
-          <div className="lg:col-span-8 space-y-12">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-              <h2 className="text-3xl font-bold mb-4 text-black dark:text-white">{isRtl ? 'التحدي' : 'The Challenge'}</h2>
+          <div className="lg:col-span-8 space-y-12 mt-6">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }} 
+              whileInView={{ opacity: 1, y: 0 }} 
+              viewport={{ once: true }} 
+              transition={{ duration: 0.6 }}
+              className="relative p-8 md:p-10 rounded-[2rem] bg-white dark:bg-[#14162E]/80 border border-gray-100 dark:border-brand-pink/10 shadow-xl hover:shadow-brand-pink/5 transition-shadow duration-300 group"
+            >
+              <div className="absolute top-0 start-8 -translate-y-1/2 w-14 h-14 bg-gradient-to-br from-brand-pink to-brand-orange rounded-2xl flex items-center justify-center shadow-lg text-white font-black text-2xl rotate-3 group-hover:-rotate-3 transition-transform">1</div>
+              <h2 className="text-2xl md:text-3xl font-bold mb-5 text-black dark:text-white pt-2">{isRtl ? 'التحدي' : 'The Challenge'}</h2>
               <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                 {project.challenge[lang]}
               </p>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }}>
-              <h2 className="text-3xl font-bold mb-4 text-black dark:text-white">{isRtl ? 'الحل' : 'Our Solution'}</h2>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }} 
+              whileInView={{ opacity: 1, y: 0 }} 
+              viewport={{ once: true }} 
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="relative p-8 md:p-10 rounded-[2rem] bg-white dark:bg-[#14162E]/80 border border-gray-100 dark:border-brand-pink/10 shadow-xl hover:shadow-brand-pink/5 transition-shadow duration-300 group"
+            >
+              <div className="absolute top-0 start-8 -translate-y-1/2 w-14 h-14 bg-gradient-to-br from-brand-pink to-brand-orange rounded-2xl flex items-center justify-center shadow-lg text-white font-black text-2xl -rotate-3 group-hover:rotate-3 transition-transform">2</div>
+              <h2 className="text-2xl md:text-3xl font-bold mb-5 text-black dark:text-white pt-2">{isRtl ? 'الحل المبتكر' : 'Our Solution'}</h2>
               <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
                 {project.solution[lang]}
               </p>
             </motion.div>
           </div>
 
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-4 mt-6">
             <motion.div 
               initial={{ opacity: 0, x: isRtl ? -20 : 20 }} 
               whileInView={{ opacity: 1, x: 0 }} 
               viewport={{ once: true }} 
               transition={{ duration: 0.6 }}
-              className="bg-gray-50 dark:bg-[#14162E] rounded-3xl p-8 border border-gray-100 dark:border-brand-pink/10 shadow-xl"
+              className="bg-gray-50 dark:bg-gradient-to-b dark:from-[#14162E] dark:to-[#0B0D1F] rounded-[2rem] p-8 border border-gray-100 dark:border-brand-pink/10 shadow-2xl relative overflow-hidden"
             >
-              <h3 className="text-xl font-bold mb-6 text-black dark:text-white border-b border-gray-200 dark:border-gray-800 pb-4">
+              {/* Decorative top border */}
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-brand-pink to-brand-orange" />
+              
+              <h3 className="text-2xl font-bold mb-8 text-black dark:text-white flex items-center gap-3">
+                <span className="w-8 h-8 rounded-full bg-brand-pink/10 flex items-center justify-center">
+                  <CheckCircle2 className="w-5 h-5 text-brand-pink" />
+                </span>
                 {isRtl ? 'النتائج والتأثير' : 'Results & Impact'}
               </h3>
-              <ul className="space-y-4">
+              <ul className="space-y-5">
                 {project.results.map((result, idx) => (
-                  <li key={idx} className="flex items-start gap-3">
-                    <CheckCircle2 className="w-6 h-6 text-brand-orange shrink-0 mt-0.5" />
-                    <span className="text-gray-700 dark:text-gray-300 font-medium">{result[lang]}</span>
-                  </li>
+                  <motion.li 
+                    key={idx} 
+                    initial={{ opacity: 0, x: isRtl ? 10 : -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.1 + 0.3 }}
+                    className="flex items-start gap-4 bg-white dark:bg-white/5 p-4 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <div className="w-6 h-6 rounded-full bg-brand-orange/10 flex items-center justify-center shrink-0 mt-0.5">
+                      <span className="w-2 h-2 rounded-full bg-brand-orange" />
+                    </div>
+                    <span className="text-gray-700 dark:text-gray-200 font-medium leading-relaxed">{result[lang]}</span>
+                  </motion.li>
                 ))}
               </ul>
             </motion.div>
