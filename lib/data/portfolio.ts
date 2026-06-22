@@ -25,14 +25,14 @@ export const projects: PortfolioProject[] = [
   {
     id: 'zarabie-social',
     slug: 'zarabie-social-media',
-    logoUrl: '/portfolio/zarabie-1.png',
+    logoUrl: '/portfolio/zarabie-1.jpeg',
     title: { en: 'Social Media Designs for Zarabie Brand', ar: 'تصميمات السوشيال ميديا لبراند زرابي للأثاث' },
     subtitle: { en: 'Social Media Marketing & Design', ar: 'تسويق وتصميم السوشيال ميديا' },
     description: {
       en: 'A creative social media campaign and visual designs for Zarabie Furniture. The designs highlight exceptional discounts, cashback offers, and premium furniture sets with an elegant layout that drives sales and engagement.',
       ar: 'حملة سوشيال ميديا وتصميمات بصرية إبداعية لبراند زرابي للأثاث. تبرز التصميمات التخفيضات الاستثنائية وعروض الكاش باك وأطقم الأثاث الفاخرة بتنسيق أنيق يساهم في زيادة المبيعات والتفاعل.'
     },
-    imageUrl: '/portfolio/zarabie-1.png',
+    imageUrl: '/portfolio/zarabie-1.jpeg',
     tags: {
       en: 'Social Media Design, Marketing Campaign, Furniture, Graphic Design',
       ar: 'تصميم سوشيال ميديا, حملة تسويقية, أثاث, تصميم جرافيك'
@@ -51,7 +51,7 @@ export const projects: PortfolioProject[] = [
       { en: 'Higher conversion rates on promotional offers', ar: 'ارتفاع معدلات التحويل والمبيعات للعروض الترويجية' },
       { en: 'Stronger brand aesthetic online', ar: 'تعزيز المظهر الجمالي والاحترافي للعلامة التجارية عبر الإنترنت' }
     ],
-    gallery: ['/portfolio/zarabie-1.png', '/portfolio/zarabie-2.png', '/portfolio/zarabie-3.png']
+    gallery: ['/portfolio/zarabie-1.jpeg', '/portfolio/zarabie-2.jpeg', '/portfolio/zarabie-3.jpeg']
   },
   {
     id: 'weber-burger',
