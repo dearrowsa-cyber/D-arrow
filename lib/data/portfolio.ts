@@ -23,6 +23,37 @@ export interface PortfolioProject {
 
 export const projects: PortfolioProject[] = [
   {
+    id: 'zarabie-social',
+    slug: 'zarabie-social-media',
+    logoUrl: '/portfolio/zarabie-1.png',
+    title: { en: 'Social Media Designs for Zarabie Brand', ar: 'تصميمات السوشيال ميديا لبراند زرابي للأثاث' },
+    subtitle: { en: 'Social Media Marketing & Design', ar: 'تسويق وتصميم السوشيال ميديا' },
+    description: {
+      en: 'A creative social media campaign and visual designs for Zarabie Furniture. The designs highlight exceptional discounts, cashback offers, and premium furniture sets with an elegant layout that drives sales and engagement.',
+      ar: 'حملة سوشيال ميديا وتصميمات بصرية إبداعية لبراند زرابي للأثاث. تبرز التصميمات التخفيضات الاستثنائية وعروض الكاش باك وأطقم الأثاث الفاخرة بتنسيق أنيق يساهم في زيادة المبيعات والتفاعل.'
+    },
+    imageUrl: '/portfolio/zarabie-1.png',
+    tags: {
+      en: 'Social Media Design, Marketing Campaign, Furniture, Graphic Design',
+      ar: 'تصميم سوشيال ميديا, حملة تسويقية, أثاث, تصميم جرافيك'
+    } as any,
+    category: ['Marketing', 'Branding'],
+    challenge: {
+      en: 'Designing promotional posts that clearly communicate significant discounts and offers (like 15% cashback) while maintaining the luxurious and elegant feel of the furniture brand.',
+      ar: 'تصميم منشورات ترويجية تنقل بوضوح التخفيضات والعروض الكبيرة (مثل 15% كاش باك) مع الحفاظ على الطابع الفاخر والأنيق لعلامة الأثاث.'
+    },
+    solution: {
+      en: 'We created a cohesive set of social media graphics using earthy tones and elegant typography. The designs seamlessly integrate product imagery with clear pricing, promotional badges (Tamara, Tabby), and strong call-to-actions like QR codes.',
+      ar: 'قمنا بإنشاء مجموعة متماسكة من تصميمات السوشيال ميديا باستخدام ألوان ترابية وخطوط أنيقة. تدمج التصميمات بسلاسة صور المنتجات مع أسعار واضحة، وشارات ترويجية (تمارا، تابي)، ودعوات قوية لاتخاذ إجراء مثل رموز الاستجابة السريعة (QR codes).'
+    },
+    results: [
+      { en: 'Increased social media engagement', ar: 'زيادة ملحوظة في التفاعل على وسائل التواصل الاجتماعي' },
+      { en: 'Higher conversion rates on promotional offers', ar: 'ارتفاع معدلات التحويل والمبيعات للعروض الترويجية' },
+      { en: 'Stronger brand aesthetic online', ar: 'تعزيز المظهر الجمالي والاحترافي للعلامة التجارية عبر الإنترنت' }
+    ],
+    gallery: ['/portfolio/zarabie-1.png', '/portfolio/zarabie-2.png', '/portfolio/zarabie-3.png']
+  },
+  {
     id: 'weber-burger',
     slug: 'weber-burger',
     logoUrl: '/portfolio/weber-1.png',
