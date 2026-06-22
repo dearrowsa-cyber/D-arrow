@@ -7,10 +7,10 @@ export default function ProvisionsPage() {
   const { t, lang } = useLanguage();
 
   return (
-    
-      <section className=" px-2 md:px-2">
+    <div className="pt-24 min-h-screen">
+      <section className="px-2 md:px-2">
         <Portfolio />
       </section>
-   
+    </div>
   );
 }
