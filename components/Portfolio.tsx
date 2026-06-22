@@ -65,18 +65,18 @@ const Portfolio = () => {
               >
                 <Link href={`/provisions/${project.slug}`} className="block h-full relative group">
                   <div className="flex flex-col h-full rounded-3xl overflow-hidden shadow-2xl bg-gradient-to-br from-[#14162E] to-[#0B0D1F] border border-brand-pink/20 transition-transform transform-gpu group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_rgba(255,77,109,0.15)]">
-                    <div className="relative h-56 flex items-center justify-center bg-gradient-to-br from-[#14162E] to-[#0B0D1F] p-3 overflow-hidden">
+                    <div className="relative h-60 md:h-64 bg-gray-100 dark:bg-[#0B0D1F] overflow-hidden">
                       <Image 
                         src={project.imageUrl} 
                         alt={project.title[lang]} 
                         width={600} 
-                        height={340} 
-                        className="object-contain w-full h-full p-2 transition-transform duration-700 group-hover:scale-110" 
+                        height={400} 
+                        className="object-cover object-top w-full h-full transition-transform duration-700 group-hover:scale-105" 
                         priority 
                         placeholder="blur" 
                         blurDataURL={DARK_BLUR} 
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#14162E] via-transparent opacity-0 group-hover:opacity-60 transition-opacity duration-500" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#14162E] via-transparent opacity-0 group-hover:opacity-40 transition-opacity duration-500" />
                     </div>
 
                     <div className="p-6 md:p-8 bg-dark-navy text-white flex flex-col flex-grow">
@@ -88,8 +88,8 @@ const Portfolio = () => {
                             </div>
                           )}
                           <div>
-                            <h3 className="text-lg md:text-xl font-bold text-brand-orange line-clamp-2 leading-tight" title={project.title[lang]}>{project.title[lang]}</h3>
-                            <p className="text-gray-300 text-xs mt-1.5">{project.subtitle[lang]}</p>
+                            <h3 className="text-base md:text-lg font-bold text-white line-clamp-2 leading-snug group-hover:text-brand-orange transition-colors" title={project.title[lang]}>{project.title[lang]}</h3>
+                            <p className="text-gray-400 text-xs mt-1.5">{project.subtitle[lang]}</p>
                           </div>
                         </div>
                       </div>

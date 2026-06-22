@@ -152,16 +152,16 @@ export default function ClientProjectPage({ project }: { project: PortfolioProje
           <h2 className="text-3xl font-bold mb-8 text-black dark:text-white text-center">{isRtl ? 'معرض الصور' : 'Project Gallery'}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {project.gallery.map((img, idx) => (
-              <div key={idx} className="relative h-64 md:h-80 rounded-2xl overflow-hidden shadow-lg group">
+              <div key={idx} className="relative h-72 md:h-96 bg-gray-50 dark:bg-[#0B0D1F] border border-gray-100 dark:border-white/5 rounded-2xl overflow-hidden shadow-lg group flex items-center justify-center p-2">
                 <Image 
                   src={img} 
                   alt={`${project.title[lang]} gallery image ${idx + 1}`} 
                   fill 
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="object-contain transition-transform duration-700 group-hover:scale-105 p-2"
                   placeholder="blur"
                   blurDataURL={DARK_BLUR}
                 />
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-brand-pink/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
               </div>
             ))}
           </div>
