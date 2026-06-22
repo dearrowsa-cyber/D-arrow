@@ -23,6 +23,37 @@ export interface PortfolioProject {
 
 export const projects: PortfolioProject[] = [
   {
+    id: 'd-arrow-social',
+    slug: 'd-arrow-social-media',
+    logoUrl: '/portfolio/darrow-1.jpeg',
+    title: { en: 'Social Media Designs for D-Arrow', ar: 'تصاميم السوشيال ميديا لوكالة دي آرو' },
+    subtitle: { en: 'Creative Social Media Marketing', ar: 'تسويق إبداعي عبر السوشيال ميديا' },
+    description: {
+      en: 'A collection of creative and engaging social media designs for D-Arrow Marketing Agency. The campaign focuses on high-quality visual storytelling, 3D typography, and targeted messaging to attract businesses and showcase our expertise.',
+      ar: 'مجموعة من التصميمات الإبداعية والجذابة لحملات السوشيال ميديا الخاصة بوكالة دي آرو للتسويق. تركز الحملة على السرد البصري عالي الجودة، والرسائل التسويقية الموجهة (مثل "لا تحرق ميزانيتك") لجذب الشركات وإبراز خبراتنا.'
+    },
+    imageUrl: '/portfolio/darrow-1.jpeg',
+    tags: {
+      en: 'Social Media, 3D Design, Marketing, Creative Ads',
+      ar: 'سوشيال ميديا, تصميم إعلاني, تسويق, إعلانات إبداعية'
+    } as any,
+    category: ['Marketing', 'Branding'],
+    challenge: {
+      en: 'Designing powerful visual content that breaks the monotony of traditional marketing ads, attracting the attention of business owners to the agency\'s services in an innovative way.',
+      ar: 'تصميم محتوى بصري قوي يكسر الملل في إعلانات التسويق التقليدية، ويجذب انتباه أصحاب الشركات والمؤسسات لخدمات الوكالة بطريقة مبتكرة وعصرية.'
+    },
+    solution: {
+      en: 'We integrated 3D typography and culturally relevant imagery with the agency\'s official gradient colors (pink and orange) to create striking visuals and strong marketing messages.',
+      ar: 'دمجنا بين التصميمات ثلاثية الأبعاد (3D)، والصور المعبرة عن الثقافة المحلية، مع استخدام ألوان الوكالة الرسمية (الوردي والبرتقالي المتدرج) لإنتاج رسائل تسويقية قوية ومؤثرة.'
+    },
+    results: [
+      { en: 'Enhanced brand awareness for D-Arrow', ar: 'تعزيز الوعي بالعلامة التجارية لوكالة دي آرو بشكل كبير' },
+      { en: 'Increased engagement on social media platforms', ar: 'زيادة ملحوظة في التفاعل على منصات التواصل الاجتماعي' },
+      { en: 'Attracted new leads and potential clients', ar: 'استقطاب عملاء محتملين جدد مهتمين بالخدمات الاحترافية' }
+    ],
+    gallery: ['/portfolio/darrow-1.jpeg', '/portfolio/darrow-2.jpeg', '/portfolio/darrow-3.jpeg', '/portfolio/darrow-4.jpeg']
+  },
+  {
     id: 'erp-crm-webapp',
     slug: 'business-management-system',
     logoUrl: '/portfolio/erp-1.png',
