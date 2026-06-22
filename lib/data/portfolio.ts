@@ -23,6 +23,37 @@ export interface PortfolioProject {
 
 export const projects: PortfolioProject[] = [
   {
+    id: 'mathwaa',
+    slug: 'mathwaa-association',
+    logoUrl: '/portfolio/mathwaa-1.png',
+    title: { en: 'Design and Development of Mathwaa Association Platform', ar: 'تصميم وتطوير المنصة الرقمية لجمعية مثوى لإكرام الموتى' },
+    subtitle: { en: 'Non-Profit Sector Digital Transformation', ar: 'التحول الرقمي للقطاع غير الربحي' },
+    description: {
+      en: 'A comprehensive digital platform for Mathwaa Association to facilitate donations, volunteering, and governance, featuring a modern UI reflecting their institutional values.',
+      ar: 'منصة رقمية متكاملة لجمعية مثوى لتسهيل التبرعات، التطوع، وإبراز الحوكمة والإفصاح، مع واجهة مستخدم حديثة تعكس قيمها المؤسسية.'
+    },
+    imageUrl: '/portfolio/mathwaa-1.png',
+    tags: {
+      en: 'Non-Profit, Web Development, UI/UX Design, Donation Portal',
+      ar: 'قطاع غير ربحي, تطوير الويب, تصميم واجهة المستخدم, بوابة تبرعات'
+    } as any,
+    category: ['Web Design', 'Branding'],
+    challenge: {
+      en: 'The association needed a modern, trustworthy digital presence to streamline donations, showcase partnerships, and clearly present their organizational structure and governance to the public.',
+      ar: 'احتاجت الجمعية إلى تواجد رقمي حديث وموثوق لتسهيل التبرعات، إبراز الشراكات، وعرض هيكلها التنظيمي وحوكمتها بشفافية للجمهور.'
+    },
+    solution: {
+      en: 'We designed a premium web experience using their brand colors (Green and Gold). We implemented dedicated sections for donations, memberships, volunteering, and a dynamic organizational structure view.',
+      ar: 'قمنا بتصميم تجربة ويب متميزة باستخدام ألوان هويتهم (الأخضر والذهبي). قمنا بتنفيذ أقسام مخصصة للتبرعات، العضويات، التطوع، وعرض ديناميكي للهيكل التنظيمي.'
+    },
+    results: [
+      { en: 'Enhanced digital trust and transparency', ar: 'تعزيز الثقة الرقمية والشفافية' },
+      { en: 'Streamlined donation and membership processes', ar: 'تبسيط عمليات التبرع والاشتراك في العضوية' },
+      { en: 'Clear representation of partnerships and governance', ar: 'عرض واضح ومميز للشراكات والهيكل التنظيمي' }
+    ],
+    gallery: ['/portfolio/mathwaa-1.png', '/portfolio/mathwaa-2.png', '/portfolio/mathwaa-3.png']
+  },
+  {
     id: 'pro1',
     slug: 'al-syahaal-arabia',
     logoUrl: '/pro1.png',
