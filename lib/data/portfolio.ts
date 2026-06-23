@@ -304,18 +304,18 @@ export const projects: PortfolioProject[] = [
   {
     id: 'pro1',
     slug: 'al-syahaal-arabia',
-    logoUrl: '/pro1.png',
+    logoUrl: '/portfolio/magazine1.png',
     title: { en: 'Design & Development of Al Syahaal Arabia Digital Magazine', ar: 'تصميم وتطوير مجلة السياحة العربية الرقمية' },
     subtitle: { en: 'Web Design & Content Strategy', ar: 'تصميم الويب واستراتيجية المحتوى' },
     description: {
       en: 'A digital magazine focused on tourism in the Arab world. We delivered a modern site with clear UX, curated content structure and SEO-friendly pages to attract organic visitors.',
       ar: 'مجلة رقمية تركز على السياحة في العالم العربي. قدمنا موقعًا حديثًا مع تجربة مستخدم واضحة وبنية محتوى مُنظمة وصفحات محسّنة لمحركات البحث.'
     },
-    imageUrl: '/pro1.png',
+    imageUrl: '/portfolio/magazine1.png',
     tags: {
       en: 'UI/UX, Web Design, Magazine/News Portal',
       ar: 'واجهة المستخدم, تصميم الويب, مدخل المجلة والأخبار'
-    } as any, // using any because tags in original code was array, but let's keep it as array
+    } as any,
     category: ['Web Design', 'Branding'],
     challenge: {
       en: 'The client needed a digital platform capable of handling high traffic while providing an intuitive reading experience for various types of tourism content across the Arab region.',
@@ -330,7 +330,7 @@ export const projects: PortfolioProject[] = [
       { en: 'Reduced bounce rate by 40%', ar: 'تقليل معدل الارتداد بنسبة 40٪' },
       { en: 'Improved page load speed to under 2 seconds', ar: 'تحسين سرعة تحميل الصفحة إلى أقل من ثانيتين' }
     ],
-    gallery: ['/pro1.png', '/pro1.png', '/pro1.png'] // Using the same image as placeholder
+    gallery: ['/portfolio/magazine1.png', '/portfolio/magazine2.png', '/portfolio/magazine3.png']
   },
   {
     id: 'beedco',
