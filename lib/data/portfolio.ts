@@ -23,6 +23,37 @@ export interface PortfolioProject {
 
 export const projects: PortfolioProject[] = [
   {
+    id: 'tanfeeze-real-estate',
+    slug: 'tanfeeze-real-estate-website',
+    logoUrl: '/portfolio/tanfeeze-1.png',
+    title: { en: 'Tanfeeze Real Estate Website', ar: 'موقع تنفيذي العقاري' },
+    subtitle: { en: 'Modern Real Estate Platform', ar: 'منصة عقارية حديثة' },
+    description: {
+      en: 'A comprehensive and elegant real estate website designed for Tanfeeze. It features a seamless property search experience, advanced filtering options, and a premium user interface to showcase high-end properties.',
+      ar: 'موقع عقاري متكامل وأنيق مصمم لشركة تنفيذي. يتميز بتجربة بحث سلسة عن العقارات، وخيارات تصفية متقدمة، وواجهة مستخدم احترافية لعرض العقارات الفاخرة بأفضل صورة.'
+    },
+    imageUrl: '/portfolio/tanfeeze-1.png',
+    tags: {
+      en: 'Real Estate, Web Design, UI/UX, Property Portal',
+      ar: 'عقارات, تصميم ويب, واجهات مستخدم, منصة عقارية'
+    } as any,
+    category: ['Web Design', 'UI/UX Design'],
+    challenge: {
+      en: 'Creating a platform that can handle a large number of property listings while maintaining fast load times and a clean, uncluttered user interface that guides buyers effortlessly.',
+      ar: 'إنشاء منصة قادرة على استيعاب عدد كبير من القوائم العقارية مع الحفاظ على سرعة التصفح وتوفير واجهة مستخدم نظيفة وبسيطة توجه المشترين بسلاسة.'
+    },
+    solution: {
+      en: 'We developed a highly responsive design with intuitive navigation and high-quality image galleries for each property, ensuring a premium browsing experience across all devices.',
+      ar: 'قمنا بتطوير تصميم متجاوب وسريع مع تنقل بديهي ومعارض صور عالية الجودة لكل عقار، لضمان تجربة تصفح راقية عبر جميع الأجهزة.'
+    },
+    results: [
+      { en: 'Increased user engagement and time spent on site', ar: 'زيادة ملحوظة في تفاعل المستخدمين والوقت المقضي في الموقع' },
+      { en: 'Higher conversion rates for property inquiries', ar: 'ارتفاع معدلات التحويل والاستفسارات حول العقارات' },
+      { en: 'Enhanced brand perception as a luxury real estate provider', ar: 'تعزيز صورة العلامة التجارية كمزود للعقارات الفاخرة' }
+    ],
+    gallery: ['/portfolio/tanfeeze-1.png', '/portfolio/tanfeeze-2.png', '/portfolio/tanfeeze-3.png', '/portfolio/tanfeeze-4.png']
+  },
+  {
     id: 'd-arrow-social',
     slug: 'd-arrow-social-media',
     logoUrl: '/portfolio/darrow-1.jpeg',
