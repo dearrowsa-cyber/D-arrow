@@ -629,7 +629,7 @@ const translations: Translations = {
   blogLoading: { en: 'Loading articles...', ar: 'جاري تحميل المقالات...' },
   blogError: { en: 'Failed to load blog posts', ar: 'فشل في تحميل مقالات المدونة' },
   resources: { en: 'Resources', ar: 'الموارد' },
-  portfolio: { en: 'Portfolio', ar: 'بورتفوليو' },
+  portfolio: { en: 'Portfolio', ar: 'أعمالنا' },
 
   // Privacy & Cookies Policies
   privacyTitle: { en: 'Privacy Policy', ar: 'سياسة الخصوصية' },
