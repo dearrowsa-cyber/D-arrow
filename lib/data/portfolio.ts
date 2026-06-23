@@ -333,6 +333,37 @@ export const projects: PortfolioProject[] = [
     gallery: ['/portfolio/magazine1.png', '/portfolio/magazine2.png', '/portfolio/magazine3.png']
   },
   {
+    id: 'al-syahaal-arabia-app',
+    slug: 'al-syahaal-arabia-app',
+    logoUrl: '/portfolio/magazine-app.jpeg',
+    title: { en: 'Al Syahaal Arabia Mobile App', ar: 'تطبيق الهاتف لمجلة السياحة العربية' },
+    subtitle: { en: 'Tourism & Travel News App', ar: 'تطبيق الأخبار السياحية والسفر' },
+    description: {
+      en: 'A mobile application designed to complement the digital magazine, providing users with real-time tourism news, destination guides, and personalized content on the go.',
+      ar: 'تطبيق للهاتف المحمول مصمم ليكون امتداداً للمجلة الرقمية، يوفر للمستخدمين أخبار السياحة في الوقت الفعلي، وأدلة الوجهات، ومحتوى مخصصاً أثناء التنقل.'
+    },
+    imageUrl: '/portfolio/magazine-app.jpeg',
+    tags: {
+      en: 'Mobile App, UI/UX, Travel, App Design',
+      ar: 'تطبيق هاتف, واجهة مستخدم, سفر وسياحة, تصميم تطبيقات'
+    } as any,
+    category: ['Web Design', 'Branding'] as any,
+    challenge: {
+      en: 'Translating the rich content of the web magazine into a compact, fast-performing mobile experience without sacrificing readability or visual appeal.',
+      ar: 'ترجمة المحتوى الغني لمجلة الويب إلى تجربة محمولة مضغوطة وسريعة الأداء دون التضحية بسهولة القراءة أو الجاذبية البصرية.'
+    },
+    solution: {
+      en: 'We developed a sleek mobile app interface with intuitive navigation, dark mode support, and offline reading capabilities tailored for travelers.',
+      ar: 'قمنا بتطوير واجهة تطبيق هاتف أنيقة مع تنقل بديهي، ودعم للوضع الداكن (Dark Mode)، وإمكانيات القراءة دون اتصال بالإنترنت المصممة خصيصاً للمسافرين.'
+    },
+    results: [
+      { en: 'High user retention rate', ar: 'معدل احتفاظ عالٍ بالمستخدمين' },
+      { en: 'Positive app store reviews', ar: 'تقييمات إيجابية في متاجر التطبيقات' },
+      { en: 'Seamless cross-platform experience', ar: 'تجربة سلسة عبر الأنظمة الأساسية' }
+    ],
+    gallery: ['/portfolio/magazine-app.jpeg']
+  },
+  {
     id: 'beedco',
     slug: 'beedco',
     logoUrl: '/beedco-logo.png',
