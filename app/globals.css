@@ -680,4 +680,10 @@ section {
   font-size: clamp(18px, 2vw, 20px) !important;
   line-height: 1.6 !important;
 }
+
+/* Force text alignment to prevent justify issues with Arabic */
+[dir="rtl"] .blog-post-content p,
+[dir="rtl"] .blog-post-content div {
+  text-align: right !important;
+}
 
