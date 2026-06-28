@@ -90,8 +90,17 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
         )}
 
         {/* Post Content - Rich Text Rendering */}
+        <style dangerouslySetInnerHTML={{ __html: `
+          .blog-post-content, .blog-post-content p, .blog-post-content div, .blog-post-content span, .blog-post-content li {
+            text-align: right !important;
+            text-justify: none !important;
+            word-break: normal !important;
+            overflow-wrap: normal !important;
+            white-space: normal !important;
+          }
+        `}} />
         <div 
-          className="blog-post-content prose prose-invert max-w-none prose-headings:text-white prose-p:text-base prose-a:text-[#FF4D6D] hover:prose-a:text-[#FF9A3C] prose-img:rounded-xl prose-img:max-w-full w-full"
+          className="blog-post-content prose prose-invert max-w-none prose-headings:text-white prose-p:text-base prose-a:text-[#FF4D6D] hover:prose-a:text-[#FF9A3C] prose-img:rounded-xl prose-img:max-w-full w-full text-right"
           dangerouslySetInnerHTML={{ __html: content }}
         />
 
