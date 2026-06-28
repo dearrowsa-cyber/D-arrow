@@ -114,6 +114,10 @@ export async function getSeoMetadata(slug: string): Promise<Metadata> {
     const ogTitleToUse = entry.ogTitle || entry.ogTitleAr || titleToUse;
     const ogDescToUse = entry.ogDescription || entry.ogDescriptionAr || descriptionToUse;
 
+    // Default image fallback if none in DB
+    const fallbackImage = 'https://d-arrow.com/og-image.jpg?v=2';
+    const ogImageToUse = entry.ogImage || fallbackImage;
+
     if (ogTitleToUse || ogDescToUse || entry.ogImage) {
       metadata.openGraph = {
         type: 'website',
@@ -122,9 +126,7 @@ export async function getSeoMetadata(slug: string): Promise<Metadata> {
         url: `https://d-arrow.com${slug === '/' ? '' : slug}`,
         ...(ogTitleToUse && { title: ogTitleToUse }),
         ...(ogDescToUse && { description: ogDescToUse }),
-        ...(entry.ogImage && {
-          images: [{ url: entry.ogImage, width: 1200, height: 630 }],
-        }),
+        images: [{ url: ogImageToUse, width: 1200, height: 630 }],
       };
     }
 
@@ -133,7 +135,7 @@ export async function getSeoMetadata(slug: string): Promise<Metadata> {
         card: entry.twitterCard as any,
         ...(ogTitleToUse && { title: ogTitleToUse }),
         ...(ogDescToUse && { description: ogDescToUse }),
-        ...(entry.ogImage && { images: [entry.ogImage] }),
+        images: [ogImageToUse],
       };
     }
 
