@@ -51,7 +51,7 @@ export default function RichTextEditor({ value, onChange, dir = 'ltr', placehold
     };
   }, []);
 
-  const modules = useMemo(() => ({
+  const modulesRef = useRef({
     toolbar: {
       container: [
         [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -64,7 +64,9 @@ export default function RichTextEditor({ value, onChange, dir = 'ltr', placehold
         image: imageHandler
       }
     }
-  }), [imageHandler]);
+  });
+
+  const modules = modulesRef.current;
 
   return (
     <div className={`rich-text-container ${dir === 'rtl' ? 'rtl-editor' : ''}`} dir={dir}>
