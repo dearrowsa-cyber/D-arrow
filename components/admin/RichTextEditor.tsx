@@ -155,11 +155,11 @@ export default function RichTextEditor({ value, onChange, dir = 'ltr', placehold
         
         /* Fix for Bold in Arabic (overrides global.css which sets it to 400 or inverses it) */
         .rtl-editor .ql-editor p {
-          font-weight: 400 !important;
+          font-weight: 900 !important;
         }
         .rich-text-container .ql-editor strong,
         .rich-text-container .ql-editor b {
-          font-weight: 900 !important;
+          font-weight: 400 !important;
         }
         
         /* Tooltip styling for Dark Mode */
