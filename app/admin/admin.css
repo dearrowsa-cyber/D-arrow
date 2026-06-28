@@ -1327,4 +1327,121 @@ body:has(.admin-login-page) footer {
   -webkit-text-fill-color: #2563EB !important;
 }
 
+/* ============================================
+   LIGHT MODE — RichTextEditor (Quill)
+   ============================================ */
+.admin-layout.light-mode .rich-text-container .quill {
+  background-color: #FFFFFF !important;
+  border: 1px solid #D1D5DB !important;
+  color: #1F2937 !important;
+}
+
+.admin-layout.light-mode .rich-text-container .ql-toolbar {
+  background-color: #F9FAFB !important;
+  border-bottom: 1px solid #E5E7EB !important;
+}
+
+.admin-layout.light-mode .rich-text-container .ql-container {
+  color: #1F2937 !important;
+}
+
+.admin-layout.light-mode .rich-text-container .ql-editor {
+  color: #1F2937 !important;
+  -webkit-text-fill-color: #1F2937 !important;
+}
+
+.admin-layout.light-mode .rich-text-container .ql-editor.ql-blank::before {
+  color: #9CA3AF !important;
+  -webkit-text-fill-color: #9CA3AF !important;
+}
+
+.admin-layout.light-mode .rich-text-container .ql-stroke {
+  stroke: #6B7280 !important;
+}
+
+.admin-layout.light-mode .rich-text-container .ql-fill {
+  fill: #6B7280 !important;
+}
+
+.admin-layout.light-mode .rich-text-container .ql-picker {
+  color: #4B5563 !important;
+  -webkit-text-fill-color: #4B5563 !important;
+}
+
+.admin-layout.light-mode .rich-text-container .ql-picker-label {
+  color: #4B5563 !important;
+  -webkit-text-fill-color: #4B5563 !important;
+}
+
+.admin-layout.light-mode .rich-text-container button.ql-active .ql-stroke,
+.admin-layout.light-mode .rich-text-container button:hover .ql-stroke {
+  stroke: #FF4D6D !important;
+}
+
+.admin-layout.light-mode .rich-text-container button.ql-active .ql-fill,
+.admin-layout.light-mode .rich-text-container button:hover .ql-fill {
+  fill: #FF4D6D !important;
+}
+
+.admin-layout.light-mode .rich-text-container .ql-picker-options {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E5E7EB !important;
+  color: #1F2937 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.admin-layout.light-mode .rich-text-container .ql-picker-item {
+  color: #1F2937 !important;
+  -webkit-text-fill-color: #1F2937 !important;
+}
+
+.admin-layout.light-mode .rich-text-container .ql-picker-item:hover,
+.admin-layout.light-mode .rich-text-container .ql-picker-item.ql-selected {
+  color: #FF4D6D !important;
+  -webkit-text-fill-color: #FF4D6D !important;
+}
+
+.admin-layout.light-mode .rich-text-container .ql-tooltip {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E5E7EB !important;
+  color: #1F2937 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.admin-layout.light-mode .rich-text-container .ql-tooltip input[type="text"] {
+  background-color: #F9FAFB !important;
+  border: 1px solid #D1D5DB !important;
+  color: #1F2937 !important;
+  -webkit-text-fill-color: #1F2937 !important;
+}
+
+.admin-layout.light-mode .rich-text-container .ql-tooltip::before {
+  color: #6B7280 !important;
+}
+
+/* ============================================
+   LIGHT MODE — AI Writer Assistant
+   ============================================ */
+.admin-layout.light-mode .ai-writer-panel {
+  background-color: #FFFFFF !important;
+  border-color: #E5E7EB !important;
+}
+
+.admin-layout.light-mode .ai-writer-panel h4 {
+  color: #8B5CF6 !important;
+  -webkit-text-fill-color: #8B5CF6 !important;
+}
+
+.admin-layout.light-mode .ai-writer-panel input[type="text"] {
+  background-color: #FFFFFF !important;
+  border-color: #D1D5DB !important;
+  color: #1F2937 !important;
+  -webkit-text-fill-color: #1F2937 !important;
+}
+
+.admin-layout.light-mode .ai-writer-panel label {
+  color: #4B5563 !important;
+  -webkit-text-fill-color: #4B5563 !important;
+}
+
 

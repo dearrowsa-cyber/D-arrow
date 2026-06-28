@@ -71,10 +71,10 @@ export default function AIWriterAssistant({ content, onContentChange, language }
           {language === 'ar' ? 'المساعد الذكي (AI)' : 'AI Assistant'}
         </button>
       ) : (
-        <div className="bg-[#14162E] border border-[#8B5CF6]/30 rounded-xl p-4 shadow-xl relative">
+        <div className="ai-writer-panel bg-white dark:bg-[#14162E] border border-gray-200 dark:border-[#8B5CF6]/30 rounded-xl p-4 shadow-xl relative">
           <button 
             onClick={() => setIsOpen(false)}
-            className="absolute top-4 left-4 text-gray-400 hover:text-white"
+            className="absolute top-4 left-4 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
             style={{ right: language === 'ar' ? 'auto' : '16px', left: language === 'ar' ? '16px' : 'auto' }}
           >
             <X size={18} />
@@ -88,21 +88,21 @@ export default function AIWriterAssistant({ content, onContentChange, language }
           <div className="flex flex-wrap gap-2 mb-4">
             <button
               onClick={() => setAction('generate_draft')}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-colors ${action === 'generate_draft' ? 'bg-[#8B5CF6] text-white' : 'bg-white/5 text-gray-300 hover:bg-white/10'}`}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-colors ${action === 'generate_draft' ? 'bg-[#8B5CF6] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10'}`}
             >
               <PenTool size={14} />
               {language === 'ar' ? 'كتابة مسودة مقال' : 'Generate Draft'}
             </button>
             <button
               onClick={() => setAction('improve')}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-colors ${action === 'improve' ? 'bg-[#8B5CF6] text-white' : 'bg-white/5 text-gray-300 hover:bg-white/10'}`}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-colors ${action === 'improve' ? 'bg-[#8B5CF6] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10'}`}
             >
               <Sparkles size={14} />
               {language === 'ar' ? 'تحسين صياغة المحتوى' : 'Improve Content'}
             </button>
             <button
               onClick={() => setAction('expand')}
-              className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-colors ${action === 'expand' ? 'bg-[#8B5CF6] text-white' : 'bg-white/5 text-gray-300 hover:bg-white/10'}`}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm transition-colors ${action === 'expand' ? 'bg-[#8B5CF6] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10'}`}
             >
               <Maximize2 size={14} />
               {language === 'ar' ? 'توسيع وشرح أكثر' : 'Expand Content'}
@@ -111,7 +111,7 @@ export default function AIWriterAssistant({ content, onContentChange, language }
           
           {action === 'generate_draft' && (
             <div className="mb-4">
-              <label className="block text-sm text-gray-400 mb-2">
+              <label className="block text-sm text-gray-700 dark:text-gray-400 mb-2">
                 {language === 'ar' ? 'عن ماذا تريد أن تكتب؟' : 'What do you want to write about?'}
               </label>
               <input
@@ -119,14 +119,14 @@ export default function AIWriterAssistant({ content, onContentChange, language }
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder={language === 'ar' ? 'مثال: أفضل 5 استراتيجيات سيو في 2026...' : 'e.g. Top 5 SEO strategies in 2026...'}
-                className="w-full bg-[#0a0e27] border border-gray-700 rounded-lg px-4 py-2 text-white text-sm outline-none focus:border-[#8B5CF6]"
+                className="w-full bg-white dark:bg-[#0a0e27] border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2 text-gray-900 dark:text-white text-sm outline-none focus:border-[#8B5CF6]"
                 dir={language === 'ar' ? 'rtl' : 'ltr'}
               />
             </div>
           )}
           
           {(action === 'improve' || action === 'expand') && (
-            <div className="mb-4 p-3 bg-white/5 border border-white/10 rounded-lg text-sm text-gray-400">
+            <div className="mb-4 p-3 bg-blue-50 dark:bg-white/5 border border-blue-100 dark:border-white/10 rounded-lg text-sm text-blue-800 dark:text-gray-400">
               {language === 'ar' 
                 ? 'سيقوم الذكاء الاصطناعي بقراءة المحتوى الحالي في المحرر أسفله ومعالجته ثم استبداله بالنسخة المحسنة. يرجى التأكد من حفظ مسودة قبل ذلك إذا أردت.' 
                 : 'The AI will read the current content in the editor below, process it, and replace it with the improved version. Please save a draft first if needed.'}
