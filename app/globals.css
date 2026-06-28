@@ -690,8 +690,9 @@ section {
 /* Force text wrapping to override inline styles pasted from Word/PDF */
 .blog-post-content * {
   white-space: normal !important;
-  word-wrap: break-word !important;
-  overflow-wrap: break-word !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+  word-wrap: normal !important;
   max-width: 100% !important;
 }
 
