@@ -7,13 +7,6 @@ import 'react-quill-new/dist/quill.snow.css';
 // Dynamically import react-quill-new with SSR disabled to avoid 'document is not defined' errors
 const ReactQuill = dynamic(() => import('react-quill-new'), { ssr: false });
 
-const formats = [
-  'header',
-  'bold', 'italic', 'underline', 'strike',
-  'list', 'bullet',
-  'link', 'image'
-];
-
 interface RichTextEditorProps {
   value: string;
   onChange: (value: string) => void;
@@ -81,7 +74,6 @@ export default function RichTextEditor({ value, onChange, dir = 'ltr', placehold
         value={value}
         onChange={onChange}
         modules={modules}
-        formats={formats}
         placeholder={placeholder}
       />
       <style jsx global>{`
