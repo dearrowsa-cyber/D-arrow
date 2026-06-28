@@ -681,10 +681,10 @@ section {
   line-height: 1.6 !important;
 }
 
-/* Force text alignment to prevent justify issues with Arabic */
-[dir="rtl"] .blog-post-content p,
-[dir="rtl"] .blog-post-content div {
-  text-align: right !important;
+/* Force text alignment to start to prevent justify issues with Arabic/English */
+.blog-post-content p,
+.blog-post-content div {
+  text-align: start !important;
 }
 
 /* Force text wrapping to override inline styles pasted from Word/PDF */
@@ -694,5 +694,6 @@ section {
   overflow-wrap: normal !important;
   word-wrap: normal !important;
   max-width: 100% !important;
+  text-align: start !important;
 }
 
