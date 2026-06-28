@@ -24,7 +24,18 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
   };
 
   const title = getDisplayText(post.title, post.titleAr);
-  const content = getDisplayText(post.content, post.contentAr);
+  
+  // Sanitize the raw HTML from Quill to forcefully remove bad inline styles that break Arabic text
+  let rawContent = getDisplayText(post.content, post.contentAr) || '';
+  if (lang === 'ar') {
+    rawContent = rawContent
+      .replace(/text-align:\s*justify;?/gi, 'text-align: right;')
+      .replace(/white-space:\s*nowrap;?/gi, 'white-space: normal;')
+      .replace(/word-break:\s*[^"';]+;?/gi, '')
+      .replace(/ql-align-justify/g, 'ql-align-right');
+  }
+  const content = rawContent;
+
   const gatedContent = getDisplayText(post.gatedContent, post.gatedContentAr);
   const category = getDisplayText(post.category, post.categoryAr);
   const tags: string[] = Array.isArray(post.tags) ? post.tags : [];
