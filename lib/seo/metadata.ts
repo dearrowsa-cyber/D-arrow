@@ -115,7 +115,7 @@ export async function getSeoMetadata(slug: string): Promise<Metadata> {
     const ogDescToUse = entry.ogDescription || entry.ogDescriptionAr || descriptionToUse;
 
     // Default image fallback if none in DB
-    const fallbackImage = 'https://d-arrow.com/og-image-v3.png';
+    const fallbackImage = 'https://d-arrow.com/og-image-padded.png';
     const ogImageToUse = entry.ogImage || fallbackImage;
 
     if (ogTitleToUse || ogDescToUse || entry.ogImage) {

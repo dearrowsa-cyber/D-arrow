@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     description: 'وكالة دي آرو للتسويق الرقمي - حلول تسويقية متكاملة تشمل SEO وتصميم المواقع وإدارة السوشيال ميديا في السعودية.',
     images: [
       {
-        url: 'https://d-arrow.com/og-image-v3.png',
+        url: 'https://d-arrow.com/og-image-padded.png',
         width: 1200,
         height: 630,
         alt: 'D Arrow Digital Marketing',
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'D Arrow | دي آرو - وكالة تسويق رقمي',
     description: 'وكالة دي آرو للتسويق الرقمي - حلول تسويقية متكاملة.',
-    images: ['https://d-arrow.com/og-image-v3.png'],
+    images: ['https://d-arrow.com/og-image-padded.png'],
   },
   icons: {
     icon: [
