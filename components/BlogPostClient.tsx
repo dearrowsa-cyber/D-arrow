@@ -29,6 +29,8 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
   let rawContent = getDisplayText(post.content, post.contentAr) || '';
   if (lang === 'ar') {
     rawContent = rawContent
+      .replace(/&nbsp;/g, ' ') // Replace non-breaking spaces with normal spaces
+      .replace(/\u00A0/g, ' ') // Replace unicode non-breaking spaces
       .replace(/text-align:\s*justify;?/gi, 'text-align: right;')
       .replace(/white-space:\s*nowrap;?/gi, 'white-space: normal;')
       .replace(/word-break:\s*[^"';]+;?/gi, '')
