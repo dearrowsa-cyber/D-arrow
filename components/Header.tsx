@@ -185,7 +185,7 @@ export default memo(function Header() {
             </Link>
             
             <Link href="/influencer" className="nav-link-hover flex items-center justify-center gap-2 !text-xl font-medium px-4 py-2 group">
-              <Star size={20} className="text-amber-500 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" fill="currentColor" />
+              <Star size={20} className="text-[#FF4D6D] group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(255,77,109,0.5)]" fill="currentColor" />
               <span className="nav-text">{lang === 'ar' ? 'انضم كمؤثر' : 'Join as Influencer'}</span>
             </Link>
             
@@ -302,7 +302,7 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
             <Link href="/blog" onClick={() => handleNavClick('/blog')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-lg rounded-lg">{t('blog')}</Link>
             
             <Link href="/influencer" onClick={() => handleNavClick('/influencer')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-lg rounded-lg">
-              <Star size={20} className="text-amber-500 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" fill="currentColor" />
+              <Star size={20} className="text-[#FF4D6D] drop-shadow-[0_0_8px_rgba(255,77,109,0.5)]" fill="currentColor" />
               {lang === 'ar' ? 'انضم كمؤثر' : 'Join as Influencer'}
             </Link>
 

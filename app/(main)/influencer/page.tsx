@@ -20,45 +20,62 @@ export default function JoinInfluencerPage() {
         </div>
 
         <div className="w-full max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6 backdrop-blur-sm">
-              <Star className="w-5 h-5 text-amber-400 fill-amber-400 animate-pulse" />
-              <span className="text-sm font-medium tracking-wide text-amber-400">
-                {isAr ? 'برنامج شركاء النجاح' : 'Success Partners Program'}
-              </span>
-            </div>
-            
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-              {isAr ? (
-                <>
-                  أطلق العنان لإمكانياتك مع <span className="bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] bg-clip-text text-transparent">D-arrow</span>
-                </>
-              ) : (
-                <>
-                  Unleash Your Potential with <span className="bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] bg-clip-text text-transparent">D-arrow</span>
-                </>
-              )}
-            </h1>
-            
-            <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-              {isAr 
-                ? 'انضم كمؤثر واحصل على مدونة أو صفحة احترافية خاصة بك. شارك إبداعاتك، وسّع نطاق وصولك، ودعنا نساعدك في إيصال صوتك للعالم.'
-                : 'Join as an influencer and get your own professional blog or page. Share your creations, expand your reach, and let us help you amplify your voice to the world.'}
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link 
-                href="https://in.d-arrow.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,77,109,0.4)] overflow-hidden w-full sm:w-auto"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  {isAr ? 'انضم إلينا الآن' : 'Join Us Now'}
-                  <ArrowRight className={`w-5 h-5 transition-transform group-hover:translate-x-1 ${isAr ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
+          <div className={`flex flex-col lg:flex-row items-center gap-12 ${isAr ? 'lg:flex-row-reverse' : ''}`}>
+            {/* Text Content */}
+            <div className={`flex-1 text-center ${isAr ? 'lg:text-right' : 'lg:text-left'}`}>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FF4D6D]/10 border border-[#FF4D6D]/20 mb-6 backdrop-blur-sm">
+                <Star className="w-5 h-5 text-[#FF4D6D] fill-[#FF4D6D] animate-pulse" />
+                <span className="text-sm font-medium tracking-wide text-[#FF4D6D]">
+                  {isAr ? 'برنامج شركاء النجاح' : 'Success Partners Program'}
                 </span>
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out"></div>
-              </Link>
+              </div>
+              
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                {isAr ? (
+                  <>
+                    أطلق العنان لإمكانياتك مع <span className="bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] bg-clip-text text-transparent">D-arrow</span>
+                  </>
+                ) : (
+                  <>
+                    Unleash Your Potential with <span className="bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] bg-clip-text text-transparent">D-arrow</span>
+                  </>
+                )}
+              </h1>
+              
+              <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                {isAr 
+                  ? 'انضم كمؤثر واحصل على مدونة أو صفحة احترافية خاصة بك. شارك إبداعاتك، وسّع نطاق وصولك، ودعنا نساعدك في إيصال صوتك للعالم.'
+                  : 'Join as an influencer and get your own professional blog or page. Share your creations, expand your reach, and let us help you amplify your voice to the world.'}
+              </p>
+
+              <div className={`flex flex-col sm:flex-row gap-4 justify-center ${isAr ? 'lg:justify-start lg:flex-row-reverse' : 'lg:justify-start'} items-center`}>
+                <Link 
+                  href="https://in.d-arrow.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group relative inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] !text-white hover:from-[rgba(255,77,109,0.9)] hover:to-[rgba(255,154,60,0.9)] px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,77,109,0.4)] overflow-hidden w-full sm:w-auto"
+                >
+                  <span className="relative z-10 flex items-center gap-2">
+                    {isAr ? 'انضم إلينا الآن' : 'Join Us Now'}
+                    <ArrowRight className={`w-5 h-5 transition-transform group-hover:translate-x-1 ${isAr ? 'rotate-180 group-hover:-translate-x-1' : ''}`} />
+                  </span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Video/Image Content */}
+            <div className="flex-1 w-full max-w-lg lg:max-w-none relative">
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#FF4D6D] to-[#FF9A3C] rounded-3xl blur-[60px] opacity-20 animate-pulse"></div>
+              <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                <video 
+                  src="/main-video.mp4" 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  className="w-full h-auto object-cover rounded-3xl"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -143,10 +160,10 @@ export default function JoinInfluencerPage() {
                 href="https://in.d-arrow.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-white text-[#1A1A2E] px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-colors duration-300 shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+                className="inline-flex justify-center items-center gap-2 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] !text-white hover:from-[rgba(255,77,109,0.9)] hover:to-[rgba(255,154,60,0.9)] px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-[0_0_20px_rgba(255,77,109,0.3)] hover:scale-105"
               >
                 {isAr ? 'ابدأ الآن' : 'Start Now'}
-                <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
+                <Star className="w-5 h-5 text-white fill-white" />
               </Link>
             </div>
           </div>
