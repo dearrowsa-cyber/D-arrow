@@ -11,7 +11,7 @@ export default function JoinInfluencerPage() {
 
   return (
     <div className="min-h-screen text-white pb-20">
-      <svg width="0" height="0" className="hidden absolute">
+      <svg className="absolute w-0 h-0" style={{ position: 'absolute', width: 0, height: 0 }}>
         <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop stopColor="#FF4D6D" offset="0%" />
           <stop stopColor="#FF9A3C" offset="100%" />
@@ -75,7 +75,7 @@ export default function JoinInfluencerPage() {
               <div className="relative rounded-3xl overflow-hidden shadow-2xl group flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
                 <Image 
-                  src="/influencer-ai-hero-saudi.png" 
+                  src="/influencer-ai-hero-saudi-logo.png" 
                   alt="Influencer Model"
                   width={600}
                   height={800}
