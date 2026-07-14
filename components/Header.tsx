@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, memo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSelectedLayoutSegments } from 'next/navigation';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Star } from 'lucide-react';
 import { useLanguage } from './LanguageProvider';
 import { useTheme } from './ThemeProvider';
 
@@ -184,6 +184,11 @@ export default memo(function Header() {
               <span className="nav-text">{t('blog')}</span>
             </Link>
             
+            <Link href="/influencer" className="nav-link-hover flex items-center justify-center gap-2 !text-xl font-medium px-4 py-2 group">
+              <Star size={20} className="text-amber-500 group-hover:scale-110 transition-transform drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" fill="currentColor" />
+              <span className="nav-text">{lang === 'ar' ? 'انضم كمؤثر' : 'Join as Influencer'}</span>
+            </Link>
+            
             <Link href="/contact" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
               <span className="nav-text">{t('contact')}</span>
             </Link>
@@ -296,6 +301,11 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
             <Link href="/store" onClick={() => handleNavClick('/store')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-lg rounded-lg">{lang === 'ar' ? 'المتجر' : 'Store'}</Link>
             <Link href="/blog" onClick={() => handleNavClick('/blog')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-lg rounded-lg">{t('blog')}</Link>
             
+            <Link href="/influencer" onClick={() => handleNavClick('/influencer')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-lg rounded-lg">
+              <Star size={20} className="text-amber-500 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]" fill="currentColor" />
+              {lang === 'ar' ? 'انضم كمؤثر' : 'Join as Influencer'}
+            </Link>
+
             <Link href="/contact" onClick={() => handleNavClick('/contact')} className="flex items-center gap-2 px-4 py-3 min-h-[44px] font-medium !text-white hover:text-brand-pink hover:bg-[rgba(255,77,109,0.1)] transition text-lg rounded-lg">{t('contact')}</Link>
           </nav>
         )}
