@@ -75,7 +75,7 @@ export default function JoinInfluencerPage() {
               <div className="relative rounded-3xl overflow-hidden shadow-2xl group flex items-center justify-center">
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
                 <Image 
-                  src="/influencer-ai-hero.png" 
+                  src="/influencer-ai-hero-saudi.png" 
                   alt="Influencer Model"
                   width={600}
                   height={800}
