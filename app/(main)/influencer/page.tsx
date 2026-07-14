@@ -11,6 +11,12 @@ export default function JoinInfluencerPage() {
 
   return (
     <div className="min-h-screen text-white pb-20">
+      <svg width="0" height="0" className="hidden absolute">
+        <linearGradient id="brandGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop stopColor="#FF4D6D" offset="0%" />
+          <stop stopColor="#FF9A3C" offset="100%" />
+        </linearGradient>
+      </svg>
       {/* Hero Section */}
       <section className="relative pt-24 pb-16 lg:pt-32 lg:pb-24 overflow-hidden">
         {/* Background decorations */}
@@ -66,15 +72,28 @@ export default function JoinInfluencerPage() {
             {/* Video/Image Content */}
             <div className="flex-1 w-full max-w-lg lg:max-w-none relative">
               <div className="absolute inset-0 bg-gradient-to-tr from-[#FF4D6D] to-[#FF9A3C] rounded-3xl blur-[60px] opacity-20 animate-pulse"></div>
-              <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-                <video 
-                  src="/main-video.mp4" 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  className="w-full h-auto object-cover rounded-3xl"
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl group flex items-center justify-center">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
+                <Image 
+                  src="/model-hero.png" 
+                  alt="Influencer Model"
+                  width={600}
+                  height={800}
+                  priority
+                  className="w-full h-auto object-cover rounded-3xl transition-transform duration-700 group-hover:scale-105"
                 />
+                <div className="absolute bottom-6 left-6 right-6 z-20 flex justify-between items-end opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl">
+                    <div className="flex gap-1 mb-2">
+                      <Star className="w-4 h-4" fill="url(#brandGradient)" stroke="url(#brandGradient)" />
+                      <Star className="w-4 h-4" fill="url(#brandGradient)" stroke="url(#brandGradient)" />
+                      <Star className="w-4 h-4" fill="url(#brandGradient)" stroke="url(#brandGradient)" />
+                      <Star className="w-4 h-4" fill="url(#brandGradient)" stroke="url(#brandGradient)" />
+                      <Star className="w-4 h-4" fill="url(#brandGradient)" stroke="url(#brandGradient)" />
+                    </div>
+                    <p className="text-sm font-medium text-white/90">{isAr ? 'انضم إلى نخبة المؤثرين' : 'Join Elite Influencers'}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -98,32 +117,32 @@ export default function JoinInfluencerPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                icon: <Layout className="w-8 h-8 text-[#FF4D6D]" />,
+                icon: <Layout className="w-8 h-8" stroke="url(#brandGradient)" />,
                 title: isAr ? 'صفحة احترافية خاصة' : 'Personal Professional Page',
                 desc: isAr ? 'نصمم لك مدونة أو صفحة احترافية تعكس هويتك وتبرز محتواك بأفضل شكل' : 'We design a professional blog or page that reflects your identity and showcases your content.'
               },
               {
-                icon: <Globe className="w-8 h-8 text-[#FF9A3C]" />,
+                icon: <Globe className="w-8 h-8" stroke="url(#brandGradient)" />,
                 title: isAr ? 'وصول عالمي' : 'Global Reach',
                 desc: isAr ? 'نساعدك في الوصول لجمهور أوسع وبناء قاعدة جماهيرية قوية' : 'We help you reach a wider audience and build a strong fan base.'
               },
               {
-                icon: <Sparkles className="w-8 h-8 text-[#FF4D6D]" />,
+                icon: <Sparkles className="w-8 h-8" stroke="url(#brandGradient)" />,
                 title: isAr ? 'دعم فني وتسويقي' : 'Technical & Marketing Support',
                 desc: isAr ? 'فريق كامل من الخبراء جاهز لدعمك تقنياً وتسويقياً على مدار الساعة' : 'A full team of experts ready to support you technically and in marketing 24/7.'
               },
               {
-                icon: <TrendingUp className="w-8 h-8 text-[#FF9A3C]" />,
+                icon: <TrendingUp className="w-8 h-8" stroke="url(#brandGradient)" />,
                 title: isAr ? 'زيادة الأرباح' : 'Increase Revenue',
                 desc: isAr ? 'فرص للتعاون مع علامات تجارية رائدة وزيادة مصادر دخلك' : 'Opportunities to collaborate with leading brands and increase your income sources.'
               },
               {
-                icon: <ShieldCheck className="w-8 h-8 text-[#FF4D6D]" />,
+                icon: <ShieldCheck className="w-8 h-8" stroke="url(#brandGradient)" />,
                 title: isAr ? 'موثوقية واحترافية' : 'Credibility & Professionalism',
                 desc: isAr ? 'العمل تحت مظلة كيان احترافي يزيد من ثقة الجمهور والعلامات التجارية بك' : 'Working under a professional entity increases the trust of the audience and brands in you.'
               },
               {
-                icon: <Users className="w-8 h-8 text-[#FF9A3C]" />,
+                icon: <Users className="w-8 h-8" stroke="url(#brandGradient)" />,
                 title: isAr ? 'مجتمع مؤثرين' : 'Influencers Community',
                 desc: isAr ? 'انضم لشبكة واسعة من المؤثرين وشارك الخبرات والنجاحات' : 'Join a wide network of influencers and share experiences and successes.'
               }
