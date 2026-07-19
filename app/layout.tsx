@@ -96,7 +96,7 @@ export default function RootLayout({
     <html lang="ar" dir="rtl" className={`lang-ar ${cairo.variable} ${tajawal.variable}`}>
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0, viewport-fit=cover" />
         <meta name="theme-color" content="#FF4D6D" />
         
         {/* Removed preconnects to Google Fonts as next/font/google handles them locally */}
