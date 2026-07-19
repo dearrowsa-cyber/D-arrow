@@ -23,6 +23,37 @@ export interface PortfolioProject {
 
 export const projects: PortfolioProject[] = [
   {
+    id: 'spark-fuel-stations',
+    slug: 'spark-fuel-stations-branding',
+    logoUrl: '/portfolio/spark-1.png',
+    title: { en: 'Bariq Al Mustaqbal (Spark) Fuel Stations', ar: 'بريق المستقبل لمحطات الوقود' },
+    subtitle: { en: 'Logo Design & Brand Identity', ar: 'تصميم الشعار والهوية البصرية' },
+    description: {
+      en: 'Complete brand identity and logo design for Bariq Al Mustaqbal (Spark) Fuel Stations. The project focused on creating a modern, recognizable, and trustworthy visual identity for the fuel station brand.',
+      ar: 'تصميم شامل للشعار والهوية البصرية لشركة "بريق المستقبل لمحطات الوقود". ركز المشروع على خلق هوية بصرية حديثة ومميزة وتعكس الثقة والموثوقية للعلامة التجارية في قطاع محطات الوقود.'
+    },
+    imageUrl: '/portfolio/spark-1.png',
+    tags: {
+      en: 'Logo Design, Brand Identity, Visual Identity',
+      ar: 'تصميم شعار, هوية بصرية, تصميم تجاري'
+    } as any,
+    category: ['Branding'],
+    challenge: {
+      en: 'Creating a standout brand identity in a highly competitive and traditional fuel station market, ensuring the logo and branding are highly visible and memorable from a distance.',
+      ar: 'ابتكار هوية بصرية بارزة في سوق محطات الوقود التنافسي والتقليدي، مع ضمان أن يكون الشعار وعناصر الهوية واضحة وملفتة للانتباه من مسافة بعيدة لمرتادي الطرق.'
+    },
+    solution: {
+      en: 'We developed a dynamic and modern logo accompanied by a cohesive brand identity system. We selected a strong color palette and typography that conveys energy, reliability, and forward-thinking.',
+      ar: 'قمنا بتطوير شعار ديناميكي وحديث مصحوباً بنظام هوية بصرية متماسك. اخترنا لوحة ألوان قوية وخطوطاً تعكس الطاقة والموثوقية والتطور المستقبلي للشركة.'
+    },
+    results: [
+      { en: 'Established a strong and recognizable brand presence', ar: 'تأسيس حضور قوي ومميز للعلامة التجارية في السوق' },
+      { en: 'Consistent visual application across all station touchpoints', ar: 'تطبيق بصري متناسق وموحد عبر جميع نقاط اتصال محطات الوقود' },
+      { en: 'Positive feedback from stakeholders and target audience', ar: 'ردود فعل إيجابية من أصحاب المصلحة والجمهور المستهدف' }
+    ],
+    gallery: ['/portfolio/spark-1.png', '/portfolio/spark-2.png', '/portfolio/spark-3.png', '/portfolio/spark-4.png']
+  },
+  {
     id: 'tanfeeze-real-estate',
     slug: 'tanfeeze-real-estate-website',
     logoUrl: '/portfolio/tanfeeze-1.png',
