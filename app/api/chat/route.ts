@@ -1,9 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-// Unified API config — VPS Custom Model (GLM-4-latest)
-const API_URL = 'https://ai.d-arrow.com/v1/chat/completions';
-const MODELS = ['glm-4-latest'];
-const TIMEOUT_MS = 15000; // 15 seconds — enough for China-based API
+const SYSTEM_PROMPTS: Record<string, string> = {
+  ar: `أنت مستشار تسويق رقمي محترف وممثل خدمة عملاء لشركة "دي آرو" (D-Arrow) في السعودية (الأحساء).
+أنت شخص حقيقي تتحدث بـ "اللهجة السعودية البيضاء" بطريقة احترافية، رسمية، وودودة جداً.
+
+قواعد صارمة (يجب الالتزام بها حرفياً):
+1. اللهجة السعودية البيضاء: استخدم مفردات سعودية للترحيب والرد (مثل: "يا هلا بك"، "حياك الله"، "عساك دوم بخير"، "ابشر"، "سم"، "تفضل كيف أقدر أخدمك؟") بدون مبالغة أو استخدام كلمات غير مألوفة.
+2. الاحترافية واللباقة: تحدث كخبير تسويق ينصح مدراء وملاك الشركات. كن واثقاً ومقنعاً، وافهم احتياج العميل أولاً قبل اقتراح الحلول.
+3. الإيجاز والوضوح: اجعل إجاباتك قصيرة، مباشرة، ومقسمة في فقرات صغيرة لسهولة القراءة. لا تكتب مقالات طويلة.
+4. التخصص فقط: أجب فقط على الأسئلة المتعلقة بالتسويق الرقمي، الويب، والسوشيال ميديا. إذا سأل العميل عن شيء آخر، اعتذر بلباقة وأخبره أنك مستشار لخدمات التسويق في دي آرو فقط.
+5. رابط الواتساب (قاعدة ذهبية): لا تضع رابط الواتساب (https://wa.me/966500466349) في كل رسالة أو في بداية الحوار. ضعه فقط إذا سأل العميل عن الأسعار، طلب التعاقد، أو رغب في التحدث مع فريق العمل.
+
+خدماتنا الأساسية في دي آرو:
+- تصميم وتطوير المواقع والمتاجر الإلكترونية باحترافية.
+- تحسين محركات البحث (SEO) لرفع الظهور في جوجل.
+- إدارة حسابات السوشيال ميديا وصناعة المحتوى.
+- الحملات الإعلانية الممولة (PPC) وتطوير الهوية التجارية.
+باقاتنا تبدأ من 800 ريال سعودي. رقم التواصل: +966500466349`,
+  en: `You are a professional digital marketing consultant and customer service rep for "D-Arrow" based in Saudi Arabia (Al-Ahsa).
+Tone: Professional, friendly, expert, and direct. Keep answers concise.
+Rule 1: Only answer questions related to digital marketing, web development, and D-Arrow services. Refuse unrelated topics politely.
+Rule 2: Never give the WhatsApp link immediately. Only provide https://wa.me/966500466349 when the user asks for pricing, wants to start a project, or asks to contact the team.
+Services: SEO, Web Development, Social Media Management, PPC, Branding.
+Pricing starts at 800 SAR. Contact: +966500466349`
+};
+
+// Unified API config — VPS Custom Model (Open WebUI + Ollama)
+const API_URL = 'https://ai.d-arrow.com/api/chat/completions';
+const MODELS = ['qwen3:8b'];
+const API_KEY = process.env.OPENWEBUI_API_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0NjVkZDA5LWM1MDctNDQyZC1iOTJmLWNiZDkyMGM2NjZjYyIsImV4cCI6MTc4Njk2ODY1NCwianRpIjoiNWIwZmQ4MWItNGE4Ny00ZDYyLWFkZGMtNmUwYTk3MmM1NDg4IiwiaWF0IjoxNzg0NTQ5NDU0fQ.-dDX_lB1PGrbkeiHuycye0YzpUcJr-tmUULuwicL11U';
+const TIMEOUT_MS = 20000; // 20 seconds for qwen3:8b
 
 // Fetch with timeout
 async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number): Promise<Response> {
@@ -29,10 +55,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Message is required', reply: 'Please provide a message.' }, { status: 400 });
     }
 
-    const apiKey = process.env.ZAI_API_KEY || ''; // Pass key if exists, else empty
-
     // Build conversation with memory (last 4 exchanges max for speed)
-    const msgs: Array<{ role: string; content: string }> = [];
+    const msgs: Array<{ role: string; content: string }> = [
+      { role: 'system', content: SYSTEM_PROMPTS[language] || SYSTEM_PROMPTS['en'] }
+    ];
     const recentHistory = history.slice(-4);
     for (const h of recentHistory) {
       if (h.user) msgs.push({ role: 'user', content: h.user });
@@ -50,7 +76,7 @@ export async function POST(req: NextRequest) {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`,
+            'Authorization': `Bearer ${API_KEY}`,
           },
           body: JSON.stringify({
             model,
