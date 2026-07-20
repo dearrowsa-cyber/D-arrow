@@ -26,10 +26,10 @@ Pricing starts at 800 SAR. Contact: +966500466349`
 };
 
 // Unified API config — VPS Custom Model (Open WebUI + Ollama)
-const API_URL = 'https://ai.d-arrow.com/api/chat/completions';
+const API_URL = 'https://ai.d-arrow.com/ollama/api/chat';
 const MODELS = ['qwen3:8b'];
-const API_KEY = process.env.OPENWEBUI_API_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0NjVkZDA5LWM1MDctNDQyZC1iOTJmLWNiZDkyMGM2NjZjYyIsImV4cCI6MTc4Njk2ODY1NCwianRpIjoiNWIwZmQ4MWItNGE4Ny00ZDYyLWFkZGMtNmUwYTk3MmM1NDg4IiwiaWF0IjoxNzg0NTQ5NDU0fQ.-dDX_lB1PGrbkeiHuycye0YzpUcJr-tmUULuwicL11U';
-const TIMEOUT_MS = 20000; // 20 seconds for qwen3:8b
+const API_KEY = process.env.OPENWEBUI_API_KEY || 'sk-00a3793dd99440de80d58c6f0a2bafb1';
+const TIMEOUT_MS = 60000; // 60 seconds for qwen3:8b (local model)
 
 // Fetch with timeout
 async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number): Promise<Response> {
@@ -81,8 +81,11 @@ export async function POST(req: NextRequest) {
           body: JSON.stringify({
             model,
             messages: msgs,
-            temperature: 0.6,
-            max_tokens: 250,
+            stream: false,
+            options: {
+              temperature: 0.6,
+              num_predict: 250
+            }
           }),
         }, TIMEOUT_MS);
 
@@ -90,7 +93,8 @@ export async function POST(req: NextRequest) {
 
         if (response.ok) {
           const data = await response.json();
-          const reply = data.choices?.[0]?.message?.content;
+          // Support both OpenAI and Ollama formats
+          const reply = data.choices?.[0]?.message?.content || data.message?.content;
           if (reply) {
             console.log(`✅ ${model} replied in ${elapsed}ms`);
             return NextResponse.json({
