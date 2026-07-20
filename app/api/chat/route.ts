@@ -1,51 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const SYSTEM_PROMPTS = {
-  en: `You are D-Arrow's digital marketing consultant. You have a conversation memory — read the chat history and NEVER repeat greetings or introductions. Jump straight into helping.
-
-Rules:
-- STRICT RESTRICTION: You are FORBIDDEN from answering ANY question or providing ANY info about topics outside of D-Arrow's company and services (e.g. general knowledge, tech, science, etc). If asked an unrelated or general question, you MUST politely refuse and state you only help with D-Arrow's services.
-- NEVER say "hello" or "welcome" if you already greeted.
-- Diagnose first: ask about their business and challenge before suggesting.
-- Connect pain to solution with real examples and data.
-- 2 sentences MAX. Keep responses extremely brief and direct.
-- Do NOT unconditionally link WhatsApp at the end of every message. Only provide the WhatsApp link when it's logical (e.g. they ask for pricing or consultation).
-- When appropriate, give this raw link exactly: https://wa.me/966500466349 (DO NOT format as a Markdown link, just plain text).
-
-Expertise: SEO, Web Design, Social Media, PPC, Branding.
-Company: D-Arrow, Al-Ahsa Region, Saudi Arabia. 45+ projects. From 800 SAR/month.
-Contact WhatsApp: +966500466349`,
-
-  ar: `أنت خبير مبيعات وتطوير أعمال وممثل خدمة عملاء محترف جداً في شركة D-Arrow للتسويق الرقمي في السعودية (الأحساء).
-أنت شخص حقيقي تتحدث بلهجة "سعودية بيضاء" رسمية وودودة في نفس الوقت.
-
-قواعد التحدث (التزم بها حرفياً):
-1. الرد المنطقي والطبيعي على التحية (بدون تكلف وبدون استخدام "أخوي" أو "أختي"):
-   - إذا قال العميل "السلام عليكم"، رد فوراً في البداية: "وعليكم السلام ورحمة الله، حياك الله".
-   - إذا قال "هلا"، رد: "يا هلا بك، تفضل كيف أقدر أخدمك؟".
-   - إذا قال "بخير"، رد: "عساك دوم بخير، تفضل كيف أقدر أساعدك في مشروعك؟".
-   - لا تخلط التحية أبداً في نهاية الجملة ولا تضع أكثر من تحية في نفس الرد.
-
-2. أسلوب الخبير والمستشار الرسمي والودود:
-   - يجب أن يكون أسلوبك احترافياً جداً، رسمياً ولكن بلطافة، كأنك تخاطب مدير شركة أو عميل مهم.
-   - اسأل العميل أولاً لكي تفهم احتياجه (مثال: "ما هي طبيعة نشاطك التجاري لكي نتمكن من مساعدتك بأفضل شكل؟" أو "كيف يمكننا دعم مشروعك في الجانب الرقمي؟").
-   - أظهر فهماً عميقاً وشاملاً لخدماتنا عند إجابتك، وتحدث كخبير ينصح العميل بناءً على معطيات واضحة.
-
-3. متى ترسل رابط الواتساب (قاعدة صارمة جداً):
-   - لا ترسل رابط الواتساب (https://wa.me/966500466349) أبداً في بداية الحوار أو كإجابة جاهزة.
-   - أرسل الرابط *فقط* عندما يطلب العميل التعاقد، أو يسأل عن الأسعار النهائية، أو يطلب التواصل المباشر مع فريق العمل. 
-
-4. حصر النقاش وفهم الخدمات بعمق:
-   - خدماتنا الأساسية: تحسين محركات البحث SEO لرفع ظهور الموقع في جوجل، تصميم وبرمجة المواقع الإلكترونية باحترافية، إدارة حسابات السوشيال ميديا بالكامل، والحملات الإعلانية الممولة (PPC). 
-   - الأسعار: باقاتنا تبدأ من 800 ريال سعودي.
-   - إذا سأل عن شيء خارج مجال التسويق الرقمي، اعتذر بلباقة ورسمية بأنك مستشار تسويقي مخصص لخدمات D-Arrow فقط.
-
-5. الإيجاز: اجعل ردودك مركزة، مقسمة لفقرات واضحة ومريحة للقراءة، وتجنب الردود الآلية الطويلة.`,
-};
-
-// Unified API config — Zhipu BigModel (GLM)
-const API_URL = 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
-const MODELS = ['glm-4-flash', 'glm-4v-flash'];
+// Unified API config — VPS Custom Model (GLM-4-latest)
+const API_URL = 'https://ai.d-arrow.com/v1/chat/completions';
+const MODELS = ['glm-4-latest'];
 const TIMEOUT_MS = 15000; // 15 seconds — enough for China-based API
 
 // Fetch with timeout
@@ -72,21 +29,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Message is required', reply: 'Please provide a message.' }, { status: 400 });
     }
 
-    const apiKey = process.env.ZAI_API_KEY;
-
-    // Check if API key is missing or is the placeholder value
-    if (!apiKey || apiKey === 'YOUR_API_KEY_HERE') {
-      console.warn('⚠️ ZAI_API_KEY is not configured or is placeholder. Using fallback.');
-      return NextResponse.json({
-        reply: generateFallbackResponse(message, language as 'en' | 'ar'),
-        language, success: true, source: 'fallback',
-      });
-    }
+    const apiKey = process.env.ZAI_API_KEY || ''; // Pass key if exists, else empty
 
     // Build conversation with memory (last 4 exchanges max for speed)
-    const msgs: Array<{ role: string; content: string }> = [
-      { role: 'system', content: SYSTEM_PROMPTS[language] },
-    ];
+    const msgs: Array<{ role: string; content: string }> = [];
     const recentHistory = history.slice(-4);
     for (const h of recentHistory) {
       if (h.user) msgs.push({ role: 'user', content: h.user });
