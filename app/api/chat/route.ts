@@ -25,11 +25,11 @@ Services: SEO, Web Development, Social Media Management, PPC, Branding.
 Pricing starts at 800 SAR. Contact: +966500466349`
 };
 
-// Unified API config — VPS Custom Model (Open WebUI + Ollama)
-const API_URL = 'https://ai.d-arrow.com/api/chat/completions';
-const MODELS = ['qwen2.5:3b'];
-const API_KEY = process.env.OPENWEBUI_API_KEY || 'sk-00a3793dd99440de80d58c6f0a2bafb1';
-const TIMEOUT_MS = 60000; // 60 seconds for local model
+// Unified API config — Zhipu Cloud API (Fast) + Custom D-Arrow Prompt
+const API_URL = process.env.ZAI_API_BASE || 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
+const MODELS = ['glm-4-flash'];
+const API_KEY = process.env.ZAI_API_KEY || '52a514d02636eb4dfd7efce2828b1220.B8L262XvL0WixjYp'; // Fallback key if env missing
+const TIMEOUT_MS = 15000; // 15 seconds for cloud API
 
 // Fetch with timeout
 async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number): Promise<Response> {
@@ -82,13 +82,8 @@ export async function POST(req: NextRequest) {
             model,
             messages: msgs,
             stream: false,
-            chat_id: 'api-call-fix',
-            options: {
-              temperature: 0.6,
-              num_predict: 250,
-              num_thread: 8,
-              num_ctx: 1024
-            }
+            temperature: 0.6,
+            max_tokens: 250
           }),
         }, TIMEOUT_MS);
 
