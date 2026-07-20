@@ -27,9 +27,9 @@ Pricing starts at 800 SAR. Contact: +966500466349`
 
 // Unified API config — VPS Custom Model (Open WebUI + Ollama)
 const API_URL = 'https://ai.d-arrow.com/ollama/api/chat';
-const MODELS = ['qwen3:8b'];
+const MODELS = ['qwen2.5:3b'];
 const API_KEY = process.env.OPENWEBUI_API_KEY || 'sk-00a3793dd99440de80d58c6f0a2bafb1';
-const TIMEOUT_MS = 60000; // 60 seconds for qwen3:8b (local model)
+const TIMEOUT_MS = 60000; // 60 seconds for local model
 
 // Fetch with timeout
 async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number): Promise<Response> {
@@ -84,7 +84,9 @@ export async function POST(req: NextRequest) {
             stream: false,
             options: {
               temperature: 0.6,
-              num_predict: 250
+              num_predict: 250,
+              num_thread: 8,
+              num_ctx: 1024
             }
           }),
         }, TIMEOUT_MS);
