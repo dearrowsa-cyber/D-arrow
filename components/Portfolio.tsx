@@ -70,10 +70,10 @@ const Portfolio = () => {
                 className="h-full"
               >
                 <Link href={`/provisions/${project.slug}`} className="block h-full relative group">
-                  <div className="flex flex-col h-full rounded-2xl overflow-hidden bg-white dark:bg-[#12142b] border border-gray-100 dark:border-white/[0.06] transition-all duration-500 group-hover:-translate-y-1.5 group-hover:shadow-[0_16px_48px_rgba(255,77,109,0.12)] group-hover:border-brand-pink/20">
+                  <div className="flex flex-col h-full rounded-2xl overflow-hidden bg-[#12142b] border border-white/[0.06] transition-all duration-500 group-hover:-translate-y-1.5 group-hover:shadow-[0_16px_48px_rgba(255,77,109,0.12)] group-hover:border-brand-pink/20">
                     
                     {/* Image Area */}
-                    <div className="relative aspect-[4/3] bg-gray-50 dark:bg-[#0a0c1e] overflow-hidden flex items-center justify-center p-3">
+                    <div className="relative aspect-[4/3] bg-[#0a0c1e] overflow-hidden flex items-center justify-center p-3">
                       <Image 
                         src={project.imageUrl} 
                         alt={project.title[lang]} 
@@ -109,25 +109,25 @@ const Portfolio = () => {
                       </div>
 
                       {/* Title */}
-                      <h3 className="text-sm font-semibold text-gray-900 dark:text-white leading-snug mb-1.5 group-hover:text-brand-pink transition-colors duration-300">
+                      <h3 className="text-sm font-semibold text-white leading-snug mb-1.5 group-hover:text-brand-pink transition-colors duration-300">
                         {project.title[lang]}
                       </h3>
                       
                       {/* Subtitle */}
-                      <p className="text-xs text-gray-500 dark:text-gray-500 mb-3">
+                      <p className="text-xs text-gray-400 mb-3">
                         {project.subtitle[lang]}
                       </p>
 
                       {/* Description */}
-                      <p className="text-[10px] text-gray-400 dark:text-gray-500 leading-relaxed line-clamp-2 flex-grow">
+                      <p className="text-[10px] text-gray-400 leading-relaxed line-clamp-2 flex-grow">
                         {project.description[lang]}
                       </p>
 
                       {/* Bottom divider + View link */}
-                      <div className="mt-4 pt-3 border-t border-gray-100 dark:border-white/[0.04] flex items-center justify-between">
+                      <div className="mt-4 pt-3 border-t border-white/[0.04] flex items-center justify-between">
                         <div className="flex items-center gap-1.5">
                           {project.logoUrl && (
-                            <div className="w-6 h-6 bg-white dark:bg-white/10 rounded-md p-0.5 flex items-center justify-center border border-gray-100 dark:border-white/10">
+                            <div className="w-6 h-6 bg-white/10 rounded-md p-0.5 flex items-center justify-center border border-white/10">
                               <Image src={project.logoUrl} alt="" width={20} height={20} className="object-contain" placeholder="blur" blurDataURL={DARK_BLUR} />
                             </div>
                           )}
