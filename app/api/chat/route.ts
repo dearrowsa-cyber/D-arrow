@@ -1,21 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const SYSTEM_PROMPTS: Record<string, string> = {
-  ar: `أنت 'دي آرو للذكاء الاصطناعي'، المساعد الذكي والمستشار التسويقي الرسمي لوكالة دي آرو (D-Arrow) للتسويق الرقمي في السعودية (الأحساء).
-أنت تتحدث دائماً بـ "اللهجة السعودية البيضاء" الاحترافية والودودة (مثل: "يا هلا بك"، "حياك الله"، "أبشر"، "سم"، "تفضل كيف أقدر أخدمك؟").
+  ar: `أنت ممثل خدمة العملاء والمبيعات الرسمي لوكالة دي آرو (D-Arrow) للتسويق الرقمي بالسعودية.
+طريقة الحديث: تحدث بـ "اللهجة السعودية البيضاء" الاحترافية واللبقة (مثل: "يا هلا بك"، "حياك الله"، "أبشر"، "تفضل كيف أقدر أخدمك؟").
 
-بيانات وكالة دي آرو (D-Arrow):
-- الخدمات: تصميم وتطوير المواقع، تحسين محركات البحث (SEO)، الحملات الإعلانية الممولة (جوجل، سناب، تيك توك)، إدارة السوشيال ميديا، الأتمتة وصناعة المحتوى.
-- الباقات: تبدأ من 800 ريال سعودي شهرياً.
-- للتواصل والتعاقد: الواتساب https://wa.me/966500466349 أو البريد info@d-arrow.com.
+نطاق عملك واختصاصك الوحيد:
+أنت متخصص فقط في خدمات ومبيعات وكالة دي آرو (D-Arrow). لا تجب على أي أسئلة خارج نطاق التسويق الرقمي وخدمات دي آرو. إذا سألك العميل عن موضوع خارج التخصص، اعتذر بلباقة ووجه الحوار مباشرة لخدماتنا.
 
-قواعد مهمة:
-1. أجب باختصار وتركيز (3-4 أسطر كحد أقصى) وبأسلوب سعودي مميز.
-2. ضع رابط الواتساب فقط عندما يسأل العميل عن الأسعار أو التعاقد أو التواصل المباشر.`,
-  en: `You are 'D-Arrow AI', the official digital marketing assistant for D-Arrow Digital Marketing Agency in Saudi Arabia (Al-Ahsa).
-Services: Web Design & Development, SEO, Paid Ads (Google, Snapchat, TikTok), Social Media Management, Content & Automation.
-Packages start from 800 SAR/month.
-Rules: Keep responses concise (3-4 lines max), friendly, and professional. Provide WhatsApp link (https://wa.me/966500466349) when asked about pricing, contact, or hiring.`
+خدمات دي آرو:
+1. تصميم وتطوير المواقع والمتاجر الإلكترونية.
+2. تحسين محركات البحث (SEO).
+3. إدارة وتصميم حسابات السوشيال ميديا.
+4. الحملات الإعلانية الممولة (جوجل، سناب شات، تيك توك، انستقرام).
+5. الأتمتة وصناعة المحتوى الرقمي.
+
+الباقات والأسعار:
+- باقاتنا التسويقية تبدأ من 800 ريال سعودي شهرياً وتختلف حسب متطلبات المشروع.
+
+التواصل والتعاقد:
+- للتعاقد أو التواصل المباشر مع فريق المبيعات: الواتساب https://wa.me/966500466349 أو البريد info@d-arrow.com
+
+تعليمات الرد:
+- كن مختصراً، وودوداً، ومباشراً (3 أسطر كحد أقصى).
+- لا تضع كلمة "سم" في نهاية ردك بتاتاً.
+- ضع رابط الواتساب فقط عندما يسأل العميل عن الأسعار، أو التعاقد، أو طلب التواصل المباشر.`,
+  en: `You are the official Customer Service and Sales Representative for D-Arrow Digital Marketing Agency in Saudi Arabia.
+Your ONLY role is D-Arrow sales and customer support. Never answer questions outside of digital marketing and D-Arrow services.
+Services: Web Design & Development, SEO, Social Media Management, Paid Ads (Google, Snapchat, TikTok, Instagram), Content Creation.
+Packages: Starts from 800 SAR/month.
+Contact/Sales: WhatsApp https://wa.me/966500466349 or info@d-arrow.com
+Rules: Be concise, polite, professional (max 3 lines). Provide WhatsApp link when asked for pricing or direct contact.`
 };
 
 // Endpoints to try for maximum speed
@@ -62,7 +76,7 @@ export async function POST(req: NextRequest) {
     }
     msgs.push({ role: 'user', content: message });
 
-    // 1. Try Local Ollama (qwen2.5:3b or glm4 with fast 2k context & 10 CPU threads)
+    // 1. Try Local Ollama (qwen2.5:3b)
     try {
       console.log(`🤖 Requesting local Ollama model at ${OLLAMA_URL}...`);
       const startTime = Date.now();
@@ -70,13 +84,13 @@ export async function POST(req: NextRequest) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'qwen2.5:3b', // Ultra-fast 3B model (8.9s on CPU vs 23.7s for 8B)
+          model: 'qwen2.5:3b',
           messages: msgs,
           stream: false,
           options: {
             num_thread: 10,
             num_ctx: 2048,
-            temperature: 0.7,
+            temperature: 0.6,
             top_p: 0.9,
           }
         })
@@ -84,8 +98,10 @@ export async function POST(req: NextRequest) {
 
       if (ollamaRes.ok) {
         const data = await ollamaRes.json();
-        const reply = data.message?.content;
+        let reply = data.message?.content;
         if (reply) {
+          // Clean any stray "سم" at the end if model outputs it
+          reply = cleanReplyText(reply);
           console.log(`✅ Ollama qwen2.5:3b replied in ${Date.now() - startTime}ms`);
           return NextResponse.json({
             reply: reply.trim(),
@@ -99,7 +115,7 @@ export async function POST(req: NextRequest) {
       console.log(`⚠️ Local Ollama fast attempt bypassed: ${e?.message || e}`);
     }
 
-    // 2. Try GLM-4 via Ollama if qwen isn't loaded
+    // 2. Try GLM-4 via Ollama
     try {
       const startTime = Date.now();
       const glmRes = await fetchWithTimeout(`${OLLAMA_URL}/api/chat`, {
@@ -112,15 +128,16 @@ export async function POST(req: NextRequest) {
           options: {
             num_thread: 10,
             num_ctx: 2048,
-            temperature: 0.7,
+            temperature: 0.6,
           }
         })
       }, 5000);
 
       if (glmRes.ok) {
         const data = await glmRes.json();
-        const reply = data.message?.content;
+        let reply = data.message?.content;
         if (reply) {
+          reply = cleanReplyText(reply);
           console.log(`✅ Ollama glm4 replied in ${Date.now() - startTime}ms`);
           return NextResponse.json({
             reply: reply.trim(),
@@ -134,7 +151,7 @@ export async function POST(req: NextRequest) {
       console.log(`⚠️ Local Ollama GLM-4 attempt bypassed: ${e?.message || e}`);
     }
 
-    // 3. Try Cloud Zhipu API (if key configured)
+    // 3. Try Cloud Zhipu API
     if (ZHIPU_API_KEY) {
       try {
         const startTime = Date.now();
@@ -148,15 +165,16 @@ export async function POST(req: NextRequest) {
             model: 'glm-4-flash',
             messages: msgs,
             stream: false,
-            temperature: 0.7,
+            temperature: 0.6,
             max_tokens: 250,
           })
         }, TIMEOUT_MS);
 
         if (zhipuRes.ok) {
           const data = await zhipuRes.json();
-          const reply = data.choices?.[0]?.message?.content;
+          let reply = data.choices?.[0]?.message?.content;
           if (reply) {
+            reply = cleanReplyText(reply);
             console.log(`✅ Zhipu Cloud GLM-4 replied in ${Date.now() - startTime}ms`);
             return NextResponse.json({
               reply: reply.trim(),
@@ -172,7 +190,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 4. Instant intelligent fallback
-    console.log('⚡ Returning instant intelligent fallback response');
+    console.log('⚡ Returning instant fallback response');
     return NextResponse.json({
       reply: generateFallbackResponse(message, currentLang),
       language: currentLang,
@@ -190,30 +208,38 @@ export async function POST(req: NextRequest) {
   }
 }
 
+function cleanReplyText(text: string): string {
+  if (!text) return '';
+  let cleaned = text.trim();
+  // Strip trailing "سم" or "سم." or "سم!"
+  cleaned = cleaned.replace(/\s*سم[.!؟]*$/gi, '');
+  return cleaned;
+}
+
 function generateFallbackResponse(message: string, language: 'en' | 'ar'): string {
   const query = message.toLowerCase();
 
   if (language === 'ar') {
-    if (query.includes('خدمة') || query.includes('خدمات') || query.includes('شو') || query.includes('وش') || query.includes('ايش')) {
-      return 'يا هلا بك! نقدم في دي آرو كافة خدمات التسويق الرقمي: تصميم المواقع، SEO، إدارة حسابات التواصل الاجتماعي، والحملات الإعلانية الممولة. وش القطاع أو الخدمة اللي تفضل نبدأ فيها؟';
+    if (query.includes('خدمة') || query.includes('خدمات') || query.includes('شو') || query.includes('وش') || query.includes('ايش') || query.includes('موقع')) {
+      return 'يا هلا بك! نقدم في وكالة دي آرو كافة خدمات التسويق الرقمي وتصميم المواقع والمتاجر، تحسين SEO، وإدارة الحملات الإعلانية. تفضل، وش نوع الخدمة اللي تفكر تطلقها لمشروعك؟';
     }
     if (query.includes('سعر') || query.includes('كم') || query.includes('تكلفة') || query.includes('بكم') || query.includes('باقات')) {
-      return 'أبشر! باقاتنا التسويقية تبدأ من 800 ريال شهرياً وتتحدد حسب احتياجات مشروعك. تقدر تتواصل معنا مباشرة على الواتساب نحدد لك الباقة المناسبة: https://wa.me/966500466349';
+      return 'أبشر! باقاتنا التسويقية تبدأ من 800 ريال شهرياً وتختلف حسب احتياجات مشروعك. تواصل معنا على الواتساب للمبيعات ونحدد لك الباقة المناسبة: https://wa.me/966500466349';
     }
-    if (query.includes('تواصل') || query.includes('رقم') || query.includes('واتس') || query.includes('اميل')) {
-      return 'حياك الله! يسعدنا تواصلك معنا مباشرة عبر الواتساب: https://wa.me/966500466349 أو الإيميل info@d-arrow.com وسنقوم بالرد عليك فوراً.';
+    if (query.includes('تواصل') || query.includes('رقم') || query.includes('واتس') || query.includes('اميل') || query.includes('شراء') || query.includes('تعاقد')) {
+      return 'حياك الله! يسعدنا تواصلك المباشر مع فريق مبيعات دي آرو عبر الواتساب: https://wa.me/966500466349 أو البريد info@d-arrow.com وسنقوم بالرد عليك فوراً.';
     }
-    return 'يا هلا بك في دي آرو! أنا مستشارك الذكي للتسويق الرقمي. تفضل كيف أقدر أساعدك اليوم؟ (الخدمات، الأسعار، أو استشارة مجانية).';
+    return 'يا هلا بك في دي آرو! أنا ممثل خدمة العملاء والمبيعات. يسعدني إجابة أي استفسار حول خدماتنا التسويقية وتصميم المواقع والباقات المتاحة.';
   }
 
-  if (query.includes('service') || query.includes('offer')) {
-    return 'Welcome to D-Arrow! We provide full digital marketing services: Web Design, SEO, Social Media, & Paid Ads. Which service are you interested in?';
+  if (query.includes('service') || query.includes('offer') || query.includes('website')) {
+    return 'Welcome to D-Arrow! We offer full digital marketing services: Web & Store Development, SEO, Social Media, & Paid Ads. How can we help your business today?';
   }
   if (query.includes('price') || query.includes('cost') || query.includes('package')) {
-    return 'Our marketing packages start from 800 SAR/month. Contact us on WhatsApp for a custom quote: https://wa.me/966500466349';
+    return 'Our marketing packages start from 800 SAR/month. Contact our sales team on WhatsApp for a custom quote: https://wa.me/966500466349';
   }
-  if (query.includes('contact') || query.includes('whatsapp') || query.includes('email')) {
-    return 'Feel free to contact us on WhatsApp: https://wa.me/966500466349 or via email at info@d-arrow.com.';
+  if (query.includes('contact') || query.includes('whatsapp') || query.includes('email') || query.includes('buy')) {
+    return 'Feel free to contact D-Arrow sales team on WhatsApp: https://wa.me/966500466349 or via email at info@d-arrow.com.';
   }
-  return 'Welcome to D-Arrow! I am your AI digital marketing assistant. How can I help you today?';
+  return 'Welcome to D-Arrow! I am your sales and customer support representative. How can I assist you with our services today?';
 }
