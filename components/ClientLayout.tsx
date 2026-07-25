@@ -41,9 +41,9 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
     return () => clearTimeout(timer);
   }, []);
 
-  // Delay Chatbot rendering to drastically improve TBT
+  // Display Chatbot widget quickly after page load
   useEffect(() => {
-    const chatTimer = setTimeout(() => setShowChatBot(true), 4000);
+    const chatTimer = setTimeout(() => setShowChatBot(true), 800);
     return () => clearTimeout(chatTimer);
   }, []);
 
