@@ -16,6 +16,7 @@ services:
     environment:
       PORT: "3000"
       HOST: "0.0.0.0"
+      HOSTNAME: "0.0.0.0"
       NODE_ENV: "production"
       OLLAMA_BASE_URL: "http://ollama:11434"
       NEXT_PUBLIC_APP_URL: "${NEXT_PUBLIC_APP_URL}"
