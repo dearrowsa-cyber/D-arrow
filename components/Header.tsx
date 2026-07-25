@@ -13,8 +13,10 @@ export default memo(function Header() {
   const isAdmin = segments && segments[0] === 'admin';
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [projectsOpen, setProjectsOpen] = useState(false);
   const [resourcesOpen, setResourcesOpen] = useState(false);
   const closeTimeoutRef = useRef<number | null>(null);
+  const projectsTimeoutRef = useRef<number | null>(null);
   const { lang, setLang, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
 
@@ -164,6 +166,79 @@ export default memo(function Header() {
 </div>
             </div>
 
+            {/* "طور مشروعك" Dropdown */}
+            <div className="relative" onMouseEnter={() => { if (projectsTimeoutRef.current) window.clearTimeout(projectsTimeoutRef.current); setProjectsOpen(true); }} onMouseLeave={() => { projectsTimeoutRef.current = window.setTimeout(() => setProjectsOpen(false), 200); }}>
+              <Link
+                href="/projects"
+                className="nav-link-hover flex items-center justify-center gap-2 !text-xl font-medium px-4 py-2"
+                style={{ textTransform: 'none' }}
+              >
+                <span className="nav-text">{lang === 'ar' ? 'طور مشروعك' : 'Grow Your Business'}</span>
+              </Link>
+              <div
+                onMouseEnter={() => { if (projectsTimeoutRef.current) window.clearTimeout(projectsTimeoutRef.current); }}
+                onMouseLeave={() => { projectsTimeoutRef.current = window.setTimeout(() => setProjectsOpen(false), 200); }}
+                className={`
+                  ${projectsOpen 
+                    ? 'opacity-100 translate-y-0 visible pointer-events-auto' 
+                    : 'opacity-0 -translate-y-2 invisible pointer-events-none'}
+                  transition-all duration-200 ease-out
+                  absolute ${lang === 'ar' ? 'right-0' : 'left-0'}
+                  mt-2 w-[280px]
+                  bg-[#14162E]
+                  border border-gray-700
+                  rounded-lg
+                  shadow-xl
+                  p-2
+                  z-[999]
+                `}
+                dir={lang === 'ar' ? 'rtl' : 'ltr'}
+              >
+                <div className="flex flex-col gap-1">
+                  <Link
+                    href="/projects/cafe"
+                    onClick={() => setProjectsOpen(false)}
+                    className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} items-center gap-3 p-2.5 rounded-md hover:bg-[rgba(255,77,109,0.15)] transition`}
+                  >
+                    <span className="text-xl">☕</span>
+                    <span className="text-sm font-semibold text-white">{lang === 'ar' ? 'كافيهات' : 'Cafés'}</span>
+                  </Link>
+                  <Link
+                    href="/projects/restaurant"
+                    onClick={() => setProjectsOpen(false)}
+                    className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} items-center gap-3 p-2.5 rounded-md hover:bg-[rgba(255,77,109,0.15)] transition`}
+                  >
+                    <span className="text-xl">🍔</span>
+                    <span className="text-sm font-semibold text-white">{lang === 'ar' ? 'مطاعم' : 'Restaurants'}</span>
+                  </Link>
+                  <Link
+                    href="/projects/car-workshop"
+                    onClick={() => setProjectsOpen(false)}
+                    className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} items-center gap-3 p-2.5 rounded-md hover:bg-[rgba(255,77,109,0.15)] transition`}
+                  >
+                    <span className="text-xl">🚗</span>
+                    <span className="text-sm font-semibold text-white">{lang === 'ar' ? 'ورش صيانة السيارات' : 'Car Workshops'}</span>
+                  </Link>
+                  <Link
+                    href="/projects/shoes"
+                    onClick={() => setProjectsOpen(false)}
+                    className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} items-center gap-3 p-2.5 rounded-md hover:bg-[rgba(255,77,109,0.15)] transition`}
+                  >
+                    <span className="text-xl">👞</span>
+                    <span className="text-sm font-semibold text-white">{lang === 'ar' ? 'أحذية ومستلزمات' : 'Shoes & Footwear'}</span>
+                  </Link>
+                  <Link
+                    href="/projects/althob-alshemagh"
+                    onClick={() => setProjectsOpen(false)}
+                    className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} items-center gap-3 p-2.5 rounded-md hover:bg-[rgba(255,77,109,0.15)] transition`}
+                  >
+                    <span className="text-xl">👔</span>
+                    <span className="text-sm font-semibold text-white">{lang === 'ar' ? 'الثوب والشماغ' : 'Thobe & Shemagh'}</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+
             <Link href="/pricing" className="nav-link-hover flex items-center justify-center !text-xl font-medium px-4 py-2">
               <span className="nav-text">{t('packages')}</span>
             </Link>
@@ -290,6 +365,34 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
                       <span className="text-sm font-bold text-white block">{t('realEstateHeader')}</span>
                     </div>
                   </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Mobile "طور مشروعك" Dropdown */}
+            <div className="relative">
+              <div className="flex w-full items-center justify-between">
+                <Link
+                  href="/projects"
+                  onClick={() => handleNavClick('/projects')}
+                  className="flex-1 flex items-center gap-2 bg-transparent text-white text-lg font-medium transition px-4 py-3 min-h-[44px]"
+                  style={{ textTransform: 'none' }}
+                >
+                  {lang === 'ar' ? 'طور مشروعك' : 'Grow Your Business'}
+                </Link>
+                <button onClick={() => setProjectsOpen(v => !v)} className="p-3 text-white focus:outline-none">
+                  <svg className={`w-5 h-5 transition-transform duration-300 ${projectsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+              </div>
+              <div className={`${projectsOpen ? 'max-h-[300px] opacity-100 mt-2 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300 ease-in-out relative w-full bg-[#14162E]/40 ${lang === 'ar' ? 'border-r-2 rounded-l-lg' : 'border-l-2 rounded-r-lg'} border-brand-pink z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+                <div className="flex flex-col gap-1 p-1">
+                  <Link href="/projects/cafe" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/cafe'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">☕ {lang === 'ar' ? 'كافيهات' : 'Cafés'}</Link>
+                  <Link href="/projects/restaurant" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/restaurant'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">🍔 {lang === 'ar' ? 'مطاعم' : 'Restaurants'}</Link>
+                  <Link href="/projects/car-workshop" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/car-workshop'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">🚗 {lang === 'ar' ? 'ورش صيانة السيارات' : 'Car Workshops'}</Link>
+                  <Link href="/projects/shoes" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/shoes'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">👞 {lang === 'ar' ? 'أحذية ومستلزمات' : 'Shoes & Footwear'}</Link>
+                  <Link href="/projects/althob-alshemagh" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/althob-alshemagh'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">👔 {lang === 'ar' ? 'الثوب والشماغ' : 'Thobe & Shemagh'}</Link>
                 </div>
               </div>
             </div>
