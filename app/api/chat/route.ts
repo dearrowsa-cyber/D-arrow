@@ -1,37 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const SYSTEM_PROMPTS: Record<string, string> = {
-  ar: `أنت مستشار تسويق رقمي محترف وممثل خدمة عملاء لشركة "دي آرو" (D-Arrow) في السعودية (الأحساء).
-أنت شخص حقيقي تتحدث بـ "اللهجة السعودية البيضاء" بطريقة احترافية، رسمية، وودودة جداً.
+  ar: `أنت 'دي آرو للذكاء الاصطناعي'، المساعد الذكي والمستشار التسويقي الرسمي لوكالة دي آرو (D-Arrow) للتسويق الرقمي في السعودية (الأحساء).
+أنت تتحدث دائماً بـ "اللهجة السعودية البيضاء" الاحترافية والودودة (مثل: "يا هلا بك"، "حياك الله"، "أبشر"، "سم"، "تفضل كيف أقدر أخدمك؟").
 
-بيانات الشركة الرسمية (يجب الاعتماد عليها في أي إجابة):
-اسم الشركة: دي آرو (D-Arrow)
-الوصف: دي آرو هي شركة تسويق رقمي تساعد الشركات على بناء حضور قوي على الإنترنت من خلال تصميم وتطوير المواقع، تحسين محركات البحث، الحملات الإعلانية، إدارة المحتوى، الأتمتة، وتحليل الأداء.
-الخدمات الأساسية:
-- تصميم وتطوير المواقع (Website design and development)
-- تحسين محركات البحث (SEO)
-- الحملات الإعلانية الممولة (Paid advertising)
-- إدارة منصات التواصل الاجتماعي (Social Media)
+بيانات وكالة دي آرو (D-Arrow):
+- الخدمات: تصميم وتطوير المواقع، تحسين محركات البحث (SEO)، الحملات الإعلانية الممولة (جوجل، سناب، تيك توك)، إدارة السوشيال ميديا، الأتمتة وصناعة المحتوى.
+- الباقات: تبدأ من 800 ريال سعودي شهرياً.
+- للتواصل والتعاقد: الواتساب https://wa.me/966500466349 أو البريد info@d-arrow.com.
 
-قواعد صارمة (يجب الالتزام بها حرفياً):
-1. اللهجة السعودية البيضاء: استخدم مفردات سعودية للترحيب والرد (مثل: "يا هلا بك"، "حياك الله"، "عساك دوم بخير"، "ابشر"، "سم"، "تفضل كيف أقدر أخدمك؟") بدون مبالغة.
-2. الاحترافية واللباقة: تحدث كخبير تسويق ينصح مدراء وملاك الشركات.
-3. التخصص فقط: أجب فقط على الأسئلة المتعلقة بالتسويق الرقمي وخدمات دي آرو.
-4. رابط الواتساب: لا تضع رابط الواتساب (https://wa.me/966500466349) في البداية. ضعه فقط إذا سأل العميل عن الأسعار، أو طلب التعاقد. باقاتنا تبدأ من 800 ريال سعودي.`,
-  en: `You are a professional digital marketing consultant and customer service rep for "D-Arrow" based in Saudi Arabia (Al-Ahsa).
-Company Profile:
-D-Arrow is a digital marketing company that helps businesses build a strong online presence through website design and development, SEO, advertising campaigns, content management, automation, and performance analytics.
-Main services: Website design and development, Search engine optimization (SEO), Paid advertising, Social Media.
-Rules: Speak professionally and directly. Only answer questions related to digital marketing. Never give the WhatsApp link immediately. Only provide https://wa.me/966500466349 when the user asks for pricing (starts at 800 SAR).`
+قواعد مهمة:
+1. أجب باختصار وتركيز (3-4 أسطر كحد أقصى) وبأسلوب سعودي مميز.
+2. ضع رابط الواتساب فقط عندما يسأل العميل عن الأسعار أو التعاقد أو التواصل المباشر.`,
+  en: `You are 'D-Arrow AI', the official digital marketing assistant for D-Arrow Digital Marketing Agency in Saudi Arabia (Al-Ahsa).
+Services: Web Design & Development, SEO, Paid Ads (Google, Snapchat, TikTok), Social Media Management, Content & Automation.
+Packages start from 800 SAR/month.
+Rules: Keep responses concise (3-4 lines max), friendly, and professional. Provide WhatsApp link (https://wa.me/966500466349) when asked about pricing, contact, or hiring.`
 };
 
-// Unified API config — Zhipu Cloud API (Fast) + Custom D-Arrow Prompt
-const API_URL = process.env.ZAI_API_BASE || 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
-const MODELS = ['glm-4-flash'];
-const API_KEY = process.env.ZAI_API_KEY || '52a514d02636eb4dfd7efce2828b1220.B8L262XvL0WixjYp'; // Fallback key if env missing
-const TIMEOUT_MS = 15000; // 15 seconds for cloud API
+// Endpoints to try for maximum speed
+const OLLAMA_URL = process.env.OLLAMA_BASE_URL || 'http://ollama:11434';
+const ZHIPU_API_URL = process.env.ZAI_API_BASE || 'https://open.bigmodel.cn/api/paas/v4/chat/completions';
+const ZHIPU_API_KEY = process.env.ZAI_API_KEY || '';
 
-// Fetch with timeout
+const TIMEOUT_MS = 6000; // 6 second max per request for instant feel
+
+// Abort controller fetch helper
 async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number): Promise<Response> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -45,86 +39,153 @@ async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: nu
 
 export async function POST(req: NextRequest) {
   try {
-    const { message, language = 'en', history = [] } = await req.json() as {
+    const { message, language = 'ar', history = [] } = await req.json() as {
       message: string;
       language?: 'en' | 'ar';
       history?: Array<{ user: string; bot: string }>;
     };
 
     if (!message) {
-      return NextResponse.json({ error: 'Message is required', reply: 'Please provide a message.' }, { status: 400 });
+      return NextResponse.json({ error: 'Message is required', reply: 'يرجى كتابة رسالتك.' }, { status: 400 });
     }
 
-    // Build conversation with memory (last 4 exchanges max for speed)
+    const currentLang = language === 'en' ? 'en' : 'ar';
     const msgs: Array<{ role: string; content: string }> = [
-      { role: 'system', content: SYSTEM_PROMPTS[language] || SYSTEM_PROMPTS['en'] }
+      { role: 'system', content: SYSTEM_PROMPTS[currentLang] }
     ];
-    const recentHistory = history.slice(-4);
+
+    // Append last 3 turns for context
+    const recentHistory = history.slice(-3);
     for (const h of recentHistory) {
       if (h.user) msgs.push({ role: 'user', content: h.user });
       if (h.bot) msgs.push({ role: 'assistant', content: h.bot });
     }
     msgs.push({ role: 'user', content: message });
 
-    // Try each model with a timeout
-    for (const model of MODELS) {
+    // 1. Try Local Ollama (qwen2.5:3b or glm4 with fast 2k context & 10 CPU threads)
+    try {
+      console.log(`🤖 Requesting local Ollama model at ${OLLAMA_URL}...`);
+      const startTime = Date.now();
+      const ollamaRes = await fetchWithTimeout(`${OLLAMA_URL}/api/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'qwen2.5:3b', // Ultra-fast 3B model (8.9s on CPU vs 23.7s for 8B)
+          messages: msgs,
+          stream: false,
+          options: {
+            num_thread: 10,
+            num_ctx: 2048,
+            temperature: 0.7,
+            top_p: 0.9,
+          }
+        })
+      }, 5000);
+
+      if (ollamaRes.ok) {
+        const data = await ollamaRes.json();
+        const reply = data.message?.content;
+        if (reply) {
+          console.log(`✅ Ollama qwen2.5:3b replied in ${Date.now() - startTime}ms`);
+          return NextResponse.json({
+            reply: reply.trim(),
+            language: currentLang,
+            success: true,
+            source: 'ollama-qwen2.5:3b',
+          });
+        }
+      }
+    } catch (e: any) {
+      console.log(`⚠️ Local Ollama fast attempt bypassed: ${e?.message || e}`);
+    }
+
+    // 2. Try GLM-4 via Ollama if qwen isn't loaded
+    try {
+      const startTime = Date.now();
+      const glmRes = await fetchWithTimeout(`${OLLAMA_URL}/api/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'glm4:latest',
+          messages: msgs,
+          stream: false,
+          options: {
+            num_thread: 10,
+            num_ctx: 2048,
+            temperature: 0.7,
+          }
+        })
+      }, 5000);
+
+      if (glmRes.ok) {
+        const data = await glmRes.json();
+        const reply = data.message?.content;
+        if (reply) {
+          console.log(`✅ Ollama glm4 replied in ${Date.now() - startTime}ms`);
+          return NextResponse.json({
+            reply: reply.trim(),
+            language: currentLang,
+            success: true,
+            source: 'ollama-glm4',
+          });
+        }
+      }
+    } catch (e: any) {
+      console.log(`⚠️ Local Ollama GLM-4 attempt bypassed: ${e?.message || e}`);
+    }
+
+    // 3. Try Cloud Zhipu API (if key configured)
+    if (ZHIPU_API_KEY) {
       try {
-        console.log(`🔄 Trying ${model} at ${API_URL}...`);
         const startTime = Date.now();
-        
-        const response = await fetchWithTimeout(API_URL, {
+        const zhipuRes = await fetchWithTimeout(ZHIPU_API_URL, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${API_KEY}`,
+            'Authorization': `Bearer ${ZHIPU_API_KEY}`,
           },
           body: JSON.stringify({
-            model,
+            model: 'glm-4-flash',
             messages: msgs,
             stream: false,
-            temperature: 0.6,
-            max_tokens: 250
-          }),
+            temperature: 0.7,
+            max_tokens: 250,
+          })
         }, TIMEOUT_MS);
 
-        const elapsed = Date.now() - startTime;
-
-        if (response.ok) {
-          const data = await response.json();
-          // Support both OpenAI and Ollama formats
-          const reply = data.choices?.[0]?.message?.content || data.message?.content;
+        if (zhipuRes.ok) {
+          const data = await zhipuRes.json();
+          const reply = data.choices?.[0]?.message?.content;
           if (reply) {
-            console.log(`✅ ${model} replied in ${elapsed}ms`);
+            console.log(`✅ Zhipu Cloud GLM-4 replied in ${Date.now() - startTime}ms`);
             return NextResponse.json({
-              reply: reply.trim(), language, success: true,
-              source: `zhipu-${model}`, model,
+              reply: reply.trim(),
+              language: currentLang,
+              success: true,
+              source: 'zhipu-glm-4-flash',
             });
           }
-        } else {
-          const errorBody = await response.text();
-          console.error(`❌ ${model}: HTTP ${response.status} in ${elapsed}ms — ${errorBody.substring(0, 200)}`);
         }
       } catch (e: any) {
-        if (e?.name === 'AbortError') {
-          console.error(`⏱️ ${model} timed out after ${TIMEOUT_MS}ms`);
-        } else {
-          console.error(`💥 ${model} error:`, e?.message || e);
-        }
+        console.log(`⚠️ Zhipu API bypassed: ${e?.message || e}`);
       }
     }
 
-    // All models failed — return instant static response
-    console.log('📌 All AI models failed. Returning static fallback.');
+    // 4. Instant intelligent fallback
+    console.log('⚡ Returning instant intelligent fallback response');
     return NextResponse.json({
-      reply: generateFallbackResponse(message, language as 'en' | 'ar'),
-      language, success: true, source: 'fallback',
+      reply: generateFallbackResponse(message, currentLang),
+      language: currentLang,
+      success: true,
+      source: 'fallback-fast',
     });
 
   } catch (error: unknown) {
-    console.error('💥 Chat API Error:', error);
+    console.error('💥 Chat API error:', error);
     return NextResponse.json({
-      reply: generateFallbackResponse('hello', 'en'),
-      success: true, source: 'fallback',
+      reply: generateFallbackResponse('مرحبا', 'ar'),
+      success: true,
+      source: 'fallback',
     }, { status: 200 });
   }
 }
@@ -133,26 +194,26 @@ function generateFallbackResponse(message: string, language: 'en' | 'ar'): strin
   const query = message.toLowerCase();
 
   if (language === 'ar') {
-    if (query.includes('خدمة') || query.includes('service') || query.includes('شو') || query.includes('وش') || query.includes('ايش')) {
-      return 'حياك الله! نقدم خدمات التسويق الرقمي الشاملة: SEO، تصميم مواقع، هوية بصرية، سوشيال ميديا، وإعلانات مدفوعة. وش المجال اللي يهمك ودك نخدمك فيه؟';
+    if (query.includes('خدمة') || query.includes('خدمات') || query.includes('شو') || query.includes('وش') || query.includes('ايش')) {
+      return 'يا هلا بك! نقدم في دي آرو كافة خدمات التسويق الرقمي: تصميم المواقع، SEO، إدارة حسابات التواصل الاجتماعي، والحملات الإعلانية الممولة. وش القطاع أو الخدمة اللي تفضل نبدأ فيها؟';
     }
-    if (query.includes('سعر') || query.includes('كم') || query.includes('price') || query.includes('تكلفة') || query.includes('بكم')) {
-      return 'باقاتنا تبدأ من 800 ريال شهرياً وتختلف حسب الخدمات اللي تحتاجها. ودك أرتب لك استشارة مجانية نحدد فيها الأنسب لك؟';
+    if (query.includes('سعر') || query.includes('كم') || query.includes('تكلفة') || query.includes('بكم') || query.includes('باقات')) {
+      return 'أبشر! باقاتنا التسويقية تبدأ من 800 ريال شهرياً وتتحدد حسب احتياجات مشروعك. تقدر تتواصل معنا مباشرة على الواتساب نحدد لك الباقة المناسبة: https://wa.me/966500466349';
     }
-    if (query.includes('تواصل') || query.includes('رقم') || query.includes('اتصال') || query.includes('contact')) {
-      return 'تقدر تتواصل معنا مباشرة على الواتساب https://wa.me/966500466349 أو عبر الإيميل support@d-arrow.com. وإذا حاب، أبشر أرتب لك موعد استشارة مجانية.';
+    if (query.includes('تواصل') || query.includes('رقم') || query.includes('واتس') || query.includes('اميل')) {
+      return 'حياك الله! يسعدنا تواصلك معنا مباشرة عبر الواتساب: https://wa.me/966500466349 أو الإيميل info@d-arrow.com وسنقوم بالرد عليك فوراً.';
     }
-    return 'حياك الله في D-Arrow! أنا هنا لخدمتك. تفضل اسألني عن خدماتنا، الأسعار، أو لو ودك تحجز استشارة مجانية.';
+    return 'يا هلا بك في دي آرو! أنا مستشارك الذكي للتسويق الرقمي. تفضل كيف أقدر أساعدك اليوم؟ (الخدمات، الأسعار، أو استشارة مجانية).';
   }
 
-  if (query.includes('service') || query.includes('what') || query.includes('offer')) {
-    return 'We offer full-spectrum digital marketing: SEO, web design, branding, social media, and paid advertising. Which area are you most interested in?';
+  if (query.includes('service') || query.includes('offer')) {
+    return 'Welcome to D-Arrow! We provide full digital marketing services: Web Design, SEO, Social Media, & Paid Ads. Which service are you interested in?';
   }
-  if (query.includes('price') || query.includes('cost') || query.includes('how much') || query.includes('package')) {
-    return 'Our packages start from 800 SAR/month depending on the services you need. Would you like to schedule a free consultation so we can recommend the right plan?';
+  if (query.includes('price') || query.includes('cost') || query.includes('package')) {
+    return 'Our marketing packages start from 800 SAR/month. Contact us on WhatsApp for a custom quote: https://wa.me/966500466349';
   }
-  if (query.includes('contact') || query.includes('call') || query.includes('email') || query.includes('phone')) {
-    return 'You can reach us at support@d-arrow.com or WhatsApp https://wa.me/966500466349. I can also arrange a free consultation if you prefer.';
+  if (query.includes('contact') || query.includes('whatsapp') || query.includes('email')) {
+    return 'Feel free to contact us on WhatsApp: https://wa.me/966500466349 or via email at info@d-arrow.com.';
   }
-  return 'Welcome to D-Arrow! I\'m here to help. Feel free to ask about our services, pricing, or schedule a free consultation.';
+  return 'Welcome to D-Arrow! I am your AI digital marketing assistant. How can I help you today?';
 }
