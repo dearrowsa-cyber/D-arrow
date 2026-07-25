@@ -10,10 +10,14 @@ services:
     restart: unless-stopped
     ports:
       - "127.0.0.1:3031:3000"
+    networks:
+      - default
+      - n8n-ollama-shared
     environment:
       PORT: "3000"
       HOST: "0.0.0.0"
       NODE_ENV: "production"
+      OLLAMA_BASE_URL: "http://ollama:11434"
       NEXT_PUBLIC_APP_URL: "${NEXT_PUBLIC_APP_URL}"
       NEXT_PUBLIC_API_URL: "${NEXT_PUBLIC_API_URL}"
       NEXT_PUBLIC_CHATBOT_ENABLED: "${NEXT_PUBLIC_CHATBOT_ENABLED}"
@@ -49,6 +53,11 @@ services:
       JWT_SECRET: "${JWT_SECRET}"
     volumes:
       - d_arrow_uploads:/app/public/uploads
+
+networks:
+  default:
+  n8n-ollama-shared:
+    external: true
 
 volumes:
   d_arrow_uploads:
