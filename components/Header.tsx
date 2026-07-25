@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, memo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSelectedLayoutSegments } from 'next/navigation';
-import { Sun, Moon, Star } from 'lucide-react';
+import { Sun, Moon, Star, Coffee, UtensilsCrossed, Wrench, ShoppingBag, Shirt } from 'lucide-react';
 import { useLanguage } from './LanguageProvider';
 import { useTheme } from './ThemeProvider';
 
@@ -194,46 +194,56 @@ export default memo(function Header() {
                 `}
                 dir={lang === 'ar' ? 'rtl' : 'ltr'}
               >
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col gap-1.5 p-1">
                   <Link
                     href="/projects/cafe"
                     onClick={() => setProjectsOpen(false)}
-                    className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} items-center gap-3 p-2.5 rounded-md hover:bg-[rgba(255,77,109,0.15)] transition`}
+                    className={`dropdown-item-hover group flex ${lang === 'ar' ? 'flex-row' : ''} items-center gap-3 p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition`}
                   >
-                    <span className="text-xl">☕</span>
-                    <span className="text-sm font-semibold text-white">{lang === 'ar' ? 'كافيهات' : 'Cafés'}</span>
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500/20 to-orange-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
+                      <Coffee className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-semibold text-white group-hover:text-brand-pink transition-colors">{lang === 'ar' ? 'كافيهات' : 'Cafés'}</span>
                   </Link>
                   <Link
                     href="/projects/restaurant"
                     onClick={() => setProjectsOpen(false)}
-                    className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} items-center gap-3 p-2.5 rounded-md hover:bg-[rgba(255,77,109,0.15)] transition`}
+                    className={`dropdown-item-hover group flex ${lang === 'ar' ? 'flex-row' : ''} items-center gap-3 p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition`}
                   >
-                    <span className="text-xl">🍔</span>
-                    <span className="text-sm font-semibold text-white">{lang === 'ar' ? 'مطاعم' : 'Restaurants'}</span>
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500/20 to-red-500/10 border border-orange-500/30 flex items-center justify-center text-orange-400 group-hover:scale-110 transition-transform">
+                      <UtensilsCrossed className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-semibold text-white group-hover:text-brand-pink transition-colors">{lang === 'ar' ? 'مطاعم' : 'Restaurants'}</span>
                   </Link>
                   <Link
                     href="/projects/car-workshop"
                     onClick={() => setProjectsOpen(false)}
-                    className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} items-center gap-3 p-2.5 rounded-md hover:bg-[rgba(255,77,109,0.15)] transition`}
+                    className={`dropdown-item-hover group flex ${lang === 'ar' ? 'flex-row' : ''} items-center gap-3 p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition`}
                   >
-                    <span className="text-xl">🚗</span>
-                    <span className="text-sm font-semibold text-white">{lang === 'ar' ? 'ورش صيانة السيارات' : 'Car Workshops'}</span>
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-red-500/20 to-pink-500/10 border border-red-500/30 flex items-center justify-center text-red-400 group-hover:scale-110 transition-transform">
+                      <Wrench className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-semibold text-white group-hover:text-brand-pink transition-colors">{lang === 'ar' ? 'ورش صيانة السيارات' : 'Car Workshops'}</span>
                   </Link>
                   <Link
                     href="/projects/shoes"
                     onClick={() => setProjectsOpen(false)}
-                    className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} items-center gap-3 p-2.5 rounded-md hover:bg-[rgba(255,77,109,0.15)] transition`}
+                    className={`dropdown-item-hover group flex ${lang === 'ar' ? 'flex-row' : ''} items-center gap-3 p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition`}
                   >
-                    <span className="text-xl">👞</span>
-                    <span className="text-sm font-semibold text-white">{lang === 'ar' ? 'أحذية ومستلزمات' : 'Shoes & Footwear'}</span>
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-indigo-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
+                      <ShoppingBag className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-semibold text-white group-hover:text-brand-pink transition-colors">{lang === 'ar' ? 'أحذية ومستلزمات' : 'Shoes & Footwear'}</span>
                   </Link>
                   <Link
                     href="/projects/althob-alshemagh"
                     onClick={() => setProjectsOpen(false)}
-                    className={`dropdown-item-hover flex ${lang === 'ar' ? 'flex-row-reverse' : ''} items-center gap-3 p-2.5 rounded-md hover:bg-[rgba(255,77,109,0.15)] transition`}
+                    className={`dropdown-item-hover group flex ${lang === 'ar' ? 'flex-row' : ''} items-center gap-3 p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition`}
                   >
-                    <span className="text-xl">👔</span>
-                    <span className="text-sm font-semibold text-white">{lang === 'ar' ? 'الثوب والشماغ' : 'Thobe & Shemagh'}</span>
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
+                      <Shirt className="w-4 h-4" />
+                    </div>
+                    <span className="text-sm font-semibold text-white group-hover:text-brand-pink transition-colors">{lang === 'ar' ? 'الثوب والشماغ' : 'Thobe & Shemagh'}</span>
                   </Link>
                 </div>
               </div>
@@ -387,12 +397,27 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
                 </button>
               </div>
               <div className={`${projectsOpen ? 'max-h-[300px] opacity-100 mt-2 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300 ease-in-out relative w-full bg-[#14162E]/40 ${lang === 'ar' ? 'border-r-2 rounded-l-lg' : 'border-l-2 rounded-r-lg'} border-brand-pink z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-                <div className="flex flex-col gap-1 p-1">
-                  <Link href="/projects/cafe" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/cafe'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">☕ {lang === 'ar' ? 'كافيهات' : 'Cafés'}</Link>
-                  <Link href="/projects/restaurant" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/restaurant'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">🍔 {lang === 'ar' ? 'مطاعم' : 'Restaurants'}</Link>
-                  <Link href="/projects/car-workshop" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/car-workshop'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">🚗 {lang === 'ar' ? 'ورش صيانة السيارات' : 'Car Workshops'}</Link>
-                  <Link href="/projects/shoes" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/shoes'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">👞 {lang === 'ar' ? 'أحذية ومستلزمات' : 'Shoes & Footwear'}</Link>
-                  <Link href="/projects/althob-alshemagh" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/althob-alshemagh'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">👔 {lang === 'ar' ? 'الثوب والشماغ' : 'Thobe & Shemagh'}</Link>
+                <div className="flex flex-col gap-1.5 p-1">
+                  <Link href="/projects/cafe" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/cafe'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">
+                    <Coffee className="w-4 h-4 text-amber-400" />
+                    {lang === 'ar' ? 'كافيهات' : 'Cafés'}
+                  </Link>
+                  <Link href="/projects/restaurant" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/restaurant'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">
+                    <UtensilsCrossed className="w-4 h-4 text-orange-400" />
+                    {lang === 'ar' ? 'مطاعم' : 'Restaurants'}
+                  </Link>
+                  <Link href="/projects/car-workshop" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/car-workshop'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">
+                    <Wrench className="w-4 h-4 text-red-400" />
+                    {lang === 'ar' ? 'ورش صيانة السيارات' : 'Car Workshops'}
+                  </Link>
+                  <Link href="/projects/shoes" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/shoes'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">
+                    <ShoppingBag className="w-4 h-4 text-blue-400" />
+                    {lang === 'ar' ? 'أحذية ومستلزمات' : 'Shoes & Footwear'}
+                  </Link>
+                  <Link href="/projects/althob-alshemagh" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/althob-alshemagh'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">
+                    <Shirt className="w-4 h-4 text-purple-400" />
+                    {lang === 'ar' ? 'الثوب والشماغ' : 'Thobe & Shemagh'}
+                  </Link>
                 </div>
               </div>
             </div>

@@ -5,29 +5,10 @@ export interface ProjectShowcase {
   category: string;
   coverImage: string;
   images: string[];
-  color: string; // accent gradient color
+  color: string;
 }
 
 export const projectsShowcase: ProjectShowcase[] = [
-  {
-    id: 'althob-alshemagh',
-    title: { en: 'Althob & Alshemagh', ar: 'الثوب والشماغ' },
-    description: {
-      en: 'Social media campaign designs for a premium traditional clothing brand — showcasing thobes and shemaghs with a modern creative edge.',
-      ar: 'تصميمات حملة سوشيال ميديا لعلامة تجارية فاخرة للملابس التقليدية — عرض الأثواب والأشمغة بلمسة إبداعية عصرية.'
-    },
-    category: 'fashion',
-    coverImage: '/D Arrow Projects/Althob & Alshemagh/D Arrow First Page(Elthob).png',
-    images: [
-      '/D Arrow Projects/Althob & Alshemagh/D Arrow First Page(Elthob).png',
-      '/D Arrow Projects/Althob & Alshemagh/Elthob 1.png',
-      '/D Arrow Projects/Althob & Alshemagh/Elthob 2.png',
-      '/D Arrow Projects/Althob & Alshemagh/Elthob 3.png',
-      '/D Arrow Projects/Althob & Alshemagh/Elthob 4.png',
-      '/D Arrow Projects/Althob & Alshemagh/Elthob 5.png',
-    ],
-    color: '#8B5CF6', // purple
-  },
   {
     id: 'cafe',
     title: { en: 'Café Brand', ar: 'براند كافيه' },
@@ -36,37 +17,19 @@ export const projectsShowcase: ProjectShowcase[] = [
       ar: 'تصميمات سوشيال ميديا إبداعية لعلامة قهوة مميزة — صور دافئة ونصوص جذابة تضبط المزاج.'
     },
     category: 'food',
-    coverImage: '/D Arrow Projects/Cafe/D Arrow First Page.png',
+    coverImage: '/projects-showcase/cafe/cover.png',
     images: [
-      '/D Arrow Projects/Cafe/D Arrow First Page.png',
-      '/D Arrow Projects/Cafe/Cafe D1.png',
-      '/D Arrow Projects/Cafe/Cafe D2.png',
-      '/D Arrow Projects/Cafe/Cafe D3.png',
-      '/D Arrow Projects/Cafe/Cafe D4.png',
-      '/D Arrow Projects/Cafe/Cafe D4 (1).png',
-      '/D Arrow Projects/Cafe/Cafe D5.png',
-      '/D Arrow Projects/Cafe/Cafe D6.png',
+      '/projects-showcase/cafe/cover.png',
+      '/projects-showcase/cafe/1.png',
+      '/projects-showcase/cafe/2.png',
+      '/projects-showcase/cafe/3.png',
+      '/projects-showcase/cafe/4.png',
+      '/projects-showcase/cafe/5.png',
+      '/projects-showcase/cafe/6.png',
+      '/projects-showcase/cafe/7.png',
+      '/projects-showcase/cafe/8.png',
     ],
-    color: '#D97706', // amber/coffee
-  },
-  {
-    id: 'car-workshop',
-    title: { en: 'Car Workshop', ar: 'ورشة سيارات' },
-    description: {
-      en: 'Bold social media marketing designs for an automotive workshop — mechanical energy meets professional branding.',
-      ar: 'تصميمات تسويقية جريئة لورشة سيارات — طاقة ميكانيكية تلتقي بالاحترافية.'
-    },
-    category: 'automotive',
-    coverImage: '/D Arrow Projects/Car workshop/D Arrow First Page(Car) (1).png',
-    images: [
-      '/D Arrow Projects/Car workshop/D Arrow First Page(Car) (1).png',
-      '/D Arrow Projects/Car workshop/Car New1.png',
-      '/D Arrow Projects/Car workshop/Car New2.png',
-      '/D Arrow Projects/Car workshop/Car New3.png',
-      '/D Arrow Projects/Car workshop/Car New4.png',
-      '/D Arrow Projects/Car workshop/Car New5 (1).png',
-    ],
-    color: '#EF4444', // red
+    color: '#D97706',
   },
   {
     id: 'restaurant',
@@ -76,32 +39,74 @@ export const projectsShowcase: ProjectShowcase[] = [
       ar: 'تصميمات سوشيال ميديا شهية لعلامة مطعم — صور فاتحة للشهية تعزز التفاعل والطلبات.'
     },
     category: 'food',
-    coverImage: '/D Arrow Projects/Resturant/D Arrow First Page(Resturant) (1).png',
+    coverImage: '/projects-showcase/restaurant/cover.png',
     images: [
-      '/D Arrow Projects/Resturant/D Arrow First Page(Resturant) (1).png',
-      '/D Arrow Projects/Resturant/1.png',
-      '/D Arrow Projects/Resturant/2.png',
-      '/D Arrow Projects/Resturant/3.png',
-      '/D Arrow Projects/Resturant/4.png',
-      '/D Arrow Projects/Resturant/5.png',
+      '/projects-showcase/restaurant/cover.png',
+      '/projects-showcase/restaurant/1.png',
+      '/projects-showcase/restaurant/2.png',
+      '/projects-showcase/restaurant/3.png',
+      '/projects-showcase/restaurant/4.png',
+      '/projects-showcase/restaurant/5.png',
+      '/projects-showcase/restaurant/6.png',
     ],
-    color: '#F97316', // orange
+    color: '#F97316',
+  },
+  {
+    id: 'car-workshop',
+    title: { en: 'Car Workshop', ar: 'ورشة سيارات' },
+    description: {
+      en: 'Bold social media marketing designs for an automotive workshop — mechanical energy meets professional branding.',
+      ar: 'تصميمات تسويقية جريئة لورشة سيارات — طاقة ميكانيكية تلتقي بالاحترافية.'
+    },
+    category: 'automotive',
+    coverImage: '/projects-showcase/car-workshop/cover.png',
+    images: [
+      '/projects-showcase/car-workshop/cover.png',
+      '/projects-showcase/car-workshop/1.png',
+      '/projects-showcase/car-workshop/2.png',
+      '/projects-showcase/car-workshop/3.png',
+      '/projects-showcase/car-workshop/4.png',
+      '/projects-showcase/car-workshop/5.png',
+      '/projects-showcase/car-workshop/6.png',
+    ],
+    color: '#EF4444',
   },
   {
     id: 'shoes',
-    title: { en: 'Premium Footwear', ar: 'أحذية فاخرة' },
+    title: { en: 'Premium Footwear', ar: 'أحذية ومستلزمات' },
     description: {
       en: 'Luxurious product photography and social media designs for a premium footwear brand — elegance in every detail.',
       ar: 'تصوير منتجات فاخرة وتصميمات سوشيال ميديا لعلامة أحذية راقية — أناقة في كل تفصيل.'
     },
     category: 'fashion',
-    coverImage: '/D Arrow Projects/Shoes/Artboard 1.png',
+    coverImage: '/projects-showcase/shoes/cover.png',
     images: [
-      '/D Arrow Projects/Shoes/Artboard 1.png',
-      '/D Arrow Projects/Shoes/Artboard 1 copy.png',
-      '/D Arrow Projects/Shoes/Artboard 1 copy 2.png',
-      '/D Arrow Projects/Shoes/Artboard 1 copy 3.png',
+      '/projects-showcase/shoes/cover.png',
+      '/projects-showcase/shoes/1.png',
+      '/projects-showcase/shoes/2.png',
+      '/projects-showcase/shoes/3.png',
+      '/projects-showcase/shoes/4.png',
     ],
-    color: '#1E3A5F', // dark navy
+    color: '#1E3A5F',
+  },
+  {
+    id: 'althob-alshemagh',
+    title: { en: 'Althob & Alshemagh', ar: 'الثوب والشماغ' },
+    description: {
+      en: 'Social media campaign designs for a premium traditional clothing brand — showcasing thobes and shemaghs with a modern creative edge.',
+      ar: 'تصميمات حملة سوشيال ميديا لعلامة تجارية فاخرة للملابس التقليدية — عرض الأثواب والأشمغة بلمسة إبداعية عصرية.'
+    },
+    category: 'fashion',
+    coverImage: '/projects-showcase/althob-alshemagh/cover.png',
+    images: [
+      '/projects-showcase/althob-alshemagh/cover.png',
+      '/projects-showcase/althob-alshemagh/1.png',
+      '/projects-showcase/althob-alshemagh/2.png',
+      '/projects-showcase/althob-alshemagh/3.png',
+      '/projects-showcase/althob-alshemagh/4.png',
+      '/projects-showcase/althob-alshemagh/5.png',
+      '/projects-showcase/althob-alshemagh/6.png',
+    ],
+    color: '#8B5CF6',
   },
 ];
