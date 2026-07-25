@@ -1,35 +1,47 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 const SYSTEM_PROMPTS: Record<string, string> = {
-  ar: `أنت ممثل خدمة العملاء والمبيعات الرسمي لوكالة دي آرو (D-Arrow) للتسويق الرقمي بالسعودية.
+  ar: `أنت ممثل خدمة العملاء والمبيعات الرسمي لوكالة دي آرو (D-Arrow) للتسويق الرقمي بالسعودية (مقرنا: منطقة الأحساء).
 طريقة الحديث: تحدث بـ "اللهجة السعودية البيضاء" الاحترافية واللبقة (مثل: "يا هلا بك"، "حياك الله"، "أبشر"، "تفضل كيف أقدر أخدمك؟").
 
-نطاق عملك واختصاصك الوحيد:
-أنت متخصص فقط في خدمات ومبيعات وكالة دي آرو (D-Arrow). لا تجب على أي أسئلة خارج نطاق التسويق الرقمي وخدمات دي آرو. إذا سألك العميل عن موضوع خارج التخصص، اعتذر بلباقة ووجه الحوار مباشرة لخدماتنا.
+نطاق عملك واختصاصك الصارم:
+- أنت متخصص حصرياً في خدمات ومبيعات وكالة دي آرو (D-Arrow) المذكورة في موقعنا الإلكتروني فقط.
+- يمنع منعاً باتاً الإجابة على أي أسئلة خارج نطاق خدمات التسويق الرقمي ومبيعات دي آرو.
+- إذا سألك العميل عن أي موضوع خارج التخصص، اعتذر بلباقة ووجه الحوار فوراً إلى خدمات دي آرو.
 
-خدمات دي آرو:
-1. تصميم وتطوير المواقع والمتاجر الإلكترونية.
-2. تحسين محركات البحث (SEO).
-3. إدارة وتصميم حسابات السوشيال ميديا.
-4. الحملات الإعلانية الممولة (جوجل، سناب شات، تيك توك، انستقرام).
-5. الأتمتة وصناعة المحتوى الرقمي.
+خدمات دي آرو الرسمية المتاحة في الموقع:
+1. تصميم وتطوير المواقع والمتاجر الإلكترونية (Next.js, WooCommerce, Shopify).
+2. تحسين محركات البحث (SEO) والتصدر في نتائج جوجل.
+3. إدارة وتصميم حسابات السوشيال ميديا وصناعة المحتوى الإبداعي.
+4. الحملات الإعلانية الممولة (Google Ads, Meta, Snapchat, TikTok).
+5. تصميم الهوية البصرية والعلامة التجارية (Branding).
+6. تصوير المشاريع والمنتجات، وإدارة الأحداث والفعاليات.
 
-الباقات والأسعار:
-- باقاتنا التسويقية تبدأ من 800 ريال سعودي شهرياً وتختلف حسب متطلبات المشروع.
+باقات التسويق الرسمية المعتمدة بالموقع:
+- باقة الأساس (Basic Plan): 3,500 ريال سعودي شهرياً (تشمل 8 منشورات + 4 ستوري + إدارة بايو وهشتاجات وتصاميم).
+- باقة النمو (Growth Plan - الأكثر شعبية): 7,500 ريال سعودي شهرياً (تشمل 12 منشور + 4 فيديوهات قصيرة Reels/TikTok + إدارة تفاعل + حملات إعلانية ممولة + أرشفة منتجات SEO).
+- باقة الاحتراف (Professional Plan): 9,000 ريال سعودي شهرياً (إدارة محتوى شاملة حتى 20 فيديو/منشور + استراتيجية إعلانات متقدمة + إعادة استهداف + صفحات هبوط وتجربة مستخدم UI/UX).
+- حزم التطوير والتصميم والمتاجر (Starter, Business, E-commerce, Enterprise): حسب متطلبات المشروع وبطلب استشارة.
 
-التواصل والتعاقد:
-- للتعاقد أو التواصل المباشر مع فريق المبيعات: الواتساب https://wa.me/966500466349 أو البريد info@d-arrow.com
+التواصل المباشر والتعاقد:
+- الواتساب المباشر للمبيعات: https://wa.me/966500466349
+- البريد الإلكتروني: support@d-arrow.com / info@d-arrow.com
 
-تعليمات الرد:
-- كن مختصراً، وودوداً، ومباشراً (3 أسطر كحد أقصى).
-- لا تضع كلمة "سم" في نهاية ردك بتاتاً.
+تعليمات الرد الصارمة:
+- الالتزام التام التام بمحتوى الموقع وأسعاره الحقيقية.
+- كن مختصراً، وودوداً، ومباشراً (من 2 إلى 4 أسطر كحد أقصى).
+- يمنع استخدام كلمة "سم" بتاتاً.
 - ضع رابط الواتساب فقط عندما يسأل العميل عن الأسعار، أو التعاقد، أو طلب التواصل المباشر.`,
-  en: `You are the official Customer Service and Sales Representative for D-Arrow Digital Marketing Agency in Saudi Arabia.
-Your ONLY role is D-Arrow sales and customer support. Never answer questions outside of digital marketing and D-Arrow services.
-Services: Web Design & Development, SEO, Social Media Management, Paid Ads (Google, Snapchat, TikTok, Instagram), Content Creation.
-Packages: Starts from 800 SAR/month.
-Contact/Sales: WhatsApp https://wa.me/966500466349 or info@d-arrow.com
-Rules: Be concise, polite, professional (max 3 lines). Provide WhatsApp link when asked for pricing or direct contact.`
+  en: `You are the official Customer Service and Sales Representative for D-Arrow Digital Marketing Agency in Saudi Arabia (Al-Ahsa).
+Strict Scope: You ONLY handle D-Arrow sales and customer inquiries based strictly on the official website content. Never answer topics outside digital marketing and D-Arrow services.
+Services: Web & Store Development, SEO Optimization, Social Media Management, Paid Ads (Google, Meta, Snapchat, TikTok), Branding Identity, Photography & Event Marketing.
+Official Marketing Packages:
+- Basic Package: 3,500 SAR/month
+- Growth Package (Most Popular): 7,500 SAR/month
+- Professional Package: 9,000 SAR/month
+- Custom Development & Enterprise Plans available upon request.
+Contact/Sales: WhatsApp https://wa.me/966500466349 | Email support@d-arrow.com
+Rules: Strictly adhere to official website pricing and details. Be concise, polite, and professional (2-4 lines max). Provide WhatsApp link when asked for pricing or direct contact.`
 };
 
 // Endpoints to try for maximum speed
@@ -100,7 +112,6 @@ export async function POST(req: NextRequest) {
         const data = await ollamaRes.json();
         let reply = data.message?.content;
         if (reply) {
-          // Clean any stray "سم" at the end if model outputs it
           reply = cleanReplyText(reply);
           console.log(`✅ Ollama qwen2.5:3b replied in ${Date.now() - startTime}ms`);
           return NextResponse.json({
@@ -189,8 +200,8 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // 4. Instant intelligent fallback
-    console.log('⚡ Returning instant fallback response');
+    // 4. Instant intelligent fallback based strictly on official site data
+    console.log('⚡ Returning instant fallback response based on site content');
     return NextResponse.json({
       reply: generateFallbackResponse(message, currentLang),
       language: currentLang,
@@ -220,26 +231,26 @@ function generateFallbackResponse(message: string, language: 'en' | 'ar'): strin
   const query = message.toLowerCase();
 
   if (language === 'ar') {
-    if (query.includes('خدمة') || query.includes('خدمات') || query.includes('شو') || query.includes('وش') || query.includes('ايش') || query.includes('موقع')) {
-      return 'يا هلا بك! نقدم في وكالة دي آرو كافة خدمات التسويق الرقمي وتصميم المواقع والمتاجر، تحسين SEO، وإدارة الحملات الإعلانية. تفضل، وش نوع الخدمة اللي تفكر تطلقها لمشروعك؟';
+    if (query.includes('خدمة') || query.includes('خدمات') || query.includes('شو') || query.includes('وش') || query.includes('ايش') || query.includes('موقع') || query.includes('تطوير')) {
+      return 'يا هلا بك! نقدم في وكالة دي آرو خدمات التسويق الرقمي المتكاملة: تصميم وتطوير المواقع والمتاجر، تحسين محركات البحث SEO، إدارة السوشيال ميديا، والحملات الإعلانية الممولة. وش الخدمة اللي تناسب تطلعات مشروعك؟';
     }
-    if (query.includes('سعر') || query.includes('كم') || query.includes('تكلفة') || query.includes('بكم') || query.includes('باقات')) {
-      return 'أبشر! باقاتنا التسويقية تبدأ من 800 ريال شهرياً وتختلف حسب احتياجات مشروعك. تواصل معنا على الواتساب للمبيعات ونحدد لك الباقة المناسبة: https://wa.me/966500466349';
+    if (query.includes('سعر') || query.includes('كم') || query.includes('تكلفة') || query.includes('بكم') || query.includes('باقات') || query.includes('باقة')) {
+      return 'أبشر! باقاتنا التسويقية المعتمدة تبدأ من باقة الأساس (3,500 ريال)، باقة النمو (7,500 ريال)، وباقة الاحتراف (9,000 ريال شهرياً). تقدر تتواصل مع المبيعات مباشرة نحدد لك الأنسب: https://wa.me/966500466349';
     }
     if (query.includes('تواصل') || query.includes('رقم') || query.includes('واتس') || query.includes('اميل') || query.includes('شراء') || query.includes('تعاقد')) {
-      return 'حياك الله! يسعدنا تواصلك المباشر مع فريق مبيعات دي آرو عبر الواتساب: https://wa.me/966500466349 أو البريد info@d-arrow.com وسنقوم بالرد عليك فوراً.';
+      return 'حياك الله! يسعدنا تواصلك المباشر مع فريق مبيعات دي آرو عبر الواتساب: https://wa.me/966500466349 أو البريد support@d-arrow.com وسنقوم بالرد عليك فوراً.';
     }
-    return 'يا هلا بك في دي آرو! أنا ممثل خدمة العملاء والمبيعات. يسعدني إجابة أي استفسار حول خدماتنا التسويقية وتصميم المواقع والباقات المتاحة.';
+    return 'يا هلا بك في دي آرو! أنا ممثل خدمة العملاء والمبيعات. تفضل استفسر عن خدماتنا التسويقية، تصميم المواقع، أو باقاتنا المعتمدة (الأساس، النمو، الاحتراف).';
   }
 
   if (query.includes('service') || query.includes('offer') || query.includes('website')) {
-    return 'Welcome to D-Arrow! We offer full digital marketing services: Web & Store Development, SEO, Social Media, & Paid Ads. How can we help your business today?';
+    return 'Welcome to D-Arrow! We offer full digital marketing: Web & Store Development, SEO, Social Media, & Paid Ads. Which service fits your business goals?';
   }
   if (query.includes('price') || query.includes('cost') || query.includes('package')) {
-    return 'Our marketing packages start from 800 SAR/month. Contact our sales team on WhatsApp for a custom quote: https://wa.me/966500466349';
+    return 'Our official marketing packages are Basic (3,500 SAR), Growth (7,500 SAR), and Professional (9,000 SAR/mo). Contact our sales team on WhatsApp for details: https://wa.me/966500466349';
   }
   if (query.includes('contact') || query.includes('whatsapp') || query.includes('email') || query.includes('buy')) {
-    return 'Feel free to contact D-Arrow sales team on WhatsApp: https://wa.me/966500466349 or via email at info@d-arrow.com.';
+    return 'Feel free to contact D-Arrow sales team on WhatsApp: https://wa.me/966500466349 or via email at support@d-arrow.com.';
   }
-  return 'Welcome to D-Arrow! I am your sales and customer support representative. How can I assist you with our services today?';
+  return 'Welcome to D-Arrow! I am your sales and customer support representative. How can I assist you with our official marketing and web packages today?';
 }
