@@ -100,7 +100,7 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       </AnimatePresence>
 
       <NetworkBackground />
-      <div className="grid-background w-full overflow-x-hidden relative z-10">
+      <div className="grid-background w-full overflow-x-hidden relative z-10 bg-[#0b0d1f] text-white min-h-screen min-h-[100dvh]">
         <Header />
         <main className="pt-24">
           {children}

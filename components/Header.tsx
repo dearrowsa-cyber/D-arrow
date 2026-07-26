@@ -233,7 +233,7 @@ export default memo(function Header() {
                     <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-indigo-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 group-hover:scale-110 transition-transform">
                       <ShoppingBag className="w-4 h-4" />
                     </div>
-                    <span className="text-sm font-semibold text-white group-hover:text-brand-pink transition-colors">{lang === 'ar' ? 'أحذية ومستلزمات' : 'Shoes & Footwear'}</span>
+                    <span className="text-sm font-semibold text-white group-hover:text-brand-pink transition-colors">{lang === 'ar' ? 'أحذية' : 'Footwear'}</span>
                   </Link>
                   <Link
                     href="/projects/althob-alshemagh"

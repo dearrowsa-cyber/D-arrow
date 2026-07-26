@@ -11,7 +11,7 @@ export interface ProjectShowcase {
 export const projectsShowcase: ProjectShowcase[] = [
   {
     id: 'cafe',
-    title: { en: 'Café Brand', ar: 'براند كافيه' },
+    title: { en: 'Café', ar: 'كافيه' },
     description: {
       en: 'Creative social media designs for a specialty coffee brand — warm visuals and enticing copy that set the mood.',
       ar: 'تصميمات سوشيال ميديا إبداعية لعلامة قهوة مميزة — صور دافئة ونصوص جذابة تضبط المزاج.'
@@ -20,7 +20,6 @@ export const projectsShowcase: ProjectShowcase[] = [
     coverImage: '/projects-showcase/cafe/cover.png',
     images: [
       '/projects-showcase/cafe/cover.png',
-      '/projects-showcase/cafe/1.png',
       '/projects-showcase/cafe/2.png',
       '/projects-showcase/cafe/3.png',
       '/projects-showcase/cafe/4.png',
@@ -42,7 +41,6 @@ export const projectsShowcase: ProjectShowcase[] = [
     coverImage: '/projects-showcase/restaurant/cover.png',
     images: [
       '/projects-showcase/restaurant/cover.png',
-      '/projects-showcase/restaurant/1.png',
       '/projects-showcase/restaurant/2.png',
       '/projects-showcase/restaurant/3.png',
       '/projects-showcase/restaurant/4.png',
@@ -62,7 +60,6 @@ export const projectsShowcase: ProjectShowcase[] = [
     coverImage: '/projects-showcase/car-workshop/cover.png',
     images: [
       '/projects-showcase/car-workshop/cover.png',
-      '/projects-showcase/car-workshop/1.png',
       '/projects-showcase/car-workshop/2.png',
       '/projects-showcase/car-workshop/3.png',
       '/projects-showcase/car-workshop/4.png',
@@ -73,7 +70,7 @@ export const projectsShowcase: ProjectShowcase[] = [
   },
   {
     id: 'shoes',
-    title: { en: 'Premium Footwear', ar: 'أحذية ومستلزمات' },
+    title: { en: 'Footwear', ar: 'أحذية' },
     description: {
       en: 'Luxurious product photography and social media designs for a premium footwear brand — elegance in every detail.',
       ar: 'تصوير منتجات فاخرة وتصميمات سوشيال ميديا لعلامة أحذية راقية — أناقة في كل تفصيل.'
@@ -82,7 +79,6 @@ export const projectsShowcase: ProjectShowcase[] = [
     coverImage: '/projects-showcase/shoes/cover.png',
     images: [
       '/projects-showcase/shoes/cover.png',
-      '/projects-showcase/shoes/1.png',
       '/projects-showcase/shoes/2.png',
       '/projects-showcase/shoes/3.png',
       '/projects-showcase/shoes/4.png',
@@ -100,7 +96,6 @@ export const projectsShowcase: ProjectShowcase[] = [
     coverImage: '/projects-showcase/althob-alshemagh/cover.png',
     images: [
       '/projects-showcase/althob-alshemagh/cover.png',
-      '/projects-showcase/althob-alshemagh/1.png',
       '/projects-showcase/althob-alshemagh/2.png',
       '/projects-showcase/althob-alshemagh/3.png',
       '/projects-showcase/althob-alshemagh/4.png',

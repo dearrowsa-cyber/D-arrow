@@ -85,6 +85,8 @@
     overflow-x: hidden;
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
+    background-color: #0b0d1f !important;
+    color-scheme: dark !important;
     /* D Arrow Brand Colors - Official Guidelines (sRGB IEC61966-2.1) */
     /* Primary Colors */
     --brand-pink: #FF4D6D;
@@ -106,14 +108,14 @@
     --font-bukra: '29LT-Bukra', var(--font-cairo, 'Cairo'), system-ui, sans-serif;
     --font-swissra: var(--font-tajawal, 'Tajawal'), system-ui, sans-serif;
   }
-  
-
 
   body {
     min-height: 100vh;
+    min-height: 100dvh;
     width: 100%;
     overflow-x: hidden;
-    background: var(--secondary-dark);
+    background-color: #0b0d1f !important;
+    background: #0b0d1f !important;
     color: var(--brand-white);
     font-family: 'TT Hoves Pro', system-ui, sans-serif;
     font-weight: 400;
