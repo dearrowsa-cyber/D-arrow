@@ -19,8 +19,6 @@ export const projectsShowcase: ProjectShowcase[] = [
     category: 'food',
     coverImage: '/projects-showcase/cafe/cover.png',
     images: [
-      '/projects-showcase/cafe/cover.png',
-      '/projects-showcase/cafe/2.png',
       '/projects-showcase/cafe/3.png',
       '/projects-showcase/cafe/4.png',
       '/projects-showcase/cafe/5.png',
@@ -40,8 +38,6 @@ export const projectsShowcase: ProjectShowcase[] = [
     category: 'food',
     coverImage: '/projects-showcase/restaurant/cover.png',
     images: [
-      '/projects-showcase/restaurant/cover.png',
-      '/projects-showcase/restaurant/2.png',
       '/projects-showcase/restaurant/3.png',
       '/projects-showcase/restaurant/4.png',
       '/projects-showcase/restaurant/5.png',
@@ -59,8 +55,6 @@ export const projectsShowcase: ProjectShowcase[] = [
     category: 'automotive',
     coverImage: '/projects-showcase/car-workshop/cover.png',
     images: [
-      '/projects-showcase/car-workshop/cover.png',
-      '/projects-showcase/car-workshop/2.png',
       '/projects-showcase/car-workshop/3.png',
       '/projects-showcase/car-workshop/4.png',
       '/projects-showcase/car-workshop/5.png',
@@ -78,7 +72,6 @@ export const projectsShowcase: ProjectShowcase[] = [
     category: 'fashion',
     coverImage: '/projects-showcase/shoes/cover.png',
     images: [
-      '/projects-showcase/shoes/cover.png',
       '/projects-showcase/shoes/2.png',
       '/projects-showcase/shoes/3.png',
       '/projects-showcase/shoes/4.png',
@@ -95,8 +88,6 @@ export const projectsShowcase: ProjectShowcase[] = [
     category: 'fashion',
     coverImage: '/projects-showcase/althob-alshemagh/cover.png',
     images: [
-      '/projects-showcase/althob-alshemagh/cover.png',
-      '/projects-showcase/althob-alshemagh/2.png',
       '/projects-showcase/althob-alshemagh/3.png',
       '/projects-showcase/althob-alshemagh/4.png',
       '/projects-showcase/althob-alshemagh/5.png',
