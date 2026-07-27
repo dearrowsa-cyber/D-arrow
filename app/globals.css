@@ -698,4 +698,13 @@ section {
   max-width: 100% !important;
   text-align: start !important;
 }
+
+/* Ensure mobile menu expandable link titles remain pure white and match all other links */
+@media (max-width: 1023px) {
+  header nav a,
+  header nav button,
+  header nav span {
+    color: #ffffff !important;
+  }
+}
 

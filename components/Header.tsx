@@ -56,7 +56,7 @@ export default memo(function Header() {
                 className="nav-link-hover flex items-center justify-center gap-2 !text-xl font-medium px-4 py-2"
                 style={{ textTransform: 'none' }}
               >
-                <span className="nav-text">{t('solutions')}</span>
+                <span className="nav-text !text-white">{t('solutions')}</span>
               </Link>
               {/* Enhanced dropdown - 3 featured columns with brand colors */}
              <div
@@ -173,7 +173,7 @@ export default memo(function Header() {
                 className="nav-link-hover flex items-center justify-center gap-2 !text-xl font-medium px-4 py-2"
                 style={{ textTransform: 'none' }}
               >
-                <span className="nav-text">{lang === 'ar' ? 'طور مشروعك' : 'Grow Your Business'}</span>
+                <span className="nav-text !text-white">{lang === 'ar' ? 'طور مشروعك' : 'Grow Your Business'}</span>
               </Link>
               <div
                 onMouseEnter={() => { if (projectsTimeoutRef.current) window.clearTimeout(projectsTimeoutRef.current); }}
@@ -333,17 +333,17 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
                   onClick={() => handleNavClick('/services')}
                   className="flex-1 flex items-center gap-2 
                              bg-transparent hover:bg-transparent 
-                             text-white text-lg font-medium 
+                             !text-white text-lg font-medium 
                              transition
                              px-4 py-3 min-h-[44px]
                              border-none outline-none"
                   style={{ textTransform: 'none' }}
                 >
-                  {t('solutions')}
+                  <span className="!text-white">{t('solutions')}</span>
                 </Link>
                 <button
                   onClick={() => setServicesOpen(v => !v)}
-                  className="p-3 text-white focus:outline-none"
+                  className="p-3 !text-white focus:outline-none"
                 >
                   <svg className={`w-5 h-5 transition-transform duration-300 ${servicesOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -385,12 +385,12 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
                 <Link
                   href="/projects"
                   onClick={() => handleNavClick('/projects')}
-                  className="flex-1 flex items-center gap-2 bg-transparent text-white text-lg font-medium transition px-4 py-3 min-h-[44px]"
+                  className="flex-1 flex items-center gap-2 bg-transparent !text-white text-lg font-medium transition px-4 py-3 min-h-[44px]"
                   style={{ textTransform: 'none' }}
                 >
-                  {lang === 'ar' ? 'طور مشروعك' : 'Grow Your Business'}
+                  <span className="!text-white">{lang === 'ar' ? 'طور مشروعك' : 'Grow Your Business'}</span>
                 </Link>
-                <button onClick={() => setProjectsOpen(v => !v)} className="p-3 text-white focus:outline-none">
+                <button onClick={() => setProjectsOpen(v => !v)} className="p-3 !text-white focus:outline-none">
                   <svg className={`w-5 h-5 transition-transform duration-300 ${projectsOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
