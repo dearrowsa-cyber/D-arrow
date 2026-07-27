@@ -353,7 +353,7 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
 
               {/* Enhanced dropdown - 3 featured columns with brand colors (Scaled Down for Mobile) */}
               <div 
-                className={`${servicesOpen ? 'max-h-[500px] opacity-100 mt-2 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300 ease-in-out relative w-full bg-[#14162E]/40 ${lang === 'ar' ? 'border-r-2 rounded-l-lg' : 'border-l-2 rounded-r-lg'} border-brand-pink z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+                className={`${servicesOpen ? 'max-h-[500px] opacity-100 mt-2 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300 ease-in-out relative w-full bg-[#14162E]/40 ${lang === 'ar' ? 'border-r-2 rounded-l-lg' : 'border-l-2 rounded-r-lg'} border-gray-700 z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
                 <div className="flex flex-col gap-1 p-1">
                   <Link href="/services?category=digital-marketing" onClick={() => { setServicesOpen(false); handleNavClick('/services'); }} className="dropdown-item-hover flex gap-3 items-center p-2 min-h-[36px] rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition w-full mb-1">
                     <img src="/icon/services-icon/digital_marketing_promotion.png" alt="Digital Marketing" className="w-7 h-7 rounded-md object-cover shadow-sm flex-shrink-0 hover:scale-105 transition" loading="lazy" decoding="async" />
@@ -396,7 +396,7 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
                   </svg>
                 </button>
               </div>
-              <div className={`${projectsOpen ? 'max-h-[300px] opacity-100 mt-2 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300 ease-in-out relative w-full bg-[#14162E]/40 ${lang === 'ar' ? 'border-r-2 rounded-l-lg' : 'border-l-2 rounded-r-lg'} border-brand-pink z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+              <div className={`${projectsOpen ? 'max-h-[300px] opacity-100 mt-2 pointer-events-auto' : 'max-h-0 opacity-0 pointer-events-none'} overflow-hidden transition-all duration-300 ease-in-out relative w-full bg-[#14162E]/40 ${lang === 'ar' ? 'border-r-2 rounded-l-lg' : 'border-l-2 rounded-r-lg'} border-gray-700 z-50`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
                 <div className="flex flex-col gap-1.5 p-1">
                   <Link href="/projects/cafe" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/cafe'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">
                     <Coffee className="w-4 h-4 text-amber-400" />
@@ -412,7 +412,7 @@ hover:shadow-md hover:scale-105 active:scale-95 whitespace-nowrap">
                   </Link>
                   <Link href="/projects/shoes" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/shoes'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">
                     <ShoppingBag className="w-4 h-4 text-blue-400" />
-                    {lang === 'ar' ? 'أحذية ومستلزمات' : 'Shoes & Footwear'}
+                    {lang === 'ar' ? 'أحذية' : 'Footwear'}
                   </Link>
                   <Link href="/projects/althob-alshemagh" onClick={() => { setProjectsOpen(false); handleNavClick('/projects/althob-alshemagh'); }} className="flex gap-3 items-center p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] text-white text-sm font-semibold">
                     <Shirt className="w-4 h-4 text-purple-400" />
