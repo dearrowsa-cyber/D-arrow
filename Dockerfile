@@ -1,10 +1,10 @@
 FROM node:20-slim AS base
-RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -y && apt-get install -y openssl git && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Copy everything first
-COPY . .
+# Always pull latest code from GitHub so rebuilds get fresh code
+RUN git clone --depth=1 --branch main https://github.com/dearrowsa-cyber/D-arrow.git . 
 
 # Install dependencies (skip postinstall to avoid prisma issues during build)
 RUN npm install --ignore-scripts --legacy-peer-deps
