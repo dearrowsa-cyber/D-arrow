@@ -1,6 +1,6 @@
 FROM node:20-slim
 
-RUN apt-get update -y && apt-get install -y openssl git && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -y && apt-get install -y openssl git python3 make g++ && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
