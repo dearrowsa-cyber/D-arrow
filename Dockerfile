@@ -5,7 +5,7 @@ RUN apt-get update -y && apt-get install -y openssl git python3 make g++ && rm -
 WORKDIR /app
 
 # Pull latest committed code from GitHub
-RUN git clone --depth=1 --branch main https://github.com/dearrowsa-cyber/D-arrow.git .
+RUN git clone --depth=1 --branch main https://github.com/dearrowsa-cyber/D-arrow.git . # cachebust-6daf90b
 
 # Install dependencies cleanly
 RUN npm install --legacy-peer-deps
