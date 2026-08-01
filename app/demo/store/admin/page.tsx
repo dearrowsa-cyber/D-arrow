@@ -104,7 +104,7 @@ export default function AdminDemoPage() {
       <header style={{ borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(20,22,46,0.8)', padding: '16px 24px' }}>
         <div style={{ maxWidth: 1200, margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <Image src="/Darrow-1.png" alt="D-Arrow Logo" width={90} height={36} style={{ objectFit: 'contain' }} />
+            <img src="/Darrow-1.png" alt="D-Arrow Logo" style={{ width: 90, height: 36, objectFit: 'contain' }} />
             <div style={{ borderRight: '1px solid rgba(255,255,255,0.1)', paddingRight: 12 }}>
               <h2 style={{ fontSize: 16, fontWeight: 800, margin: 0, color: 'white', display: 'flex', alignItems: 'center', gap: 6 }}><ShieldCheck size={18} style={{ color: '#10B981' }} /> لوحة التحكم</h2>
               <span style={{ fontSize: 11, color: '#9CA3AF' }}>إدارة المنتجات، المخزون، الطلبات</span>
