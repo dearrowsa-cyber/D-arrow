@@ -3,64 +3,210 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ShoppingCart, Star, Check, ArrowRight, Package, ExternalLink, ShieldCheck, Layout, Code, Sparkles } from 'lucide-react';
-import { useCart } from '@/components/store/CartContext';
+import { ShoppingCart, Star, Check, ArrowRight, Package, ShieldCheck, Layout, Sparkles, CreditCard, Heart, Truck, Lock } from 'lucide-react';
+import '@/app/demo/store/demo-store.css';
+
+const FALLBACK_PRODUCTS: Record<string, any> = {
+  'p1': {
+    id: 'p1',
+    slug: 'p1',
+    name: 'ساعة ذكية متميزة (Ultra Smart)',
+    nameAr: 'ساعة ذكية متميزة (Ultra Smart)',
+    category: 'إلكترونيات',
+    categoryAr: 'إلكترونيات',
+    price: 499,
+    salePrice: 349,
+    stock: 8,
+    images: JSON.stringify([
+      'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=800&q=90',
+      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=90'
+    ]),
+    description: 'ساعة متوافقة مع جميع الهواتف الذكية مع شاشة AMOLED وقياس المؤشرات الحيوية وشحن سريع.',
+    descriptionAr: 'ساعة متوافقة مع جميع الهواتف الذكية مع شاشة AMOLED وقياس المؤشرات الحيوية وشحن سريع وبطارية يدوم شحنها لـ 7 أيام.',
+    featuresAr: JSON.stringify(['شاشة AMOLED بدقة عالية 454x454', 'مقاومة للماء والمعايير البحرية IP68', 'بطارية تدوم 7 أيام متواصلة', 'قياس نبض القلب ونسبة الأكسجين ومعدل النوم', 'شحن لاسلكي مغناطيسي سريع']),
+    rating: 4.8,
+    reviewsCount: 124
+  },
+  'p2': {
+    id: 'p2',
+    slug: 'p2',
+    name: 'سماعات لاسلكية إلغاء الضوضاء (Pro ANC)',
+    nameAr: 'سماعات لاسلكية إلغاء الضوضاء (Pro ANC)',
+    category: 'إلكترونيات',
+    categoryAr: 'إلكترونيات',
+    price: 399,
+    salePrice: 279,
+    stock: 2,
+    images: JSON.stringify([
+      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=90',
+      'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=90'
+    ]),
+    description: 'سماعات احترافية صوت محيطي عالي الدقة مع عزل ضوضاء نشط وبطارية تدوم 30 ساعة.',
+    descriptionAr: 'سماعات احترافية صوت محيطي عالي الدقة مع عزل ضوضاء نشط وبطارية تدوم 30 ساعة متواصلة.',
+    featuresAr: JSON.stringify(['عزل ضوضاء نشط ANC حتى -35dB', 'بطارية تدوم 30 ساعة مع علبة الشحن', 'مايكروفون مزدوج للتحكم في المكالمات', 'اتصال سريع بلوتوث 5.3']),
+    rating: 4.6,
+    reviewsCount: 89
+  },
+  'p3': {
+    id: 'p3',
+    slug: 'p3',
+    name: 'عطر الفخامة الملكي بالعود والورد (50ml)',
+    nameAr: 'عطر الفخامة الملكي بالعود والورد (50ml)',
+    category: 'عطور',
+    categoryAr: 'عطور',
+    price: 260,
+    salePrice: 199,
+    stock: 15,
+    images: JSON.stringify([
+      'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=90',
+      'https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=800&q=90'
+    ]),
+    description: 'عطر شرقي فاخر بنفحات العود الكمبودي والصندل والمسك الأبيض لمناسباتك الخاصة.',
+    descriptionAr: 'عطر شرقي فاخر بنفحات العود الكمبودي والصندل والمسك الأبيض لمناسباتك الخاصة.',
+    featuresAr: JSON.stringify(['عود كمبودي طبيعي 100%', 'ثبات يدوم أكثر من 12 ساعة', 'عبوة هدايا فاخرة', 'تركيبة ملكية حصرية']),
+    rating: 4.9,
+    reviewsCount: 203
+  },
+  'p4': {
+    id: 'p4',
+    slug: 'p4',
+    name: 'محفظة جلد طبيعي فاخرة حماية RFID',
+    nameAr: 'محفظة جلد طبيعي فاخرة حماية RFID',
+    category: 'كماليات',
+    categoryAr: 'كماليات',
+    price: 120,
+    salePrice: 89,
+    stock: 0,
+    images: JSON.stringify([
+      'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=90'
+    ]),
+    description: 'مصنوعة من أجوَد أنواع الجلد الطبيعي بتصميم أنيق وحماية RFID للبطاقات البنكية.',
+    descriptionAr: 'مصنوعة من أجوَد أنواع الجلد الطبيعي بتصميم أنيق وحماية RFID للبطاقات البنكية.',
+    featuresAr: JSON.stringify(['جلد طبيعي 100%', 'حماية RFID ضد السرقة الإلكترونية', 'يتسع لـ 8 بطاقات بنكية', 'حجم نحيف ومريح']),
+    rating: 4.3,
+    reviewsCount: 56
+  },
+  'p5': {
+    id: 'p5',
+    slug: 'p5',
+    name: 'نظارة شمسية قطبية كلاسيكية (Polarized)',
+    nameAr: 'نظارة شمسية قطبية كلاسيكية (Polarized)',
+    category: 'كماليات',
+    categoryAr: 'كماليات',
+    price: 210,
+    salePrice: 149,
+    stock: 12,
+    images: JSON.stringify([
+      'https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=800&q=90'
+    ]),
+    description: 'حماية كاملة من الأشعة فوق البنفسجية UV400 مع هيكل خفيف الوزن من التيتانيوم.',
+    descriptionAr: 'حماية كاملة من الأشعة فوق البنفسجية UV400 مع هيكل خفيف الوزن من التيتانيوم.',
+    featuresAr: JSON.stringify(['عدسات بولاريزد عالية النقاء', 'حماية UV400 كاملة', 'إطار تيتانيوم مقاوم للصدمات', 'علبة حافظة فاخرة']),
+    rating: 4.5,
+    reviewsCount: 77
+  },
+  'p6': {
+    id: 'p6',
+    slug: 'p6',
+    name: 'حقيبة ظهر للأعمال مقاومة للماء',
+    nameAr: 'حقيبة ظهر للأعمال مقاومة للماء',
+    category: 'أزياء',
+    categoryAr: 'أزياء',
+    price: 320,
+    salePrice: 229,
+    stock: 5,
+    images: JSON.stringify([
+      'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=90'
+    ]),
+    description: 'مساحة تتسع لجهاز 15.6 بوصة منفذ شحن USB خارجي وجيوب متعددة مخفية للأمان.',
+    descriptionAr: 'مساحة تتسع لجهاز 15.6 بوصة منفذ شحن USB خارجي وجيوب متعددة مخفية للأمان.',
+    featuresAr: JSON.stringify(['قماش هيدروفوبيك مقاوم للماء', 'جيب محمول مبطن 15.6 بوصة', 'منفذ شحن USB خارجي', 'جيوب سريّة ضد السرقة']),
+    rating: 4.7,
+    reviewsCount: 112
+  },
+  'ecommerce-store-admin-template': {
+    id: 'tmpl-1',
+    slug: 'ecommerce-store-admin-template',
+    name: 'سكريبت المتجر الإلكتروني السعودي الكامل مع لوحة التحكم',
+    nameAr: 'سكريبت المتجر الإلكتروني السعودي الكامل مع لوحة التحكم',
+    category: 'قوالب ومتارج',
+    categoryAr: 'قوالب ومتارج',
+    price: 1999,
+    salePrice: 1299,
+    stock: 99,
+    images: JSON.stringify([
+      'https://images.unsplash.com/photo-1556742049-0a6754407767?auto=format&fit=crop&w=800&q=90',
+      'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=90'
+    ]),
+    description: 'قالب سكريبت متجر إلكتروني سعودي حديث متكامل جاهز للربط مع مدى وأبل باي ولوحة تحكم كاملة.',
+    descriptionAr: 'قالب سكريبت متجر إلكتروني سعودي حديث متكامل جاهز للربط مع مدى وأبل باي ولوحة تحكم كاملة لإدارة المبيعات والمنتجات والكوبونات.',
+    featuresAr: JSON.stringify(['بوابة دفع تفاعلية مدمجة (مدى، أبل باي، فيزا، تابي، تمارا)', 'لوحة تحكم إدارية شاملة للمبيعات والمنتجات والكوبونات', 'تصميم متوافق 100% مع الجوال واللغة العربية', 'شحن وسلة تسوق تفاعلية وفواتير إلكترونية']),
+    rating: 5.0,
+    reviewsCount: 48,
+    type: 'template'
+  }
+};
 
 export default function ProductPage() {
   const params = useParams();
-  const slug = params.slug as string;
+  const slug = (params.slug as string) || 'p1';
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [selectedImg, setSelectedImg] = useState(0);
   const [added, setAdded] = useState(false);
-  const [reviewForm, setReviewForm] = useState({ customerName: '', rating: 5, comment: '' });
-  const [submitting, setSubmitting] = useState(false);
-  const [reviewMsg, setReviewMsg] = useState('');
-  const { addItem } = useCart();
 
   useEffect(() => {
     fetch('/api/store/products?status=published')
       .then(r => r.json())
       .then(d => {
         if (d.success) {
-          const found = (d.products || []).find((p: any) => p.slug === slug);
-          if (found) setProduct(found);
+          const found = (d.products || []).find((p: any) => p.slug === slug || p.id === slug);
+          if (found) {
+            setProduct(found);
+            setLoading(false);
+            return;
+          }
         }
+        // Fallback
+        const fallback = FALLBACK_PRODUCTS[slug] || FALLBACK_PRODUCTS['p1'];
+        setProduct(fallback);
+      })
+      .catch(() => {
+        const fallback = FALLBACK_PRODUCTS[slug] || FALLBACK_PRODUCTS['p1'];
+        setProduct(fallback);
       })
       .finally(() => setLoading(false));
   }, [slug]);
 
-  const handleAdd = () => {
-    if (!product) return;
-    const imgs = product.images ? JSON.parse(product.images) : [];
-    addItem({ productId: product.id, name: product.name, nameAr: product.nameAr, price: product.price, salePrice: product.salePrice, image: imgs[0] || '' });
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
-  };
+  if (loading) return (
+    <div style={{ minHeight: '100vh', background: '#0B0D1F', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ width: 48, height: 48, border: '3px solid rgba(255,77,109,0.2)', borderTopColor: '#FF4D6D', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
+    </div>
+  );
 
-  const submitReview = async () => {
-    if (!reviewForm.customerName) return;
-    setSubmitting(true);
-    try {
-      const r = await fetch('/api/store/reviews', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...reviewForm, productId: product.id }) });
-      const d = await r.json();
-      if (d.success) { setReviewMsg('شكراً! سيظهر تقييمك بعد المراجعة'); setReviewForm({ customerName: '', rating: 5, comment: '' }); }
-    } catch {} finally { setSubmitting(false); }
-  };
-
-  if (loading) return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><div style={{ width: 48, height: 48, border: '3px solid rgba(255,77,109,0.2)', borderTopColor: '#FF4D6D', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} /><style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style></div>;
-  if (!product) return <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 16 }}><Package size={64} style={{ color: '#374151' }} /><h2 style={{ color: '#9CA3AF' }}>المنتج غير موجود</h2><Link href="/store" style={{ color: '#FF4D6D' }}>العودة للمتجر</Link></div>;
-
-  const images = product.images ? JSON.parse(product.images) : [];
-  const features = product.featuresAr ? JSON.parse(product.featuresAr) : (product.features ? JSON.parse(product.features) : []);
+  const images = product.images ? (typeof product.images === 'string' ? JSON.parse(product.images) : product.images) : [];
+  const features = product.featuresAr ? (typeof product.featuresAr === 'string' ? JSON.parse(product.featuresAr) : product.featuresAr) : [];
   const hasDiscount = product.salePrice && product.salePrice < product.price;
   const discountPct = hasDiscount ? Math.round((1 - product.salePrice / product.price) * 100) : 0;
-  const avgRating = product.reviews?.length ? (product.reviews.reduce((s: number, r: any) => s + r.rating, 0) / product.reviews.length).toFixed(1) : null;
-  const isTemplate = product.type === 'template' || product.slug.includes('template');
+  const isOutOfStock = product.stock <= 0;
 
   return (
-    <section style={{ minHeight: '100vh', padding: '120px 24px 80px' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+    <div dir="rtl" style={{ background: '#0B0D1F', color: '#E6E6EA', minHeight: '100vh', fontFamily: 'system-ui, sans-serif', paddingBottom: 80 }}>
+      {/* Top Header */}
+      <header style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(20,22,46,0.85)', backdropFilter: 'blur(14px)', position: 'sticky', top: 0, zIndex: 40, padding: '14px 24px' }}>
+        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <Link href="/store" style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#E6E6EA', textDecoration: 'none', fontWeight: 600, fontSize: 14 }}>
+            ← العودة للمتجر
+          </Link>
+          <span style={{ fontSize: 15, fontWeight: 800, color: 'white' }}>تفاصيل المنتج</span>
+          <Link href="/store/checkout" style={{ background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', padding: '8px 16px', borderRadius: 10, textDecoration: 'none', fontSize: 13, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
+            <ShoppingCart size={15} /> إتمام الشراء
+          </Link>
+        </div>
+      </header>
+
+      <div style={{ maxWidth: 1100, margin: '40px auto 0', padding: '0 24px' }}>
         {/* Breadcrumb */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 32, fontSize: 14, color: '#6B7280' }}>
           <Link href="/store" style={{ color: '#FF4D6D', textDecoration: 'none' }}>المتجر</Link>
@@ -68,25 +214,27 @@ export default function ProductPage() {
           <span style={{ color: '#9CA3AF' }}>{product.nameAr || product.name}</span>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'start' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 48, alignItems: 'start' }}>
           {/* Images */}
           <div>
-            <div style={{ borderRadius: 20, overflow: 'hidden', border: '1px solid rgba(255,77,109,0.1)', marginBottom: 12, aspectRatio: '1', background: 'rgba(20,22,46,0.6)', position: 'relative' }}>
+            <div style={{ borderRadius: 24, overflow: 'hidden', border: '1px solid rgba(255,77,109,0.15)', aspectRatio: '1', background: '#14162E', position: 'relative' }}>
               {images[selectedImg] ? (
                 <img src={images[selectedImg]} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
-                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Package size={80} style={{ color: '#374151' }} /></div>
+                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Package size={80} style={{ color: '#374151' }} />
+                </div>
               )}
-              {isTemplate && (
-                <span style={{ position: 'absolute', top: 16, right: 16, background: 'linear-gradient(135deg,#10B981,#059669)', color: 'white', padding: '6px 14px', borderRadius: 20, fontSize: 13, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <Layout size={14} /> متجر + لوحة تحكم
+              {hasDiscount && (
+                <span style={{ position: 'absolute', top: 16, right: 16, background: '#EF4444', color: 'white', padding: '6px 14px', borderRadius: 20, fontSize: 13, fontWeight: 800 }}>
+                  خصم {discountPct}%
                 </span>
               )}
             </div>
             {images.length > 1 && (
-              <div style={{ display: 'flex', gap: 8 }}>
+              <div style={{ display: 'flex', gap: 10, marginTop: 14 }}>
                 {images.map((img: string, i: number) => (
-                  <div key={i} onClick={() => setSelectedImg(i)} style={{ width: 72, height: 72, borderRadius: 12, overflow: 'hidden', border: `2px solid ${selectedImg === i ? '#FF4D6D' : 'rgba(255,77,109,0.1)'}`, cursor: 'pointer', transition: '0.2s' }}>
+                  <div key={i} onClick={() => setSelectedImg(i)} style={{ width: 72, height: 72, borderRadius: 14, overflow: 'hidden', border: `2px solid ${selectedImg === i ? '#FF4D6D' : 'rgba(255,255,255,0.08)'}`, cursor: 'pointer' }}>
                     <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                 ))}
@@ -94,129 +242,50 @@ export default function ProductPage() {
             )}
           </div>
 
-          {/* Product Info */}
+          {/* Product Details */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-              <span style={{ fontSize: 13, color: '#FF4D6D', fontWeight: 600 }}>{product.categoryAr || product.category}</span>
-              {isTemplate && (
-                <span style={{ fontSize: 12, color: '#10B981', background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.3)', padding: '2px 8px', borderRadius: 12, fontWeight: 600 }}>
-                  نسخة متجر جاهزة
-                </span>
-              )}
-            </div>
+            <span style={{ fontSize: 13, color: '#FF4D6D', fontWeight: 600 }}>{product.categoryAr || product.category}</span>
+            <h1 style={{ fontSize: 30, fontWeight: 800, color: 'white', margin: '6px 0 14px', lineHeight: 1.3 }}>{product.nameAr || product.name}</h1>
 
-            <h1 style={{ fontSize: 32, fontWeight: 700, color: '#E6E6EA', margin: '0 0 16px', lineHeight: 1.3 }}>{product.nameAr || product.name}</h1>
-
-            {avgRating && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
-                <div style={{ display: 'flex', gap: 2 }}>
-                  {[1,2,3,4,5].map(s => <Star key={s} size={18} style={{ color: s <= Math.round(parseFloat(avgRating)) ? '#EAB308' : '#374151', fill: s <= Math.round(parseFloat(avgRating)) ? '#EAB308' : 'none' }} />)}
-                </div>
-                <span style={{ color: '#EAB308', fontWeight: 600 }}>{avgRating}</span>
-                <span style={{ color: '#6B7280', fontSize: 13 }}>({product.reviews?.length} تقييم)</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
+              <div style={{ display: 'flex', gap: 3 }}>
+                {[1, 2, 3, 4, 5].map(s => <Star key={s} size={16} style={{ color: '#EAB308', fill: '#EAB308' }} />)}
               </div>
-            )}
-
-            {/* Price */}
-            <div style={{ background: 'rgba(20,22,46,0.6)', border: '1px solid rgba(255,77,109,0.1)', borderRadius: 16, padding: 24, marginBottom: 24 }}>
-              {hasDiscount ? (
-                <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                  <span style={{ fontSize: 36, fontWeight: 800, color: '#22C55E' }}>{product.salePrice} ر.س</span>
-                  <span style={{ fontSize: 20, color: '#6B7280', textDecoration: 'line-through' }}>{product.price} ر.س</span>
-                  <span style={{ background: '#EF4444', color: 'white', padding: '4px 12px', borderRadius: 20, fontSize: 14, fontWeight: 700 }}>خصم {discountPct}%</span>
-                </div>
-              ) : (
-                <span style={{ fontSize: 36, fontWeight: 800, color: '#E6E6EA' }}>{product.price} ر.س</span>
-              )}
+              <span style={{ color: '#EAB308', fontWeight: 700, fontSize: 15 }}>{product.rating || 4.8}</span>
+              <span style={{ color: '#6B7280', fontSize: 13 }}>({product.reviewsCount || 120} تقييم)</span>
             </div>
 
-            {/* Action Buttons */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 24 }}>
-              <button onClick={handleAdd} style={{ width: '100%', padding: '16px 32px', borderRadius: 14, background: added ? '#22C55E' : 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', border: 'none', cursor: 'pointer', fontSize: 18, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, transition: '0.3s', boxShadow: '0 8px 30px rgba(255,77,109,0.3)' }}>
-                {added ? <><Check size={22} /> تمت الإضافة للسلة</> : <><ShoppingCart size={22} /> أضف إلى السلة</>}
-              </button>
-
-              {isTemplate && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                  <Link href="/demo/store" target="_blank" style={{ padding: '12px 16px', borderRadius: 12, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#E6E6EA', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, fontSize: 14, fontWeight: 600, transition: '0.2s' }}>
-                    <ExternalLink size={16} style={{ color: '#FF4D6D' }} />
-                    معاينة المتجر المباشرة
-                  </Link>
-                  <Link href="/demo/store/admin" target="_blank" style={{ padding: '12px 16px', borderRadius: 12, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#E6E6EA', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, fontSize: 14, fontWeight: 600, transition: '0.2s' }}>
-                    <ShieldCheck size={16} style={{ color: '#10B981' }} />
-                    معاينة لوحة التحكم
-                  </Link>
-                </div>
-              )}
+            <div style={{ background: 'rgba(20,22,46,0.7)', border: '1px solid rgba(255,77,109,0.12)', borderRadius: 18, padding: 24, marginBottom: 24 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                <span style={{ fontSize: 34, fontWeight: 800, color: '#22C55E' }}>{product.salePrice || product.price} ر.س</span>
+                {hasDiscount && <span style={{ fontSize: 18, color: '#6B7280', textDecoration: 'line-through' }}>{product.price} ر.س</span>}
+              </div>
             </div>
 
-            {/* Features */}
+            <div style={{ display: 'flex', gap: 12, marginBottom: 28 }}>
+              <Link href="/store/checkout" style={{ flex: 1, padding: '16px 24px', borderRadius: 14, background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', textDecoration: 'none', fontWeight: 800, fontSize: 17, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, boxShadow: '0 8px 30px rgba(255,77,109,0.3)' }}>
+                <CreditCard size={20} /> شراء الآن عبر بوابة الدفع 💳
+              </Link>
+            </div>
+
+            <p style={{ fontSize: 15, color: '#D1D5DB', lineHeight: 1.8, margin: '0 0 24px' }}>{product.descriptionAr || product.description}</p>
+
             {features.length > 0 && (
-              <div style={{ marginBottom: 24 }}>
-                <h3 style={{ fontSize: 18, fontWeight: 700, color: '#E6E6EA', marginBottom: 12 }}>{isTemplate ? 'مميزات القالب ولوحة التحكم' : 'مميزات المنتج'}</h3>
-                {features.map((f: string, i: number) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                    <Check size={16} style={{ color: '#22C55E', flexShrink: 0 }} />
-                    <span style={{ color: '#D1D5DB', fontSize: 15 }}>{f}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {/* Description */}
-            {(product.descriptionAr || product.description) && (
-              <div style={{ color: '#D1D5DB', fontSize: 15, lineHeight: 1.8 }} dangerouslySetInnerHTML={{ __html: product.descriptionAr || product.description }} />
-            )}
-          </div>
-        </div>
-
-        {/* Reviews Section */}
-        <div style={{ marginTop: 64 }}>
-          <h2 style={{ fontSize: 24, fontWeight: 700, color: '#E6E6EA', marginBottom: 24 }}>التقييمات ({product.reviews?.length || 0})</h2>
-
-          {/* Review Form */}
-          <div style={{ background: 'rgba(20,22,46,0.6)', border: '1px solid rgba(255,77,109,0.1)', borderRadius: 16, padding: 24, marginBottom: 24 }}>
-            <h4 style={{ color: '#E6E6EA', marginBottom: 16 }}>أضف تقييمك</h4>
-            {reviewMsg ? (
-              <p style={{ color: '#22C55E', textAlign: 'center', padding: 16 }}>{reviewMsg}</p>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                <input placeholder="اسمك" value={reviewForm.customerName} onChange={e => setReviewForm(p => ({ ...p, customerName: e.target.value }))} dir="rtl" style={{ padding: 12, background: 'rgba(11,13,31,0.6)', border: '1px solid rgba(255,77,109,0.15)', borderRadius: 10, color: '#E6E6EA', fontSize: 14, outline: 'none' }} />
-                <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                  <span style={{ color: '#9CA3AF', fontSize: 14 }}>التقييم:</span>
-                  {[1,2,3,4,5].map(s => (
-                    <Star key={s} size={24} onClick={() => setReviewForm(p => ({ ...p, rating: s }))} style={{ cursor: 'pointer', color: s <= reviewForm.rating ? '#EAB308' : '#374151', fill: s <= reviewForm.rating ? '#EAB308' : 'none', transition: '0.2s' }} />
+              <div style={{ background: 'rgba(20,22,46,0.5)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 18, padding: 20 }}>
+                <h4 style={{ fontSize: 15, fontWeight: 700, color: 'white', margin: '0 0 12px' }}>مواصفات المنتج:</h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                  {features.map((f: string, i: number) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 14, color: '#D1D5DB' }}>
+                      <Check size={16} style={{ color: '#10B981', flexShrink: 0 }} />
+                      <span>{f}</span>
+                    </div>
                   ))}
                 </div>
-                <textarea placeholder="تعليقك (اختياري)" value={reviewForm.comment} onChange={e => setReviewForm(p => ({ ...p, comment: e.target.value }))} dir="rtl" rows={3} style={{ padding: 12, background: 'rgba(11,13,31,0.6)', border: '1px solid rgba(255,77,109,0.15)', borderRadius: 10, color: '#E6E6EA', fontSize: 14, resize: 'vertical', outline: 'none' }} />
-                <button onClick={submitReview} disabled={submitting} style={{ padding: '12px 24px', borderRadius: 10, background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', border: 'none', cursor: 'pointer', fontWeight: 600, alignSelf: 'flex-start' }}>
-                  {submitting ? 'جاري الإرسال...' : 'إرسال التقييم'}
-                </button>
               </div>
             )}
           </div>
-
-          {/* Existing Reviews */}
-          {product.reviews?.length > 0 && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              {product.reviews.map((review: any) => (
-                <div key={review.id} style={{ background: 'rgba(20,22,46,0.4)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: 16, padding: 20 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontWeight: 700 }}>{review.customerName.charAt(0)}</div>
-                      <span style={{ fontWeight: 600, color: '#E6E6EA' }}>{review.customerName}</span>
-                    </div>
-                    <div style={{ display: 'flex', gap: 2 }}>
-                      {[1,2,3,4,5].map(s => <Star key={s} size={14} style={{ color: s <= review.rating ? '#EAB308' : '#374151', fill: s <= review.rating ? '#EAB308' : 'none' }} />)}
-                    </div>
-                  </div>
-                  {review.comment && <p style={{ color: '#D1D5DB', fontSize: 14, margin: 0, lineHeight: 1.6 }}>{review.comment}</p>}
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </div>
-    </section>
+    </div>
   );
 }
