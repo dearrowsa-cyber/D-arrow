@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ShoppingCart, Star, Check, ArrowRight, Package, ShieldCheck, Layout, Sparkles, CreditCard, Heart, Truck, Lock } from 'lucide-react';
-import '@/app/demo/store/demo-store.css';
+import '@/app/(main)/demo/store/demo-store.css';
 
 const FALLBACK_PRODUCTS: Record<string, any> = {
   'p1': {

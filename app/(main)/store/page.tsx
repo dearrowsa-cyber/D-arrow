@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { ShoppingCart, Search, Package, ShieldCheck, Check, Sparkles, X, Plus, Minus, CreditCard, Eye, Star, Heart, Truck, RotateCcw, Headphones, Zap, MessageCircle, Clock, Shield, Lock, ThumbsUp, CheckCircle2 } from 'lucide-react';
-import '@/app/demo/store/demo-store.css';
+import '@/app/(main)/demo/store/demo-store.css';
 
 interface DemoProduct {
   id: string;

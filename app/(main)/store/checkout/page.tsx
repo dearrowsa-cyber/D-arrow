@@ -8,7 +8,7 @@ import {
   Wallet, Landmark, Clock, AlertCircle, Copy,
   CheckCircle2, Package, Sparkles, ArrowRight, Eye, EyeOff, Shield
 } from 'lucide-react';
-import '@/app/demo/store/demo-store.css';
+import '@/app/(main)/demo/store/demo-store.css';
 
 type CheckoutStep = 'shipping' | 'payment' | 'review' | 'processing' | 'confirmed';
 type PaymentMethod = 'mada' | 'visa' | 'applepay' | 'tabby' | 'tamara' | 'bank';
