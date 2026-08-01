@@ -1,42 +1,25 @@
-FROM node:20-slim AS base
+FROM node:20-slim
+
 RUN apt-get update -y && apt-get install -y openssl git && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
-# Always pull latest code from GitHub so rebuilds get fresh code
-RUN git clone --depth=1 --branch main https://github.com/dearrowsa-cyber/D-arrow.git . 
+# Pull latest committed code from GitHub
+RUN git clone --depth=1 --branch main https://github.com/dearrowsa-cyber/D-arrow.git .
 
-# Install dependencies (skip postinstall to avoid prisma issues during build)
-RUN npm install --ignore-scripts --legacy-peer-deps
+# Install dependencies cleanly
+RUN npm install --legacy-peer-deps
 
-# Generate Prisma client manually
+# Generate Prisma Client
 RUN npx prisma generate
 
-# Build the Next.js app
+# Build full Next.js production bundle
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN npm run build
-
-# Production image
-FROM node:20-slim AS runner
-RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists/*
-
-WORKDIR /app
-
 ENV NODE_ENV=production
-ENV NEXT_TELEMETRY_DISABLED=1
-
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-COPY --from=base /app/public ./public
-COPY --from=base --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=base --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=base /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=base /app/node_modules/@prisma ./node_modules/@prisma
-
-USER nextjs
+RUN npm run build
 
 EXPOSE 3000
 ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
-CMD ["node", "server.js"]
+CMD ["npm", "run", "start"]
