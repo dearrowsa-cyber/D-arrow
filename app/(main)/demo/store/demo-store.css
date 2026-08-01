@@ -1,0 +1,66 @@
+/* Demo Saudi E-Commerce Store Styles */
+
+.trust-badge-item {
+  background: rgba(20, 22, 46, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 16px 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.trust-badge-item:hover {
+  background: rgba(20, 22, 46, 0.8);
+  border-color: rgba(255, 77, 109, 0.3);
+  transform: translateY(-2px);
+}
+
+.countdown-box {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 10px;
+  border-radius: 10px;
+  text-align: center;
+  min-width: 44px;
+}
+
+.demo-card {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.demo-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 77, 109, 0.35) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.demo-card:hover .demo-card-img {
+  transform: scale(1.06);
+}
+
+.demo-card-img {
+  transition: transform 0.5s ease;
+}
+
+.floating-support-btn {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #25D366;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+  z-index: 45;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.floating-support-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6);
+}
