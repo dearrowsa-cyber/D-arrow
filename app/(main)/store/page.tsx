@@ -2,40 +2,33 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, Star, Search, Package, ShieldCheck, Check, Sparkles, X, Plus, Minus, CreditCard, Eye, Heart, Truck, RotateCcw, Headphones, Zap, MessageCircle, Clock, Lock, ChevronRight, ChevronLeft, CheckCircle2, ThumbsUp } from 'lucide-react';
-import { useCart } from '@/components/store/CartContext';
-import '@/app/demo/store/demo-store.css';
+import { ShoppingCart, Search, Package, ShieldCheck, Check, Sparkles, X, Plus, Minus, CreditCard, Eye, Star, Heart, Truck, RotateCcw, Headphones, Zap, MessageCircle, Clock, Shield, Lock, ThumbsUp, CheckCircle2 } from 'lucide-react';
+import '../../demo/store/demo-store.css';
 
 interface DemoProduct {
   id: string;
   name: string;
-  nameAr?: string;
   category: string;
   price: number;
   oldPrice?: number;
-  salePrice?: number;
   stock: number;
   image: string;
   description: string;
-  descriptionAr?: string;
   badge?: string;
   rating: number;
   reviewsCount: number;
   features?: string[];
   isFlashDeal?: boolean;
-  slug?: string;
 }
 
 interface BannerSlide {
   id: number;
-  saudiBadge: string;
   tag: string;
+  saudiBadge: string;
   title: string;
   subtitle: string;
   code: string;
-  bgGradient: string;
   ctaText: string;
-  icon: string;
   accentColor: string;
   imageUrl: string;
 }
@@ -48,9 +41,7 @@ const HERO_SLIDES: BannerSlide[] = [
     title: 'عروض الخصم الحصرية - وفر حتى 50%',
     subtitle: 'احصل على أفضل الأجهزة الذكية والعطور الفاخرة بأقل الأسعار في المملكة مع شحن سريع وتطبيقات الخصم الفوري.',
     code: 'KSA50',
-    bgGradient: 'linear-gradient(135deg, #1E1B4B 0%, #311B92 50%, #4A148C 100%)',
     ctaText: 'تصفح عروض المملكة',
-    icon: '⚡',
     accentColor: '#10B981',
     imageUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=90'
   },
@@ -61,9 +52,7 @@ const HERO_SLIDES: BannerSlide[] = [
     title: 'عطور شرقية وفاخرة بنفحات العود الأصلي',
     subtitle: 'استمتع بثبات يدوم طويلاً مع تركيبة عطرية حصرية من أندر أنواع العود والصندل الملكي.',
     code: 'OUD15',
-    bgGradient: 'linear-gradient(135deg, #831843 0%, #9D174D 50%, #500724 100%)',
     ctaText: 'تسوق العود الملكي',
-    icon: '🌸',
     accentColor: '#EC4899',
     imageUrl: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=1200&q=90'
   },
@@ -74,120 +63,97 @@ const HERO_SLIDES: BannerSlide[] = [
     title: 'قسّط مشترياتك بدون فوائد مع تابي وتمارا',
     subtitle: 'تسوق كل ما تحتاجه اليوم في السعودية وقسّم فاتورتك على 4 دفعات مريحة مع مدى وأبل باي بدون فوائد.',
     code: 'TABBYFREE',
-    bgGradient: 'linear-gradient(135deg, #064E3B 0%, #047857 50%, #022C22 100%)',
     ctaText: 'اختر وسيلة الدفع',
-    icon: '💳',
     accentColor: '#3B82F6',
     imageUrl: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&w=1200&q=90'
   }
 ];
 
-const STATIC_PRODUCTS: DemoProduct[] = [
+const PRODUCTS: DemoProduct[] = [
   {
     id: 'p1',
     name: 'ساعة ذكية متميزة (Ultra Smart)',
-    nameAr: 'ساعة ذكية متميزة (Ultra Smart)',
     category: 'إلكترونيات',
     price: 349,
     oldPrice: 499,
-    salePrice: 349,
     stock: 8,
     image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=90',
     description: 'ساعة متوافقة مع جميع الهواتف الذكية مع شاشة AMOLED وقياس المؤشرات الحيوية وشحن سريع.',
-    descriptionAr: 'ساعة متوافقة مع جميع الهواتف الذكية مع شاشة AMOLED وقياس المؤشرات الحيوية وشحن سريع.',
     badge: 'الأكثر مبيعاً بالمملكة 🔥',
     rating: 4.8,
     reviewsCount: 124,
-    features: ['شاشة AMOLED بدقة عالية', 'مقاومة للماء IP68', 'بطارية تدوم 7 أيام'],
-    isFlashDeal: true,
-    slug: 'ultra-smart-watch'
+    features: ['شاشة AMOLED بدقة عالية', 'مقاومة للماء IP68', 'بطارية تدوم 7 أيام', 'قياس نبض القلب والأكسجين'],
+    isFlashDeal: true
   },
   {
     id: 'p2',
     name: 'سماعات لاسلكية إلغاء الضوضاء (Pro ANC)',
-    nameAr: 'سماعات لاسلكية إلغاء الضوضاء (Pro ANC)',
     category: 'إلكترونيات',
     price: 279,
     oldPrice: 399,
-    salePrice: 279,
     stock: 2,
     image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=800&q=90',
     description: 'سماعات احترافية صوت محيطي عالي الدقة مع عزل ضوضاء نشط وبطارية تدوم 30 ساعة.',
-    descriptionAr: 'سماعات احترافية صوت محيطي عالي الدقة مع عزل ضوضاء نشط وبطارية تدوم 30 ساعة.',
-    badge: 'باقي 2 فقط!',
+    badge: 'باقي 2 قطع فقط!',
     rating: 4.6,
     reviewsCount: 89,
-    features: ['عزل ضوضاء نشط ANC', 'بطارية 30 ساعة'],
-    isFlashDeal: true,
-    slug: 'pro-anc-headphones'
+    features: ['عزل ضوضاء نشط ANC', 'بطارية 30 ساعة', 'مايكروفون مزدوج HD', 'بلوتوث 5.3'],
+    isFlashDeal: true
   },
   {
     id: 'p3',
     name: 'عطر الفخامة الملكي بالعود والورد (50ml)',
-    nameAr: 'عطر الفخامة الملكي بالعود والورد (50ml)',
     category: 'عطور',
     price: 199,
     oldPrice: 260,
-    salePrice: 199,
     stock: 15,
     image: 'https://images.unsplash.com/photo-1547887537-6158d64c35b3?auto=format&fit=crop&w=800&q=90',
     description: 'عطر شرقي فاخر بنفحات العود الكمبودي والصندل والمسك الأبيض لمناسباتك الخاصة.',
-    descriptionAr: 'عطر شرقي فاخر بنفحات العود الكمبودي والصندل والمسك الأبيض لمناسباتك الخاصة.',
     badge: 'إصدار خاص 🇸🇦',
     rating: 4.9,
     reviewsCount: 203,
-    features: ['عود كمبودي طبيعي 100%', 'ثبات يدوم +12 ساعة'],
-    slug: 'royal-luxury-perfume'
+    features: ['عود كمبودي طبيعي 100%', 'ثبات يدوم +12 ساعة', 'عبوة فاخرة هدايا', 'تركيبة حصرية']
   },
   {
     id: 'p4',
-    name: 'محفظة جلد طبيعي فاخرة',
-    nameAr: 'محفظة جلد طبيعي فاخرة',
+    name: 'محفظة جلد طبيعي فاخرة حماية RFID',
     category: 'كماليات',
     price: 89,
     oldPrice: 120,
-    salePrice: 89,
     stock: 0,
     image: 'https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=800&q=90',
-    description: 'مصنوعة من أجوَد أنواع الجلد الطبيعي بتصميم أنيق وحماية RFID للبطاقات.',
-    descriptionAr: 'مصنوعة من أجوَد أنواع الجلد الطبيعي بتصميم أنيق وحماية RFID للبطاقات.',
+    description: 'مصنوعة من أجوَد أنواع الجلد الطبيعي بتصميم أنيق وحماية RFID للبطاقات البنكية.',
     badge: 'نفذت الكمية',
     rating: 4.3,
     reviewsCount: 56,
-    slug: 'luxury-leather-wallet'
+    features: ['جلد طبيعي إيطالي', 'حماية RFID', '8 فتحات للبطاقات', 'جيب عملات معدنية']
   },
   {
     id: 'p5',
     name: 'نظارة شمسية قطبية كلاسيكية (Polarized)',
-    nameAr: 'نظارة شمسية قطبية كلاسيكية (Polarized)',
     category: 'كماليات',
     price: 149,
     oldPrice: 210,
-    salePrice: 149,
     stock: 12,
     image: 'https://images.unsplash.com/photo-1572635196237-14b3f281503f?auto=format&fit=crop&w=800&q=90',
     description: 'حماية كاملة من الأشعة فوق البنفسجية UV400 مع هيكل خفيف الوزن من التيتانيوم.',
-    descriptionAr: 'حماية كاملة من الأشعة فوق البنفسجية UV400 مع هيكل خفيف الوزن من التيتانيوم.',
     rating: 4.5,
     reviewsCount: 77,
-    slug: 'polarized-sunglasses'
+    features: ['عدسات بولاريزد', 'حماية UV400', 'هيكل تيتانيوم', 'علبة فاخرة مع قماشة تنظيف']
   },
   {
     id: 'p6',
     name: 'حقيبة ظهر للأعمال مقاومة للماء',
-    nameAr: 'حقيبة ظهر للأعمال مقاومة للماء',
     category: 'أزياء',
     price: 229,
     oldPrice: 320,
-    salePrice: 229,
     stock: 5,
     image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=90',
     description: 'مساحة تتسع لجهاز 15.6 بوصة منفذ شحن USB خارجي وجيوب متعددة مخفية للأمان.',
-    descriptionAr: 'مساحة تتسع لجهاز 15.6 بوصة منفذ شحن USB خارجي وجيوب متعددة مخفية للأمان.',
     rating: 4.7,
     reviewsCount: 112,
-    isFlashDeal: true,
-    slug: 'waterproof-backpack'
+    features: ['مقاومة للماء IPX4', 'منفذ USB خارجي', 'تتسع لـ 15.6 بوصة', 'جيوب مخفية مضادة للسرقة'],
+    isFlashDeal: true
   }
 ];
 
@@ -218,7 +184,7 @@ const REVIEWS = [
     id: 3,
     name: 'سعود الشمري',
     location: 'الدمام',
-    comment: 'السماعات عزل الضوضاء فيها جبار وقسّطت المبلغ عبر تابي على 4 دفعات بدون أي فوائد أو تعقيدات. تجربة شراءممتازة.',
+    comment: 'السماعات عزل الضوضاء فيها جبار وقسّطت المبلغ عبر تابي على 4 دفعات بدون أي فوائد أو تعقيدات. تجربة شراء ممتازة.',
     rating: 5,
     date: 'منذ أسبوع',
     purchasedProduct: 'سماعات لاسلكية (Pro ANC)',
@@ -238,110 +204,22 @@ const REVIEWS = [
   }
 ];
 
-const PAYMENT_GATEWAYS = [
-  {
-    id: 'mada',
-    name: 'مدى Mada 🇸🇦',
-    tag: 'الدفع الفوري البنكي',
-    desc: 'البطاقات السعودية المباشرة',
-    bg: 'linear-gradient(135deg, rgba(16,185,129,0.15), rgba(5,150,105,0.05))',
-    borderColor: '#10B981',
-    iconColor: '#10B981',
-    badgeText: 'معتمد رسمياً بالمملكة'
-  },
-  {
-    id: 'applepay',
-    name: 'أبل باي Apple Pay ',
-    tag: 'نقرة واحدة آمنة',
-    desc: 'دفع سريع لمستخدمي آيفون',
-    bg: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03))',
-    borderColor: 'rgba(255,255,255,0.2)',
-    iconColor: '#FFFFFF',
-    badgeText: 'أسرع طريقة خروج'
-  },
-  {
-    id: 'tabby',
-    name: 'تابي Tabby 💚',
-    tag: 'قسّمها على 4 دفعات',
-    desc: 'بدون أي فوائد أو رسوم',
-    bg: 'linear-gradient(135deg, rgba(52,211,153,0.15), rgba(16,185,129,0.05))',
-    borderColor: '#34D399',
-    iconColor: '#34D399',
-    badgeText: 'بدون فوائد 0%'
-  },
-  {
-    id: 'tamara',
-    name: 'تمارا Tamara <ctrl42>',
-    tag: 'ادفع بعدين أو قسّط',
-    desc: 'مرونة كاملة بالدفع',
-    bg: 'linear-gradient(135deg, rgba(251,146,60,0.15), rgba(245,158,11,0.05))',
-    borderColor: '#FB923C',
-    iconColor: '#FB923C',
-    badgeText: 'قسط أو ادفع بعدين'
-  },
-  {
-    id: 'cards',
-    name: 'فيزا وماستركارد 💳',
-    tag: 'بطاقات ائتمانية تشفير 256',
-    desc: 'دفع آمن عالمي ومحلي',
-    bg: 'linear-gradient(135deg, rgba(59,130,246,0.15), rgba(37,99,235,0.05))',
-    borderColor: '#3B82F6',
-    iconColor: '#3B82F6',
-    badgeText: 'حماية SSL كاملة'
-  },
-  {
-    id: 'bank',
-    name: 'تحويل بنكي محلي 🏦',
-    tag: 'الراجحي، الأهلي، الإنماء',
-    desc: 'تحويل مباشر مع تأكيد',
-    bg: 'linear-gradient(135deg, rgba(168,85,247,0.15), rgba(147,51,234,0.05))',
-    borderColor: '#A855F7',
-    iconColor: '#A855F7',
-    badgeText: 'بنوك المملكة'
-  }
-];
+const CATEGORY_ICONS: Record<string, string> = { 'الكل': '🏪', 'إلكترونيات': '📱', 'عطور': '🌸', 'كماليات': '💎', 'أزياء': '👜' };
 
 export default function StorePage() {
-  const [products, setProducts] = useState<any[]>(STATIC_PRODUCTS);
+  const [selectedCat, setSelectedCat] = useState('الكل');
   const [search, setSearch] = useState('');
-  const [category, setCategory] = useState('all');
-  const [categories, setCategories] = useState<string[]>(['إلكترونيات', 'عطور', 'كماليات', 'أزياء', 'قوالب ومتاجر']);
-  const { addItem, itemCount } = useCart();
-  const [addedId, setAddedId] = useState<string | null>(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [cart, setCart] = useState<{ product: DemoProduct; quantity: number }[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [coupon, setCoupon] = useState('');
+  const [discountPct, setDiscountPct] = useState(0);
+  const [couponMsg, setCouponMsg] = useState('');
+  const [detailProduct, setDetailProduct] = useState<DemoProduct | null>(null);
+  const [addedIds, setAddedIds] = useState<Set<string>>(new Set());
   const [wishlist, setWishlist] = useState<Set<string>>(new Set());
-  const [timeLeft, setTimeLeft] = useState({ hours: 14, minutes: 35, seconds: 22 });
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  useEffect(() => {
-    fetch('/api/store/products?status=published')
-      .then(r => r.json())
-      .then(d => {
-        if (d.success && d.products && d.products.length > 0) {
-          const dbProds = d.products.map((p: any) => {
-            const imgs = p.images ? (typeof p.images === 'string' ? JSON.parse(p.images) : p.images) : [];
-            return {
-              id: p.id,
-              name: p.nameAr || p.name,
-              nameAr: p.nameAr || p.name,
-              category: p.categoryAr || p.category || 'قوالب ومتاجر',
-              price: p.price,
-              oldPrice: p.price + 200,
-              salePrice: p.salePrice || p.price,
-              stock: 10,
-              image: imgs[0] || '/projects-showcase/store-preview.png',
-              description: p.descriptionAr || p.description,
-              descriptionAr: p.descriptionAr || p.description,
-              badge: p.featured ? 'مميز 🔥' : undefined,
-              rating: 5.0,
-              reviewsCount: 18,
-              slug: p.slug
-            };
-          });
-          setProducts([...dbProds, ...STATIC_PRODUCTS]);
-        }
-      })
-      .catch(err => console.error(err));
-  }, []);
+  const [timeLeft, setTimeLeft] = useState({ hours: 14, minutes: 35, seconds: 22 });
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -362,28 +240,47 @@ export default function StorePage() {
     return () => clearInterval(slideTimer);
   }, []);
 
-  const handleAdd = (product: any) => {
-    addItem({
-      productId: product.id,
-      name: product.name,
-      nameAr: product.nameAr || product.name,
-      price: product.price,
-      salePrice: product.salePrice,
-      image: product.image || '',
+  const categories = ['الكل', 'إلكترونيات', 'عطور', 'كماليات', 'أزياء'];
+
+  const filteredProducts = PRODUCTS.filter(p => {
+    const matchCat = selectedCat === 'الكل' || p.category === selectedCat;
+    const matchSearch = !search || p.name.includes(search) || p.description.includes(search);
+    return matchCat && matchSearch;
+  });
+
+  const flashDeals = PRODUCTS.filter(p => p.isFlashDeal);
+
+  const addToCart = (product: DemoProduct) => {
+    if (product.stock <= 0) return;
+    setCart(prev => {
+      const existing = prev.find(item => item.product.id === product.id);
+      if (existing) return prev.map(item => item.product.id === product.id ? { ...item, quantity: Math.min(item.quantity + 1, product.stock) } : item);
+      return [...prev, { product, quantity: 1 }];
     });
-    setAddedId(product.id);
-    setTimeout(() => setAddedId(null), 1500);
+    setAddedIds(prev => new Set(prev).add(product.id));
+    setTimeout(() => setAddedIds(prev => { const n = new Set(prev); n.delete(product.id); return n; }), 1500);
+  };
+
+  const updateQuantity = (id: string, delta: number) => {
+    setCart(prev => prev.map(item => {
+      if (item.product.id === id) { const nq = item.quantity + delta; return nq > 0 ? { ...item, quantity: Math.min(nq, item.product.stock) } : null; }
+      return item;
+    }).filter(Boolean) as typeof cart);
   };
 
   const toggleWishlist = (id: string) => setWishlist(prev => { const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n; });
 
-  const filtered = products.filter(p => {
-    const matchSearch = !search || p.name?.toLowerCase().includes(search.toLowerCase()) || p.nameAr?.includes(search) || p.description?.includes(search);
-    const matchCat = category === 'all' || p.category === category;
-    return matchSearch && matchCat;
-  });
+  const applyCoupon = () => {
+    const code = coupon.trim().toUpperCase();
+    if (code === 'KSA50' || code === 'DEMO20' || code === 'STORE20') { setDiscountPct(20); setCouponMsg('تم تطبيق خصم 20% بنجاح! ✅'); }
+    else if (code === 'OUD15') { setDiscountPct(15); setCouponMsg('تم تطبيق خصم 15% على العطور! ✅'); }
+    else { setDiscountPct(0); setCouponMsg('كود غير صحيح — جرّب KSA50'); }
+  };
 
-  const flashDeals = products.filter(p => p.isFlashDeal || p.badge === 'الأكثر مبيعاً بالمملكة 🔥' || p.badge === 'باقي 2 فقط!');
+  const cartSubtotal = cart.reduce((s, i) => s + i.product.price * i.quantity, 0);
+  const discountAmount = Math.round((cartSubtotal * discountPct) / 100);
+  const cartTotal = cartSubtotal - discountAmount;
+  const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
 
   const renderStars = (rating: number) => (
     <div style={{ display: 'flex', gap: 3 }}>
@@ -394,21 +291,53 @@ export default function StorePage() {
   const slide = HERO_SLIDES[currentSlide];
 
   return (
-    <section dir="rtl" style={{ minHeight: '100vh', padding: '60px 24px 80px', background: '#0B0D1F', color: '#E6E6EA', fontFamily: 'system-ui, sans-serif' }}>
-      <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-        
-        {/* Header Title */}
-        <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <h1 style={{ fontSize: 'clamp(32px,5vw,48px)', fontWeight: 800, marginBottom: 12 }}>
-            <span style={{ background: 'linear-gradient(135deg, #FF4D6D, #FF9A3C)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>المتجر السعودي</span> الرقمي 🇸🇦
-          </h1>
-          <p style={{ color: '#9CA3AF', fontSize: 17, maxWidth: 600, margin: '0 auto' }}>
-            أدوات، منتجات وقوالب متكاملة مع سكريبتات الإدارة والتسويق الاحترافي بالمملكة
-          </p>
+    <div dir="rtl" style={{ background: '#0B0D1F', color: '#E6E6EA', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
+      
+      {/* Top Bar */}
+      <div style={{ background: 'linear-gradient(90deg, #059669, #10B981)', color: 'white', padding: '10px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, fontSize: 14, fontWeight: 600 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span>🇸🇦</span>
+          <span>المتجر الإلكتروني السعودي الحديث — عروض حصرية وشحن مجاني لكافة مدن المملكة</span>
         </div>
+        <div style={{ display: 'flex', gap: 10 }}>
+          <Link href="/demo/store/admin" style={{ background: 'rgba(0,0,0,0.25)', color: 'white', padding: '5px 12px', borderRadius: 8, textDecoration: 'none', fontSize: 12, display: 'flex', alignItems: 'center', gap: 5 }}><ShieldCheck size={14} /> لوحة التحكم</Link>
+          <Link href="/store/checkout" style={{ background: 'white', color: '#047857', padding: '5px 12px', borderRadius: 8, textDecoration: 'none', fontSize: 12, fontWeight: 700 }}>بوابة الدفع التفاعلية 💳</Link>
+        </div>
+      </div>
 
-        {/* Hero Offer Poster Slider */}
-        <div style={{ borderRadius: 24, background: slide.bgGradient, border: '1px solid rgba(255,77,109,0.25)', padding: '40px 36px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 32, alignItems: 'center', position: 'relative', overflow: 'hidden', minHeight: 290, marginBottom: 36 }}>
+      {/* Header */}
+      <header style={{ borderBottom: '1px solid rgba(255,255,255,0.06)', background: 'rgba(20,22,46,0.85)', backdropFilter: 'blur(14px)', position: 'sticky', top: 0, zIndex: 40 }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', padding: '14px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
+          <Link href="/store" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+            <img src="/Darrow-1.png" alt="D-Arrow Logo" style={{ width: 100, height: 40, objectFit: 'contain' }} />
+            <div style={{ borderRight: '1px solid rgba(255,255,255,0.1)', paddingRight: 10 }}>
+              <span style={{ fontSize: 15, fontWeight: 800, color: 'white', display: 'block', lineHeight: 1.2 }}>المتجر السعودي</span>
+              <span style={{ fontSize: 10, color: '#9CA3AF' }}>Saudi E-Commerce</span>
+            </div>
+          </Link>
+
+          <div style={{ flex: 1, maxWidth: 420, position: 'relative' }}>
+            <Search size={17} style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', color: '#6B7280' }} />
+            <input
+              placeholder="ابحث عن منتج، عطر سعودي، ساعة..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              style={{ width: '100%', padding: '10px 42px 10px 16px', background: 'rgba(11,13,31,0.6)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 12, color: 'white', outline: 'none', fontSize: 14 }}
+            />
+          </div>
+
+          <button onClick={() => setIsCartOpen(true)} style={{ position: 'relative', background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', border: 'none', color: 'white', padding: '10px 18px', borderRadius: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8, fontWeight: 700, fontSize: 14 }}>
+            <ShoppingCart size={18} /> السلة
+            {totalItems > 0 && (
+              <span style={{ background: '#EF4444', width: 22, height: 22, borderRadius: '50%', fontSize: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', top: -6, left: -6, border: '2px solid #0B0D1F', fontWeight: 800 }}>{totalItems}</span>
+            )}
+          </button>
+        </div>
+      </header>
+
+      {/* Hero Banner Slider */}
+      <section style={{ maxWidth: 1200, margin: '24px auto 0', padding: '0 24px' }}>
+        <div style={{ borderRadius: 24, background: 'linear-gradient(135deg, #10122B 0%, #1A1C3B 100%)', border: `1px solid ${slide.accentColor}40`, padding: '40px 36px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 32, alignItems: 'center', position: 'relative', overflow: 'hidden', minHeight: 300, boxShadow: '0 20px 50px rgba(0,0,0,0.5)' }}>
           <div style={{ position: 'relative', zIndex: 2 }}>
             <div style={{ display: 'flex', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
               <span style={{ background: `${slide.accentColor}20`, border: `1px solid ${slide.accentColor}40`, color: slide.accentColor, padding: '4px 14px', borderRadius: 20, fontSize: 12, fontWeight: 700 }}>
@@ -418,48 +347,31 @@ export default function StorePage() {
                 {slide.tag}
               </span>
             </div>
-            
-            <h2 style={{ fontSize: 'clamp(22px,3.5vw,34px)', fontWeight: 800, margin: '0 0 10px', color: '#FFFFFF', lineHeight: 1.3 }}>
+
+            <h1 style={{ fontSize: 'clamp(24px,3.8vw,36px)', fontWeight: 800, margin: '0 0 12px', color: '#FFFFFF', lineHeight: 1.3 }}>
               {slide.title}
-            </h2>
-            <p style={{ color: '#D1D5DB', fontSize: 14, margin: '0 0 20px', lineHeight: 1.6 }}>{slide.subtitle}</p>
+            </h1>
+            <p style={{ color: '#D1D5DB', fontSize: 14, margin: '0 0 24px', lineHeight: 1.6 }}>{slide.subtitle}</p>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, flexWrap: 'wrap' }}>
-              <button onClick={() => { setCategory('all'); setSearch(''); }} style={{ background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', border: 'none', padding: '12px 24px', borderRadius: 12, fontWeight: 700, cursor: 'pointer', fontSize: 14, boxShadow: '0 8px 25px rgba(255,77,109,0.3)' }}>
+              <button onClick={() => { setSelectedCat('الكل'); setSearch(''); }} style={{ background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', border: 'none', padding: '13px 26px', borderRadius: 12, fontWeight: 800, cursor: 'pointer', fontSize: 14, boxShadow: '0 8px 25px rgba(255,77,109,0.35)' }}>
                 {slide.ctaText}
               </button>
-              <div style={{ background: 'rgba(0,0,0,0.3)', border: '1px dashed rgba(255,255,255,0.2)', padding: '8px 16px', borderRadius: 10, fontSize: 13, fontWeight: 700, color: '#FF9A3C' }}>
-                كود الخصم: <span style={{ fontFamily: 'monospace', color: '#22C55E' }}>{slide.code}</span>
+              <div style={{ background: 'rgba(0,0,0,0.4)', border: '1px dashed rgba(255,255,255,0.2)', padding: '9px 18px', borderRadius: 12, fontSize: 13, fontWeight: 700, color: '#FF9A3C' }}>
+                كود الخصم: <span style={{ fontFamily: 'monospace', fontSize: 15, color: '#22C55E' }}>{slide.code}</span>
               </div>
             </div>
           </div>
 
-          <div style={{ position: 'relative', zIndex: 2, height: 230, borderRadius: 20, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.15)', background: '#14162E', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 12px 30px rgba(0,0,0,0.3)' }}>
+          <div style={{ position: 'relative', zIndex: 2, height: 230, borderRadius: 22, overflow: 'hidden', border: '1px solid rgba(255,255,255,0.15)', background: '#14162E', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 16px 40px rgba(0,0,0,0.5)' }}>
             <img src={slide.imageUrl} alt={slide.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
-
-          {/* Slider Dots */}
-          <div style={{ position: 'absolute', bottom: 16, right: 36, display: 'flex', gap: 8, zIndex: 3 }}>
-            {HERO_SLIDES.map((s, idx) => (
-              <button
-                key={s.id}
-                onClick={() => setCurrentSlide(idx)}
-                style={{
-                  width: currentSlide === idx ? 32 : 10,
-                  height: 10,
-                  borderRadius: 5,
-                  background: currentSlide === idx ? '#FF4D6D' : 'rgba(255,255,255,0.2)',
-                  border: 'none',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s'
-                }}
-              />
-            ))}
-          </div>
         </div>
+      </section>
 
-        {/* Trust & Features Icon Badges Bar */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16, marginBottom: 36 }}>
+      {/* Trust Badges */}
+      <section style={{ maxWidth: 1200, margin: '28px auto 0', padding: '0 24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
           {[
             { icon: <Truck size={24} style={{ color: '#10B981' }} />, title: 'شحن سريع بالمملكة 🇸🇦', sub: 'توصيل خلال 24-48 ساعة' },
             { icon: <ShieldCheck size={24} style={{ color: '#3B82F6' }} />, title: 'ضمان أصلي 100%', sub: 'منتجات عالية الجودة' },
@@ -474,17 +386,19 @@ export default function StorePage() {
             </div>
           ))}
         </div>
+      </section>
 
-        {/* Flash Deals Section with Live Countdown Timer */}
-        <div style={{ background: 'linear-gradient(135deg, rgba(239,68,68,0.12), rgba(245,158,11,0.12))', border: '1px solid rgba(239,68,68,0.25)', borderRadius: 24, padding: 24, marginBottom: 36 }}>
+      {/* Flash Sale */}
+      <section style={{ maxWidth: 1200, margin: '36px auto 0', padding: '0 24px' }}>
+        <div style={{ background: 'linear-gradient(135deg, rgba(239,68,68,0.12), rgba(245,158,11,0.12))', border: '1px solid rgba(239,68,68,0.25)', borderRadius: 24, padding: 24 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16, marginBottom: 20 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div style={{ background: '#EF4444', color: 'white', padding: 8, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Zap size={22} />
               </div>
               <div>
-                <h3 style={{ fontSize: 20, fontWeight: 800, margin: 0, color: 'white' }}>تخفيضات خاطفة بالمملكة ⚡ (Flash Sale)</h3>
-                <span style={{ fontSize: 12, color: '#9CA3AF' }}>عروض حصرية محدودة بالكمية والوقت!</span>
+                <h2 style={{ fontSize: 20, fontWeight: 800, margin: 0, color: 'white' }}>تخفيضات خاطفة بالمملكة ⚡ (Flash Sale)</h2>
+                <span style={{ fontSize: 12, color: '#9CA3AF' }}>عروض محدودة بالكمية والوقت!</span>
               </div>
             </div>
 
@@ -501,17 +415,17 @@ export default function StorePage() {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 20 }}>
-            {flashDeals.slice(0, 3).map(p => (
+            {flashDeals.map(p => (
               <div key={p.id} style={{ background: 'rgba(20,22,46,0.7)', borderRadius: 16, padding: 14, border: '1px solid rgba(255,255,255,0.06)', display: 'flex', gap: 14, alignItems: 'center' }}>
                 <img src={p.image} alt="" style={{ width: 80, height: 80, borderRadius: 12, objectFit: 'cover' }} />
                 <div style={{ flex: 1 }}>
                   <span style={{ fontSize: 11, color: '#EF4444', fontWeight: 700 }}>خصم خاص</span>
-                  <h4 style={{ fontSize: 14, fontWeight: 700, margin: '2px 0 6px', color: 'white' }}>{p.nameAr || p.name}</h4>
+                  <h4 style={{ fontSize: 14, fontWeight: 700, margin: '2px 0 6px', color: 'white' }}>{p.name}</h4>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <span style={{ color: '#22C55E', fontWeight: 800, fontSize: 16 }}>{p.salePrice || p.price} ر.س</span>
+                    <span style={{ color: '#22C55E', fontWeight: 800, fontSize: 16 }}>{p.price} ر.س</span>
                     {p.oldPrice && <span style={{ color: '#6B7280', textDecoration: 'line-through', fontSize: 12 }}>{p.oldPrice} ر.س</span>}
                   </div>
-                  <button onClick={() => handleAdd(p)} style={{ marginTop: 8, width: '100%', padding: '6px', background: 'linear-gradient(135deg,#EF4444,#F59E0B)', color: 'white', border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
+                  <button onClick={() => addToCart(p)} style={{ marginTop: 8, width: '100%', padding: '6px', background: 'linear-gradient(135deg,#EF4444,#F59E0B)', color: 'white', border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
                     اطلب الآن قبل النفاد
                   </button>
                 </div>
@@ -519,47 +433,40 @@ export default function StorePage() {
             ))}
           </div>
         </div>
+      </section>
 
-        {/* Filters Bar */}
-        <div style={{ display: 'flex', gap: 16, marginBottom: 32, flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', flex: 1 }}>
-            <div style={{ position: 'relative', flex: 1, minWidth: 250 }}>
-              <Search size={18} style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', color: '#6B7280' }} />
-              <input
-                placeholder="ابحث عن منتج، قالب، أو خدمة..."
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                style={{ width: '100%', padding: '12px 44px 12px 16px', background: 'rgba(20,22,46,0.6)', border: '1px solid rgba(255,77,109,0.15)', borderRadius: 12, color: '#E6E6EA', fontSize: 14, outline: 'none' }}
-              />
-            </div>
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              <button
-                onClick={() => setCategory('all')}
-                style={{ padding: '10px 20px', borderRadius: 10, border: '1px solid', borderColor: category === 'all' ? '#FF4D6D' : 'rgba(255,77,109,0.15)', background: category === 'all' ? 'rgba(255,77,109,0.15)' : 'transparent', color: category === 'all' ? '#FF4D6D' : '#9CA3AF', cursor: 'pointer', fontSize: 14, fontWeight: 600 }}
-              >الكل</button>
-              {categories.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setCategory(cat)}
-                  style={{ padding: '10px 20px', borderRadius: 10, border: '1px solid', borderColor: category === cat ? '#FF4D6D' : 'rgba(255,77,109,0.15)', background: category === cat ? 'rgba(255,77,109,0.15)' : 'transparent', color: category === cat ? '#FF4D6D' : '#9CA3AF', cursor: 'pointer', fontSize: 14, fontWeight: 600 }}
-                >{cat}</button>
-              ))}
-            </div>
-          </div>
-          <Link href="/store/cart" style={{ position: 'relative', padding: '10px 20px', borderRadius: 12, background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8, fontWeight: 700, fontSize: 14 }}>
-            <ShoppingCart size={18} />
-            السلة
-            {itemCount > 0 && (
-              <span style={{ position: 'absolute', top: -8, left: -8, width: 22, height: 22, borderRadius: '50%', background: '#EF4444', color: 'white', fontSize: 11, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800 }}>{itemCount}</span>
-            )}
-          </Link>
+      {/* Categories */}
+      <section style={{ maxWidth: 1200, margin: '36px auto 0', padding: '0 24px' }}>
+        <div style={{ display: 'flex', gap: 10, overflowX: 'auto', paddingBottom: 4 }}>
+          {categories.map(cat => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCat(cat)}
+              style={{
+                padding: '10px 20px', borderRadius: 12, border: '1px solid',
+                borderColor: selectedCat === cat ? '#FF4D6D' : 'rgba(255,255,255,0.08)',
+                background: selectedCat === cat ? 'rgba(255,77,109,0.15)' : 'rgba(20,22,46,0.5)',
+                color: selectedCat === cat ? '#FF4D6D' : '#9CA3AF',
+                cursor: 'pointer', fontWeight: 600, fontSize: 14, whiteSpace: 'nowrap', transition: '0.2s',
+                display: 'flex', alignItems: 'center', gap: 6
+              }}
+            >
+              <span>{CATEGORY_ICONS[cat]}</span> {cat}
+            </button>
+          ))}
         </div>
+      </section>
 
-        {/* Products Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24, marginBottom: 48 }}>
-          {filtered.map(product => {
-            const nameText = product.nameAr || product.name;
-            const linkHref = product.slug ? `/store/${product.slug}` : `/demo/store/${product.id}`;
+      {/* Products Grid */}
+      <section style={{ maxWidth: 1200, margin: '28px auto 0', padding: '0 24px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+          <h2 style={{ fontSize: 20, fontWeight: 800, margin: 0, color: 'white' }}>جميع المنتجات بالمملكة <span style={{ color: '#6B7280', fontWeight: 500, fontSize: 14 }}>({filteredProducts.length})</span></h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 24 }}>
+          {filteredProducts.map((product) => {
+            const isOutOfStock = product.stock <= 0;
+            const isLowStock = product.stock > 0 && product.stock <= 3;
+            const discPct = product.oldPrice ? Math.round((1 - product.price / product.oldPrice) * 100) : 0;
 
             return (
               <div
@@ -567,60 +474,64 @@ export default function StorePage() {
                 className="demo-card"
                 style={{
                   background: 'rgba(20,22,46,0.6)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 20,
-                  overflow: 'hidden', display: 'flex', flexDirection: 'column', position: 'relative'
+                  overflow: 'hidden', display: 'flex', flexDirection: 'column', transition: 'all 0.35s ease',
+                  position: 'relative'
                 }}
               >
-                <Link href={linkHref} style={{ height: 230, position: 'relative', overflow: 'hidden', background: '#14162E', display: 'block' }}>
-                  <img className="demo-card-img" src={product.image} alt={nameText} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div onClick={() => setDetailProduct(product)} style={{ height: 230, position: 'relative', overflow: 'hidden', background: '#14162E', cursor: 'pointer' }}>
+                  <img className="demo-card-img" src={product.image} alt={product.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
 
+                  {discPct > 0 && (
+                    <span style={{ position: 'absolute', top: 12, left: 12, background: '#EF4444', color: 'white', padding: '4px 10px', borderRadius: 10, fontSize: 12, fontWeight: 800 }}>-{discPct}%</span>
+                  )}
                   {product.badge && (
-                    <span style={{ position: 'absolute', top: 12, right: 12, background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', padding: '4px 12px', borderRadius: 20, fontSize: 12, fontWeight: 700 }}>
+                    <span style={{ position: 'absolute', top: 12, right: 12, background: isOutOfStock ? 'rgba(239,68,68,0.9)' : isLowStock ? 'rgba(245,158,11,0.9)' : 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', padding: '4px 12px', borderRadius: 10, fontSize: 11, fontWeight: 700 }}>
                       {product.badge}
                     </span>
                   )}
-                  <button onClick={(e) => { e.preventDefault(); toggleWishlist(product.id); }} style={{ position: 'absolute', bottom: 12, right: 12, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', border: 'none', width: 32, height: 32, borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: wishlist.has(product.id) ? '#EF4444' : '#9CA3AF' }}>
+                  <button onClick={(e) => { e.stopPropagation(); toggleWishlist(product.id); }} style={{ position: 'absolute', bottom: 12, right: 12, background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', border: 'none', width: 32, height: 32, borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: wishlist.has(product.id) ? '#EF4444' : '#9CA3AF' }}>
                     <Heart size={15} fill={wishlist.has(product.id) ? '#EF4444' : 'none'} />
                   </button>
-                </Link>
+                </div>
 
                 <div style={{ padding: '18px 20px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                      <span style={{ fontSize: 12, color: '#FF4D6D', fontWeight: 600 }}>{product.category || 'عام'}</span>
+                      <span style={{ fontSize: 12, color: '#FF4D6D', fontWeight: 600 }}>{product.category}</span>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                         <Star size={13} style={{ color: '#EAB308', fill: '#EAB308' }} />
-                        <span style={{ fontSize: 12, color: '#EAB308', fontWeight: 700 }}>{product.rating || 4.9}</span>
+                        <span style={{ fontSize: 12, color: '#EAB308', fontWeight: 700 }}>{product.rating}</span>
+                        <span style={{ fontSize: 11, color: '#6B7280' }}>({product.reviewsCount})</span>
                       </div>
                     </div>
-                    <Link href={linkHref} style={{ textDecoration: 'none' }}>
-                      <h3 style={{ fontSize: 16, fontWeight: 700, color: 'white', margin: '0 0 8px', lineHeight: 1.4 }}>{nameText}</h3>
-                    </Link>
+                    <h3 onClick={() => setDetailProduct(product)} style={{ fontSize: 16, fontWeight: 700, color: 'white', margin: '0 0 8px', lineHeight: 1.4, cursor: 'pointer' }}>{product.name}</h3>
                     <p style={{ fontSize: 13, color: '#9CA3AF', margin: '0 0 14px', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
-                      {product.descriptionAr || product.description || 'منتج عالي الجودة مع دعم ومميزات متكاملة.'}
+                      {product.description}
                     </p>
                   </div>
 
                   <div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-                      <span style={{ fontSize: 21, fontWeight: 800, color: '#22C55E' }}>{product.salePrice || product.price} ر.س</span>
-                      {product.oldPrice && <span style={{ fontSize: 14, color: '#6B7280', textDecoration: 'line-through' }}>{product.price} ر.س</span>}
+                      <span style={{ fontSize: 21, fontWeight: 800, color: '#22C55E' }}>{product.price} ر.س</span>
+                      {product.oldPrice && <span style={{ fontSize: 14, color: '#6B7280', textDecoration: 'line-through' }}>{product.oldPrice} ر.س</span>}
                     </div>
 
                     <div style={{ display: 'flex', gap: 8 }}>
                       <button
                         className="demo-btn-add"
-                        onClick={() => handleAdd(product)}
+                        onClick={() => addToCart(product)}
+                        disabled={isOutOfStock}
                         style={{
                           flex: 1, padding: '11px 12px', borderRadius: 12,
-                          background: addedId === product.id ? '#22C55E' : 'linear-gradient(135deg,#FF4D6D,#FF9A3C)',
-                          color: 'white', border: 'none', cursor: 'pointer',
+                          background: isOutOfStock ? '#374151' : addedIds.has(product.id) ? '#22C55E' : 'linear-gradient(135deg,#FF4D6D,#FF9A3C)',
+                          color: 'white', border: 'none', cursor: isOutOfStock ? 'not-allowed' : 'pointer',
                           fontWeight: 700, fontSize: 13, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, transition: '0.3s'
                         }}
                       >
-                        {addedId === product.id ? <><Check size={15} /> تمت الإضافة</> : <><ShoppingCart size={15} /> أضف للسلة</>}
+                        {isOutOfStock ? <><Package size={15} /> غير متوفر</> : addedIds.has(product.id) ? <><Check size={15} /> تمت الإضافة</> : <><ShoppingCart size={15} /> أضف للسلة</>}
                       </button>
-                      <Link href={linkHref} style={{ padding: '11px 14px', borderRadius: 12, background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', color: '#9CA3AF', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, fontWeight: 600, textDecoration: 'none' }}>
-                        <Eye size={15} /> التفاصيل
+                      <Link href="/store/checkout" style={{ padding: '11px 14px', borderRadius: 12, background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.3)', color: '#10B981', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, fontWeight: 700, textDecoration: 'none' }}>
+                        <CreditCard size={15} /> الشراء
                       </Link>
                     </div>
                   </div>
@@ -629,112 +540,201 @@ export default function StorePage() {
             );
           })}
         </div>
+      </section>
 
-        {/* Enhanced Saudi Customer Reviews Section */}
-        <div style={{ marginTop: 48, marginBottom: 48 }}>
-          <div style={{ textAlign: 'center', marginBottom: 32 }}>
-            <span style={{ background: 'rgba(255,77,109,0.15)', color: '#FF4D6D', border: '1px solid rgba(255,77,109,0.25)', padding: '6px 16px', borderRadius: 20, fontSize: 12, fontWeight: 700 }}>ثقة عملائنا في السعودية 💕</span>
-            <h2 style={{ fontSize: 26, fontWeight: 800, color: 'white', margin: '10px 0 6px' }}>ماذا يقول عملاؤنا بالمملكة؟</h2>
-            <p style={{ color: '#9CA3AF', fontSize: 14, margin: 0 }}>تقييمات حقيقية من مشترين موثقين عبر مختلف مدن المملكة 🇸🇦</p>
-          </div>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', gap: 24 }}>
-            {REVIEWS.map((rev) => (
-              <div key={rev.id} style={{ background: 'rgba(20,22,46,0.75)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 20, padding: 24, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
-                <div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-                    {renderStars(rev.rating)}
-                    <span style={{ fontSize: 11, color: '#6B7280' }}>{rev.date}</span>
-                  </div>
-                  
-                  <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', padding: '4px 10px', borderRadius: 8, fontSize: 11, color: '#FF9A3C', fontWeight: 600, display: 'inline-block', marginBottom: 12 }}>
-                    قام بشراء: {rev.purchasedProduct}
-                  </div>
-
-                  <p style={{ fontSize: 13, color: '#E6E6EA', lineHeight: 1.7, margin: '0 0 16px' }}>"{rev.comment}"</p>
-                </div>
-
-                <div style={{ borderTop: '1px dashed rgba(255,255,255,0.08)', paddingTop: 14 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 15, color: 'white', flexShrink: 0 }}>
-                      {rev.name[0]}
-                    </div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <h4 style={{ fontSize: 14, fontWeight: 700, color: 'white', margin: 0 }}>{rev.name}</h4>
-                        <CheckCircle2 size={14} style={{ color: '#10B981' }} title="مشتري موثق" />
-                      </div>
-                      <span style={{ fontSize: 11, color: '#9CA3AF' }}>مشتري موثق 🇸🇦 — {rev.location}</span>
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 10, fontSize: 11, color: '#10B981', fontWeight: 600 }}>
-                    <ThumbsUp size={12} /> {rev.recommend}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+      {/* Customer Reviews */}
+      <section style={{ maxWidth: 1200, margin: '48px auto 0', padding: '0 24px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 32 }}>
+          <span style={{ background: 'rgba(255,77,109,0.15)', color: '#FF4D6D', border: '1px solid rgba(255,77,109,0.25)', padding: '6px 16px', borderRadius: 20, fontSize: 12, fontWeight: 700 }}>ثقة عملائنا في السعودية 💕</span>
+          <h2 style={{ fontSize: 26, fontWeight: 800, color: 'white', margin: '10px 0 6px' }}>ماذا يقول عملاؤنا بالمملكة؟</h2>
+          <p style={{ color: '#9CA3AF', fontSize: 14, margin: 0 }}>تقييمات حقيقية من مشترين موثقين عبر مختلف مدن المملكة 🇸🇦</p>
         </div>
 
-        {/* Interactive Saudi Payment Gateways Showcase Section */}
-        <div style={{ background: 'linear-gradient(135deg, rgba(20,22,46,0.9), rgba(11,13,31,0.95))', border: '1px solid rgba(16,185,129,0.25)', borderRadius: 28, padding: '36px 32px', marginBottom: 48, boxShadow: '0 20px 60px rgba(0,0,0,0.4)' }}>
-          <div style={{ textAlign: 'center', marginBottom: 32 }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.3)', color: '#10B981', padding: '6px 16px', borderRadius: 20, fontSize: 12, fontWeight: 700, marginBottom: 10 }}>
-              <Lock size={14} /> بوابات الدفع الإلكتروني المعتمدة بالسعودية 🇸🇦
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', gap: 24 }}>
+          {REVIEWS.map((rev) => (
+            <div key={rev.id} style={{ background: 'rgba(20,22,46,0.75)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 20, padding: 24, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 10px 30px rgba(0,0,0,0.3)' }}>
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+                  {renderStars(rev.rating)}
+                  <span style={{ fontSize: 11, color: '#6B7280' }}>{rev.date}</span>
+                </div>
+                
+                <div style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)', padding: '4px 10px', borderRadius: 8, fontSize: 11, color: '#FF9A3C', fontWeight: 600, display: 'inline-block', marginBottom: 12 }}>
+                  قام بشراء: {rev.purchasedProduct}
+                </div>
+
+                <p style={{ fontSize: 13, color: '#E6E6EA', lineHeight: 1.7, margin: '0 0 16px' }}>"{rev.comment}"</p>
+              </div>
+
+              <div style={{ borderTop: '1px dashed rgba(255,255,255,0.08)', paddingTop: 14 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 15, color: 'white', flexShrink: 0 }}>
+                    {rev.name[0]}
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <h4 style={{ fontSize: 14, fontWeight: 700, color: 'white', margin: 0 }}>{rev.name}</h4>
+                      <CheckCircle2 size={14} style={{ color: '#10B981' }} />
+                    </div>
+                    <span style={{ fontSize: 11, color: '#9CA3AF' }}>مشتري موثق 🇸🇦 — {rev.location}</span>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 10, fontSize: 11, color: '#10B981', fontWeight: 600 }}>
+                  <ThumbsUp size={12} /> {rev.recommend}
+                </div>
+              </div>
             </div>
-            <h2 style={{ fontSize: 24, fontWeight: 800, color: 'white', margin: '4px 0 8px' }}>دفع إلكتروني آمن ومشفر 100%</h2>
-            <p style={{ color: '#9CA3AF', fontSize: 14, margin: 0, maxWidth: 600, marginLeft: 'auto', marginRight: 'auto' }}>
-              ندعم كافة خيارات الدفع المحلية في المملكة العربية السعودية مع معالجة فورية وتأكيد تلقائي بالفاتورة
+          ))}
+        </div>
+      </section>
+
+      {/* Interactive Payment Gateway CTA Section */}
+      <section style={{ maxWidth: 1200, margin: '56px auto 0', padding: '0 24px' }}>
+        <div style={{ background: 'linear-gradient(135deg, rgba(20,22,46,0.9), rgba(11,13,31,0.95))', border: '1px solid rgba(16,185,129,0.25)', borderRadius: 28, padding: '48px 36px', boxShadow: '0 20px 60px rgba(0,0,0,0.4)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+          
+          <div style={{ position: 'relative', zIndex: 2 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.3)', color: '#10B981', padding: '6px 16px', borderRadius: 20, fontSize: 12, fontWeight: 700, marginBottom: 16 }}>
+              <Lock size={14} /> بوابة دفع إلكترونية تفاعلية 🇸🇦
+            </div>
+
+            <h2 style={{ fontSize: 'clamp(22px,3.5vw,30px)', fontWeight: 800, color: 'white', margin: '0 0 12px' }}>جرّب بوابة الدفع الإلكتروني الآمنة</h2>
+            <p style={{ color: '#9CA3AF', fontSize: 15, margin: '0 auto 28px', maxWidth: 600, lineHeight: 1.7 }}>
+              بوابة دفع متكاملة تدعم مدى، أبل باي، فيزا، تابي، تمارا، والتحويل البنكي — مع نموذج إدخال بطاقة تفاعلي ومعالجة دفع مباشرة وفاتورة إلكترونية
+            </p>
+
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 10, flexWrap: 'wrap', marginBottom: 28 }}>
+              {[
+                { name: 'مدى 🇸🇦', color: '#10B981' },
+                { name: 'أبل باي Apple Pay', color: '#FFFFFF' },
+                { name: 'فيزا Visa / MC 💳', color: '#3B82F6' },
+                { name: 'تابي Tabby 💚', color: '#34D399' },
+                { name: 'تمارا Tamara 🧡', color: '#FB923C' },
+                { name: 'تحويل بنكي 🏦', color: '#A855F7' },
+              ].map((pm, i) => (
+                <div key={i} style={{ background: `${pm.color}10`, border: `1px solid ${pm.color}30`, borderRadius: 12, padding: '8px 14px', fontSize: 12, fontWeight: 700, color: pm.color }}>
+                  {pm.name}
+                </div>
+              ))}
+            </div>
+
+            <Link href="/store/checkout" style={{
+              display: 'inline-flex', alignItems: 'center', gap: 10,
+              background: 'linear-gradient(135deg, #10B981, #059669)',
+              color: 'white', padding: '16px 36px', borderRadius: 16,
+              textDecoration: 'none', fontWeight: 800, fontSize: 17,
+              boxShadow: '0 10px 40px rgba(16,185,129,0.3)'
+            }}>
+              <CreditCard size={22} /> الدخول إلى بوابة الدفع التفاعلية الآن
+            </Link>
+
+            <p style={{ fontSize: 12, color: '#6B7280', marginTop: 14 }}>
+              تجريبية بالكامل — تجربة دفع آمنة ومشفرة 100%
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16, marginBottom: 28 }}>
-            {PAYMENT_GATEWAYS.map(gw => (
-              <div
-                key={gw.id}
-                style={{
-                  background: gw.bg,
-                  border: `1px solid ${gw.borderColor}35`,
-                  borderRadius: 18,
-                  padding: '20px 16px',
-                  textAlign: 'center',
-                  transition: 'all 0.3s ease',
-                  position: 'relative',
-                  overflow: 'hidden'
-                }}
-              >
-                <span style={{ background: `${gw.borderColor}20`, border: `1px solid ${gw.borderColor}40`, color: gw.iconColor, padding: '3px 10px', borderRadius: 12, fontSize: 10, fontWeight: 700, display: 'inline-block', marginBottom: 10 }}>
-                  {gw.badgeText}
-                </span>
-                <h4 style={{ fontSize: 15, fontWeight: 800, color: 'white', margin: '0 0 4px' }}>{gw.name}</h4>
-                <p style={{ fontSize: 12, color: gw.iconColor, fontWeight: 700, margin: '0 0 2px' }}>{gw.tag}</p>
-                <p style={{ fontSize: 11, color: '#9CA3AF', margin: 0 }}>{gw.desc}</p>
+          <div style={{ position: 'relative', zIndex: 2, marginTop: 32, background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: '14px 24px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#10B981', fontWeight: 600 }}>
+              <ShieldCheck size={16} /> تشفير 256-bit SSL
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#3B82F6', fontWeight: 600 }}>
+              <Shield size={16} /> PCI-DSS Compliant
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#F59E0B', fontWeight: 600 }}>
+              <CheckCircle2 size={16} /> دفع موثق ومضمون
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer style={{ marginTop: 80, borderTop: '1px solid rgba(255,255,255,0.06)', padding: '40px 24px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 32 }}>
+          <div>
+            <img src="/Darrow-1.png" alt="D-Arrow Logo" style={{ width: 100, height: 40, objectFit: 'contain', marginBottom: 12 }} />
+            <p style={{ fontSize: 13, color: '#6B7280', lineHeight: 1.6 }}>هذا المتجر نسخة استعراضية من سكريبت المتجر الإلكتروني السعودي المتكامل مع لوحة التحكم. تم تطويره بواسطة فريق D-Arrow.</p>
+          </div>
+          <div>
+            <h4 style={{ color: 'white', fontWeight: 700, marginBottom: 12, fontSize: 14 }}>وسائل الدفع المدعومة بالمملكة</h4>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {['مدى Mada 🇸🇦', 'Apple Pay', 'Visa', 'Mastercard', 'Tabby تابي', 'Tamara تمارا'].map(m => (
+                <span key={m} style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.08)', padding: '6px 12px', borderRadius: 8, fontSize: 12, color: '#D1D5DB', fontWeight: 600 }}>{m}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div style={{ maxWidth: 1200, margin: '24px auto 0', paddingTop: 20, borderTop: '1px solid rgba(255,255,255,0.06)', textAlign: 'center', fontSize: 12, color: '#6B7280' }}>
+          قالب استعراضي — تم تطويره بواسطة <span style={{ color: '#FF4D6D', fontWeight: 700 }}>D-Arrow</span> للتسويق الرقمي بالسعودية | جميع الحقوق محفوظة © 2026 🇸🇦
+        </div>
+      </footer>
+
+      {/* Floating WhatsApp Support Button */}
+      <a href="https://wa.me/966000000000" target="_blank" rel="noopener noreferrer" className="floating-support-btn" title="تواصل معنا عبر الواتساب">
+        <MessageCircle size={28} />
+      </a>
+
+      {renderCartDrawer()}
+    </div>
+  );
+
+  function renderCartDrawer() {
+    if (!isCartOpen) return null;
+    return (
+      <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(6px)', zIndex: 50, display: 'flex', justifyContent: 'flex-start' }} onClick={() => setIsCartOpen(false)}>
+        <div onClick={e => e.stopPropagation()} style={{ width: '100%', maxWidth: 440, background: '#10122B', borderLeft: '1px solid rgba(255,77,109,0.15)', height: '100%', display: 'flex', flexDirection: 'column', padding: 24 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <ShoppingCart size={20} style={{ color: '#FF4D6D' }} />
+              <h3 style={{ fontSize: 17, fontWeight: 700, margin: 0 }}>سلة التسوق ({totalItems})</h3>
+            </div>
+            <button onClick={() => setIsCartOpen(false)} style={{ background: 'rgba(255,255,255,0.06)', border: 'none', color: '#9CA3AF', cursor: 'pointer', width: 32, height: 32, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center' }}><X size={18} /></button>
+          </div>
+
+          <div style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {cart.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '60px 0', color: '#6B7280' }}>
+                <ShoppingCart size={44} style={{ opacity: 0.2, margin: '0 auto 12px' }} />
+                <p style={{ margin: 0, fontSize: 14 }}>سلة التسوق فارغة</p>
+              </div>
+            ) : cart.map(item => (
+              <div key={item.product.id} style={{ display: 'flex', gap: 12, background: 'rgba(20,22,46,0.5)', padding: 12, borderRadius: 14, border: '1px solid rgba(255,255,255,0.04)', alignItems: 'center' }}>
+                <img src={item.product.image} alt="" style={{ width: 56, height: 56, borderRadius: 10, objectFit: 'cover' }} />
+                <div style={{ flex: 1 }}>
+                  <h4 style={{ fontSize: 13, fontWeight: 700, margin: '0 0 4px', color: 'white', lineHeight: 1.3 }}>{item.product.name}</h4>
+                  <span style={{ fontSize: 13, color: '#22C55E', fontWeight: 700 }}>{item.product.price * item.quantity} ر.س</span>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'rgba(0,0,0,0.3)', borderRadius: 8, padding: 3 }}>
+                  <button onClick={() => updateQuantity(item.product.id, -1)} style={{ background: 'none', border: 'none', color: '#9CA3AF', cursor: 'pointer', padding: 2 }}><Minus size={13} /></button>
+                  <span style={{ fontSize: 13, fontWeight: 700, padding: '0 5px', minWidth: 20, textAlign: 'center' }}>{item.quantity}</span>
+                  <button onClick={() => updateQuantity(item.product.id, 1)} style={{ background: 'none', border: 'none', color: '#9CA3AF', cursor: 'pointer', padding: 2 }}><Plus size={13} /></button>
+                </div>
               </div>
             ))}
           </div>
 
-          {/* Security Banner Footer */}
-          <div style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: '16px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 14 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <ShieldCheck size={28} style={{ color: '#10B981' }} />
-              <div>
-                <h4 style={{ fontSize: 14, fontWeight: 700, color: 'white', margin: 0 }}>تشفير بيانات آمن 256-bit SSL</h4>
-                <p style={{ fontSize: 12, color: '#9CA3AF', margin: 0 }}>جميع معاملاتك المالية محمية ومعتمدة وفق أعلى معايير الأمان البنكي (PCI-DSS Compliant)</p>
+          {cart.length > 0 && (
+            <div style={{ borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: 16, marginTop: 16 }}>
+              <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
+                <input placeholder="كود الخصم (KSA50)" value={coupon} onChange={e => setCoupon(e.target.value)} style={{ flex: 1, padding: 9, background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, color: 'white', fontSize: 13, outline: 'none' }} />
+                <button onClick={applyCoupon} style={{ background: 'rgba(255,77,109,0.15)', border: '1px solid rgba(255,77,109,0.3)', color: '#FF4D6D', padding: '0 14px', borderRadius: 10, fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>تطبيق</button>
               </div>
+              {couponMsg && <p style={{ fontSize: 12, color: discountPct > 0 ? '#22C55E' : '#EF4444', margin: '0 0 10px' }}>{couponMsg}</p>}
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, fontSize: 14, color: '#9CA3AF', marginBottom: 14 }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}><span>المجموع الفرعي:</span><span>{cartSubtotal} ر.س</span></div>
+                {discountPct > 0 && <div style={{ display: 'flex', justifyContent: 'space-between', color: '#22C55E' }}><span>خصم {discountPct}%:</span><span>-{discountAmount} ر.س</span></div>}
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 17, fontWeight: 800, color: 'white', paddingTop: 8, borderTop: '1px dashed rgba(255,255,255,0.08)' }}>
+                  <span>الإجمالي:</span><span style={{ color: '#22C55E' }}>{cartTotal} ر.س</span>
+                </div>
+              </div>
+
+              <Link href="/store/checkout" onClick={() => setIsCartOpen(false)} style={{ width: '100%', padding: 13, borderRadius: 12, background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', border: 'none', fontWeight: 800, fontSize: 15, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, textDecoration: 'none' }}>
+                <CreditCard size={18} /> إتمام الشراء — بوابة الدفع التفاعلية
+              </Link>
             </div>
-            <div style={{ background: 'rgba(16,185,129,0.15)', color: '#10B981', padding: '6px 14px', borderRadius: 10, fontSize: 12, fontWeight: 800, display: 'flex', alignItems: 'center', gap: 6 }}>
-              <CheckCircle2 size={15} /> دفع موثق ومضمون
-            </div>
-          </div>
+          )}
         </div>
-
       </div>
-
-      {/* Floating Support Button */}
-      <a href="https://wa.me/966000000000" target="_blank" rel="noopener noreferrer" className="floating-support-btn" title="تواصل معنا عبر الواتساب">
-        <MessageCircle size={28} />
-      </a>
-    </section>
-  );
+    );
+  }
 }
