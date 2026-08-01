@@ -1,0 +1,75 @@
+{
+  "name": "D-Arrow AI Content Generator (Qwen3)",
+  "active": false,
+  "nodes": [
+    {
+      "id": "node-webhook",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "darrow-ai-content",
+        "responseMode": "responseNode"
+      },
+      "webhookId": "darrow-ai-content-001"
+    },
+    {
+      "id": "node-ollama",
+      "name": "Qwen3 8B Model",
+      "type": "@n8n/n8n-nodes-langchain.lmOllama",
+      "typeVersion": 1,
+      "position": [500, 440],
+      "parameters": {
+        "model": "qwen3:8b",
+        "options": {
+          "temperature": 0.7,
+          "numCtx": 4096
+        }
+      }
+    },
+    {
+      "id": "node-chain",
+      "name": "AI Content Chain",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.4,
+      "position": [500, 300],
+      "parameters": {
+        "prompt": {
+          "values": [
+            {
+              "type": "string",
+              "value": "={{ $json.body.prompt || $json.body.message || 'Write professional marketing content about D-Arrow digital marketing services' }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "node-respond",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [760, 300],
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify({ success: true, model: 'qwen3:8b', response: $json.text }) }}"
+      }
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [[{ "node": "AI Content Chain", "type": "main", "index": 0 }]]
+    },
+    "AI Content Chain": {
+      "main": [[{ "node": "Respond to Webhook", "type": "main", "index": 0 }]]
+    },
+    "Qwen3 8B Model": {
+      "ai_languageModel": [[{ "node": "AI Content Chain", "type": "ai_languageModel", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
