@@ -1,0 +1,122 @@
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(255, 77, 109, 0.4); }
+  50% { box-shadow: 0 0 30px rgba(255, 77, 109, 0.8); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.demo-card {
+  transition: all 0.35s ease;
+}
+
+.demo-card:hover {
+  border-color: rgba(255, 77, 109, 0.35) !important;
+  transform: translateY(-6px) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35) !important;
+}
+
+.demo-card:hover .demo-card-img {
+  transform: scale(1.08);
+}
+
+.demo-card-img {
+  transition: transform 0.5s ease;
+}
+
+.demo-btn-add:hover {
+  box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
+}
+
+/* Promotional Poster Banner */
+.promo-banner-slide {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.promo-poster-card {
+  transition: all 0.35s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.promo-poster-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.promo-poster-card:hover img {
+  transform: scale(1.06);
+}
+
+.promo-poster-card img {
+  transition: transform 0.6s ease;
+}
+
+/* Flash Sale Countdown Box */
+.countdown-box {
+  background: rgba(11, 13, 31, 0.8);
+  border: 1px solid rgba(255, 77, 109, 0.3);
+  box-shadow: 0 8px 24px rgba(255, 77, 109, 0.15);
+  border-radius: 12px;
+  padding: 8px 14px;
+  min-width: 54px;
+  text-align: center;
+}
+
+/* Floating WhatsApp / Support Button */
+.floating-support-btn {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 99;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: white;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: float 3s ease-in-out infinite;
+}
+
+.floating-support-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 12px 35px rgba(37, 211, 102, 0.6);
+}
+
+/* Trust Badge Cards */
+.trust-badge-item {
+  background: rgba(20, 22, 46, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 20px 16px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.trust-badge-item:hover {
+  border-color: rgba(255, 77, 109, 0.25);
+  background: rgba(20, 22, 46, 0.85);
+  transform: translateY(-4px);
+}

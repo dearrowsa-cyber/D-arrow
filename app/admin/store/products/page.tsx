@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Plus, Edit, Trash2, Star, Package } from 'lucide-react';
+import { Plus, Edit, Trash2, Star, Package, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 
 interface Product {
@@ -24,6 +24,7 @@ interface Product {
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [seeding, setSeeding] = useState(false);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
@@ -35,6 +36,24 @@ export default function AdminProductsPage() {
       const data = await res.json();
       if (data.success) setProducts(data.products || []);
     } catch { } finally { setLoading(false); }
+  };
+
+  const handleSeedTemplate = async () => {
+    setSeeding(true);
+    try {
+      const res = await fetch('/api/admin/store/seed-template', { method: 'POST' });
+      const data = await res.json();
+      if (data.success) {
+        showToast(data.message || 'تم إدراج قالب المتجر بنجاح', 'success');
+        fetchProducts();
+      } else {
+        showToast(data.error || 'حدث خطأ أثناء الإدراج', 'error');
+      }
+    } catch {
+      showToast('حدث خطأ بالاتصال', 'error');
+    } finally {
+      setSeeding(false);
+    }
   };
 
   const handleDelete = async () => {
@@ -94,9 +113,14 @@ export default function AdminProductsPage() {
           <h2 style={{ fontSize: 24, fontWeight: 700, color: '#E6E6EA', margin: 0 }}>المنتجات</h2>
           <p style={{ color: '#6B7280', fontSize: 14, margin: '4px 0 0' }}>{products.length} منتج</p>
         </div>
-        <Link href="/admin/store/products/new" className="admin-btn admin-btn-primary">
-          <Plus size={16} /> إضافة منتج
-        </Link>
+        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+          <button className="admin-btn admin-btn-ghost" onClick={handleSeedTemplate} disabled={seeding} style={{ borderColor: 'rgba(16,185,129,0.3)', color: '#10B981' }}>
+            <Sparkles size={16} /> {seeding ? 'جاري الإضافة...' : 'زرع/تحديث قالب المتجر'}
+          </button>
+          <Link href="/admin/store/products/new" className="admin-btn admin-btn-primary">
+            <Plus size={16} /> إضافة منتج
+          </Link>
+        </div>
       </div>
 
       {/* Products Table */}

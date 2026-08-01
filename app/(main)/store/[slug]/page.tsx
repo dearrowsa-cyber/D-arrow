@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ShoppingCart, Star, Check, ArrowRight, Package } from 'lucide-react';
+import { ShoppingCart, Star, Check, ArrowRight, Package, ExternalLink, ShieldCheck, Layout, Code, Sparkles } from 'lucide-react';
 import { useCart } from '@/components/store/CartContext';
 
 export default function ProductPage() {
@@ -56,6 +56,7 @@ export default function ProductPage() {
   const hasDiscount = product.salePrice && product.salePrice < product.price;
   const discountPct = hasDiscount ? Math.round((1 - product.salePrice / product.price) * 100) : 0;
   const avgRating = product.reviews?.length ? (product.reviews.reduce((s: number, r: any) => s + r.rating, 0) / product.reviews.length).toFixed(1) : null;
+  const isTemplate = product.type === 'template' || product.slug.includes('template');
 
   return (
     <section style={{ minHeight: '100vh', padding: '120px 24px 80px' }}>
@@ -70,11 +71,16 @@ export default function ProductPage() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'start' }}>
           {/* Images */}
           <div>
-            <div style={{ borderRadius: 20, overflow: 'hidden', border: '1px solid rgba(255,77,109,0.1)', marginBottom: 12, aspectRatio: '1', background: 'rgba(20,22,46,0.6)' }}>
+            <div style={{ borderRadius: 20, overflow: 'hidden', border: '1px solid rgba(255,77,109,0.1)', marginBottom: 12, aspectRatio: '1', background: 'rgba(20,22,46,0.6)', position: 'relative' }}>
               {images[selectedImg] ? (
                 <img src={images[selectedImg]} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               ) : (
                 <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><Package size={80} style={{ color: '#374151' }} /></div>
+              )}
+              {isTemplate && (
+                <span style={{ position: 'absolute', top: 16, right: 16, background: 'linear-gradient(135deg,#10B981,#059669)', color: 'white', padding: '6px 14px', borderRadius: 20, fontSize: 13, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <Layout size={14} /> متجر + لوحة تحكم
+                </span>
               )}
             </div>
             {images.length > 1 && (
@@ -90,7 +96,15 @@ export default function ProductPage() {
 
           {/* Product Info */}
           <div>
-            <span style={{ fontSize: 13, color: '#FF4D6D', fontWeight: 600, marginBottom: 8, display: 'block' }}>{product.categoryAr || product.category}</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+              <span style={{ fontSize: 13, color: '#FF4D6D', fontWeight: 600 }}>{product.categoryAr || product.category}</span>
+              {isTemplate && (
+                <span style={{ fontSize: 12, color: '#10B981', background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.3)', padding: '2px 8px', borderRadius: 12, fontWeight: 600 }}>
+                  نسخة متجر جاهزة
+                </span>
+              )}
+            </div>
+
             <h1 style={{ fontSize: 32, fontWeight: 700, color: '#E6E6EA', margin: '0 0 16px', lineHeight: 1.3 }}>{product.nameAr || product.name}</h1>
 
             {avgRating && (
@@ -116,15 +130,30 @@ export default function ProductPage() {
               )}
             </div>
 
-            {/* Add to Cart */}
-            <button onClick={handleAdd} style={{ width: '100%', padding: '16px 32px', borderRadius: 14, background: added ? '#22C55E' : 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', border: 'none', cursor: 'pointer', fontSize: 18, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, transition: '0.3s', marginBottom: 24, boxShadow: '0 8px 30px rgba(255,77,109,0.3)' }}>
-              {added ? <><Check size={22} /> تمت الإضافة للسلة</> : <><ShoppingCart size={22} /> أضف إلى السلة</>}
-            </button>
+            {/* Action Buttons */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 24 }}>
+              <button onClick={handleAdd} style={{ width: '100%', padding: '16px 32px', borderRadius: 14, background: added ? '#22C55E' : 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', border: 'none', cursor: 'pointer', fontSize: 18, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, transition: '0.3s', boxShadow: '0 8px 30px rgba(255,77,109,0.3)' }}>
+                {added ? <><Check size={22} /> تمت الإضافة للسلة</> : <><ShoppingCart size={22} /> أضف إلى السلة</>}
+              </button>
+
+              {isTemplate && (
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                  <Link href="/demo/store" target="_blank" style={{ padding: '12px 16px', borderRadius: 12, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#E6E6EA', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, fontSize: 14, fontWeight: 600, transition: '0.2s' }}>
+                    <ExternalLink size={16} style={{ color: '#FF4D6D' }} />
+                    معاينة المتجر المباشرة
+                  </Link>
+                  <Link href="/demo/store/admin" target="_blank" style={{ padding: '12px 16px', borderRadius: 12, background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', color: '#E6E6EA', textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, fontSize: 14, fontWeight: 600, transition: '0.2s' }}>
+                    <ShieldCheck size={16} style={{ color: '#10B981' }} />
+                    معاينة لوحة التحكم
+                  </Link>
+                </div>
+              )}
+            </div>
 
             {/* Features */}
             {features.length > 0 && (
               <div style={{ marginBottom: 24 }}>
-                <h3 style={{ fontSize: 18, fontWeight: 700, color: '#E6E6EA', marginBottom: 12 }}>مميزات المنتج</h3>
+                <h3 style={{ fontSize: 18, fontWeight: 700, color: '#E6E6EA', marginBottom: 12 }}>{isTemplate ? 'مميزات القالب ولوحة التحكم' : 'مميزات المنتج'}</h3>
                 {features.map((f: string, i: number) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
                     <Check size={16} style={{ color: '#22C55E', flexShrink: 0 }} />
