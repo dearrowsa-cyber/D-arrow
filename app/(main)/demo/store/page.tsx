@@ -295,11 +295,11 @@ export default function StoreDemoPage() {
     const discPct = p.oldPrice ? Math.round((1 - p.price / p.oldPrice) * 100) : 0;
     return (
       <div dir="rtl" style={{ background: '#0B0D1F', color: '#E6E6EA', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
-        <div style={{ background: 'linear-gradient(90deg, #10B981, #059669)', color: 'white', padding: '10px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, fontSize: 14, fontWeight: 600 }}>
+        <div style={{ background: 'linear-gradient(90deg, #FF4D6D, #FF9A3C)', color: 'white', padding: '10px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, fontSize: 14, fontWeight: 600 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}><Sparkles size={16} /> 🇸🇦 وضع المعاينة المباشرة — سكريبت المتجر الإلكتروني السعودي</div>
           <div style={{ display: 'flex', gap: 10 }}>
             <Link href="/demo/store/admin" style={{ background: 'rgba(0,0,0,0.25)', color: 'white', padding: '5px 12px', borderRadius: 8, textDecoration: 'none', fontSize: 12, display: 'flex', alignItems: 'center', gap: 5 }}><ShieldCheck size={14} /> لوحة التحكم</Link>
-            <Link href="/demo/store/checkout" style={{ background: 'white', color: '#047857', padding: '5px 12px', borderRadius: 8, textDecoration: 'none', fontSize: 12, fontWeight: 700 }}>بوابة الدفع</Link>
+            <Link href="/demo/store/checkout" style={{ background: 'white', color: '#FF4D6D', padding: '5px 12px', borderRadius: 8, textDecoration: 'none', fontSize: 12, fontWeight: 700 }}>بوابة الدفع</Link>
           </div>
         </div>
 
@@ -358,7 +358,7 @@ export default function StoreDemoPage() {
                 >
                   {isOutOfStock ? <><Package size={20} /> غير متوفر حالياً</> : addedIds.has(p.id) ? <><Check size={20} /> تمت الإضافة!</> : <><ShoppingCart size={20} /> أضف إلى السلة</>}
                 </button>
-                <Link href="/demo/store/checkout" style={{ padding: '16px 24px', borderRadius: 14, background: 'linear-gradient(135deg,#10B981,#059669)', color: 'white', textDecoration: 'none', fontWeight: 800, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
+                <Link href="/demo/store/checkout" style={{ padding: '16px 24px', borderRadius: 14, background: 'linear-gradient(135deg,#FF6F4F,#FF9A3C)', color: 'white', textDecoration: 'none', fontWeight: 800, fontSize: 15, display: 'flex', alignItems: 'center', gap: 8 }}>
                   <CreditCard size={18} /> شراء الآن
                 </Link>
               </div>
@@ -380,14 +380,14 @@ export default function StoreDemoPage() {
     <div dir="rtl" style={{ background: '#0B0D1F', color: '#E6E6EA', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
       
       {/* Top Bar */}
-      <div style={{ background: 'linear-gradient(90deg, #059669, #10B981)', color: 'white', padding: '10px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, fontSize: 14, fontWeight: 600 }}>
+      <div style={{ background: 'linear-gradient(90deg, #FF4D6D, #FF9A3C)', color: 'white', padding: '10px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 10, fontSize: 14, fontWeight: 600 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <span>🇸🇦</span>
           <span>المتجر الإلكتروني السعودي الحديث — عروض حصرية وشحن مجاني لكافة مدن المملكة</span>
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
           <Link href="/demo/store/admin" style={{ background: 'rgba(0,0,0,0.25)', color: 'white', padding: '5px 12px', borderRadius: 8, textDecoration: 'none', fontSize: 12, display: 'flex', alignItems: 'center', gap: 5 }}><ShieldCheck size={14} /> لوحة التحكم</Link>
-          <Link href="/demo/store/checkout" style={{ background: 'white', color: '#047857', padding: '5px 12px', borderRadius: 8, textDecoration: 'none', fontSize: 12, fontWeight: 700 }}>بوابة الدفع التفاعلية 💳</Link>
+          <Link href="/demo/store/checkout" style={{ background: 'white', color: '#FF4D6D', padding: '5px 12px', borderRadius: 8, textDecoration: 'none', fontSize: 12, fontWeight: 700 }}>بوابة الدفع التفاعلية 💳</Link>
         </div>
       </div>
 
@@ -511,7 +511,7 @@ export default function StoreDemoPage() {
                     <span style={{ color: '#22C55E', fontWeight: 800, fontSize: 16 }}>{p.price} ر.س</span>
                     {p.oldPrice && <span style={{ color: '#6B7280', textDecoration: 'line-through', fontSize: 12 }}>{p.oldPrice} ر.س</span>}
                   </div>
-                  <button onClick={() => addToCart(p)} style={{ marginTop: 8, width: '100%', padding: '6px', background: 'linear-gradient(135deg,#EF4444,#F59E0B)', color: 'white', border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
+                  <button onClick={() => addToCart(p)} style={{ marginTop: 8, width: '100%', padding: '6px', background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', border: 'none', borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: 'pointer' }}>
                     اطلب الآن قبل النفاد
                   </button>
                 </div>
@@ -616,7 +616,7 @@ export default function StoreDemoPage() {
                       >
                         {isOutOfStock ? <><Package size={15} /> غير متوفر</> : addedIds.has(product.id) ? <><Check size={15} /> تمت الإضافة</> : <><ShoppingCart size={15} /> أضف للسلة</>}
                       </button>
-                      <Link href="/demo/store/checkout" style={{ padding: '11px 14px', borderRadius: 12, background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.3)', color: '#10B981', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, fontWeight: 700, textDecoration: 'none' }}>
+                      <Link href="/demo/store/checkout" style={{ padding: '11px 14px', borderRadius: 12, background: 'rgba(255,77,109,0.12)', border: '1px solid rgba(255,77,109,0.3)', color: '#FF4D6D', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, fontWeight: 700, textDecoration: 'none' }}>
                         <CreditCard size={15} /> الشراء
                       </Link>
                     </div>
@@ -677,10 +677,10 @@ export default function StoreDemoPage() {
 
       {/* Interactive Payment Gateway CTA Section */}
       <section style={{ maxWidth: 1200, margin: '56px auto 0', padding: '0 24px' }}>
-        <div style={{ background: 'linear-gradient(135deg, rgba(20,22,46,0.9), rgba(11,13,31,0.95))', border: '1px solid rgba(16,185,129,0.25)', borderRadius: 28, padding: '48px 36px', boxShadow: '0 20px 60px rgba(0,0,0,0.4)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ background: 'linear-gradient(135deg, rgba(20,22,46,0.9), rgba(11,13,31,0.95))', border: '1px solid rgba(255,77,109,0.25)', borderRadius: 28, padding: '48px 36px', boxShadow: '0 20px 60px rgba(0,0,0,0.4)', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
           
           <div style={{ position: 'relative', zIndex: 2 }}>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.3)', color: '#10B981', padding: '6px 16px', borderRadius: 20, fontSize: 12, fontWeight: 700, marginBottom: 16 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,77,109,0.12)', border: '1px solid rgba(255,77,109,0.3)', color: '#FF4D6D', padding: '6px 16px', borderRadius: 20, fontSize: 12, fontWeight: 700, marginBottom: 16 }}>
               <Lock size={14} /> بوابة دفع إلكترونية تفاعلية 🇸🇦
             </div>
 
@@ -706,10 +706,10 @@ export default function StoreDemoPage() {
 
             <Link href="/demo/store/checkout" style={{
               display: 'inline-flex', alignItems: 'center', gap: 10,
-              background: 'linear-gradient(135deg, #10B981, #059669)',
+              background: 'linear-gradient(135deg, #FF4D6D, #FF9A3C)',
               color: 'white', padding: '16px 36px', borderRadius: 16,
               textDecoration: 'none', fontWeight: 800, fontSize: 17,
-              boxShadow: '0 10px 40px rgba(16,185,129,0.3)'
+              boxShadow: '0 10px 40px rgba(255,77,109,0.3)'
             }}>
               <CreditCard size={22} /> الدخول إلى بوابة الدفع التفاعلية الآن
             </Link>
@@ -720,7 +720,7 @@ export default function StoreDemoPage() {
           </div>
 
           <div style={{ position: 'relative', zIndex: 2, marginTop: 32, background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 16, padding: '14px 24px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#10B981', fontWeight: 600 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#FF4D6D', fontWeight: 600 }}>
               <ShieldCheck size={16} /> تشفير 256-bit SSL
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#3B82F6', fontWeight: 600 }}>
