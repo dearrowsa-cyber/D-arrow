@@ -370,21 +370,30 @@ a {
 }
 
 a:hover {
-  background: linear-gradient(90deg, #FF9A3C, #FF4D6D);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--brand-orange);
 }
 
-/* Exclude styled links (social icons, CTA buttons, cards) from gradient text effect */
-a.group:hover,
-a[class*="bg-gradient"]:hover,
-a[class*="inline-flex"]:hover,
-a[class*="rounded-2xl"]:hover {
-  background: none;
-  -webkit-background-clip: unset;
-  -webkit-text-fill-color: unset;
-  background-clip: unset;
+/* Exclude styled button links, CTA buttons, and cards from default pink text and hover transparent gradient */
+a[class*="bg-"],
+a[class*="rounded-"],
+a[class*="px-"],
+a[class*="py-"],
+a.btn,
+a.group {
+  color: white !important;
+  -webkit-text-fill-color: white !important;
+}
+
+a[class*="bg-"]:hover,
+a[class*="rounded-"]:hover,
+a[class*="px-"]:hover,
+a[class*="py-"]:hover,
+a.btn:hover,
+a.group:hover {
+  background-clip: unset !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: white !important;
+  color: white !important;
 }
 
 /* UI Elements - Buttons & Labels */
