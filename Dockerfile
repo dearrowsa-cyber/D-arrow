@@ -34,14 +34,19 @@ FROM node:20-slim AS builder
 WORKDIR /app
 
 RUN apt-get update -y \
- && apt-get install -y --no-install-recommends openssl ca-certificates \
+ && apt-get install -y --no-install-recommends openssl ca-certificates git \
  && rm -rf /var/lib/apt/lists/*
 
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
+# Clone latest code from GitHub (ensures Portainer always builds fresh code
+# even though the build context only contains docker-compose.yml).
+RUN git clone --depth 1 https://github.com/dearrowsa-cyber/D-arrow.git /tmp/repo \
+ && cp -a /tmp/repo/. /app/ \
+ && rm -rf /tmp/repo/.git
+
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
 
 # Generate Prisma client from the committed schema, then build the Next.js app.
 RUN npx prisma generate \
