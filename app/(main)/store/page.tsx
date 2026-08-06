@@ -25,7 +25,10 @@ import {
   Clock,
   ChevronLeft,
   Bot,
-  Users
+  Users,
+  Building2,
+  Home,
+  MapPin
 } from 'lucide-react';
 import { useLanguage } from '@/components/LanguageProvider';
 
@@ -136,6 +139,73 @@ export default function StoreServicePage() {
           </div>
         </section>
 
+        {/* Featured Real Estate Template Section */}
+        <section className="bg-gradient-to-br from-[#14162E] via-[#161836] to-[#0A0C1E] border border-[#FF9A3C]/40 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-[#FF9A3C]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#10B981]/15 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
+            <div className="space-y-4 max-w-2xl text-center lg:text-right">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10B981]/15 border border-[#10B981]/40 text-[#10B981] text-xs font-bold">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-ping" />
+                <span>{isAr ? '🆕 إصدار جديد حديثاً | قالب العقار السعودي' : '🆕 New Release | Saudi Real Estate Template'}</span>
+              </div>
+
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
+                {isAr ? 'نظام وقالب الموقع العقاري السعودي (Saudi Real Estate App)' : 'Saudi Real Estate Website System & Template'}
+              </h2>
+
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                {isAr ? (
+                  'قالب موقع عقاري متكامل مخصص للسوق السعودي، مع عرض العقارات للبيع والإيجار، البحث المتقدم حسب الحي والمدينة والمنطقة، معرض صور تفاعلي، خريطة مدمجة، استعلامات العملاء، وحجز مواعيد المعاينة.'
+                ) : (
+                  'Complete real estate website template tailored for Saudi market. Features property listings for sale/rent, advanced search by district/city/region, interactive gallery, embedded maps, client inquiry forms, and viewing appointment booking.'
+                )}
+              </p>
+
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2 text-xs font-semibold text-slate-300">
+                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+                  <Home className="w-4 h-4 text-[#10B981]" /> {isAr ? 'شقق - فلل - أراضي' : 'Apartments - Villas - Land'}
+                </span>
+                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+                  <MapPin className="w-4 h-4 text-[#FF9A3C]" /> {isAr ? 'خريطة جوجل مدمجة' : 'Google Maps Integration'}
+                </span>
+                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+                  <CheckCircle2 className="w-4 h-4 text-[#FF4D6D]" /> {isAr ? 'نموذج طلبات وحجوزات' : 'Inquiry & Booking Forms'}
+                </span>
+              </div>
+            </div>
+
+            {/* Action Buttons for Real Estate Template */}
+            <div className="flex flex-col gap-3.5 w-full lg:w-auto flex-shrink-0">
+              <Link
+                href="/demo/real-estate"
+                className="px-6 py-4 rounded-xl bg-gradient-to-r from-[#10B981] to-[#FF9A3C] text-white font-black text-center flex items-center justify-center gap-3 shadow-lg shadow-[#10B981]/30 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 group"
+              >
+                <Building2 className="w-5 h-5 text-white group-hover:rotate-12 transition-transform" />
+                <span className="text-white">{isAr ? 'معاينة الموقع العقاري التفاعلي (/demo/real-estate)' : 'View Interactive Real Estate Demo'}</span>
+                <ExternalLink className="w-4 h-4 text-white opacity-90" />
+              </Link>
+              
+              <Link
+                href="/contact"
+                className="px-6 py-3.5 rounded-xl bg-[#14162E] hover:bg-[#10B981]/15 text-white font-bold text-center flex items-center justify-center gap-2.5 border border-[#10B981]/40 hover:border-[#10B981] transition-all duration-300"
+              >
+                <MessageCircle className="w-4 h-4 text-[#10B981]" />
+                <span className="text-white">{isAr ? 'طلب شراء القالب العقاري' : 'Request Real Estate Template Purchase'}</span>
+              </Link>
+
+              <Link
+                href="/projects"
+                className="px-6 py-3.5 rounded-xl bg-[#14162E] hover:bg-[#FF9A3C]/15 text-white font-bold text-center flex items-center justify-center gap-2.5 border border-[#FF9A3C]/40 hover:border-[#FF9A3C] transition-all duration-300"
+              >
+                <Layout className="w-4 h-4 text-[#FF9A3C]" />
+                <span className="text-white">{isAr ? 'مشاهدة مشاريعنا العقارية السابقة' : 'View Past Real Estate Projects'}</span>
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* D-Arrow Applications Catalog Grid */}
         <section className="space-y-8">
           <div className="text-center space-y-3">
@@ -170,7 +240,31 @@ export default function StoreServicePage() {
               </Link>
             </div>
 
-            {/* App Item 2: Influencer Platform System */}
+            {/* App Item 2: Real Estate Template */}
+            <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#10B981]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between relative overflow-hidden">
+              <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#10B981]/20 border border-[#10B981]/40 text-[#10B981] text-[10px] font-bold">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" /> NEW
+              </div>
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#10B981]/20 to-[#FF9A3C]/20 border border-[#10B981]/30 flex items-center justify-center text-[#10B981] group-hover:scale-110 transition-transform">
+                  <Building2 className="w-6 h-6 text-[#10B981]" />
+                </div>
+                <h3 className="text-xl font-bold text-white">{isAr ? 'نظام الموقع العقاري السعودي 🏢' : 'Saudi Real Estate Website System 🏢'}</h3>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  {isAr ? 'قالب موقع عقاري متكامل لعرض العقارات، البحث المتقدم، خرائط جوجل، وحجوزات المعاينة المباشرة للسوق السعودي.' : 'Full real estate template with listings, advanced search, Google Maps, and viewing bookings for KSA market.'}
+                </p>
+              </div>
+
+              <Link
+                href="/demo/real-estate"
+                className="mt-4 w-full py-3 rounded-xl bg-gradient-to-r from-[#10B981] to-[#FF9A3C] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition"
+              >
+                <span>{isAr ? 'معاينة القالب العقاري' : 'Preview Real Estate Demo'}</span>
+                <ArrowRight className="w-4 h-4 rotate-180" />
+              </Link>
+            </div>
+
+            {/* App Item 3: Influencer Platform System */}
             <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF9A3C]/20 to-[#FF4D6D]/20 border border-[#FF9A3C]/30 flex items-center justify-center text-[#FF9A3C] group-hover:scale-110 transition-transform">
@@ -191,7 +285,7 @@ export default function StoreServicePage() {
               </Link>
             </div>
 
-            {/* App Item 3: Payment Gateway System */}
+            {/* App Item 4: Payment Gateway System */}
             <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF4D6D]/20 to-[#FF9A3C]/20 border border-[#FF4D6D]/30 flex items-center justify-center text-[#FF4D6D] group-hover:scale-110 transition-transform">
@@ -212,7 +306,7 @@ export default function StoreServicePage() {
               </Link>
             </div>
 
-            {/* App Item 4: AI Customer Support Bot */}
+            {/* App Item 5: AI Customer Support Bot */}
             <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF9A3C]/20 to-[#FF4D6D]/20 border border-[#FF9A3C]/30 flex items-center justify-center text-[#FF9A3C] group-hover:scale-110 transition-transform">
@@ -233,7 +327,7 @@ export default function StoreServicePage() {
               </Link>
             </div>
 
-            {/* App Item 5: High Speed Infrastructure */}
+            {/* App Item 6: High Speed Infrastructure */}
             <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF4D6D]/20 to-[#FF9A3C]/20 border border-[#FF4D6D]/30 flex items-center justify-center text-[#FF4D6D] group-hover:scale-110 transition-transform">
@@ -254,7 +348,7 @@ export default function StoreServicePage() {
               </Link>
             </div>
 
-            {/* App Item 6: SEO & Analytics Integration */}
+            {/* App Item 7: SEO & Analytics Integration */}
             <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
               <div className="space-y-4">
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF9A3C]/20 to-[#FF4D6D]/20 border border-[#FF9A3C]/30 flex items-center justify-center text-[#FF9A3C] group-hover:scale-110 transition-transform">
