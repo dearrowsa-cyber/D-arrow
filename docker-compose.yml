@@ -45,6 +45,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        CACHEBUST: "${CACHEBUST:-1}"
       # If you already pushed a prebuilt image to GHCR/Docker Hub, replace the
       # `build:` block above with:  image: ghcr.io/your-org/d-arrow-app:latest
     container_name: d-arrow-app

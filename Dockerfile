@@ -40,9 +40,14 @@ RUN apt-get update -y \
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
-# ✅ Use LOCAL project code (includes blog fallback + live store links fixes)
-# ❌ Removed dangerous git clone that was overwriting local changes!
-COPY . .
+# Cache-bust ARG: pass --build-arg CACHEBUST=$(date +%s) to force fresh clone
+ARG CACHEBUST=1
+
+# Clone latest code from GitHub (Portainer build context is empty, only has compose file)
+RUN echo "Cache bust: $CACHEBUST" \
+ && git clone --depth 1 https://github.com/dearrowsa-cyber/D-arrow.git /tmp/repo \
+ && cp -a /tmp/repo/. /app/ \
+ && rm -rf /tmp/repo/.git
 
 COPY --from=deps /app/node_modules ./node_modules
 
