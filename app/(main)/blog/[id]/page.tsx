@@ -198,7 +198,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   let post: any = null;
 
   try {
-    post = await prisma.blogPost.findUnique({ where: { id } });
+    post = await prisma.blogPost.findFirst({
+      where: { OR: [{ id }, { slug: id }] }
+    });
   } catch {
     post = null;
   }
@@ -256,7 +258,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
   let post: any = null;
 
   try {
-    const rawPost = await prisma.blogPost.findUnique({ where: { id } });
+    const rawPost = await prisma.blogPost.findFirst({
+      where: { OR: [{ id }, { slug: id }] }
+    });
     if (rawPost) {
       post = {
         ...rawPost,

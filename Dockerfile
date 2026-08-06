@@ -40,16 +40,13 @@ RUN apt-get update -y \
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
-# Cache-bust ARG: pass --build-arg CACHEBUST=$(date +%s) to force fresh clone
-ARG CACHEBUST=1
+# Fetch latest commit JSON from GitHub to automatically bust Docker cache whenever a new commit is pushed
+ADD https://api.github.com/repos/dearrowsa-cyber/D-arrow/commits/main /tmp/latest_commit.json
 
 # Clone latest code from GitHub (Portainer build context is empty, only has compose file)
-RUN echo "Cache bust: $CACHEBUST" \
- && git clone --depth 1 https://github.com/dearrowsa-cyber/D-arrow.git /tmp/repo \
+RUN git clone --depth 1 https://github.com/dearrowsa-cyber/D-arrow.git /tmp/repo \
  && cp -a /tmp/repo/. /app/ \
- && rm -rf /tmp/repo/.git \
- && git -C /app log --oneline -1 2>/dev/null || echo "Cloned repo successfully" \
- && ls -la /app/app/\(main\)/demo/ 2>/dev/null || echo "WARNING: demo directory missing after clone"
+ && rm -rf /tmp/repo/.git
 
 COPY --from=deps /app/node_modules ./node_modules
 
