@@ -111,6 +111,7 @@ export async function POST(req: NextRequest) {
         categoryAr: data.categoryAr || null,
         type: data.type || 'digital',
         downloadUrl: data.downloadUrl || null,
+        demoUrl: data.demoUrl || null,
         features: data.features || null,
         featuresAr: data.featuresAr || null,
         status: data.status || 'published',

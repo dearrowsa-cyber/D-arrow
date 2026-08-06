@@ -185,6 +185,7 @@ model Product {
   categoryAr      String?
   type            String   @default("digital") // digital, service, template, course
   downloadUrl     String?  // URL or file path for digital products
+  demoUrl         String?  // Live preview/demo URL for template products (e.g. /demo/store)
   features        String?  // JSON array of feature strings
   featuresAr      String?  // JSON array of Arabic feature strings
   status          String   @default("published") // published, draft

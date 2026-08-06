@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Plus, Edit, Trash2, Star, Package, Sparkles } from 'lucide-react';
+import { Plus, Edit, Trash2, Star, Package, Sparkles, ExternalLink } from 'lucide-react';
 import Image from 'next/image';
 
 interface Product {
@@ -17,6 +17,7 @@ interface Product {
   type: string;
   status: string;
   images: string;
+  demoUrl?: string;
   reviews?: { rating: number }[];
   _count?: { reviews: number; orderItems: number };
 }
@@ -195,6 +196,18 @@ export default function AdminProductsPage() {
                     <td>{product._count?.orderItems || 0}</td>
                     <td>
                       <div style={{ display: 'flex', gap: 8 }}>
+                        {product.demoUrl && (
+                          <a
+                            href={product.demoUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title="معاينة حية"
+                            className="admin-btn admin-btn-ghost admin-btn-sm"
+                            style={{ color: '#10B981' }}
+                          >
+                            <ExternalLink size={14} />
+                          </a>
+                        )}
                         <Link href={`/admin/store/products/${product.id}`} className="admin-btn admin-btn-ghost admin-btn-sm">
                           <Edit size={14} />
                         </Link>

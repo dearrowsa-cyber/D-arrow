@@ -28,7 +28,7 @@ export default function EditProductPage() {
   const [form, setForm] = useState({
     name: '', nameAr: '', slug: '', description: '', descriptionAr: '',
     price: '', salePrice: '', currency: 'SAR', category: 'General', categoryAr: '',
-    type: 'digital', downloadUrl: '', status: 'published', featured: false,
+    type: 'digital', downloadUrl: '', demoUrl: '', status: 'published', featured: false,
   });
 
   const [images, setImages] = useState<string[]>([]);
@@ -49,7 +49,7 @@ export default function EditProductPage() {
           description: p.description || '', descriptionAr: p.descriptionAr || '',
           price: String(p.price || ''), salePrice: p.salePrice ? String(p.salePrice) : '',
           currency: p.currency || 'SAR', category: p.category || 'General', categoryAr: p.categoryAr || '',
-          type: p.type || 'digital', downloadUrl: p.downloadUrl || '',
+          type: p.type || 'digital', downloadUrl: p.downloadUrl || '', demoUrl: p.demoUrl || '',
           status: p.status || 'published', featured: p.featured || false,
         });
         setImages(p.images ? JSON.parse(p.images) : []);
@@ -246,6 +246,11 @@ export default function EditProductPage() {
             <div style={{ marginBottom: 16 }}>
               <label className="admin-label">رابط التحميل</label>
               <input className="admin-input" value={form.downloadUrl} onChange={e => updateField('downloadUrl', e.target.value)} dir="ltr" />
+            </div>
+            <div style={{ marginBottom: 16 }}>
+              <label className="admin-label">رابط المعاينة الحية (Live Demo)</label>
+              <input className="admin-input" placeholder="/demo/store" value={form.demoUrl} onChange={e => updateField('demoUrl', e.target.value)} dir="ltr" />
+              <p style={{ color: '#6B7280', fontSize: 12, margin: '6px 0 0' }}>يظهر زر "معاينة حية" في صفحة المنتج للقوالب (مثال: /demo/store)</p>
             </div>
             <div style={{ marginBottom: 16 }}>
               <label className="admin-label">الحالة</label>

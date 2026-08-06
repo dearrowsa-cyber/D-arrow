@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { ShoppingCart, Star, Check, ArrowRight, Package, ShieldCheck, Layout, Sparkles, CreditCard, Heart, Truck, Lock } from 'lucide-react';
+import { ShoppingCart, Star, Check, ArrowRight, Package, ShieldCheck, Layout, Sparkles, CreditCard, Heart, Truck, Lock, ExternalLink } from 'lucide-react';
 import '@/app/(main)/demo/store/demo-store.css';
 
 const FALLBACK_PRODUCTS: Record<string, any> = {
@@ -143,7 +143,8 @@ const FALLBACK_PRODUCTS: Record<string, any> = {
     featuresAr: JSON.stringify(['بوابة دفع تفاعلية مدمجة (مدى، أبل باي، فيزا، تابي، تمارا)', 'لوحة تحكم إدارية شاملة للمبيعات والمنتجات والكوبونات', 'تصميم متوافق 100% مع الجوال واللغة العربية', 'شحن وسلة تسوق تفاعلية وفواتير إلكترونية']),
     rating: 5.0,
     reviewsCount: 48,
-    type: 'template'
+    type: 'template',
+    demoUrl: '/demo/store'
   }
 };
 
@@ -262,8 +263,20 @@ export default function ProductPage() {
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: 12, marginBottom: 28 }}>
-              <Link href="/store/checkout" style={{ flex: 1, padding: '16px 24px', borderRadius: 14, background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', textDecoration: 'none', fontWeight: 800, fontSize: 17, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, boxShadow: '0 8px 30px rgba(255,77,109,0.3)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 28 }}>
+              {product.demoUrl && (
+                <a
+                  href={product.demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ padding: '16px 24px', borderRadius: 14, background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.35)', color: '#10B981', textDecoration: 'none', fontWeight: 800, fontSize: 17, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, transition: 'all 0.25s' }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(16,185,129,0.2)'; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = 'rgba(16,185,129,0.12)'; }}
+                >
+                  <ExternalLink size={20} /> معاينة القالب الحية — جرّبه الآن ↗️
+                </a>
+              )}
+              <Link href="/store/checkout" style={{ padding: '16px 24px', borderRadius: 14, background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', textDecoration: 'none', fontWeight: 800, fontSize: 17, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10, boxShadow: '0 8px 30px rgba(255,77,109,0.3)' }}>
                 <CreditCard size={20} /> شراء الآن عبر بوابة الدفع 💳
               </Link>
             </div>

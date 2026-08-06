@@ -15,6 +15,7 @@ async function main() {
     categoryAr: 'قوالب ومتاجر',
     type: 'template',
     downloadUrl: '/downloads/ecommerce-store-template.zip',
+    demoUrl: '/demo/store',
     images: JSON.stringify([
       '/projects-showcase/store-preview.png',
       '/main-one.png',

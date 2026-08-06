@@ -36,6 +36,7 @@ export default function NewProductPage() {
     categoryAr: '',
     type: 'digital',
     downloadUrl: '',
+    demoUrl: '',
     status: 'published',
     featured: false,
   });
@@ -255,6 +256,11 @@ export default function NewProductPage() {
             <div style={{ marginBottom: 16 }}>
               <label className="admin-label">رابط التحميل</label>
               <input className="admin-input" placeholder="https://..." value={form.downloadUrl} onChange={e => updateField('downloadUrl', e.target.value)} dir="ltr" />
+            </div>
+            <div style={{ marginBottom: 16 }}>
+              <label className="admin-label">رابط المعاينة الحية (Live Demo)</label>
+              <input className="admin-input" placeholder="/demo/store" value={form.demoUrl} onChange={e => updateField('demoUrl', e.target.value)} dir="ltr" />
+              <p style={{ color: '#6B7280', fontSize: 12, margin: '6px 0 0' }}>يظهر زر "معاينة حية" في صفحة المنتج للقوالب (مثال: /demo/store)</p>
             </div>
             <div style={{ marginBottom: 16 }}>
               <label className="admin-label">الحالة</label>

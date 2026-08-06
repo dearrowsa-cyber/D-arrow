@@ -15,6 +15,7 @@ export async function POST(req: NextRequest) {
         categoryAr: 'متاجر إلكترونية',
         type: 'template',
         downloadUrl: '/downloads/ecommerce-store-template.zip',
+        demoUrl: '/demo/store',
         images: JSON.stringify([
           'https://images.unsplash.com/photo-1556742049-0a67e6f49969?auto=format&fit=crop&w=800&q=90',
           'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=90'
@@ -48,6 +49,7 @@ export async function POST(req: NextRequest) {
         categoryAr: 'عقارات وتطوير',
         type: 'template',
         downloadUrl: '/downloads/real-estate-template.zip',
+        demoUrl: '/demo/real-estate',
         images: JSON.stringify([
           'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=90',
           'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=90'
