@@ -47,7 +47,9 @@ ARG CACHEBUST=1
 RUN echo "Cache bust: $CACHEBUST" \
  && git clone --depth 1 https://github.com/dearrowsa-cyber/D-arrow.git /tmp/repo \
  && cp -a /tmp/repo/. /app/ \
- && rm -rf /tmp/repo/.git
+ && rm -rf /tmp/repo/.git \
+ && git -C /app log --oneline -1 2>/dev/null || echo "Cloned repo successfully" \
+ && ls -la /app/app/\(main\)/demo/ 2>/dev/null || echo "WARNING: demo directory missing after clone"
 
 COPY --from=deps /app/node_modules ./node_modules
 
@@ -70,12 +72,12 @@ RUN apt-get update -y \
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Next.js standalone output (next.config.js -> output: 'standalone')
+# Fallback copy paths — covers both standalone and non-standalone Next configs.
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
 
 # Persisted mount targets (Portainer volumes will attach here).
 RUN mkdir -p /app/public/uploads /app/data
@@ -92,7 +94,7 @@ set -euo pipefail
 echo "[entrypoint] Applying pending Prisma migrations..."
 npx prisma migrate deploy || echo "[entrypoint] WARNING: prisma migrate deploy failed (skip if dev.db unused)"
 echo "[entrypoint] Starting Next.js server on ${HOSTNAME}:${PORT}"
-exec node server.js
+exec node_modules/.bin/next start -H "${HOSTNAME}" -p "${PORT}"
 EOF
 RUN chmod +x /app/entrypoint.sh
 

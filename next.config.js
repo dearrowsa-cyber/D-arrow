@@ -2,8 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   
-  output: 'standalone',
-  
   productionBrowserSourceMaps: false,
   compress: true,
   poweredByHeader: false,
