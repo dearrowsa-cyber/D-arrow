@@ -93,7 +93,7 @@ export default function EditPostPage() {
     }
   };
 
-  const updateField = (key: string, value: string) => {
+  const updateField = (key: string, value: string | boolean) => {
     setForm(prev => ({ ...prev, [key]: value }));
   };
 

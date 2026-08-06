@@ -3,7 +3,7 @@ export type LocalizedString = {
   ar: string;
 };
 
-export type ProjectCategory = 'All' | 'Web Design' | 'Marketing' | 'Branding';
+export type ProjectCategory = 'All' | 'Web Design' | 'Marketing' | 'Branding' | 'Web Development' | 'UI/UX Design';
 
 export interface PortfolioProject {
   id: string;
@@ -13,7 +13,7 @@ export interface PortfolioProject {
   subtitle: LocalizedString;
   description: LocalizedString;
   imageUrl: string;
-  tags: LocalizedString;
+  tags: { en: string[]; ar: string[] };
   category: ProjectCategory[];
   challenge: LocalizedString;
   solution: LocalizedString;

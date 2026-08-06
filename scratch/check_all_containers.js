@@ -5,13 +5,9 @@ function fetchJSON(url, options = {}) {
   return new Promise((resolve, reject) => {
     const u = new URL(url);
     const opts = {
-      hostname: u.hostname,
-      port: u.port || 443,
-      path: u.pathname + u.search,
-      method: options.method || 'GET',
-      agent,
-      headers: options.headers || {},
-      timeout: 30000
+      hostname: u.hostname, port: u.port || 443,
+      path: u.pathname + u.search, method: options.method || 'GET',
+      agent, headers: options.headers || {}, timeout: 30000
     };
     if (options.body) {
       opts.headers['Content-Type'] = 'application/json';
@@ -42,24 +38,11 @@ async function main() {
   const headers = { 'Authorization': `Bearer ${token}` };
   const envId = 3;
 
-  // Get app container
   const cs = await fetchJSON(`${base}/endpoints/${envId}/docker/containers/json?all=true`, { headers });
-  const app = (cs.data || []).find(c => (c.Names || []).some(n => /d-arrow-app/.test(n)));
-  
-  if (!app) { console.log('App container not found'); return; }
-  console.log('App container:', app.Id.slice(0,12), app.State, app.Status);
-  console.log('Image:', app.Image);
-  console.log('Created:', new Date(app.Created * 1000).toISOString());
-
-  // Get last 60 lines of logs
-  const logs = await fetchJSON(
-    `${base}/endpoints/${envId}/docker/containers/${app.Id}/logs?stdout=true&stderr=true&tail=60&timestamps=false`,
-    { headers }
-  );
-  let text = typeof logs.data === 'string' ? logs.data : String(logs.data ?? '');
-  text = text.replace(/[\x00-\x08]/g, '');
-  console.log('\n=== Last 60 lines of app logs ===');
-  console.log(text);
+  console.log('=== All Containers ===');
+  (cs.data || []).forEach(c => {
+    console.log(`- Name: ${c.Names.join(', ')} | State: ${c.State} | Status: ${c.Status}`);
+  });
 }
 
 main().catch(e => console.error('FATAL:', e));

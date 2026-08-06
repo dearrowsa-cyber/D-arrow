@@ -6,8 +6,8 @@ import RobotsEditor from '@/components/seo/RobotsEditor';
 interface RobotRule {
   id?: string;
   userAgent: string;
-  allow?: string;
-  disallow?: string;
+  directive: string;
+  path: string;
 }
 
 export default function RobotsManager() {

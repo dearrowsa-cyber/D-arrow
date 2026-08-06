@@ -11,7 +11,7 @@ import { projects, ProjectCategory } from '@/lib/data/portfolio';
 // Tiny dark placeholder to prevent white flash during image load
 const DARK_BLUR = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPj/HwADBwIAMCbHYQAAAABJRU5ErkJggg==';
 
-const categories: ProjectCategory[] = ['All', 'Web Design', 'Marketing', 'Branding'];
+const categories: ProjectCategory[] = ['All', 'Web Design', 'Marketing', 'Branding', 'Web Development', 'UI/UX Design'];
 
 const Portfolio = () => {
   const { t, lang } = useLanguage();

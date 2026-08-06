@@ -153,7 +153,7 @@ export default function SchemaManager() {
           <button className="admin-btn admin-btn-ghost" style={{ marginBottom: '16px' }} onClick={() => setShowBuilder(false)}>
             &larr; Back to List
           </button>
-          <SchemaBuilder initialType={currentSchema.type} initialData={currentSchema.jsonData} onSave={handleSaveTrigger} />
+          <SchemaBuilder initialType={currentSchema.type ?? 'Article'} initialData={currentSchema.jsonData ?? ''} onSave={handleSaveTrigger} />
         </div>
       ) : (
         <div className="admin-card" style={{ padding: 0, overflowX: 'auto' }}>

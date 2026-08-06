@@ -71,6 +71,7 @@ export default function RichTextEditor({ value, onChange, dir = 'ltr', placehold
   return (
     <div className={`rich-text-container ${dir === 'rtl' ? 'rtl-editor' : ''}`} dir={dir}>
       <ReactQuill
+        // @ts-expect-error - react-quill-new supports ref via forwarding but types don't expose it
         ref={quillRef}
         theme="snow"
         value={value}

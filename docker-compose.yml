@@ -1,64 +1,141 @@
-version: '3.8'
+version: '3.9'
+
+# Generic docker-compose for D-Arrow Next.js app + PostgreSQL (admin DB).
+# Works on any Linux VPS with Docker >= 24 and on Portainer Stacks (paste as-is).
+#
+# Quick start (VPS shell, after uploading this repo or git pull):
+#   cp .env.example .env
+#   # edit .env — set all secrets, NEXT_PUBLIC_APP_URL, and PG passwords.
+#   docker compose up -d --build
+# Then point your reverse proxy (Nginx / NPM / Traefik / Caddy) to 127.0.0.1:3031.
 
 services:
+  # ----------------------------
+  # 1) PostgreSQL (Prisma datasource)
+  # ----------------------------
+  d-arrow-postgres:
+    image: postgres:16-alpine
+    container_name: d-arrow-postgres
+    restart: unless-stopped
+    user: "999:999"
+    shm_size: 128m
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-darrow} -d ${POSTGRES_DATABASE:-darrow}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    environment:
+      POSTGRES_USER:     "${POSTGRES_USER:-darrow}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-changeme_postgres_in_env}"
+      POSTGRES_DB:       "${POSTGRES_DATABASE:-darrow}"
+      PGDATA:            "/var/lib/postgresql/data/pgdata"
+      TZ:                 Asia/Riyadh
+    volumes:
+      - d_arrow_pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
+    # Do NOT expose 5432 on the host unless you need external access. Keep it
+    # internal to the compose project — the app reaches it via DNS name.
+
+  # ----------------------------
+  # 2) D-Arrow Next.js web app
+  # ----------------------------
   d-arrow-app:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: d-arrow-app-new
-    user: "root"
+      # If you already pushed a prebuilt image to GHCR/Docker Hub, replace the
+      # `build:` block above with:  image: ghcr.io/your-org/d-arrow-app:latest
+    container_name: d-arrow-app
     restart: unless-stopped
+    depends_on:
+      d-arrow-postgres:
+        condition: service_healthy
     ports:
+      # Bind to loopback only — terminate TLS at your reverse proxy.
+      # To expose directly (NOT recommended without a proxy), use "3000:3000".
       - "127.0.0.1:3031:3000"
-    networks:
-      - default
-      - n8n-ollama-shared
     environment:
-      PORT: "3000"
-      HOST: "0.0.0.0"
-      HOSTNAME: "0.0.0.0"
-      NODE_ENV: "production"
-      OLLAMA_BASE_URL: "http://ollama:11434"
-      NEXT_PUBLIC_APP_URL: "${NEXT_PUBLIC_APP_URL}"
-      NEXT_PUBLIC_API_URL: "${NEXT_PUBLIC_API_URL}"
-      NEXT_PUBLIC_CHATBOT_ENABLED: "${NEXT_PUBLIC_CHATBOT_ENABLED}"
-      DATABASE_URL: "${DATABASE_URL}"
-      POSTGRES_URL: "${POSTGRES_URL}"
-      POSTGRES_PRISMA_URL: "${POSTGRES_PRISMA_URL}"
-      POSTGRES_URL_NON_POOLING: "${POSTGRES_URL_NON_POOLING}"
-      DATABASE_URL_UNPOOLED: "${DATABASE_URL_UNPOOLED}"
-      POSTGRES_USER: "${POSTGRES_USER}"
-      POSTGRES_HOST: "${POSTGRES_HOST}"
-      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
-      POSTGRES_DATABASE: "${POSTGRES_DATABASE}"
-      PGDATABASE: "${PGDATABASE}"
-      PGHOST: "${PGHOST}"
-      PGPASSWORD: "${PGPASSWORD}"
-      PGUSER: "${PGUSER}"
-      NEON_PROJECT_ID: "${NEON_PROJECT_ID}"
-      CONTACT_RECIPIENT: "${CONTACT_RECIPIENT}"
-      SMTP_HOST: "${SMTP_HOST}"
-      SMTP_PORT: "${SMTP_PORT}"
-      SMTP_USER: "${SMTP_USER}"
-      SMTP_PASS: "${SMTP_PASS}"
-      SMTP_FROM: "${SMTP_FROM}"
-      SMTP_SECURE: "${SMTP_SECURE}"
-      SMTP_REJECT_UNAUTHORIZED: "${SMTP_REJECT_UNAUTHORIZED}"
-      ZAI_API_KEY: "${ZAI_API_KEY}"
-      ZAI_API_BASE: "${ZAI_API_BASE}"
-      ZAI_MODEL: "${ZAI_MODEL}"
-      NEXT_PUBLIC_N8N_WEBHOOK_URL: "${NEXT_PUBLIC_N8N_WEBHOOK_URL}"
-      CRON_SECRET: "${CRON_SECRET}"
-      BLOG_API_SECRET_KEY: "${BLOG_API_SECRET_KEY}"
-      ADMIN_PASSWORD: "${ADMIN_PASSWORD}"
-      JWT_SECRET: "${JWT_SECRET}"
+      NODE_ENV:              production
+      PORT:                  "3000"
+      HOSTNAME:              "0.0.0.0"
+
+      # --- Public site URLs (change to your real domain) ---
+      NEXT_PUBLIC_APP_URL:   "${NEXT_PUBLIC_APP_URL:-http://localhost:3031}"
+      NEXT_PUBLIC_API_URL:   "${NEXT_PUBLIC_API_URL:-${NEXT_PUBLIC_APP_URL:-http://localhost:3031}}"
+
+      # --- Chatbot feature toggle ---
+      NEXT_PUBLIC_CHATBOT_ENABLED: "${NEXT_PUBLIC_CHATBOT_ENABLED:-true}"
+
+      # --- Prisma / Postgres (internal service name = d-arrow-postgres) ---
+      DATABASE_URL:          "postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@d-arrow-postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public"
+      # Alias vars some codepaths read:
+      POSTGRES_URL:          "postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@d-arrow-postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public"
+      POSTGRES_PRISMA_URL:   "postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@d-arrow-postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public&pgbouncer=false"
+      POSTGRES_URL_NON_POOLING: "postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@d-arrow-postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public"
+      DATABASE_URL_UNPOOLED: "postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@d-arrow-postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public"
+      PGHOST:                "d-arrow-postgres"
+      PGDATABASE:            "${POSTGRES_DATABASE:-darrow}"
+      PGUSER:                "${POSTGRES_USER:-darrow}"
+      PGPASSWORD:            "${POSTGRES_PASSWORD:-changeme_postgres_in_env}"
+
+      # --- Optional Ollama integration (comment out/remove if unused) ---
+      OLLAMA_BASE_URL:       "${OLLAMA_BASE_URL:-http://ollama:11434}"
+
+      # --- Email (SMTP) ---
+      CONTACT_RECIPIENT:     "${CONTACT_RECIPIENT:-}"
+      SMTP_HOST:             "${SMTP_HOST:-}"
+      SMTP_PORT:             "${SMTP_PORT:-587}"
+      SMTP_USER:             "${SMTP_USER:-}"
+      SMTP_PASS:             "${SMTP_PASS:-}"
+      SMTP_FROM:             "${SMTP_FROM:-}"
+      SMTP_SECURE:           "${SMTP_SECURE:-false}"
+      SMTP_REJECT_UNAUTHORIZED: "${SMTP_REJECT_UNAUTHORIZED:-true}"
+
+      # --- LLM / AI ---
+      ZAI_API_KEY:           "${ZAI_API_KEY:-}"
+      ZAI_API_BASE:          "${ZAI_API_BASE:-}"
+      ZAI_MODEL:             "${ZAI_MODEL:-}"
+      OPENAI_API_KEY:        "${OPENAI_API_KEY:-}"
+      ANTHROPIC_API_KEY:     "${ANTHROPIC_API_KEY:-}"
+      GOOGLE_API_KEY:        "${GOOGLE_API_KEY:-}"
+      OPENROUTER_API_KEY:    "${OPENROUTER_API_KEY:-}"
+
+      # --- Integrations ---
+      NEXT_PUBLIC_N8N_WEBHOOK_URL: "${NEXT_PUBLIC_N8N_WEBHOOK_URL:-}"
+      CRON_SECRET:           "${CRON_SECRET:-change_me_to_random_string}"
+      BLOG_API_SECRET_KEY:   "${BLOG_API_SECRET_KEY:-change_me_to_random_string}"
+      ADMIN_PASSWORD:        "${ADMIN_PASSWORD:-admin_change_me}"
+      JWT_SECRET:            "${JWT_SECRET:-change_me_to_long_random_string_64chars}"
+
+      # --- Stripe / Store (optional) ---
+      STRIPE_SECRET_KEY:     "${STRIPE_SECRET_KEY:-}"
+      STRIPE_PUBLISHABLE_KEY: "${STRIPE_PUBLISHABLE_KEY:-}"
+      STRIPE_WEBHOOK_SECRET: "${STRIPE_WEBHOOK_SECRET:-}"
+
     volumes:
       - d_arrow_uploads:/app/public/uploads
-
-networks:
-  default:
-  n8n-ollama-shared:
-    external: true
+      - d_arrow_data:/app/data
+    networks:
+      - backend
+      # If you run a shared Traefik/NPM network, attach it here. Otherwise
+      # remove the line and the networks entry at the bottom.
+      # - proxy
 
 volumes:
+  d_arrow_pgdata:
+    # Uncomment and rename in Portainer UI to retain across stack re-deploys:
+    # name: d-arrow-pgdata
   d_arrow_uploads:
+  d_arrow_data:
+
+networks:
+  backend:
+    internal: false
+  # Optional: attach a pre-existing reverse-proxy network created outside this
+  # compose (e.g. for Traefik / Nginx Proxy Manager). In Portainer Stacks,
+  # set this network's scope to "Swarm-wide" or declare it as external below:
+  # proxy:
+  #   external: true
+  #   name: proxy

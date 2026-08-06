@@ -3,66 +3,146 @@ import prisma from '@/lib/prisma';
 
 export async function POST(req: NextRequest) {
   try {
-    const templateProduct = {
-      name: 'Full E-Commerce Store Template + Admin Panel',
-      nameAr: 'قالب متجر إلكتروني متكامل + لوحة تحكم',
-      slug: 'ecommerce-store-admin-template',
-      price: 499.0,
-      salePrice: 299.0,
-      currency: 'SAR',
-      category: 'Templates',
-      categoryAr: 'قوالب ومتاجر',
-      type: 'template',
-      downloadUrl: '/downloads/ecommerce-store-template.zip',
-      images: JSON.stringify([
-        '/projects-showcase/store-preview.png',
-        '/main-one.png',
-        '/connect2.png'
-      ]),
-      featuresAr: JSON.stringify([
-        'لوحة تحكم احترافية شاملة لإدارة المنتجات والطلبات والعملاء',
-        'دعم بوابات الدفع الإلكتروني (مدى، الفيزا، Stripe، والتحويل البنكي)',
-        'تصميم متجاوب وسريع جداً مبني بتقنية Next.js & React & TypeScript',
-        'نظام كوبونات الخصم وتتبع المبيعات والتقارير المالية المباشرة',
-        'دعم كامل للغتين العربية والإنجليزية ومعادلة SEO مدمجة',
-        'كود مصدري نقي وسهل التخصيص والربط مع أي قاعدة بيانات'
-      ]),
-      features: JSON.stringify([
-        'Comprehensive Admin Panel for products, orders, and customers',
-        'Multi-payment gateway integration (Mada, Visa, Stripe, Bank transfer)',
-        'Responsive & ultra-fast UI built with Next.js & React & TypeScript',
-        'Coupon code system, sales analytics & financial reports',
-        'Full Arabic & English support with built-in SEO engine',
-        'Clean source code with easy database integration'
-      ]),
-      description: 'A full-featured e-commerce store template with an interactive admin panel built using Next.js & TypeScript.',
-      descriptionAr: `<div style="line-height: 1.8; font-size: 16px;">
-        <p style="margin-bottom: 16px; color: #D1D5DB;">
-          قالب وسكريبت متجر إلكتروني متكامل مبني بأحدث تقنيات <strong>Next.js</strong> و <strong>TypeScript</strong>، يأتي مجهزاً بلوحة تحكم تفاعلية وشاملة لإدارة المنتجات، الطلبات، الخصومات، العملاء والتقارير المالية بسهولة تامة.
-        </p>
-        
-        <h3 style="color: #FF4D6D; margin-top: 24px; margin-bottom: 12px; font-size: 18px;">مميزات القالب ولوحة التحكم:</h3>
-        <ul style="padding-right: 20px; color: #9CA3AF; display: flex; flex-direction: column; gap: 8px;">
-          <li><strong style="color: #E6E6EA;">إدارة المنتجات:</strong> إضافة، تعديل، حذف، رفع صور متعددة، وتحديد فئات وأسعار العروض.</li>
-          <li><strong style="color: #E6E6EA;">إدارة الطلبات:</strong> تتبع حالة الطلبات (قيد الانتظار، مدفوع، مكتمل) وطباعة الفواتير.</li>
-          <li><strong style="color: #E6E6EA;">نظام الكوبونات:</strong> إنشاء قسائم خصم بنسبة مئوية أو قيمة ثابتة وتحديد تاريخ الانتهاء.</li>
-          <li><strong style="color: #E6E6EA;">بوابات الدفع:</strong> جاهز للربط الفوري مع مدى، Stripe، التحويل البنكي وبوابات الدفع المحلية.</li>
-          <li><strong style="color: #E6E6EA;">لوحة تحكم إحصائية:</strong> ملخص يومي وشهر للمبيعات وأداء المتجر.</li>
-        </ul>
-      </div>`,
-      status: 'published',
-      featured: true,
-    };
+    const productsToSeed = [
+      {
+        name: 'Saudi E-Commerce Store & Admin System',
+        nameAr: 'قالب المتجر الإلكتروني السعودي المتكامل + لوحة التحكم',
+        slug: 'saudi-ecommerce-store-system',
+        price: 499.0,
+        salePrice: 299.0,
+        currency: 'SAR',
+        category: 'Ecommerce',
+        categoryAr: 'متاجر إلكترونية',
+        type: 'template',
+        downloadUrl: '/downloads/ecommerce-store-template.zip',
+        images: JSON.stringify([
+          'https://images.unsplash.com/photo-1556742049-0a67e6f49969?auto=format&fit=crop&w=800&q=90',
+          'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=90'
+        ]),
+        featuresAr: JSON.stringify([
+          'لوحة تحكم احترافية شاملة لإدارة المنتجات والطلبات والعملاء',
+          'دعم بوابات الدفع الإلكتروني السعودية (مدى، أبل باي، سداد، فيزا)',
+          'تصميم متجاوب وسريع جداً مبني بتقنية Next.js & React & Tailwind',
+          'نظام كوبونات الخصم وتتبع المبيعات والتقارير المباشرة',
+          'دعم كامل للغتين العربية والإنجليزية ومعادلة SEO مدمجة'
+        ]),
+        features: JSON.stringify([
+          'Comprehensive Admin Panel for products, orders, and customers',
+          'Multi-payment gateway integration (Mada, Apple Pay, Visa)',
+          'Responsive & ultra-fast UI built with Next.js & React',
+          'Coupon code system, sales analytics & financial reports'
+        ]),
+        description: 'قالب وسكريبت متجر إلكتروني سعودي حديث مجهز بلوحة تحكم وبوابة دفع تفاعلية.',
+        descriptionAr: 'قالب وسكريبت متجر إلكتروني سعودي حديث مجهز بلوحة تحكم وبوابة دفع تفاعلية وتصفح المنتجات.',
+        status: 'published',
+        featured: true,
+      },
+      {
+        name: 'Saudi Real Estate Platform & CRM',
+        nameAr: 'قالب المنصة العقارية وإدارة الأملاك (Real Estate Platform)',
+        slug: 'saudi-real-estate-platform',
+        price: 899.0,
+        salePrice: 599.0,
+        currency: 'SAR',
+        category: 'Real Estate',
+        categoryAr: 'عقارات وتطوير',
+        type: 'template',
+        downloadUrl: '/downloads/real-estate-template.zip',
+        images: JSON.stringify([
+          'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=90',
+          'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=90'
+        ]),
+        featuresAr: JSON.stringify([
+          'منظومة فلترة وتصفح العقارات بالمخططات والمدن والأسعار',
+          'نظام حجز ومعاينة فورية وربط مع واتساب المستشار العقاري',
+          'خارطة تفاعلية لعرض المشاريع السكنية والتجارية بالمملكة',
+          'لوحة تحكم لإضافة المشاريع وتتبع طلبات المستثمرين'
+        ]),
+        features: JSON.stringify([
+          'Real estate listing and interactive search engine',
+          'Direct booking & WhatsApp agent integration',
+          'Interactive map for residential & commercial projects'
+        ]),
+        description: 'نظام متكامل للمكاتب والمطورين العقاريين لعرض المشاريع واستقبال طلبات الشراء.',
+        descriptionAr: 'نظام متكامل للمكاتب والمطورين العقاريين لعرض المشاريع واستقبال طلبات الشراء والتحليل.',
+        status: 'published',
+        featured: true,
+      },
+      {
+        name: 'Influencer Marketing Platform SaaS',
+        nameAr: 'منصة تسويق المؤثرين والحملات الإعلانية (SaaS Platform)',
+        slug: 'influencer-marketing-platform',
+        price: 1299.0,
+        salePrice: 849.0,
+        currency: 'SAR',
+        category: 'SaaS',
+        categoryAr: 'أنظمة سحابية',
+        type: 'software',
+        downloadUrl: '/downloads/influencer-platform.zip',
+        images: JSON.stringify([
+          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=90'
+        ]),
+        featuresAr: JSON.stringify([
+          'نظام إدارة وتتبع حملات المشاهير والمؤثرين',
+          'تحليلات وصول الحملات ونسبة التفاعل والعائد على الاستثمار ROI',
+          'ربط مع أنظمة العملاء وإرسال التقارير التلقائية'
+        ]),
+        features: JSON.stringify([
+          'Influencer campaign management & analytics',
+          'ROI calculation & automatic performance reporting'
+        ]),
+        description: 'منصة سحابية لإدارة الحملات الإعلانية مع المؤثرين والمشاهير.',
+        descriptionAr: 'منصة سحابية لإدارة الحملات الإعلانية مع المؤثرين والمشاهير وتتبع نتائج الإعلانات.',
+        status: 'published',
+        featured: false,
+      },
+      {
+        name: 'Digital Marketing & SEO Mastery Course',
+        nameAr: 'كورس التسويق الرقمي وتصدر محركات البحث (SEO Course)',
+        slug: 'digital-marketing-seo-course',
+        price: 299.0,
+        salePrice: 149.0,
+        currency: 'SAR',
+        category: 'Courses',
+        categoryAr: 'كورسات وأدوات',
+        type: 'course',
+        downloadUrl: '/downloads/seo-course-access.pdf',
+        images: JSON.stringify([
+          'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=800&q=90'
+        ]),
+        featuresAr: JSON.stringify([
+          'شرح عملي ومبسط لاستراتيجيات تصدر نتائج البحث الأولى Google',
+          'أدوات وتحليلات الكلمات المفتاحية بالسوق السعودي والخليجي',
+          'شهادة إتمام ودعم مباشر عبر مجتمع دي آرو'
+        ]),
+        features: JSON.stringify([
+          'Comprehensive SEO & Search Engine dominance course',
+          'Keyword strategy tailored for Saudi & Gulf markets'
+        ]),
+        description: 'دورة تدريبية شاملة لتنميتها أعمالك وحصيلة مبيعاتك عبر محركات البحث.',
+        descriptionAr: 'دورة تدريبية شاملة لتنميتها أعمالك وحصيلة مبيعاتك عبر محركات البحث والتسويق.',
+        status: 'published',
+        featured: true,
+      }
+    ];
 
-    const product = await prisma.product.upsert({
-      where: { slug: templateProduct.slug },
-      update: templateProduct,
-      create: templateProduct,
+    const results = [];
+    for (const item of productsToSeed) {
+      const p = await prisma.product.upsert({
+        where: { slug: item.slug },
+        update: item,
+        create: item,
+      });
+      results.push(p);
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: `تم زرع/تحديث ${results.length} من المنتجات والقوالب بنجاح في قاعدة البيانات!`,
+      products: results
     });
-
-    return NextResponse.json({ success: true, message: 'تم زرع/تحديث قالب المتجر الإلكتروني ولوحة التحكم بنجاح', product });
   } catch (error) {
     console.error('Error seeding store template:', error);
-    return NextResponse.json({ success: false, error: 'فشل في إضافة/تحديث قالب المتجر' }, { status: 500 });
+    return NextResponse.json({ success: false, error: 'فشل في إضافة/تحديث المنتجات' }, { status: 500 });
   }
 }

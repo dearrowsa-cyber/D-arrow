@@ -1,0 +1,132 @@
+version: '3.9'
+
+# =============================================================================
+# D-Arrow  ·  Portainer-Ready Stack YAML
+# =============================================================================
+# How to use in Portainer:
+#   1) Open Portainer → your VPS endpoint → Stacks → "Add stack"
+#   2) Name: d-arrow     ·     Method: Web editor
+#   3) Paste this ENTIRE file into the editor
+#   4) Under "Environment variables", copy every variable from .env.example
+#      (the ones below marked "REQUIRED" MUST be set — Portainer won't prompt).
+#   5) Click Deploy the stack.
+#
+# Post-deploy:
+#   - App listens on container port 3000. Attach your proxy network / expose a
+#     host port below. Default host binding is  127.0.0.1:3031 → 3000 .
+#   - After first run, the entrypoint runs `prisma migrate deploy` automatically.
+# =============================================================================
+
+x-app-env: &app-env
+  NODE_ENV:              production
+  PORT:                  "3000"
+  HOSTNAME:              "0.0.0.0"
+  NEXT_PUBLIC_CHATBOT_ENABLED: "${NEXT_PUBLIC_CHATBOT_ENABLED:-true}"
+  OLLAMA_BASE_URL:       "${OLLAMA_BASE_URL:-http://ollama:11434}"
+  CONTACT_RECIPIENT:     "${CONTACT_RECIPIENT:-}"
+  SMTP_HOST:             "${SMTP_HOST:-}"
+  SMTP_PORT:             "${SMTP_PORT:-587}"
+  SMTP_USER:             "${SMTP_USER:-}"
+  SMTP_PASS:             "${SMTP_PASS:-}"
+  SMTP_FROM:             "${SMTP_FROM:-}"
+  SMTP_SECURE:           "${SMTP_SECURE:-false}"
+  SMTP_REJECT_UNAUTHORIZED: "${SMTP_REJECT_UNAUTHORIZED:-true}"
+  ZAI_API_KEY:           "${ZAI_API_KEY:-}"
+  ZAI_API_BASE:          "${ZAI_API_BASE:-}"
+  ZAI_MODEL:             "${ZAI_MODEL:-}"
+  OPENAI_API_KEY:        "${OPENAI_API_KEY:-}"
+  ANTHROPIC_API_KEY:     "${ANTHROPIC_API_KEY:-}"
+  GOOGLE_API_KEY:        "${GOOGLE_API_KEY:-}"
+  OPENROUTER_API_KEY:    "${OPENROUTER_API_KEY:-}"
+  NEXT_PUBLIC_N8N_WEBHOOK_URL: "${NEXT_PUBLIC_N8N_WEBHOOK_URL:-}"
+  CRON_SECRET:           "${CRON_SECRET:-change_me}"
+  BLOG_API_SECRET_KEY:   "${BLOG_API_SECRET_KEY:-change_me}"
+  ADMIN_PASSWORD:        "${ADMIN_PASSWORD:-admin_change_me}"
+  JWT_SECRET:            "${JWT_SECRET:-please_change_this_to_a_64char_random_value}"
+  STRIPE_SECRET_KEY:     "${STRIPE_SECRET_KEY:-}"
+  STRIPE_PUBLISHABLE_KEY: "${STRIPE_PUBLISHABLE_KEY:-}"
+  STRIPE_WEBHOOK_SECRET: "${STRIPE_WEBHOOK_SECRET:-}"
+
+x-pg-env: &pg-env
+  POSTGRES_USER:         "${POSTGRES_USER:-darrow}"
+  POSTGRES_PASSWORD:     "${POSTGRES_PASSWORD:-REQUIRED_CHANGE_ME}"
+  POSTGRES_DB:           "${POSTGRES_DATABASE:-darrow}"
+  PGDATA:                "/var/lib/postgresql/data/pgdata"
+  TZ:                    Asia/Riyadh
+
+services:
+  # ---------------------------------------------------------------------------
+  # PostgreSQL — Prisma datasource, persists to named volume
+  # ---------------------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    user: "999:999"
+    shm_size: 128m
+    stop_grace_period: 60s
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-darrow} -d ${POSTGRES_DATABASE:-darrow}"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    environment: *pg-env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks: [backend]
+
+  # ---------------------------------------------------------------------------
+  # D-Arrow Next.js web app — image is built in the Stack from project repo
+  # If you pre-publish an image, replace `build:` with `image: ghcr.io/...`
+  # ---------------------------------------------------------------------------
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    # image: ghcr.io/dearrowsa-cyber/d-arrow:latest   # <— uncomment & delete build: if using a prebuilt image
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      # Default: expose only on loopback. Put your real reverse proxy in front.
+      - "127.0.0.1:3031:3000"
+      # --- Traefik users — delete the line above, uncomment labels below,
+      #     and add the proxy network to `networks:` at the bottom of this file.
+    # labels:
+    #   - "traefik.enable=true"
+    #   - "traefik.docker.network=proxy"
+    #   - "traefik.http.routers.darrow.rule=Host(`your-domain.com`)"
+    #   - "traefik.http.routers.darrow.entrypoints=websecure"
+    #   - "traefik.http.routers.darrow.tls.certresolver=le"
+    #   - "traefik.http.services.darrow.loadbalancer.server.port=3000"
+    environment:
+      <<: *app-env
+      NEXT_PUBLIC_APP_URL: "${NEXT_PUBLIC_APP_URL:-http://localhost:3031}"           # REQUIRED — e.g. https://d-arrow.com
+      NEXT_PUBLIC_API_URL: "${NEXT_PUBLIC_API_URL:-${NEXT_PUBLIC_APP_URL:-http://localhost:3031}}"
+      DATABASE_URL:          "postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-REQUIRED_CHANGE_ME}@postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public"
+      POSTGRES_URL:          "postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-REQUIRED_CHANGE_ME}@postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public"
+      POSTGRES_PRISMA_URL:   "postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-REQUIRED_CHANGE_ME}@postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public&pgbouncer=false"
+      POSTGRES_URL_NON_POOLING: "postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-REQUIRED_CHANGE_ME}@postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public"
+      DATABASE_URL_UNPOOLED: "postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-REQUIRED_CHANGE_ME}@postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public"
+      PGHOST:                "postgres"
+      PGDATABASE:            "${POSTGRES_DATABASE:-darrow}"
+      PGUSER:                "${POSTGRES_USER:-darrow}"
+      PGPASSWORD:            "${POSTGRES_PASSWORD:-REQUIRED_CHANGE_ME}"
+    volumes:
+      - uploads:/app/public/uploads
+      - appdata:/app/data
+    networks: [backend]
+    #  - proxy   # <— uncomment for Traefik / shared reverse-proxy network
+
+volumes:
+  pgdata:
+  uploads:
+  appdata:
+
+networks:
+  backend:
+    driver: bridge
+  # proxy:                                    # <— uncomment for Traefik/NPM shared network
+  #   external: true
+  #   name: proxy

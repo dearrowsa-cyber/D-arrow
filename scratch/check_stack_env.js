@@ -10,8 +10,7 @@ function fetchJSON(url, options = {}) {
       path: u.pathname + u.search,
       method: options.method || 'GET',
       agent,
-      headers: options.headers || {},
-      timeout: 30000
+      headers: options.headers || {}
     };
     if (options.body) {
       opts.headers['Content-Type'] = 'application/json';
@@ -26,7 +25,6 @@ function fetchJSON(url, options = {}) {
       });
     });
     req.on('error', reject);
-    req.on('timeout', () => req.destroy(new Error('timeout')));
     if (options.body) req.write(options.body);
     req.end();
   });
@@ -34,32 +32,26 @@ function fetchJSON(url, options = {}) {
 
 async function main() {
   const base = 'https://apps.d-arrow.com/api';
-  const auth = await fetchJSON(`${base}/auth`, {
+  const authRes = await fetchJSON(`${base}/auth`, {
     method: 'POST',
     body: JSON.stringify({ username: 'd-arrow', password: 'D-Arrow.2026' })
   });
-  const token = auth.data.jwt;
+  const token = authRes.data.jwt;
   const headers = { 'Authorization': `Bearer ${token}` };
-  const envId = 3;
-
-  // Get app container
-  const cs = await fetchJSON(`${base}/endpoints/${envId}/docker/containers/json?all=true`, { headers });
-  const app = (cs.data || []).find(c => (c.Names || []).some(n => /d-arrow-app/.test(n)));
   
-  if (!app) { console.log('App container not found'); return; }
-  console.log('App container:', app.Id.slice(0,12), app.State, app.Status);
-  console.log('Image:', app.Image);
-  console.log('Created:', new Date(app.Created * 1000).toISOString());
-
-  // Get last 60 lines of logs
-  const logs = await fetchJSON(
-    `${base}/endpoints/${envId}/docker/containers/${app.Id}/logs?stdout=true&stderr=true&tail=60&timestamps=false`,
-    { headers }
-  );
-  let text = typeof logs.data === 'string' ? logs.data : String(logs.data ?? '');
-  text = text.replace(/[\x00-\x08]/g, '');
-  console.log('\n=== Last 60 lines of app logs ===');
-  console.log(text);
+  const stacks = await fetchJSON(`${base}/stacks`, { headers });
+  const allStacks = Array.isArray(stacks.data) ? stacks.data : [];
+  const stack = allStacks.find(s => s.Name.includes('d-arrow'));
+  
+  if (!stack) { console.log('No d-arrow stack found. All stacks:', allStacks.map(s => s.Name)); return; }
+  
+  console.log('Stack:', stack.Name, 'ID:', stack.Id);
+  console.log('\n=== Environment Variables ===');
+  for (const e of (stack.Env || [])) {
+    // Mask password values for safety
+    const val = /password|secret|key|jwt/i.test(e.name) ? e.value.slice(0,4) + '****' : e.value;
+    console.log(`  ${e.name} = ${val}`);
+  }
 }
 
 main().catch(e => console.error('FATAL:', e));

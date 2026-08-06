@@ -160,8 +160,8 @@ export default function SeoDashboard() {
               </tr>
             </thead>
             <tbody>
-              {data?.brandKeywords?.length > 0 ? (
-                data.brandKeywords.map((kw: KeywordStat, i: number) => (
+              {(data?.brandKeywords?.length ?? 0) > 0 ? (
+                data!.brandKeywords.map((kw: KeywordStat, i: number) => (
                   <tr key={i}>
                     <td style={{ fontWeight: 500 }}>{kw.keyword}</td>
                     <td style={{ color: kw.position <= 3 ? '#10B981' : '#FFF' }}>
@@ -197,8 +197,8 @@ export default function SeoDashboard() {
               </tr>
             </thead>
             <tbody>
-              {data?.generalKeywords?.length > 0 ? (
-                data.generalKeywords.map((kw: KeywordStat, i: number) => (
+              {(data?.generalKeywords?.length ?? 0) > 0 ? (
+                data!.generalKeywords.map((kw: KeywordStat, i: number) => (
                   <tr key={i}>
                     <td style={{ fontWeight: 500 }}>{kw.keyword}</td>
                     <td style={{ color: kw.position <= 10 ? '#10B981' : '#FFF' }}>
@@ -249,11 +249,11 @@ export default function SeoDashboard() {
           </div>
         )}
 
-        {data?.recentErrors?.length > 0 ? (
+        {(data?.recentErrors?.length ?? 0) > 0 ? (
           <div>
             <h4 style={{ marginBottom: '16px', color: '#E5E7EB' }}>أبرز الأخطاء الحالية:</h4>
             <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: '8px' }}>
-              {data.recentErrors.map((err: { page: string; error: string }, i: number) => (
+              {data!.recentErrors.map((err: { page: string; error: string }, i: number) => (
                 <li key={i} style={{ background: '#1F2937', padding: '12px 16px', borderRadius: '6px', display: 'flex', gap: '12px', alignItems: 'center' }}>
                   <AlertTriangle size={16} color="#EF4444" style={{ flexShrink: 0 }} />
                   <span style={{ color: '#9CA3AF', fontSize: '14px', flexShrink: 0 }}>[{err.page}]</span>

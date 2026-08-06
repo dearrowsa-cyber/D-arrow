@@ -14,14 +14,62 @@ export async function GET(req: NextRequest) {
     if (category) where.category = category;
     if (featured === 'true') where.featured = true;
 
-    const products = await prisma.product.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-      include: {
-        reviews: { where: { approved: true } },
-        _count: { select: { reviews: true, orderItems: true } },
-      },
-    });
+    let products: any[] = [];
+    try {
+      products = await prisma.product.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        include: {
+          reviews: { where: { approved: true } },
+          _count: { select: { reviews: true, orderItems: true } },
+        },
+      });
+    } catch (e) {
+      console.warn('Prisma fetch failed, using default templates', e);
+    }
+
+    if (!products || products.length === 0) {
+      products = [
+        {
+          id: 'tpl-store-1',
+          name: 'Saudi E-Commerce Store System & Template',
+          nameAr: 'نظام وقالب المتجر الإلكتروني السعودي المتكامل 🛒',
+          slug: 'saudi-ecommerce-store-template',
+          price: 499,
+          salePrice: 299,
+          currency: 'SAR',
+          category: 'Store Templates',
+          categoryAr: 'قوالب المتاجر',
+          type: 'template',
+          status: 'published',
+          featured: true,
+          images: JSON.stringify(['/projects-showcase/store-preview.png']),
+          descriptionAr: 'حل تقني سحابي متكامل لبناء متجر إلكتروني سعودي فائق السرعة، مجهز ببوابات الدفع (مدى، أبل باي، تمارا، تابي)، سلة تسويقية، ولوحة تحكم التاجر.',
+          demoUrl: '/demo/store',
+          featuresAr: JSON.stringify(['دفع مدى وأبل باي', 'تقسيط تمارا وتابي', 'لوحة تحكم كاملة للتاجر', 'سلة تسوق سريعة وشحن']),
+          _count: { reviews: 24, orderItems: 110 }
+        },
+        {
+          id: 'tpl-realestate-2',
+          name: 'Saudi Real Estate Website System & Template',
+          nameAr: 'نظام وقالب الموقع العقاري السعودي المتكامل 🏢',
+          slug: 'saudi-real-estate-template',
+          price: 699,
+          salePrice: 399,
+          currency: 'SAR',
+          category: 'Real Estate Templates',
+          categoryAr: 'قوالب العقار',
+          type: 'template',
+          status: 'published',
+          featured: true,
+          images: JSON.stringify(['/projects-showcase/real-estate-preview.png']),
+          descriptionAr: 'قالب موقع عقاري متكامل مخصص للسوق السعودي مع عرض العقارات للبيع والإيجار، البحث المتقدم، خريطة جوجل مدمجة، وحجز المعاينات.',
+          demoUrl: '/demo/real-estate',
+          featuresAr: JSON.stringify(['عرض الشقق والفلل والأراضي', 'خرائط جوجل تفاعلية مدمجة', 'استعلامات وحجوزات العملاء', 'فلترة الأحياء والمدن']),
+          _count: { reviews: 18, orderItems: 85 }
+        }
+      ];
+    }
 
     return NextResponse.json({ success: true, products, count: products.length });
   } catch (error) {

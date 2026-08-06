@@ -45,7 +45,7 @@ export default function NewPostPage() {
   });
   const [tagInput, setTagInput] = useState('');
 
-  const updateField = (key: string, value: string) => {
+  const updateField = (key: string, value: string | boolean) => {
     setForm(prev => ({ ...prev, [key]: value }));
   };
 

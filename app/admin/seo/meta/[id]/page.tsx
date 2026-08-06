@@ -22,7 +22,14 @@ interface SeoMeta {
 
 interface SeoAnalysisResult {
   score: number;
-  checks: { name: string; status: 'success' | 'warning' | 'error'; message: string }[];
+  checks: {
+    id: string;
+    label: string;
+    passed: boolean;
+    points: number;
+    maxPoints: number;
+  }[];
+  suggestions: string[];
 }
 
 export default function SeoMetaEditor({ params }: { params: Promise<{ id: string }> }) {

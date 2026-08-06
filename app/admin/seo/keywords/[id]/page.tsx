@@ -52,7 +52,7 @@ export default function KeywordDetail() {
       });
   }, [params.id, router]);
 
-  if (loading) return <div className="admin-content">جاري تحميل بيانات الكلمة...</div>;
+  if (loading || !data) return <div className="admin-content">جاري تحميل بيانات الكلمة...</div>;
 
   const latest = data.rankings?.[0] || { position: 0, clicks: 0, impressions: 0, ctr: 0 };
   

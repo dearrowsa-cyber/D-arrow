@@ -12,7 +12,7 @@ interface SEOScorerProps {
 }
 
 export default function SEOScorer({ title, excerpt, content, tags }: SEOScorerProps) {
-  const { language: _lang } = useLanguage();
+  const { lang: _lang } = useLanguage();
   // Ensure we use 'ar' or 'en' for logic
   const lang = _lang === 'ar' ? 'ar' : 'en';
 
