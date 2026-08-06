@@ -36,7 +36,6 @@ export default function StoreServicePage() {
   const { lang } = useLanguage();
   const isAr = lang === 'ar';
   const [activeTab, setActiveTab] = useState<'all' | 'ecommerce' | 'realestate' | 'saas'>('all');
-  const [previewModal, setPreviewModal] = useState<'none' | 'store' | 'real-estate'>('none');
 
   return (
     <div className="min-h-screen bg-[#0A0C1E] text-white pt-28 pb-20 px-4 sm:px-6 lg:px-12 relative overflow-hidden" dir={isAr ? 'rtl' : 'ltr'}>
@@ -113,30 +112,38 @@ export default function StoreServicePage() {
 
             {/* Action Buttons for Featured Application */}
             <div className="flex flex-col gap-3.5 w-full lg:w-auto flex-shrink-0">
-              <button
-                onClick={() => setPreviewModal('store')}
+              <a
+                href="/demo/store"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-6 py-4 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-black text-center flex items-center justify-center gap-3 shadow-lg shadow-[#FF4D6D]/30 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 group cursor-pointer"
               >
                 <ShoppingBag className="w-5 h-5 text-white group-hover:rotate-12 transition-transform" />
-                <span className="text-white">{isAr ? 'معاينة المتجر التفاعلي الفورية 🌐' : 'Live Interactive Demo Store'}</span>
+                <span className="text-white">{isAr ? 'فتح المتجر التفاعلي المباشر ↗️' : 'Open Live Demo Store ↗️'}</span>
                 <Sparkles className="w-4 h-4 text-white opacity-90 animate-pulse" />
-              </button>
+              </a>
               
-              <Link
+              <a
                 href="/demo/store/checkout"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-6 py-3.5 rounded-xl bg-[#14162E] hover:bg-[#FF4D6D]/15 text-white font-bold text-center flex items-center justify-center gap-2.5 border border-[#FF4D6D]/40 hover:border-[#FF4D6D] transition-all duration-300"
               >
                 <CreditCard className="w-4 h-4 text-[#FF4D6D]" />
-                <span className="text-white">{isAr ? 'تجربة صفحة الدفع 💳' : 'Test Checkout Gateway'}</span>
-              </Link>
+                <span className="text-white">{isAr ? 'صفحة الدفع المباشرة ↗️' : 'Live Checkout Demo ↗️'}</span>
+                <ExternalLink className="w-3.5 h-3.5 text-[#FF4D6D]" />
+              </a>
 
-              <Link
+              <a
                 href="/demo/store/admin"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-6 py-3.5 rounded-xl bg-[#14162E] hover:bg-[#FF9A3C]/15 text-white font-bold text-center flex items-center justify-center gap-2.5 border border-[#FF9A3C]/40 hover:border-[#FF9A3C] transition-all duration-300"
               >
                 <Layout className="w-4 h-4 text-[#FF9A3C]" />
-                <span className="text-white">{isAr ? 'لوحة تحكم التاجر 📊' : 'Merchant Control Panel'}</span>
-              </Link>
+                <span className="text-white">{isAr ? 'لوحة تحكم التاجر ↗️' : 'Merchant Dashboard ↗️'}</span>
+                <ExternalLink className="w-3.5 h-3.5 text-[#FF9A3C]" />
+              </a>
             </div>
           </div>
         </section>
@@ -180,14 +187,16 @@ export default function StoreServicePage() {
 
             {/* Action Buttons for Real Estate Template */}
             <div className="flex flex-col gap-3.5 w-full lg:w-auto flex-shrink-0">
-              <button
-                onClick={() => setPreviewModal('real-estate')}
+              <a
+                href="/demo/real-estate"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="px-6 py-4 rounded-xl bg-gradient-to-r from-[#10B981] to-[#FF9A3C] text-white font-black text-center flex items-center justify-center gap-3 shadow-lg shadow-[#10B981]/30 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 group cursor-pointer"
               >
                 <Building2 className="w-5 h-5 text-white group-hover:rotate-12 transition-transform" />
-                <span className="text-white">{isAr ? 'معاينة الموقع العقاري التفاعلية 🏢' : 'Live Interactive Real Estate Demo'}</span>
-                <Sparkles className="w-4 h-4 text-white opacity-90 animate-pulse" />
-              </button>
+                <span className="text-white">{isAr ? 'فتح المنصة العقارية المباشرة ↗️' : 'Open Live Real Estate Demo ↗️'}</span>
+                <ExternalLink className="w-4 h-4 text-white" />
+              </a>
               
               <Link
                 href="/contact"
@@ -282,20 +291,24 @@ export default function StoreServicePage() {
                 </div>
 
                 <div className="space-y-2.5 mt-4">
-                  <button
-                    onClick={() => setPreviewModal('store')}
+                  <a
+                    href="/demo/store"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
                   >
-                    <span>{isAr ? 'معاينة متجر العرض التفاعلي 🌐' : 'Preview Live Store Demo'}</span>
-                    <ArrowRight className="w-4 h-4 rotate-180" />
-                  </button>
-                  <Link
+                    <span>{isAr ? 'رابط المعاينة المباشرة ↗️' : 'Live Preview Link ↗️'}</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                  <a
                     href="/demo/store/admin"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#FF9A3C]/40 hover:border-[#FF9A3C] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
                   >
                     <Layout className="w-3.5 h-3.5 text-[#FF9A3C]" />
-                    <span>{isAr ? 'لوحة تحكم التاجر' : 'Merchant Control Panel'}</span>
-                  </Link>
+                    <span>{isAr ? 'لوحة تحكم التاجر ↗️' : 'Merchant Dashboard ↗️'}</span>
+                  </a>
                 </div>
               </div>
             )}
@@ -317,13 +330,15 @@ export default function StoreServicePage() {
                 </div>
 
                 <div className="space-y-2.5 mt-4">
-                  <button
-                    onClick={() => setPreviewModal('real-estate')}
+                  <a
+                    href="/demo/real-estate"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="w-full py-3 rounded-xl bg-gradient-to-r from-[#10B981] to-[#FF9A3C] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
                   >
-                    <span>{isAr ? 'معاينة موقع العقار التفاعلي 🌐' : 'Preview Real Estate Demo'}</span>
-                    <ArrowRight className="w-4 h-4 rotate-180" />
-                  </button>
+                    <span>{isAr ? 'رابط المعاينة المباشرة ↗️' : 'Live Demo Link ↗️'}</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
                   <Link
                     href="/projects"
                     className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#10B981]/40 hover:border-[#10B981] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
@@ -335,118 +350,188 @@ export default function StoreServicePage() {
               </div>
             )}
 
-            {/* App Item 3: Influencer Platform System */}
+            {/* App Item 3: Influencer Platform System (SaaS) */}
             {(activeTab === 'all' || activeTab === 'saas') && (
               <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
+                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF9A3C]/20 border border-[#FF9A3C]/40 text-[#FF9A3C] text-[10px] font-bold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF9A3C] animate-ping" /> {isAr ? 'منصة سحابية' : 'SaaS Platform'}
+                </div>
                 <div className="space-y-4">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF9A3C]/20 to-[#FF4D6D]/20 border border-[#FF9A3C]/30 flex items-center justify-center text-[#FF9A3C] group-hover:scale-110 transition-transform">
                     <Users className="w-6 h-6 text-[#FF9A3C]" />
                   </div>
-                  <h3 className="text-xl font-bold text-white">{isAr ? 'نظام إدارة حملات المؤثرين 🌟' : 'Influencers Campaign Platform 🌟'}</h3>
+                  <h3 className="text-xl font-bold text-white">{isAr ? 'منصة إدارة حملات المؤثرين السحابية 🌟' : 'Influencer Campaign SaaS Platform 🌟'}</h3>
                   <p className="text-slate-300 text-sm leading-relaxed">
-                    {isAr ? 'منصة سحابية متكاملة لربط العلامات التجارية بالمؤثرين وإدارة التعاقدات والنتائج تلقائياً.' : 'Cloud platform connecting brands with influencers to manage contracts and analytics.'}
+                    {isAr ? 'منصة سحابية متكاملة لربط العلامات التجارية بالمؤثرين وإدارة التعاقدات والنتائج والتحليلات تلقائياً.' : 'Cloud SaaS platform connecting brands with influencers, managing contracts, analytics & results.'}
                   </p>
                 </div>
 
-                <Link
-                  href="/influencer"
-                  className="mt-4 w-full py-3 rounded-xl bg-[#14162E] hover:bg-[#FF9A3C]/15 border border-[#FF9A3C]/40 text-white font-bold text-center text-sm flex items-center justify-center gap-2 transition"
-                >
-                  <span>{isAr ? 'استكشف نظام المؤثرين' : 'Explore Platform'}</span>
-                  <ArrowRight className="w-4 h-4 rotate-180" />
-                </Link>
+                <div className="space-y-2.5 mt-4">
+                  <a
+                    href="/influencer"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF9A3C] to-[#FF4D6D] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
+                  >
+                    <span>{isAr ? 'رابط المعاينة المباشرة ↗️' : 'Live Platform Demo ↗️'}</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                  <Link
+                    href="/contact"
+                    className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#FF9A3C]/40 hover:border-[#FF9A3C] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5 text-[#FF9A3C]" />
+                    <span>{isAr ? 'طلب نسخة مخصصة' : 'Request Custom Build'}</span>
+                  </Link>
+                </div>
               </div>
             )}
 
             {/* App Item 4: Payment Gateway System */}
             {(activeTab === 'all' || activeTab === 'saas') && (
               <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
+                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF4D6D]/20 border border-[#FF4D6D]/40 text-[#FF4D6D] text-[10px] font-bold">
+                  {isAr ? 'الدفع الرقمي' : 'Digital Payments'}
+                </div>
                 <div className="space-y-4">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF4D6D]/20 to-[#FF9A3C]/20 border border-[#FF4D6D]/30 flex items-center justify-center text-[#FF4D6D] group-hover:scale-110 transition-transform">
                     <CreditCard className="w-6 h-6 text-[#FF4D6D]" />
                   </div>
-                  <h3 className="text-xl font-bold text-white">{isAr ? 'تطبيق بوابة الدفع والربط المالي 💳' : 'Payment Gateways Integration App 💳'}</h3>
+                  <h3 className="text-xl font-bold text-white">{isAr ? 'نظام بوابات الدفع والربط المالي 💳' : 'Payment Gateways Integration System 💳'}</h3>
                   <p className="text-slate-300 text-sm leading-relaxed">
-                    {isAr ? 'تطبيق ربط مالي مباشر مع مدى، أبل باي، تمارا وتوبي لتأمين التحصيل المالي للمتاجر والشركات.' : 'Direct financial gateway plugin connecting Mada, Apple Pay, Tamara, and Tabby.'}
+                    {isAr ? 'نظام ربط مالي مباشر وشامل مع مدى، أبل باي، تمارا، تابي، STC Pay لتأمين التحصيل المالي للمتاجر والشركات.' : 'Complete payment system integrating Mada, Apple Pay, Tamara, Tabby, STC Pay for stores & businesses.'}
                   </p>
                 </div>
 
-                <Link
-                  href="/demo/store/checkout"
-                  className="mt-4 w-full py-3 rounded-xl bg-[#14162E] hover:bg-[#FF4D6D]/15 border border-[#FF4D6D]/40 text-white font-bold text-center text-sm flex items-center justify-center gap-2 transition"
-                >
-                  <span>{isAr ? 'تجربة تجريبية للبوابة' : 'Test Payment Gateway'}</span>
-                  <ArrowRight className="w-4 h-4 rotate-180" />
-                </Link>
+                <div className="space-y-2.5 mt-4">
+                  <a
+                    href="/demo/store/checkout"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
+                  >
+                    <span>{isAr ? 'تجربة الدفع المباشرة ↗️' : 'Live Payment Demo ↗️'}</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                  <Link
+                    href="/demo/store/admin"
+                    className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#FF9A3C]/40 hover:border-[#FF9A3C] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
+                  >
+                    <Settings className="w-3.5 h-3.5 text-[#FF9A3C]" />
+                    <span>{isAr ? 'إعدادات الدفع' : 'Dashboard Settings'}</span>
+                  </Link>
+                </div>
               </div>
             )}
 
             {/* App Item 5: AI Customer Support Bot */}
             {(activeTab === 'all' || activeTab === 'saas') && (
               <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
+                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF9A3C]/20 border border-[#FF9A3C]/40 text-[#FF9A3C] text-[10px] font-bold">
+                  {isAr ? 'ذكاء اصطناعي' : 'AI Powered'}
+                </div>
                 <div className="space-y-4">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF9A3C]/20 to-[#FF4D6D]/20 border border-[#FF9A3C]/30 flex items-center justify-center text-[#FF9A3C] group-hover:scale-110 transition-transform">
                     <Bot className="w-6 h-6 text-[#FF9A3C]" />
                   </div>
-                  <h3 className="text-xl font-bold text-white">{isAr ? 'مساعد الذكاء الاصطناعي الذكي 🤖' : 'AI Smart Assistant Bot 🤖'}</h3>
+                  <h3 className="text-xl font-bold text-white">{isAr ? 'مساعد الذكاء الاصطناعي التفاعلي 🤖' : 'Interactive AI Smart Assistant 🤖'}</h3>
                   <p className="text-slate-300 text-sm leading-relaxed">
-                    {isAr ? 'بوت دردشة ذكي مخصص للتفاعل الفوري مع عملاء متجرك أو شركتك والإجابة على الاستفسارات 24/7.' : 'Smart AI conversational bot for instant 24/7 customer support and lead conversion.'}
+                    {isAr ? 'بوت دردشة ذكي مخصص باللغة العربية والإنجليزية للتفاعل الفوري مع عملائك والإجابة على الاستفسارات وتوليد العملاء المحتملين 24/7.' : 'Smart bilingual (AR/EN) AI chatbot for 24/7 instant customer support & lead generation automation.'}
                   </p>
                 </div>
 
-                <Link
-                  href="/contact"
-                  className="mt-4 w-full py-3 rounded-xl bg-[#14162E] hover:bg-[#FF9A3C]/15 border border-[#FF9A3C]/40 text-white font-bold text-center text-sm flex items-center justify-center gap-2 transition"
-                >
-                  <span>{isAr ? 'طلب تجربة البوت' : 'Request Bot Demo'}</span>
-                  <ArrowRight className="w-4 h-4 rotate-180" />
-                </Link>
+                <div className="space-y-2.5 mt-4">
+                  <a
+                    href="/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF9A3C] to-[#FF4D6D] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
+                  >
+                    <span>{isAr ? 'جرب البوت على الموقع ↗️' : 'Try Bot on Homepage ↗️'}</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                  <Link
+                    href="/contact"
+                    className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#FF9A3C]/40 hover:border-[#FF9A3C] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5 text-[#FF9A3C]" />
+                    <span>{isAr ? 'طلب بوت مخصص' : 'Request Custom Bot'}</span>
+                  </Link>
+                </div>
               </div>
             )}
 
             {/* App Item 6: High Speed Infrastructure */}
             {(activeTab === 'all' || activeTab === 'saas') && (
               <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
+                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#10B981]/20 border border-[#10B981]/40 text-[#10B981] text-[10px] font-bold">
+                  {isAr ? 'سرعة فائقة' : 'High-Speed'}
+                </div>
                 <div className="space-y-4">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF4D6D]/20 to-[#FF9A3C]/20 border border-[#FF4D6D]/30 flex items-center justify-center text-[#FF4D6D] group-hover:scale-110 transition-transform">
                     <Zap className="w-6 h-6 text-[#FF4D6D]" />
                   </div>
-                  <h3 className="text-xl font-bold text-white">{isAr ? 'استضافة واستخلاص السرعة الفائقة ⚡' : 'High Speed Infrastructure ⚡'}</h3>
+                  <h3 className="text-xl font-bold text-white">{isAr ? 'استضافة سحابية سرعة فائقة ⚡' : 'High-Speed Cloud Hosting Infrastructure ⚡'}</h3>
                   <p className="text-slate-300 text-sm leading-relaxed">
-                    {isAr ? 'بنية تحتية سحابية مخصصة تضمن سرعة تصفح فائقة ومعدل جاهزية 99.9% للمتاجر الكبرى.' : 'High-speed cloud infrastructure guaranteeing 99.9% uptime and sub-second speeds.'}
+                    {isAr ? 'بنية تحتية سحابية مخصصة بسيرفرات بالسعودية (Riyadh/Al-Ahsa) تضمن سرعة تصفح فائقة ومعدل جاهزية 99.9% وCDN عالمي للمتاجر الكبرى.' : 'Saudi-based cloud infrastructure (Riyadh/Al-Ahsa) with 99.9% uptime, global CDN & ultra-fast speeds for enterprise stores.'}
                   </p>
                 </div>
 
-                <Link
-                  href="/services"
-                  className="mt-4 w-full py-3 rounded-xl bg-[#14162E] hover:bg-[#FF4D6D]/15 border border-[#FF4D6D]/40 text-white font-bold text-center text-sm flex items-center justify-center gap-2 transition"
-                >
-                  <span>{isAr ? 'تفاصيل الاستضافة' : 'Hosting Details'}</span>
-                  <ArrowRight className="w-4 h-4 rotate-180" />
-                </Link>
+                <div className="space-y-2.5 mt-4">
+                  <Link
+                    href="/services"
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#10B981] to-[#FF9A3C] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
+                  >
+                    <span>{isAr ? 'تفاصيل الاستضافة' : 'Hosting Details'}</span>
+                    <ArrowRight className="w-4 h-4 rotate-180" />
+                  </Link>
+                  <a
+                    href="/demo/store"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#FF4D6D]/40 hover:border-[#FF4D6D] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
+                  >
+                    <Zap className="w-3.5 h-3.5 text-[#FF4D6D]" />
+                    <span>{isAr ? 'اختبر السرعة بنفسك ↗️' : 'Test Live Speed Demo ↗️'}</span>
+                  </a>
+                </div>
               </div>
             )}
 
             {/* App Item 7: SEO & Analytics Integration */}
             {(activeTab === 'all' || activeTab === 'saas') && (
               <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
+                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#10B981]/20 border border-[#10B981]/40 text-[#10B981] text-[10px] font-bold">
+                  {isAr ? 'تحليلات متقدمة' : 'Advanced Analytics'}
+                </div>
                 <div className="space-y-4">
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF9A3C]/20 to-[#FF4D6D]/20 border border-[#FF9A3C]/30 flex items-center justify-center text-[#FF9A3C] group-hover:scale-110 transition-transform">
                     <BarChart3 className="w-6 h-6 text-[#FF9A3C]" />
                   </div>
-                  <h3 className="text-xl font-bold text-white">{isAr ? 'تطبيق تحليلات وربط البكسلات 📊' : 'Analytics & Pixels App 📊'}</h3>
+                  <h3 className="text-xl font-bold text-white">{isAr ? 'نظام تحليلات وبكسلات التتبع 📊' : 'Analytics & Tracking Pixels System 📊'}</h3>
                   <p className="text-slate-300 text-sm leading-relaxed">
-                    {isAr ? 'ربط تلقائي مع سناب شات، تيك توك، ميتا، وجوجل لتتبع تحويلات المبيعات بدقة فائقة.' : 'Pre-integrated analytics tracking Snap, TikTok, Meta, and Google conversion pixels.'}
+                    {isAr ? 'ربط تلقائي ومتكامل مع سناب شات، تيك توك، ميتا، جوجل أناليتكس 4، وتبييت لتبعيات المبيعات والتحويلات، مع لوحة تحكم موحدة.' : 'Fully integrated analytics: Snap, TikTok, Meta, GA4, & Tabby/Tamara conversion tracking with a unified dashboard.'}
                   </p>
                 </div>
 
-                <Link
-                  href="/services"
-                  className="mt-4 w-full py-3 rounded-xl bg-[#14162E] hover:bg-[#FF9A3C]/15 border border-[#FF9A3C]/40 text-white font-bold text-center text-sm flex items-center justify-center gap-2 transition"
-                >
-                  <span>{isAr ? 'استكشف التتبع' : 'Explore Tracking'}</span>
-                  <ArrowRight className="w-4 h-4 rotate-180" />
-                </Link>
+                <div className="space-y-2.5 mt-4">
+                  <a
+                    href="/demo/store/admin"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF9A3C] to-[#FF4D6D] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
+                  >
+                    <span>{isAr ? 'لوحة التحليلات المباشرة ↗️' : 'Live Analytics Dashboard ↗️'}</span>
+                    <ExternalLink className="w-4 h-4" />
+                  </a>
+                  <Link
+                    href="/services"
+                    className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#FF9A3C]/40 hover:border-[#FF9A3C] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
+                  >
+                    <Globe className="w-3.5 h-3.5 text-[#FF9A3C]" />
+                    <span>{isAr ? 'استكشف خدمات التتبع' : 'Explore Tracking Services'}</span>
+                  </Link>
+                </div>
               </div>
             )}
 
@@ -480,68 +565,19 @@ export default function StoreServicePage() {
               <span className="text-white">{isAr ? 'تواصل عبر الواتساب مباشرة' : 'Contact on WhatsApp Directly'}</span>
             </a>
 
-            <Link
+            <a
               href="/demo/store"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-8 py-4 rounded-xl bg-[#14162E] hover:bg-[#FF4D6D]/15 text-white font-bold text-lg border border-[#FF4D6D]/40 hover:border-[#FF4D6D] flex items-center gap-3 transition-all"
             >
-              <span className="text-white">{isAr ? 'معاينة المتجر التفاعلي' : 'View Demo Store'}</span>
+              <span className="text-white">{isAr ? 'معاينة المتجر المباشرة ↗️' : 'View Live Demo Store ↗️'}</span>
               <ExternalLink className="w-5 h-5 text-white" />
-            </Link>
+            </a>
           </div>
         </section>
 
       </div>
-
-      {/* Live Interactive Preview Modal */}
-      {previewModal !== 'none' && (
-        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex flex-col justify-between overflow-hidden animate-fadeIn">
-          {/* Modal Header Bar */}
-          <div className="bg-[#14162E] border-b border-white/10 px-6 py-4 flex items-center justify-between z-20">
-            <div className="flex items-center gap-4">
-              <span className="text-xl">
-                {previewModal === 'store' ? '🛒' : '🏢'}
-              </span>
-              <div>
-                <h3 className="text-lg font-extrabold text-white">
-                  {previewModal === 'store'
-                    ? (isAr ? 'معاينة قالب المتجر الإلكتروني السعودي التفاعلي' : 'Saudi E-Commerce Store Interactive Demo')
-                    : (isAr ? 'معاينة قالب المنصة والموقع العقاري السعودي' : 'Saudi Real Estate Platform Interactive Demo')}
-                </h3>
-                <p className="text-xs text-slate-400">
-                  {isAr ? 'معاينة حية ومباشرة بكامل الميزات والأجهزة' : 'Live Interactive Demo Preview'}
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <a
-                href={previewModal === 'store' ? '/demo/store' : '/demo/real-estate'}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-all"
-              >
-                <span>{isAr ? 'فتح في نافذة مستقلة ↗️' : 'Open in New Window ↗️'}</span>
-              </a>
-
-              <button
-                onClick={() => setPreviewModal('none')}
-                className="px-4 py-2 rounded-xl bg-[#FF4D6D] hover:bg-[#FF4D6D]/80 text-white font-black text-sm flex items-center gap-2 transition-all shadow-lg shadow-[#FF4D6D]/30"
-              >
-                <span>{isAr ? 'إغلاق المعاينة ✕' : 'Close Preview ✕'}</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Modal Frame Body */}
-          <div className="flex-1 w-full bg-[#0A0C1E] relative overflow-auto">
-            <iframe
-              src={previewModal === 'store' ? '/demo/store' : '/demo/real-estate'}
-              className="w-full h-full border-0 min-h-[85vh]"
-              title={previewModal === 'store' ? 'Store Demo' : 'Real Estate Demo'}
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

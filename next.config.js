@@ -2,6 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   
+  output: 'standalone',
+  
   productionBrowserSourceMaps: false,
   compress: true,
   poweredByHeader: false,
@@ -46,6 +48,12 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'coresg-normal.trae.ai',
+        port: '',
+        pathname: '/**',
+      },
     ],
     formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: true,
@@ -61,6 +69,7 @@ const nextConfig = {
       ],
     },
   ],
+  
 };
 
 module.exports = nextConfig;

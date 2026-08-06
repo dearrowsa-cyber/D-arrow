@@ -40,11 +40,9 @@ RUN apt-get update -y \
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
-# Clone latest code from GitHub (ensures Portainer always builds fresh code
-# even though the build context only contains docker-compose.yml).
-RUN git clone --depth 1 https://github.com/dearrowsa-cyber/D-arrow.git /tmp/repo \
- && cp -a /tmp/repo/. /app/ \
- && rm -rf /tmp/repo/.git
+# ✅ Use LOCAL project code (includes blog fallback + live store links fixes)
+# ❌ Removed dangerous git clone that was overwriting local changes!
+COPY . .
 
 COPY --from=deps /app/node_modules ./node_modules
 
@@ -67,15 +65,12 @@ RUN apt-get update -y \
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Next.js 15 standalone emits the app under .next/standalone when enabled in
-# next.config.js. If standalone is disabled, COPY the whole build tree instead.
+# Next.js standalone output (next.config.js -> output: 'standalone')
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
-
-# Fallback copy paths — covers both standalone and non-standalone Next configs.
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
 
 # Persisted mount targets (Portainer volumes will attach here).
 RUN mkdir -p /app/public/uploads /app/data
@@ -92,7 +87,7 @@ set -euo pipefail
 echo "[entrypoint] Applying pending Prisma migrations..."
 npx prisma migrate deploy || echo "[entrypoint] WARNING: prisma migrate deploy failed (skip if dev.db unused)"
 echo "[entrypoint] Starting Next.js server on ${HOSTNAME}:${PORT}"
-exec node_modules/.bin/next start -H "${HOSTNAME}" -p "${PORT}"
+exec node server.js
 EOF
 RUN chmod +x /app/entrypoint.sh
 
