@@ -27,6 +27,8 @@ RUN apt-get update -y \
 
 # Install only prod + dev dependencies we need for the build.
 COPY package.json package-lock.json* ./
+# Prisma schema is required by the postinstall "prisma generate" script.
+COPY prisma ./prisma
 RUN npm install --legacy-peer-deps
 
 # --- BUILD STAGE --------------------------------------------------------------
