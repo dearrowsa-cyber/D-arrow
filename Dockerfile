@@ -95,6 +95,7 @@ npx prisma migrate deploy || echo "[entrypoint] WARNING: prisma migrate deploy f
 echo "[entrypoint] Starting Next.js server on ${HOSTNAME}:${PORT}"
 exec node_modules/.bin/next start -H "${HOSTNAME}" -p "${PORT}"
 EOF
-RUN chmod +x /app/entrypoint.sh
+# Guard against CRLF line endings (Windows checkout) breaking the shebang.
+RUN sed -i 's/\r$//' /app/entrypoint.sh && chmod +x /app/entrypoint.sh
 
 ENTRYPOINT ["tini", "--", "/app/entrypoint.sh"]
