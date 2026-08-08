@@ -122,16 +122,16 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
           </div>
         )}
 
-        {/* Category Filter */}
-        <div className="mb-12 flex flex-wrap gap-2 justify-center" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+        {/* Category Filters */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-12">
           {categories.map(category => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
+              className={`px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm transition-all duration-300 ${
                 selectedCategory === category
-                  ? 'bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white'
-                  : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                  ? 'bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white shadow-lg shadow-[#FF4D6D]/30 scale-105'
+                  : 'bg-[#14162E] text-slate-300 border border-white/10 hover:border-white/30'
               }`}
             >
               {category === 'all' 
@@ -150,22 +150,23 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
                 return (
                   <article
                     key={post.id}
-                    className="group bg-gradient-to-br from-[#1a1f3a] to-[#14162E] border border-gray-800 rounded-2xl overflow-hidden hover:border-[#FF4D6D] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF4D6D]/20 hover:-translate-y-1 flex flex-col justify-between h-full"
+                    className="group bg-[#0D0F25] border border-white/[0.08] rounded-2xl overflow-hidden hover:border-[#FF4D6D]/60 transition-all duration-300 hover:shadow-2xl hover:shadow-[#FF4D6D]/15 hover:-translate-y-1 flex flex-col justify-between h-full"
                     dir={lang === 'ar' ? 'rtl' : 'ltr'}
                   >
                     <div>
                       {/* Image / Branded Cover */}
                       {post.imageUrl && !failedImages[post.id] && post.imageUrl !== 'https://d-arrow.com/_headers' ? (
-                        <div className="w-full h-48 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] relative overflow-hidden">
+                        <div className="w-full h-52 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] relative overflow-hidden">
                           <img
                             src={post.imageUrl}
                             alt={post.title}
                             onError={() => handleImageError(post.id)}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                           />
+                          <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#0D0F25] to-transparent pointer-events-none" />
                         </div>
                       ) : (
-                        <div className="w-full h-48 bg-gradient-to-br from-[#FF4D6D] via-[#FF6B6B] to-[#FF9A3C] relative overflow-hidden flex items-center justify-center">
+                        <div className="w-full h-52 bg-gradient-to-br from-[#FF4D6D] via-[#FF6B6B] to-[#FF9A3C] relative overflow-hidden flex items-center justify-center">
                           <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.4) 0, transparent 40%), radial-gradient(circle at 80% 80%, rgba(255,255,255,0.3) 0, transparent 40%)' }} />
                           <div className="relative text-white/90 group-hover:scale-110 transition-transform duration-300">
                             {getCategoryIcon(post.category)}
@@ -173,6 +174,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
                           <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-white/80 text-[10px] font-bold tracking-widest uppercase">
                             D-Arrow · Blog
                           </div>
+                          <div className="absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#0D0F25] to-transparent pointer-events-none" />
                         </div>
                       )}
 
@@ -180,23 +182,23 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
                       <div className="p-6">
                         {/* Category & Tags */}
                         <div className="flex flex-wrap items-center gap-2 mb-3">
-                          <span className="px-3 py-1 bg-[#FF4D6D]/20 text-[#FF4D6D] text-xs font-semibold rounded-full border border-[#FF4D6D]/30">
+                          <span className="px-3 py-1 bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 border border-[#FF4D6D]/30 text-[#FF4D6D] text-xs font-bold rounded-full">
                             {post.category}
                           </span>
                           {(post.tags || []).slice(0, 2).map((tag, i) => (
-                            <span key={i} className="text-[11px] text-gray-400 font-medium">#{tag}</span>
+                            <span key={i} className="text-xs text-slate-400 font-medium">#{tag}</span>
                           ))}
                         </div>
 
                         {/* Title */}
-                        <h2 className="text-lg md:text-xl font-bold text-white mb-3 group-hover:text-[#FF4D6D] transition-colors duration-300 line-clamp-2 leading-snug">
+                        <h2 className="text-lg md:text-xl font-extrabold text-white mb-3 group-hover:text-[#FF4D6D] transition-colors duration-300 line-clamp-2 leading-snug">
                           <Link href={`/blog/${targetSlug}`}>
                             {getDisplayText(post.title, post.titleAr)}
                           </Link>
                         </h2>
 
                         {/* Excerpt */}
-                        <p className="text-gray-300 text-sm mb-4 line-clamp-3 leading-relaxed font-light">
+                        <p className="text-slate-300 text-sm mb-4 line-clamp-3 leading-relaxed font-light">
                           {getDisplayText(post.excerpt, post.excerptAr) || stripHtml(getDisplayText(post.content, post.contentAr)).substring(0, 150) + '...'}
                         </p>
                       </div>
@@ -205,30 +207,30 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
                     {/* Bottom Area */}
                     <div className="px-6 pb-6 pt-0 space-y-4">
                       {/* Footer Info */}
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-800/80 text-xs text-gray-400">
+                      <div className="flex items-center justify-between pt-4 border-t border-white/[0.08] text-xs text-slate-400">
                         <div className="flex items-center gap-2">
-                          <div className="w-7 h-7 rounded-full bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] flex items-center justify-center text-white text-[11px] font-extrabold shadow-sm">
+                          <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[#FF4D6D] to-[#FF9A3C] flex items-center justify-center text-white text-[11px] font-black shadow-sm">
                             {post.author ? post.author.charAt(0).toUpperCase() : 'D'}
                           </div>
-                          <span className="text-gray-300 font-medium text-xs">{post.author}</span>
+                          <span className="text-slate-200 font-medium text-xs">{post.author}</span>
                         </div>
-                        <div className="flex items-center gap-2.5 text-gray-400 text-xs">
+                        <div className="flex items-center gap-2 text-slate-400 text-xs">
                           <span>{formatDate(post.date)}</span>
                           <span>•</span>
                           <span>{post.readTime || 5} {lang === 'ar' ? 'دقيقة قراءة' : 'min read'}</span>
                         </div>
                       </div>
 
-                      {/* Read More Action Button */}
+                      {/* Read More Interactive Button */}
                       <Link 
                         href={`/blog/${targetSlug}`}
-                        className="w-full py-2.5 px-4 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-bold text-sm rounded-xl hover:shadow-lg hover:shadow-[#FF4D6D]/30 transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 group/btn cursor-pointer"
+                        className="w-full py-3 px-4 bg-[#14162E] hover:bg-gradient-to-r hover:from-[#FF4D6D] hover:to-[#FF9A3C] border border-[#FF4D6D]/40 hover:border-transparent text-white font-bold text-sm rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 group/btn cursor-pointer shadow-md"
                       >
                         <span className="text-white font-bold">{lang === 'ar' ? 'اقرأ المقال كاملاً' : 'Read Full Article'}</span>
                         {lang === 'ar' ? (
-                          <ArrowLeft className="w-4 h-4 text-white group-hover/btn:-translate-x-1 transition-transform duration-300" />
+                          <ArrowLeft className="w-4 h-4 text-[#FF4D6D] group-hover/btn:text-white group-hover/btn:-translate-x-1.5 transition-all duration-300" />
                         ) : (
-                          <ArrowRight className="w-4 h-4 text-white group-hover/btn:translate-x-1 transition-transform duration-300" />
+                          <ArrowRight className="w-4 h-4 text-[#FF4D6D] group-hover/btn:text-white group-hover/btn:translate-x-1.5 transition-all duration-300" />
                         )}
                       </Link>
                     </div>
