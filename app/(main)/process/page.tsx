@@ -69,7 +69,7 @@ export default function ProcessPage() {
               <div key={stepNum} className={styles.processCard}>
                 <div className={styles.cardTop}>
                   <div className={styles.iconWrap}>
-                    <img src={step.icon} alt={step.title?.[lang] || t(step.titleKey)} className={styles.iconImage} />
+                    <img src={step.icon} alt={step.title?.[lang] || t(step.titleKey)} className="w-12 h-12 max-w-[48px] max-h-[48px] object-contain mx-auto" />
                   </div>
                   <div className= {`${styles.badge}`} style={{ background: 'linear-gradient(90deg, #f7df04, #f7e204)'}}>
                     <span className='!text-black'>{lang === 'ar' ? 'الخطوة' : 'Step'} {stepNum}</span>
@@ -148,7 +148,7 @@ export default function ProcessPage() {
               { icon: '/icon/mainicons1/transparent101.png', titleKey: 'transparentCommunication', descKey: 'transparentCommunicationDesc' },
             ].map((feature, i) => (
               <div key={i} className="p-6 border border-gray-800 rounded-lg text-center hover:border-brand-pink/50 transition">
-                <div className="mb-3"><img src={feature.icon} alt={t(feature.titleKey)} className={styles.iconImage} /></div>
+                <div className="mb-3 flex items-center justify-center h-14"><img src={feature.icon} alt={t(feature.titleKey)} className="w-12 h-12 max-w-[48px] max-h-[48px] object-contain mx-auto" /></div>
                 <h3 className="font-semibold mb-2">{t(feature.titleKey)}</h3>
                 <p className="text-gray-800 dark:text-gray-400 text-sm">{t(feature.descKey)}</p>
               </div>

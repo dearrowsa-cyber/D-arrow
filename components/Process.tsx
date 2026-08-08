@@ -76,7 +76,7 @@ const Process = () => {
                     alt={t(step.titleKey)}
                     width={90}
                     height={90}
-                    className={styles.iconImage}
+                    className="w-12 h-12 max-w-[48px] max-h-[48px] object-contain mx-auto"
                     loading="lazy"
                   />
                 </div>

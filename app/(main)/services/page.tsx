@@ -486,11 +486,11 @@ function ServicesContent() {
                 className="p-6 border border-gray-800 rounded-lg text-center hover:border-brand-pink/50 transition"
               >
                 <motion.div
-                  className="mb-3"
+                  className="mb-4 flex items-center justify-center h-16"
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <img src={feature.icon} alt={t(feature.titleKey)} className={styles.iconImage} />
+                  <img src={feature.icon} alt={t(feature.titleKey)} className="w-14 h-14 max-w-[56px] max-h-[56px] object-contain mx-auto" />
                 </motion.div>
                 <h4 className="font-semibold mb-2 !text-white dark:text-white">{t(feature.titleKey)}</h4>
                 <p className="text-gray-800 dark:text-gray-400 text-sm">{t(feature.descKey)}</p>

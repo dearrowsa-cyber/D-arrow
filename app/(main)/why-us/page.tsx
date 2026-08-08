@@ -69,7 +69,7 @@ export default function WhyUsPage() {
               <div key={index} className={styles.whyCard}>
                 <div className={styles.cardTop}>
                   <div className={styles.iconWrap}>
-                    <img src={feature.icon} alt={feature.title?.[lang] || t(feature.titleKey)} className={styles.iconImage} />
+                    <img src={feature.icon} alt={feature.title?.[lang] || t(feature.titleKey)} className="w-12 h-12 max-w-[48px] max-h-[48px] object-contain mx-auto" />
                   </div>
                 </div>
 
