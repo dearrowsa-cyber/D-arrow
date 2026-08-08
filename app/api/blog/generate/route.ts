@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import prisma from '@/lib/prisma';
 
 const getBlogDataPath = () => {
   const dataDir = path.join(process.cwd(), 'public', 'data');
@@ -199,7 +200,41 @@ Make it informative, engaging, and optimized for web readers in BOTH languages.`
       readTime: Math.ceil((parsedContent.content || aiContent).split(' ').length / 200),
     };
 
-    // Save to blog posts file
+    // Save to database FIRST (primary storage — persists across redeploys and appears on /blog)
+    let dbPost: any = null;
+    try {
+      const slugBase = (blogPost.title || 'post')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '')
+        .slice(0, 60) || `post-${Date.now()}`;
+      const slug = `${slugBase}-${Date.now().toString(36)}`;
+      dbPost = await prisma.blogPost.create({
+        data: {
+          title: blogPost.title,
+          titleAr: blogPost.titleAr,
+          slug,
+          content: blogPost.content,
+          contentAr: blogPost.contentAr,
+          excerpt: blogPost.excerpt,
+          excerptAr: blogPost.excerptAr,
+          author: blogPost.author,
+          category,
+          categoryAr: '',
+          date: blogPost.date,
+          time: blogPost.time,
+          readTime: blogPost.readTime,
+          imageUrl: null,
+          tags: JSON.stringify([]),
+          status: 'published',
+        },
+      });
+      console.log(`✅ Blog post saved to database: ${dbPost.id}`);
+    } catch (dbError) {
+      console.error('❌ Failed to save post to database:', dbError);
+    }
+
+    // Also save to blog posts file (legacy fallback)
     const filePath = getBlogDataPath();
     let fileData: { posts: any[], lastGenerated: string | null } = { posts: [], lastGenerated: null };
 
@@ -224,7 +259,8 @@ Make it informative, engaging, and optimized for web readers in BOTH languages.`
     return NextResponse.json({
       success: true,
       message: 'Blog post generated successfully',
-      post: blogPost,
+      post: dbPost || blogPost,
+      savedToDb: !!dbPost,
     });
   } catch (error) {
     console.error('❌ Error generating blog post:', error);
