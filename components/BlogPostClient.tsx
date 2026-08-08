@@ -15,8 +15,12 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
   const { lang, t } = useLanguage();
 
   const formatDate = (dateStr: string) => {
+    if (!dateStr) return '';
+    // Parse "YYYY-MM-DD" as LOCAL date parts (avoid UTC midnight shift showing previous day)
+    const parts = dateStr.split('-').map(Number);
+    if (parts.length !== 3 || parts.some(isNaN)) return dateStr;
     const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateStr).toLocaleDateString(lang === 'ar' ? 'ar-SA' : 'en-US', options);
+    return new Date(parts[0], parts[1] - 1, parts[2]).toLocaleDateString(lang === 'ar' ? 'ar-SA' : 'en-US', options);
   };
 
   const getDisplayText = (enText: string, arText: string) => {

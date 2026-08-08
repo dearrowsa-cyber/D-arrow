@@ -50,12 +50,16 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
   });
 
   const formatDate = (dateStr: string) => {
+    if (!dateStr) return '';
+    // Parse "YYYY-MM-DD" as LOCAL date parts (avoid UTC midnight shift showing previous day)
+    const parts = dateStr.split('-').map(Number);
+    if (parts.length !== 3 || parts.some(isNaN)) return dateStr;
     const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
     };
-    return new Date(dateStr).toLocaleDateString(lang === 'ar' ? 'ar-SA' : 'en-US', options);
+    return new Date(parts[0], parts[1] - 1, parts[2]).toLocaleDateString(lang === 'ar' ? 'ar-SA' : 'en-US', options);
   };
 
   const stripHtml = (html: string) => {
@@ -164,9 +168,14 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
                         </div>
                         <span className="text-sm text-gray-400">{post.author}</span>
                       </div>
-                      <span className="text-xs text-gray-500">
-                        {post.readTime} {t('blogReadTime')}
-                      </span>
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs text-gray-500">
+                          {formatDate(post.date)}
+                        </span>
+                        <span className="text-xs text-gray-500">
+                          {post.readTime} {t('blogReadTime')}
+                        </span>
+                      </div>
                     </div>
 
                     {/* Read More Button */}
