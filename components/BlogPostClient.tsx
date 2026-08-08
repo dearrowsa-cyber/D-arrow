@@ -2,7 +2,7 @@
 
 import { useLanguage } from '@/components/LanguageProvider';
 import Link from 'next/link';
-import { ArrowLeft, ArrowRight, Calendar, Clock, User, Tag } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Calendar, Clock, User, Tag, Search, Share2, ShoppingCart, Palette, Cpu, Video, Megaphone, Camera, TrendingUp, FileText } from 'lucide-react';
 
 import ContentGate from '@/components/ContentGate';
 import DynamicCTA from '@/components/DynamicCTA';
@@ -46,6 +46,20 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
   const category = getDisplayText(post.category, post.categoryAr);
   const tags: string[] = Array.isArray(post.tags) ? post.tags : [];
 
+  const getCategoryIcon = (cat: string) => {
+    const c = cat.toLowerCase();
+    if (c.includes('seo')) return <Search size={56} />;
+    if (c.includes('social')) return <Share2 size={56} />;
+    if (c.includes('commerce') || c.includes('e-com')) return <ShoppingCart size={56} />;
+    if (c.includes('brand')) return <Palette size={56} />;
+    if (c.includes('ai') || c.includes('tech')) return <Cpu size={56} />;
+    if (c.includes('video')) return <Video size={56} />;
+    if (c.includes('paid') || c.includes('ads')) return <Megaphone size={56} />;
+    if (c.includes('photo')) return <Camera size={56} />;
+    if (c.includes('market') || c.includes('digital')) return <TrendingUp size={56} />;
+    return <FileText size={56} />;
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0e27] to-[#14162E] pt-32 pb-20 blog-post-container">
       <div className="container mx-auto px-4 md:px-6 lg:px-12 max-w-5xl" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
@@ -88,10 +102,20 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
           </div>
         </div>
 
-        {/* Featured Image */}
-        {post.imageUrl && (
+        {/* Featured Image / Branded Cover */}
+        {post.imageUrl ? (
           <div className="w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden mb-12 shadow-2xl shadow-[#FF4D6D]/10">
             <img src={post.imageUrl} alt={title} className="w-full h-full object-cover" />
+          </div>
+        ) : (
+          <div className="w-full h-[300px] md:h-[380px] rounded-2xl overflow-hidden mb-12 shadow-2xl shadow-[#FF4D6D]/10 bg-gradient-to-br from-[#FF4D6D] via-[#FF6B6B] to-[#FF9A3C] relative flex items-center justify-center">
+            <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.4) 0, transparent 40%), radial-gradient(circle at 80% 80%, rgba(255,255,255,0.3) 0, transparent 40%)' }} />
+            <div className="relative text-white/90">
+              {getCategoryIcon(post.category)}
+            </div>
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/80 text-xs font-bold tracking-[0.3em] uppercase">
+              D-Arrow · Blog
+            </div>
           </div>
         )}
 

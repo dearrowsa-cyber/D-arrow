@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useLanguage } from '@/components/LanguageProvider';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
+import { Search, Share2, ShoppingCart, Palette, Cpu, Video, Megaphone, Camera, TrendingUp, FileText } from 'lucide-react';
 
 interface BlogPost {
   id: string;
@@ -71,6 +72,20 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
     return lang === 'ar' ? (arText || enText) : enText;
   };
 
+  const getCategoryIcon = (category: string) => {
+    const c = category.toLowerCase();
+    if (c.includes('seo')) return <Search size={40} />;
+    if (c.includes('social')) return <Share2 size={40} />;
+    if (c.includes('commerce') || c.includes('e-com')) return <ShoppingCart size={40} />;
+    if (c.includes('brand')) return <Palette size={40} />;
+    if (c.includes('ai') || c.includes('tech')) return <Cpu size={40} />;
+    if (c.includes('video')) return <Video size={40} />;
+    if (c.includes('paid') || c.includes('ads')) return <Megaphone size={40} />;
+    if (c.includes('photo')) return <Camera size={40} />;
+    if (c.includes('market') || c.includes('digital')) return <TrendingUp size={40} />;
+    return <FileText size={40} />;
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#0a0e27] to-[#14162E] pt-32 pb-20">
       <div className="container mx-auto px-4 md:px-6 lg:px-12">
@@ -125,14 +140,24 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
                   className="group bg-gradient-to-br from-[#1a1f3a] to-[#14162E] border border-gray-700 rounded-lg overflow-hidden hover:border-[#FF4D6D] transition-all duration-300 hover:shadow-xl hover:shadow-[#FF4D6D]/20 hover:-translate-y-1"
                   dir={lang === 'ar' ? 'rtl' : 'ltr'}
                 >
-                  {/* Image */}
-                  {post.imageUrl && (
+                  {/* Image / Branded Cover */}
+                  {post.imageUrl ? (
                     <div className="w-full h-48 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] relative overflow-hidden">
                       <img
                         src={post.imageUrl}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
+                    </div>
+                  ) : (
+                    <div className="w-full h-48 bg-gradient-to-br from-[#FF4D6D] via-[#FF6B6B] to-[#FF9A3C] relative overflow-hidden flex items-center justify-center">
+                      <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.4) 0, transparent 40%), radial-gradient(circle at 80% 80%, rgba(255,255,255,0.3) 0, transparent 40%)' }} />
+                      <div className="relative text-white/90 group-hover:scale-110 transition-transform duration-300">
+                        {getCategoryIcon(post.category)}
+                      </div>
+                      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-white/80 text-[10px] font-bold tracking-widest uppercase">
+                        D-Arrow · Blog
+                      </div>
                     </div>
                   )}
 
