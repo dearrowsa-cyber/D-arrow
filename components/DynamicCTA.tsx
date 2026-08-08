@@ -35,9 +35,9 @@ export default function DynamicCTA({ type }: DynamicCTAProps) {
             : 'We build ad campaigns and content strategies that drive the highest ROI for your business.',
           btn: lang === 'ar' ? 'تواصل مع خبراء السوشيال' : 'Talk to Social Experts',
           link: '/services/smm',
-          icon: <Smartphone size={32} className="text-[#10B981]" />,
-          gradient: 'from-[#10B981]/20 to-[#0a0e27]',
-          border: 'border-[#10B981]/30'
+          icon: <Smartphone size={32} className="text-[#FF9A3C]" />,
+          gradient: 'from-[#FF9A3C]/20 to-[#0a0e27]',
+          border: 'border-[#FF9A3C]/30'
         };
       case 'web':
         return {
@@ -91,7 +91,8 @@ export default function DynamicCTA({ type }: DynamicCTAProps) {
         <div className="flex-shrink-0 w-full md:w-auto">
           <Link 
             href={content.link}
-            className="group flex items-center justify-center gap-2 w-full md:w-auto bg-white text-[#0a0e27] font-bold py-4 px-8 rounded-xl hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:-translate-y-1 transition-all duration-300"
+            className="group flex items-center justify-center gap-2 w-full md:w-auto bg-white font-bold py-4 px-8 rounded-xl hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:-translate-y-1 transition-all duration-300"
+            style={{ color: '#0a0e27' }}
           >
             {content.btn}
             {lang === 'ar' ? (

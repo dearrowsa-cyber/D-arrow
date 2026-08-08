@@ -198,7 +198,8 @@ export default function SocialMediaLanding() {
             </p>
             <Link 
               href="/contact"
-              className="px-12 py-6 bg-white text-[#0a0e27] rounded-2xl font-black text-xl hover:scale-105 transition-transform shadow-[0_0_50px_rgba(255,255,255,0.2)] inline-block"
+              className="px-12 py-6 bg-white rounded-2xl font-black text-xl hover:scale-105 transition-transform shadow-[0_0_50px_rgba(255,255,255,0.2)] inline-block"
+              style={{ color: '#0a0e27' }}
             >
               {t('smmLP_cta')}
             </Link>
