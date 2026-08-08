@@ -191,8 +191,8 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
                         </div>
 
                         {/* Title */}
-                        <h2 className="text-lg md:text-xl font-extrabold text-white mb-3 group-hover:text-[#FF4D6D] transition-colors duration-300 line-clamp-2 leading-snug">
-                          <Link href={`/blog/${targetSlug}`}>
+                        <h2 className="text-lg md:text-xl font-extrabold mb-3 line-clamp-2 leading-snug">
+                          <Link href={`/blog/${targetSlug}`} className="text-white hover:text-white/90 transition-colors duration-300 no-underline">
                             {getDisplayText(post.title, post.titleAr)}
                           </Link>
                         </h2>
