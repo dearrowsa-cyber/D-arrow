@@ -91,14 +91,13 @@ export default function DynamicCTA({ type }: DynamicCTAProps) {
         <div className="flex-shrink-0 w-full md:w-auto">
           <Link 
             href={content.link}
-            className="group flex items-center justify-center gap-2 w-full md:w-auto bg-white font-bold py-4 px-8 rounded-xl hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:-translate-y-1 transition-all duration-300"
-            style={{ color: '#0a0e27' }}
+            className="group inline-flex items-center justify-center gap-3 w-full md:w-auto bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-extrabold text-base md:text-lg py-4 px-8 rounded-xl shadow-lg shadow-[#FF4D6D]/25 hover:shadow-xl hover:shadow-[#FF4D6D]/40 hover:scale-[1.03] active:scale-95 transition-all duration-300 cursor-pointer"
           >
-            {content.btn}
+            <span className="text-white font-extrabold">{content.btn}</span>
             {lang === 'ar' ? (
-              <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
+              <ArrowLeft size={22} className="text-white group-hover:-translate-x-1.5 transition-transform duration-300" />
             ) : (
-              <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              <ArrowRight size={22} className="text-white group-hover:translate-x-1.5 transition-transform duration-300" />
             )}
           </Link>
         </div>
