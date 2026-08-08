@@ -1,549 +1,375 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import PricingCard from '@/components/PricingCard';
-import CustomServiceModal from '@/components/CustomServiceModal';
-import PricingInquiryModal from '@/components/PricingInquiryModal';
-import styles from './pricing.module.css';
 import { useLanguage } from '@/components/LanguageProvider';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import styles from './pricing.module.css';
 
-// FAQs moved inside component to support translations
+/* ───────── Data ───────── */
+const PACKAGES = [
+  {
+    id: 'starter',
+    nameAr: 'الانطلاقة',
+    nameEn: 'Starter',
+    audienceAr: 'محلات، عيادات فردية، مشاريع ناشئة',
+    audienceEn: 'Small shops, clinics, startups',
+    priceRange: '1,800 - 2,500',
+    priceUnitAr: 'ر.س / شهرياً',
+    priceUnitEn: 'SAR / month',
+    noteAr: '+ ميزانية إعلانات منفصلة',
+    noteEn: '+ Separate ad budget',
+    featured: false,
+    badgeAr: '',
+    badgeEn: '',
+    features: [
+      { ar: 'منصتين سوشيال ميديا - 12 منشور شهرياً', en: '2 social platforms – 12 posts/month' },
+      { ar: 'تصاميم جرافيك بهوية العميل', en: 'Branded graphic designs' },
+      { ar: 'إدارة حملة إعلانية واحدة', en: '1 ad campaign management' },
+      { ar: 'تقرير أداء شهري مبسّط', en: 'Simple monthly performance report' },
+      { ar: 'رد على الرسائل خلال الدوام', en: 'Message replies during business hours' },
+    ],
+    ctaAr: 'ابدأ بهذي الباقة',
+    ctaEn: 'Get Started',
+  },
+  {
+    id: 'professional',
+    nameAr: 'الاحتراف',
+    nameEn: 'Professional',
+    audienceAr: 'شركات تجارية، سلاسل مطاعم، عقارات، عيادات',
+    audienceEn: 'Businesses, restaurant chains, real estate, clinics',
+    priceRange: '4,500 - 6,500',
+    priceUnitAr: 'ر.س / شهرياً',
+    priceUnitEn: 'SAR / month',
+    noteAr: 'مدير حساب مخصص',
+    noteEn: 'Dedicated account manager',
+    featured: true,
+    badgeAr: 'الأكثر طلباً',
+    badgeEn: 'Most Popular',
+    features: [
+      { ar: '3-4 منصات - 20 منشور + 8 فيديوهات', en: '3-4 platforms – 20 posts + 8 videos' },
+      { ar: 'جلسة تصوير احترافي شهرية', en: 'Monthly professional photoshoot' },
+      { ar: 'إدارة كاملة Meta + Google + Snapchat', en: 'Full Meta + Google + Snapchat management' },
+      { ar: 'SEO بكلمات محلية (خبر، دمام، أحساء)', en: 'Local SEO (Khobar, Dammam, Al-Ahsa)' },
+      { ar: 'إدارة واتساب بزنس', en: 'WhatsApp Business management' },
+      { ar: 'تقارير أسبوعية + تحليل شهري', en: 'Weekly reports + monthly analytics' },
+    ],
+    ctaAr: 'ابدأ بهذي الباقة',
+    ctaEn: 'Get Started',
+  },
+  {
+    id: 'business',
+    nameAr: 'الأعمال',
+    nameEn: 'Business',
+    audienceAr: 'مقاولات، موردين، معدات صناعية، B2B',
+    audienceEn: 'Contractors, suppliers, industrial, B2B',
+    priceRange: '8,000 - 12,000',
+    priceUnitAr: 'ر.س / شهرياً',
+    priceUnitEn: 'SAR / month',
+    noteAr: 'استراتيجية ربع سنوية',
+    noteEn: 'Quarterly strategy',
+    featured: false,
+    badgeAr: '',
+    badgeEn: '',
+    features: [
+      { ar: 'كل خدمات باقة الاحتراف', en: 'All Professional package services' },
+      { ar: 'محتوى ثنائي اللغة (عربي / إنجليزي)', en: 'Bilingual content (Arabic / English)' },
+      { ar: 'حملات LinkedIn لصناع القرار', en: 'LinkedIn campaigns for decision makers' },
+      { ar: 'إدارة وتحسين الموقع الإلكتروني', en: 'Website management & optimization' },
+      { ar: 'فيديو تعريفي كل ربع سنة', en: 'Quarterly promo video' },
+      { ar: 'اجتماع استراتيجي شهري', en: 'Monthly strategic meeting' },
+    ],
+    ctaAr: 'ابدأ بهذي الباقة',
+    ctaEn: 'Get Started',
+  },
+  {
+    id: 'enterprise',
+    nameAr: 'المؤسسية',
+    nameEn: 'Enterprise',
+    audienceAr: 'مجموعات شركات، مصانع، سلاسل متعددة الفروع',
+    audienceEn: 'Corporate groups, factories, multi-branch chains',
+    priceRange: '15,000+',
+    priceUnitAr: 'ر.س / شهرياً',
+    priceUnitEn: 'SAR / month',
+    noteAr: 'فريق مخصص بالكامل',
+    noteEn: 'Fully dedicated team',
+    featured: false,
+    badgeAr: '',
+    badgeEn: '',
+    features: [
+      { ar: 'كل خدمات باقة الأعمال', en: 'All Business package services' },
+      { ar: 'فريق متكامل: مصمم، كاتب، معلن، مدير حساب', en: 'Full team: designer, writer, advertiser, account manager' },
+      { ar: 'تغطية فعاليات ومعارض صناعية', en: 'Events & industrial exhibitions coverage' },
+      { ar: 'إدارة سمعة رقمية ومراجعات', en: 'Digital reputation & reviews management' },
+      { ar: 'تقارير تنفيذية مرتبطة بالمبيعات', en: 'Executive reports linked to sales' },
+      { ar: 'دعم أسبوعي على مدار الساعة', en: '24/7 weekly support' },
+    ],
+    ctaAr: 'تواصل معنا',
+    ctaEn: 'Contact Us',
+  },
+];
 
+const WHY_CARDS = [
+  {
+    num: '01',
+    titleAr: 'تنوع اقتصادي فريد',
+    titleEn: 'Unique Economic Diversity',
+    descAr: 'قطاع صناعي وبترولي ضخم في الدمام، تجارة عائلية راسخة في الأحساء، وقطاع خدمي وترفيهي متسارع في الخبر — كل سوق يحتاج لغة مختلفة.',
+    descEn: 'A huge industrial and petrochemical sector in Dammam, established family businesses in Al-Ahsa, and a fast-growing service & entertainment sector in Khobar — each market needs a different approach.',
+  },
+  {
+    num: '02',
+    titleAr: 'جمهور ثنائي اللغة',
+    titleEn: 'Bilingual Audience',
+    descAr: 'نسبة كبيرة من المقيمين والشركات المرتبطة بالقطاع الصناعي تتطلب محتوى عربي وإنجليزي معاً، وهذا مدمج في باقاتنا من الأساس.',
+    descEn: 'A large percentage of residents and companies linked to the industrial sector require both Arabic and English content, which is built into our packages from the start.',
+  },
+  {
+    num: '03',
+    titleAr: 'فرصة تفوق حقيقية',
+    titleEn: 'A Real Competitive Edge',
+    descAr: 'المنافسة أقل احترافية مقارنة بالمدن الكبرى، وهذا يفتح المجال لتنفيذ أعلى جودة بسعر أذكى يكسب حصة سوقية بسرعة.',
+    descEn: 'Competition is less professional compared to major cities, opening the door for higher-quality execution at smarter prices to capture market share quickly.',
+  },
+];
+
+const ADVANTAGES = [
+  {
+    icon: '0%',
+    titleAr: 'بدون عمولات مخفية',
+    titleEn: 'No Hidden Fees',
+    descAr: 'تدفع ميزانية الإعلانات مباشرة بدون أي هامش ربح إضافي عليها',
+    descEn: 'Pay your ad budget directly with zero markup on top',
+  },
+  {
+    icon: '10%',
+    titleAr: 'خصم العقد الربع سنوي',
+    titleEn: 'Quarterly Contract Discount',
+    descAr: 'التزام أطول = توفير أكبر على نفس مستوى الخدمة',
+    descEn: 'Longer commitment = bigger savings on the same service level',
+  },
+  {
+    icon: '15%',
+    titleAr: 'خصم العقد السنوي',
+    titleEn: 'Annual Contract Discount',
+    descAr: 'أفضل قيمة للشركات اللي تخطط لنمو طويل المدى',
+    descEn: 'Best value for companies planning long-term growth',
+  },
+  {
+    icon: '15',
+    titleAr: 'يوم تجربة B2B',
+    titleEn: 'Day B2B Trial',
+    descAr: 'باقة تجريبية بسعر رمزي تكسر التردد قبل التوقيع على عقد كبير',
+    descEn: 'A trial package at a nominal price to break hesitation before signing a big contract',
+  },
+];
+
+const CITIES = [
+  {
+    nameAr: 'الأحساء',
+    nameEn: 'Al-Ahsa',
+    focusAr: 'المحلات العائلية والقطاع التجاري',
+    focusEn: 'Family businesses & commercial sector',
+    descAr: 'عرض باقة الانطلاقة بسعر تأسيسي لأول 20 عميل، مع التركيز على القطاع الزراعي والتجاري المحلي الراسخ.',
+    descEn: 'Starter package at a founding price for the first 20 clients, focusing on the established agricultural and local commercial sector.',
+    gradient: 'linear-gradient(180deg, rgba(255,77,109,0.06), #12203E)',
+  },
+  {
+    nameAr: 'الخبر',
+    nameEn: 'Khobar',
+    focusAr: 'المطاعم والعيادات وقطاع الجمال',
+    focusEn: 'Restaurants, clinics & beauty sector',
+    descAr: 'محتوى مرئي قوي بالريلز نظراً لارتفاع التفاعل، مع شراكات مع مصورين ومؤثرين محليين بدل الاعتماد على الرياض.',
+    descEn: 'Strong visual Reels content due to high engagement, with local photographer & influencer partnerships instead of relying on Riyadh.',
+    gradient: 'linear-gradient(180deg, rgba(255,154,60,0.06), #12203E)',
+  },
+  {
+    nameAr: 'الدمام',
+    nameEn: 'Dammam',
+    focusAr: 'الشركات الصناعية والمقاولين',
+    focusEn: 'Industrial companies & contractors',
+    descAr: 'باقة الأعمال بمحتوى ثنائي اللغة موجّه مباشرة لصناع القرار في القطاع الصناعي والمقاولات الكبرى.',
+    descEn: 'Business package with bilingual content directed at decision-makers in the industrial sector and major contracting companies.',
+    gradient: 'linear-gradient(180deg, rgba(255,77,109,0.06), #12203E)',
+  },
+];
+
+/* ───────── Component ───────── */
 export default function PricingPage() {
-  const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly');
-  const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
-  const [isPricingInquiryOpen, setIsPricingInquiryOpen] = useState(false);
-  const [selectedPackage, setSelectedPackage] = useState('');
-  const [selectedPrice, setSelectedPrice] = useState('');
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<'marketing' | 'development'>('marketing');
-  const { t, lang } = useLanguage();
-  const bgRef = useRef<HTMLCanvasElement | null>(null);
-
-  useEffect(() => {
-    const canvas = bgRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    // capture non-null references for use in nested functions
-    const canvasEl = canvas;
-    const ctxEl = ctx;
-
-    let width = canvasEl.clientWidth || window.innerWidth;
-    let height = canvasEl.clientHeight || window.innerHeight;
-    const dpr = window.devicePixelRatio || 1;
-
-    function resize() {
-      const c = bgRef.current;
-      if (!c) return;
-      width = c.clientWidth || window.innerWidth;
-      height = c.clientHeight || window.innerHeight;
-      c.width = Math.max(1, Math.floor(width * dpr));
-      c.height = Math.max(1, Math.floor(height * dpr));
-      c.style.width = width + 'px';
-      c.style.height = height + 'px';
-      const localCtx = c.getContext('2d');
-      if (localCtx) localCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
-
-    resize();
-
-    type Point = { x: number; y: number; vx: number; vy: number };
-    const points: Point[] = [];
-    const POINT_COUNT = Math.max(25, Math.floor((width * height) / 80000));
-    for (let i = 0; i < POINT_COUNT; i++) {
-      points.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
-      });
-    }
-
-    let raf = 0;
-    const maxDist = Math.min(160, Math.max(80, Math.sqrt(width * height) / 4));
-
-    function step() {
-      ctxEl.clearRect(0, 0, width, height);
-
-      for (const p of points) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
-      }
-
-      for (let i = 0; i < points.length; i++) {
-        const a = points[i];
-        for (let j = i + 1; j < points.length; j++) {
-          const b = points[j];
-          const dx = a.x - b.x;
-          const dy = a.y - b.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < maxDist) {
-            const alpha = 1 - dist / maxDist;
-            ctxEl.beginPath();
-            ctxEl.strokeStyle = `rgba(80,180,220,${(alpha * 0.18).toFixed(3)})`;
-            ctxEl.lineWidth = 1;
-            ctxEl.moveTo(a.x, a.y);
-            ctxEl.lineTo(b.x, b.y);
-            ctxEl.stroke();
-          }
-        }
-      }
-
-      for (const p of points) {
-        ctxEl.beginPath();
-        ctxEl.fillStyle = 'rgba(90,190,230,0.9)';
-        ctxEl.arc(p.x, p.y, 1.6, 0, Math.PI * 2);
-        ctxEl.fill();
-      }
-
-      raf = requestAnimationFrame(step);
-    }
-
-    raf = requestAnimationFrame(step);
-    window.addEventListener('resize', resize);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener('resize', resize);
-    };
-  }, [bgRef]);
-
-  const faqs = [
-    { question: t('faq_q1'), answer: t('faq_a1') },
-    { question: t('faq_q2'), answer: t('faq_a2') },
-    { question: t('faq_q3'), answer: t('faq_a3') },
-    { question: t('faq_q4'), answer: t('faq_a4') },
-  ];
-
-  const digitalServices = lang === 'ar' ? [
-    'التسويق عبر وسائل التواصل الاجتماعي',
-    'تحسين محركات البحث وتسويق المحتوى',
-    'التسويق عبر البريد الإلكتروني',
-    'إعلانات الدفع مقابل النقرة',
-    'إنتاج الفيديو',
-    'صناعة المحتوى',
-    'التحليلات والتقارير',
-    'استراتيجية العلامة التجارية',
-  ] : [
-    'Social Media Marketing',
-    'SEO & Content Marketing',
-    'Email Marketing',
-    'PPC Advertising',
-    'Video Production',
-    'Content Creation',
-    'Analytics & Reporting',
-    'Brand Strategy',
-  ];
-
-  const realEstateServices = lang === 'ar' ? [
-    'جولات العقارات الافتراضية',
-    'تسويق العقارات',
-    'تحسين قوائم العقارات',
-    'التصوير بالطائرات بدون طيار',
-    'التصوير المعماري',
-    'جذب العملاء المحتملين',
-    'تحسين محركات البحث العقاري',
-    'هوية العلامة التجارية العقارية',
-  ] : [
-    'Virtual Property Tours',
-    'Property Marketing',
-    'Listing Optimization',
-    'Drone Photography',
-    'Architectural Visualization',
-    'Lead Generation',
-    'Real Estate SEO',
-    'Property Branding',
-  ];
-
-  const handleServiceToggle = (service: string) => {
-    setSelectedServices(prev =>
-      prev.includes(service)
-        ? prev.filter(s => s !== service)
-        : [...prev, service]
-    );
-  };
-
-  const categories = [
-    {
-      id: 'marketing',
-      title: t('marketingPackages'),
-      plans: [
-        {
-          title: t('pricingBasic'),
-          price: t('pricingBasicPrice'),
-          oldPrice: t('pricingBasicOldPrice'),
-          features: [
-            t('pricingBasicFeature1'),
-            t('pricingBasicFeature2'),
-            t('pricingBasicFeature3'),
-            t('pricingBasicFeature4'),
-            t('pricingBasicFeature5'),
-            t('pricingBasicFeature6'),
-            t('pricingBasicFeature7'),
-          ],
-          cta: t('pricingCta'),
-          icon: '/icon/update/basic2.png',
-        },
-        {
-          title: t('pricingGrowth'),
-          price: t('pricingGrowthPrice'),
-          oldPrice: t('pricingGrowthOldPrice'),
-          features: [
-            t('pricingGrowthFeature1'),
-            t('pricingGrowthFeature2'),
-            t('pricingGrowthFeature3'),
-            t('pricingGrowthFeature4'),
-            t('pricingGrowthFeature5'),
-            t('pricingGrowthFeature6'),
-            t('pricingGrowthFeature7'),
-            t('pricingGrowthFeature8'),
-            t('pricingGrowthFeature9'),
-          ],
-          cta: t('pricingCta'),
-          featured: true,
-          icon: '/icon/update/growth2.png',
-        },
-        {
-          title: t('pricingProfessional'),
-          price: t('pricingProfessionalPrice'),
-          oldPrice: t('pricingProfessionalOldPrice'),
-          features: [
-            t('pricingProfessionalFeature1'),
-            t('pricingProfessionalFeature2'),
-            t('pricingProfessionalFeature3'),
-            t('pricingProfessionalFeature4'),
-            t('pricingProfessionalFeature5'),
-            t('pricingProfessionalFeature6'),
-            t('pricingProfessionalFeature7'),
-            t('pricingProfessionalFeature8'),
-            t('pricingProfessionalFeature9'),
-            t('pricingProfessionalFeature10'),
-          ],
-          cta: t('pricingCta'),
-          icon: '/icon/update/professional2.png',
-        },
-        {
-          title: t('pricingCustom'),
-          price: t('pricingCustomPrice'),
-          features: [
-            t('pricingCustomFeature1'),
-            t('pricingCustomFeature2'),
-            t('pricingCustomFeature3'),
-            t('pricingCustomFeature4'),
-            t('pricingCustomFeature5'),
-            t('pricingCustomFeature6'),
-            t('pricingCustomFeature7'),
-            t('pricingCustomFeature8'),
-          ],
-          cta: t('pricingCta'),
-          icon: '/icon/update/custom2.png',
-          isCustom: true,
-        },
-      ],
-    },
-    {
-      id: 'development',
-      title: t('developmentDesignPackage'),
-      plans: [
-        {
-          title: t('pricingStarterPackage'),
-          price: t('pricingStarterPrice'),
-          features: [
-            t('pricingStarterFeature1'),
-            t('pricingStarterFeature2'),
-            t('pricingStarterFeature3'),
-            t('pricingStarterFeature4'),
-            t('pricingStarterFeature5'),
-            t('pricingStarterFeature6'),
-            t('pricingStarterFeature7'),
-          ],
-          cta: t('pricingCta'),
-          icon: '/icon/update/basic2.png',
-        },
-        {
-          title: t('pricingBusiness'),
-          price: t('pricingBusinessPrice'),
-          features: [
-            t('pricingBusinessFeature1'),
-            t('pricingBusinessFeature2'),
-            t('pricingBusinessFeature3'),
-            t('pricingBusinessFeature4'),
-            t('pricingBusinessFeature5'),
-            t('pricingBusinessFeature6'),
-            t('pricingBusinessFeature7'),
-          ],
-          cta: t('pricingCta'),
-          icon: '/icon/update/growth2.png',
-        },
-        {
-          title: t('pricingEcommerce'),
-          price: t('pricingEcommercePrice'),
-          features: [
-            t('pricingEcommerceFeature1'),
-            t('pricingEcommerceFeature2'),
-            t('pricingEcommerceFeature3'),
-            t('pricingEcommerceFeature4'),
-            t('pricingEcommerceFeature5'),
-            t('pricingEcommerceFeature6'),
-            t('pricingEcommerceFeature7'),
-            t('pricingEcommerceFeature8'),
-            t('pricingEcommerceFeature9'),
-          ],
-          cta: t('pricingCta'),
-          icon: '/icon/update/professional2.png',
-        },
-        {
-          title: t('pricingEnterprise'),
-          price: t('requestQuote'),
-          features: [
-            t('pricingEnterpriseFeature1'),
-            t('pricingEnterpriseFeature2'),
-            t('pricingEnterpriseFeature3'),
-            t('pricingEnterpriseFeature4'),
-            t('pricingEnterpriseFeature5'),
-            t('pricingEnterpriseFeature6'),
-            t('pricingEnterpriseFeature7'),
-            t('pricingEnterpriseFeature8'),
-          ],
-          cta: t('pricingCta'),
-          icon: '/icon/update/custom2.png',
-          isCustom: true,
-        },
-      ],
-    },
-  ];
+  const { lang } = useLanguage();
+  const isAr = lang === 'ar';
+  const t = (ar: string, en: string) => isAr ? ar : en;
 
   return (
-    <div className="min-h-screen overflow-hidden relative">
-      <canvas ref={bgRef} className={styles.networkCanvas} />
-      {/* JSON-LD Schema for Pricing Page */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'PriceSpecification',
-            priceCurrency: 'SAR',
-            offers: [
-              {
-                '@type': 'Offer',
-                name: 'Branding Identity',
-                price: '800 - 1500',
-                priceCurrency: 'SAR',
-                description: 'Logo design, brand colors, visual identity, and social media templates',
-              },
-              {
-                '@type': 'Offer',
-                name: 'Digital Marketing',
-                price: '1200 - 2500',
-                priceCurrency: 'SAR',
-                priceValidUntil: new Date(new Date().setFullYear(new Date().getFullYear() + 1)).toISOString().split('T')[0],
-                description: 'Instagram & social media content, digital templates, email marketing, and analytics',
-              },
-              {
-                '@type': 'Offer',
-                name: 'Web Solutions',
-                price: '2000 - 4000',
-                priceCurrency: 'SAR',
-                description: 'Custom WordPress website, responsive design, SEO optimization, and performance tuning',
-              },
-            ],
-          }),
-        }}
-      />
-      
-      {/* Dynamic Localized FAQ Schema */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'FAQPage',
-            mainEntity: faqs.map(faq => ({
-              '@type': 'Question',
-              name: faq.question,
-              acceptedAnswer: {
-                '@type': 'Answer',
-                text: faq.answer,
-              },
-            })),
-          }),
-        }}
-      />
-      
-      {/* Hero Section */}
-      <section className={`relative py-10 lg:py-18`}>
-        <div className="w-full max-w-full px-4 md:px-8">
-          <div className="text-center max-w-4xl mx-auto mb-12">
-            <div className={styles.heroMeta}>
-              <span className={styles.heroBadge}>{t('pricingBadge')}</span>
-              <span className={styles.heroPill}>{t('pricingPill')}</span>
-            </div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-              {t('pricingHeroTitle')}
-            </h1>
-            <p className="text-lg mb-6 text-black dark:text-white">
-              {t('pricingHeroSubtitle')}
-            </p>
+    <div className={styles.page} dir={isAr ? 'rtl' : 'ltr'}>
 
-           
+      {/* ── HERO ── */}
+      <header className={styles.hero}>
+        <svg className={styles.bigArrowBg} viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="0,0 200,100 0,200" fill="url(#pkgG1)" />
+          <defs>
+            <linearGradient id="pkgG1" x1="0" y1="0" x2="200" y2="200">
+              <stop offset="0%" stopColor="#FF4D6D" />
+              <stop offset="100%" stopColor="#FF9A3C" />
+            </linearGradient>
+          </defs>
+        </svg>
+
+        <span className={styles.eyebrow}>
+          {t('دي آرو للتسويق', 'D-Arrow Marketing')} <b className={styles.eyebrowAccent}>|</b> {t('باقات التسويق الرقمي 2026', 'Digital Marketing Packages 2026')}
+        </span>
+
+        <h1 className={`${styles.heroTitle} ${styles.display}`}>
+          {t('نوصّلك ', 'We get you ')}
+          <span className={styles.grad}>{t('قدّام', 'ahead of')}</span>
+          {t(' السوق', ' the market')}
+          <br />
+          {t('في الأحساء، الخبر والدمام', 'in Al-Ahsa, Khobar & Dammam')}
+        </h1>
+
+        <p className={styles.heroSub}>
+          {t(
+            'باقات متكاملة، أسعار تنافسية، وتنفيذ احترافي مصمم خصيصاً لطبيعة المنطقة الشرقية — لأن دي آرو دايماً للأمام.',
+            'Integrated packages, competitive prices, and professional execution designed specifically for the Eastern Province — because D-Arrow is always ahead.'
+          )}
+        </p>
+
+        <div className={styles.heroStats}>
+          <div className={styles.stat}>
+            <b className={styles.statNum}>3</b>
+            <span className={styles.statLabel}>{t('مدن نغطيها بعمق', 'Cities we deeply cover')}</span>
           </div>
-
-          {/* Category selector (show only selected category) */}
-          <div className="flex justify-center gap-4 mt-6 text-center">
-            <motion.button
-              className={`px-4 sm:px-6 py-2 rounded-full  text-sm sm:text-base ${selectedCategory === 'marketing' ? 'bg-brand-pink text-white' : 'bg-gray-700 text-black'}`}
-              onClick={() => setSelectedCategory('marketing')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-            >
-              {t('marketingPackages')}
-            </motion.button>
-            <motion.button
-              className={`px-4 sm:px-6 py-2 rounded-full  text-sm sm:text-base ${selectedCategory === 'development' ? 'bg-brand-pink text-white' : 'bg-gray-700 text-black'}`}
-              onClick={() => setSelectedCategory('development')}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-            >
-              {t('developmentDesignPackage')}
-            </motion.button>
+          <div className={styles.stat}>
+            <b className={styles.statNum}>4</b>
+            <span className={styles.statLabel}>{t('باقات متدرجة', 'Tiered packages')}</span>
           </div>
-
-          {/* Active category plans */}
-          {(() => {
-            const active = categories.find(c => c.id === selectedCategory);
-            if (!active) return null;
-            return (
-              <section className="mt-12">
-               <div className="flex items-center justify-center mb-6">
-  <h2 className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-center bg-gradient-to-r from-pink-600 to-orange-500 text-transparent bg-clip-text drop-shadow-lg">
-  {active.title}
-</h2>
-
-</div>
-
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                  {active.plans.map((plan, idx) => (
-                    <div
-                      key={idx}
-                      onClick={() => {
-                        if ((plan as any).isCustom) {
-                          setIsCustomModalOpen(true);
-                        } else {
-                          setSelectedPackage(plan.title);
-                          setSelectedPrice(plan.price);
-                          setIsPricingInquiryOpen(true);
-                        }
-                      }}
-                    >
-                      <PricingCard {...plan as any} titleKey={undefined} />
-                    </div>
-                  ))}
-                </div>
-              </section>
-            );
-          })()}
-        </div>
-
-        {/* Custom Service Modal */}
-        <CustomServiceModal isOpen={isCustomModalOpen} onClose={() => setIsCustomModalOpen(false)} />
-        
-        {/* Pricing Inquiry Modal */}
-        <PricingInquiryModal 
-          isOpen={isPricingInquiryOpen} 
-          onClose={() => setIsPricingInquiryOpen(false)}
-          packageName={selectedPackage}
-          packagePrice={selectedPrice}
-        />
-
-        
-        
-      </section>
-
-      {/* Features Comparison */}
-      <section className="relative py-16 lg:py-20 border-t border-gray-800/50">
-        <div className="w-full mx-auto px-6 md:px-12">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-black dark:text-white">{t('whatsIncluded')}</h2>
-            <p className="text-gray-800 dark:text-gray-400 text-lg">{t('processDesc')}</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              { icon: '/icon/update/fast-turnaround.png', titleKey: 'feature_fastTurnaround_title', descKey: 'feature_fastTurnaround_desc' },
-              { icon: '/icon/update/result-oriented.png', titleKey: 'feature_resultsFocused_title', descKey: 'feature_resultsFocused_desc' },
-              { icon: '/icon/mainicons1/support10.png', titleKey: 'feature_dedicatedSupport_title', descKey: 'feature_dedicatedSupport_desc' },
-              { icon: '/icon/mainicons1/analysis.png', titleKey: 'feature_analytics_title', descKey: 'feature_analytics_desc' },
-              { icon: '/icon/mainicons1/transparent10.png', titleKey: 'feature_revisions_title', descKey: 'feature_revisions_desc' },
-              { icon: '/icon/update/premium-quality.png', titleKey: 'feature_premium_title', descKey: 'feature_premium_desc' },
-            ].map((feature, i) => (
-              <div key={i} className="p-6 border border-gray-800 rounded-lg text-center hover:border-brand-pink/50 transition">
-                <div className="mb-3"><img src={feature.icon} alt={t(feature.titleKey)} className={styles.iconImage} /></div>
-                <h3 className="font-semibold mb-2 text-white dark:text-white">{t(feature.titleKey)}</h3>
-                <p className="text-white dark:text-gray-400 text-sm">{t(feature.descKey)}</p>
-              </div>
-            ))}
+          <div className={styles.stat}>
+            <b className={styles.statNum}>20%</b>
+            <span className={styles.statLabel}>{t('خصم إطلاق للعملاء الجدد', 'Launch discount for new clients')}</span>
           </div>
         </div>
-      </section>
+      </header>
 
-      {/* FAQ Section */}
-      <section className="relative py-4 lg:py-10 border-t border-gray-800/50">
-        <div className="max-w-4xl mx-auto px-6 md:px-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-black dark:text-white">{t('faqTitle')}</h2>
-          
-          <div className="space-y-6">
-            {faqs.map((faq, index) => (
-              <details key={index} className="group p-6 border border-gray-800 rounded-lg hover:border-brand-pink/50 transition cursor-pointer">
-                <summary className="flex justify-between items-center font-semibold text-lg text-black dark:text-white">
-                  <span className='text-white'>{faq.question}</span>
-                  <span className="text-brand-pink group-open:rotate-180 transition">▼</span>
-                </summary>
-                <p className="text-white dark:text-gray-400 mt-4 leading-relaxed">{faq.answer}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative py-2 lg:py-6 border-t border-gray-800/50">
-        <div className="max-w-4xl mx-auto px-6 md:px-12 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-black dark:text-white">{t('readyToGrowTitle')}</h2>
-          <p className="text-xl text-gray-800 dark:text-gray-400 mb-8">
-            {t('readyToGrowDesc')}
+      {/* ── WHY SECTION ── */}
+      <section className={`${styles.section} ${styles.why}`}>
+        <div className={styles.sectionHead}>
+          <span className={styles.tag}>{t('لماذا المنطقة الشرقية مختلفة', 'Why the Eastern Province is Different')}</span>
+          <h2 className={styles.sectionTitle}>{t('سوق نعرفه بالتفصيل', 'A Market We Know Inside Out')}</h2>
+          <p className={styles.sectionDesc}>
+            {t(
+              'ما هي عبارة عن نسخة مكررة من باقات الرياض وجدة — كل باقة مبنية على طبيعة العملاء هنا فعلاً',
+              'These aren\'t copy-pasted Riyadh & Jeddah packages — every package is built on the reality of clients here'
+            )}
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-            >
-              <Link href="/contact" className="bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] !text-white px-8 py-4 rounded-lg font-semibold text-lg transition shadow-lg hover:shadow-amber-500/50 inline-block text-center">
-                {t('startFreeConsultation')}
-              </Link>
-            </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-            >
-              <Link href="/" className="border border-brand-pink/50 hover:border-brand-pink text-brand-pink px-8 py-4 rounded-lg font-semibold text-lg transition inline-block text-center">
-                {t('viewPortfolio')}
-              </Link>
-            </motion.div>
-          </div>
+        </div>
+        <div className={styles.whyGrid}>
+          {WHY_CARDS.map((card) => (
+            <div key={card.num} className={styles.whyCard}>
+              <span className={styles.whyNum}>{card.num}</span>
+              <h3 className={styles.whyCardTitle}>{t(card.titleAr, card.titleEn)}</h3>
+              <p className={styles.whyCardDesc}>{t(card.descAr, card.descEn)}</p>
+            </div>
+          ))}
         </div>
       </section>
+
+      {/* ── PACKAGES ── */}
+      <section className={styles.section} id="packages">
+        <div className={styles.sectionHead}>
+          <span className={styles.tag}>{t('الباقات', 'Packages')}</span>
+          <h2 className={styles.sectionTitle}>{t('اختر السرعة اللي تناسب نموّك', 'Choose the Speed That Fits Your Growth')}</h2>
+          <p className={styles.sectionDesc}>
+            {t(
+              'من المشاريع الناشئة إلى المجموعات الكبرى — أربع باقات مصممة لتغطي كل شرائح السوق',
+              'From startups to large groups — four packages designed to cover every market segment'
+            )}
+          </p>
+        </div>
+        <div className={styles.packagesGrid}>
+          {PACKAGES.map((pkg) => (
+            <div key={pkg.id} className={`${styles.pkg} ${pkg.featured ? styles.pkgFeatured : ''}`}>
+              {pkg.featured && (
+                <span className={styles.badge}>{t(pkg.badgeAr, pkg.badgeEn)}</span>
+              )}
+              <div className={styles.pkgName}>{t(pkg.nameAr, pkg.nameEn)}</div>
+              <div className={styles.pkgAudience}>{t(pkg.audienceAr, pkg.audienceEn)}</div>
+              <div className={styles.price}>
+                {pkg.priceRange}
+                <span className={styles.priceUnit}> {t(pkg.priceUnitAr, pkg.priceUnitEn)}</span>
+              </div>
+              <div className={styles.priceNote}>{t(pkg.noteAr, pkg.noteEn)}</div>
+              <ul className={styles.featureList}>
+                {pkg.features.map((f, i) => (
+                  <li key={i} className={styles.featureItem}>
+                    <span className={styles.bulletArrow} />
+                    <span>{t(f.ar, f.en)}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link
+                href="/contact"
+                className={`${styles.pkgCta} ${pkg.featured ? styles.pkgCtaFeatured : ''}`}
+              >
+                {t(pkg.ctaAr, pkg.ctaEn)}
+              </Link>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── ADVANTAGE ── */}
+      <section className={`${styles.section} ${styles.advantage}`}>
+        <div className={styles.sectionHead}>
+          <span className={styles.tag}>{t('لماذا نكسب السوق', 'Why We Win the Market')}</span>
+          <h2 className={styles.sectionTitle}>{t('أسعار شفافة بلا مفاجآت', 'Transparent Pricing, No Surprises')}</h2>
+        </div>
+        <div className={styles.advantageGrid}>
+          {ADVANTAGES.map((adv, i) => (
+            <div key={i} className={styles.advItem}>
+              <div className={styles.advIcon}>{adv.icon}</div>
+              <h4 className={styles.advTitle}>{t(adv.titleAr, adv.titleEn)}</h4>
+              <p className={styles.advDesc}>{t(adv.descAr, adv.descEn)}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── CITIES ── */}
+      <section className={styles.section}>
+        <div className={styles.sectionHead}>
+          <span className={styles.tag}>{t('خطة الدخول للسوق', 'Market Entry Strategy')}</span>
+          <h2 className={styles.sectionTitle}>{t('استراتيجية مدينة بمدينة', 'City-by-City Strategy')}</h2>
+        </div>
+        <div className={styles.citiesGrid}>
+          {CITIES.map((city, i) => (
+            <div key={i} className={styles.cityCard} style={{ background: city.gradient }}>
+              <h3 className={styles.cityName}>{t(city.nameAr, city.nameEn)}</h3>
+              <div className={styles.cityFocus}>{t(city.focusAr, city.focusEn)}</div>
+              <p className={styles.cityDesc}>{t(city.descAr, city.descEn)}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── FOOTER CTA ── */}
+      <footer className={styles.footerCta}>
+        <h2 className={styles.footerTitle}>
+          {t('جاهز تبدأ نموّك الرقمي في المنطقة الشرقية؟', 'Ready to Start Your Digital Growth in the Eastern Province?')}
+        </h2>
+        <p className={styles.footerSub}>
+          {t(
+            'تواصل معنا الحين واحصل على استشارة مجانية وخطة مخصصة لنشاطك',
+            'Contact us now and get a free consultation & custom plan for your business'
+          )}
+        </p>
+        <Link href="/contact" className={styles.ctaBig}>
+          {t('اطلب عرض سعر مجاني', 'Request a Free Quote')}
+        </Link>
+        <div className={styles.footBottom}>
+          {t(
+            '© 2026 دي آرو للتسويق الرقمي — المنطقة الشرقية، المملكة العربية السعودية',
+            '© 2026 D-Arrow Digital Marketing — Eastern Province, Saudi Arabia'
+          )}
+        </div>
+      </footer>
     </div>
   );
 }

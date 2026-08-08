@@ -9,7 +9,7 @@ type Translations = Record<string, { en: string | string[]; ar: string | string[
 const translations: Translations = {
   services: { en: 'Services', ar: 'الخدمات' },
   whyUs: { en: 'Why Us', ar: 'لماذا نحن' },
-  pricing: { en: 'Pricing', ar: 'الأسعار' },
+  pricing: { en: 'Packages', ar: 'الباقات' },
   process: { en: 'Process', ar: 'العملية' },
     provisions: { en: 'Provisions', ar: 'المشاريع' },
     

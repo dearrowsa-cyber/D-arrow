@@ -151,12 +151,12 @@ export default function StoreServicePage() {
         {/* Featured Real Estate Template Section */}
         <section className="bg-gradient-to-br from-[#14162E] via-[#161836] to-[#0A0C1E] border border-[#FF9A3C]/40 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-48 h-48 bg-[#FF9A3C]/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#10B981]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#FF4D6D]/15 rounded-full blur-3xl pointer-events-none" />
 
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
             <div className="space-y-4 max-w-2xl text-center lg:text-right">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10B981]/15 border border-[#10B981]/40 text-[#10B981] text-xs font-bold">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-ping" />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF9A3C]/15 border border-[#FF9A3C]/40 text-[#FF9A3C] text-xs font-bold">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#FF9A3C] animate-ping" />
                 <span>{isAr ? '🆕 إصدار جديد حديثاً | قالب العقار السعودي' : '🆕 New Release | Saudi Real Estate Template'}</span>
               </div>
 
@@ -174,7 +174,7 @@ export default function StoreServicePage() {
 
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2 text-xs font-semibold text-slate-300">
                 <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
-                  <Home className="w-4 h-4 text-[#10B981]" /> {isAr ? 'شقق - فلل - أراضي' : 'Apartments - Villas - Land'}
+                  <Home className="w-4 h-4 text-[#FF9A3C]" /> {isAr ? 'شقق - فلل - أراضي' : 'Apartments - Villas - Land'}
                 </span>
                 <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
                   <MapPin className="w-4 h-4 text-[#FF9A3C]" /> {isAr ? 'خريطة جوجل مدمجة' : 'Google Maps Integration'}
@@ -191,7 +191,7 @@ export default function StoreServicePage() {
                 href="/demo/real-estate"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-4 rounded-xl bg-gradient-to-r from-[#10B981] to-[#FF9A3C] text-white font-black text-center flex items-center justify-center gap-3 shadow-lg shadow-[#10B981]/30 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 group cursor-pointer"
+                className="px-6 py-4 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-black text-center flex items-center justify-center gap-3 shadow-lg shadow-[#FF4D6D]/30 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 group cursor-pointer"
               >
                 <Building2 className="w-5 h-5 text-white group-hover:rotate-12 transition-transform" />
                 <span className="text-white">{isAr ? 'فتح المنصة العقارية المباشرة ↗️' : 'Open Live Real Estate Demo ↗️'}</span>
@@ -200,9 +200,9 @@ export default function StoreServicePage() {
               
               <Link
                 href="/contact"
-                className="px-6 py-3.5 rounded-xl bg-[#14162E] hover:bg-[#10B981]/15 text-white font-bold text-center flex items-center justify-center gap-2.5 border border-[#10B981]/40 hover:border-[#10B981] transition-all duration-300"
+                className="px-6 py-3.5 rounded-xl bg-[#14162E] hover:bg-[#FF4D6D]/15 text-white font-bold text-center flex items-center justify-center gap-2.5 border border-[#FF4D6D]/40 hover:border-[#FF4D6D] transition-all duration-300"
               >
-                <MessageCircle className="w-4 h-4 text-[#10B981]" />
+                <MessageCircle className="w-4 h-4 text-[#FF4D6D]" />
                 <span className="text-white">{isAr ? 'طلب شراء القالب العقاري' : 'Request Real Estate Template Purchase'}</span>
               </Link>
 
@@ -253,7 +253,7 @@ export default function StoreServicePage() {
                 onClick={() => setActiveTab('realestate')}
                 className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all ${
                   activeTab === 'realestate'
-                    ? 'bg-gradient-to-r from-[#10B981] to-[#FF9A3C] text-white shadow-lg shadow-[#10B981]/30 scale-105'
+                    ? 'bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white shadow-lg shadow-[#FF4D6D]/30 scale-105'
                     : 'bg-[#14162E] text-slate-300 border border-white/10 hover:border-white/30'
                 }`}
               >
@@ -315,13 +315,13 @@ export default function StoreServicePage() {
 
             {/* App Item 2: Real Estate Template */}
             {(activeTab === 'all' || activeTab === 'realestate') && (
-              <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-[#10B981]/40 hover:border-[#10B981] transition-all duration-300 space-y-4 group flex flex-col justify-between relative overflow-hidden">
-                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#10B981]/20 border border-[#10B981]/40 text-[#10B981] text-[10px] font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#10B981]" /> {isAr ? 'العقار والتطوير' : 'Real Estate'}
+              <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-[#FF9A3C]/40 hover:border-[#FF9A3C] transition-all duration-300 space-y-4 group flex flex-col justify-between relative overflow-hidden">
+                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF9A3C]/20 border border-[#FF9A3C]/40 text-[#FF9A3C] text-[10px] font-bold">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF9A3C]" /> {isAr ? 'العقار والتطوير' : 'Real Estate'}
                 </div>
                 <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#10B981]/20 to-[#FF9A3C]/20 border border-[#10B981]/30 flex items-center justify-center text-[#10B981] group-hover:scale-110 transition-transform">
-                    <Building2 className="w-6 h-6 text-[#10B981]" />
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF9A3C]/20 to-[#FF4D6D]/20 border border-[#FF9A3C]/30 flex items-center justify-center text-[#FF9A3C] group-hover:scale-110 transition-transform">
+                    <Building2 className="w-6 h-6 text-[#FF9A3C]" />
                   </div>
                   <h3 className="text-xl font-bold text-white">{isAr ? 'نظام وقالب الموقع العقاري السعودي 🏢' : 'Saudi Real Estate Website Template 🏢'}</h3>
                   <p className="text-slate-300 text-sm leading-relaxed">
@@ -334,16 +334,16 @@ export default function StoreServicePage() {
                     href="/demo/real-estate"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#10B981] to-[#FF9A3C] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
                   >
                     <span>{isAr ? 'رابط المعاينة المباشرة ↗️' : 'Live Demo Link ↗️'}</span>
                     <ExternalLink className="w-4 h-4" />
                   </a>
                   <Link
                     href="/projects"
-                    className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#10B981]/40 hover:border-[#10B981] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
+                    className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#FF9A3C]/40 hover:border-[#FF9A3C] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
                   >
-                    <Building2 className="w-3.5 h-3.5 text-[#10B981]" />
+                    <Building2 className="w-3.5 h-3.5 text-[#FF9A3C]" />
                     <span>{isAr ? 'نماذج مشاريع عقارية' : 'Real Estate Portfolio'}</span>
                   </Link>
                 </div>
@@ -464,7 +464,7 @@ export default function StoreServicePage() {
             {/* App Item 6: High Speed Infrastructure */}
             {(activeTab === 'all' || activeTab === 'saas') && (
               <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
-                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#10B981]/20 border border-[#10B981]/40 text-[#10B981] text-[10px] font-bold">
+                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF4D6D]/20 border border-[#FF4D6D]/40 text-[#FF4D6D] text-[10px] font-bold">
                   {isAr ? 'سرعة فائقة' : 'High-Speed'}
                 </div>
                 <div className="space-y-4">
@@ -480,7 +480,7 @@ export default function StoreServicePage() {
                 <div className="space-y-2.5 mt-4">
                   <Link
                     href="/services"
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#10B981] to-[#FF9A3C] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
+                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
                   >
                     <span>{isAr ? 'تفاصيل الاستضافة' : 'Hosting Details'}</span>
                     <ArrowRight className="w-4 h-4 rotate-180" />
@@ -501,7 +501,7 @@ export default function StoreServicePage() {
             {/* App Item 7: SEO & Analytics Integration */}
             {(activeTab === 'all' || activeTab === 'saas') && (
               <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
-                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#10B981]/20 border border-[#10B981]/40 text-[#10B981] text-[10px] font-bold">
+                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF9A3C]/20 border border-[#FF9A3C]/40 text-[#FF9A3C] text-[10px] font-bold">
                   {isAr ? 'تحليلات متقدمة' : 'Advanced Analytics'}
                 </div>
                 <div className="space-y-4">
