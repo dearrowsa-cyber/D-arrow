@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { useLanguage } from '@/components/LanguageProvider';
 import Link from 'next/link';
 import { ArrowLeft, ArrowRight, Calendar, Clock, User, Tag, Search, Share2, ShoppingCart, Palette, Cpu, Video, Megaphone, Camera, TrendingUp, FileText } from 'lucide-react';
@@ -13,14 +14,20 @@ interface BlogPostClientProps {
 
 export default function BlogPostClient({ post }: BlogPostClientProps) {
   const { lang, t } = useLanguage();
+  const [imageError, setImageError] = useState(false);
 
   const formatDate = (dateStr: string) => {
     if (!dateStr) return '';
-    // Parse "YYYY-MM-DD" as LOCAL date parts (avoid UTC midnight shift showing previous day)
-    const parts = dateStr.split('-').map(Number);
+    const parts = dateStr.split('T')[0].split('-').map(Number);
     if (parts.length !== 3 || parts.some(isNaN)) return dateStr;
-    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(parts[0], parts[1] - 1, parts[2]).toLocaleDateString(lang === 'ar' ? 'ar-SA' : 'en-US', options);
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric', calendar: 'gregory' };
+    try {
+      const d = new Date(parts[0], parts[1] - 1, parts[2]);
+      if (isNaN(d.getTime())) return dateStr;
+      return d.toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US', options);
+    } catch {
+      return dateStr;
+    }
   };
 
   const getDisplayText = (enText: string, arText: string) => {
@@ -103,9 +110,14 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
         </div>
 
         {/* Featured Image / Branded Cover */}
-        {post.imageUrl ? (
+        {post.imageUrl && !imageError && post.imageUrl !== 'https://d-arrow.com/_headers' ? (
           <div className="w-full h-[400px] md:h-[500px] rounded-2xl overflow-hidden mb-12 shadow-2xl shadow-[#FF4D6D]/10">
-            <img src={post.imageUrl} alt={title} className="w-full h-full object-cover" />
+            <img 
+              src={post.imageUrl} 
+              alt={title} 
+              onError={() => setImageError(true)}
+              className="w-full h-full object-cover" 
+            />
           </div>
         ) : (
           <div className="w-full h-[300px] md:h-[380px] rounded-2xl overflow-hidden mb-12 shadow-2xl shadow-[#FF4D6D]/10 bg-gradient-to-br from-[#FF4D6D] via-[#FF6B6B] to-[#FF9A3C] relative flex items-center justify-center">

@@ -36,10 +36,15 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
   const [posts] = useState<BlogPost[]>(initialPosts);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedTag, setSelectedTag] = useState<string | null>(tagFromUrl);
+  const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     setSelectedTag(tagFromUrl);
   }, [tagFromUrl]);
+
+  const handleImageError = (postId: string) => {
+    setFailedImages(prev => ({ ...prev, [postId]: true }));
+  };
 
   const categories = ['all', ...new Set(posts.map(post => post.category))];
   const allTags = Array.from(new Set(posts.flatMap(p => p.tags || [])));
@@ -52,15 +57,21 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
 
   const formatDate = (dateStr: string) => {
     if (!dateStr) return '';
-    // Parse "YYYY-MM-DD" as LOCAL date parts (avoid UTC midnight shift showing previous day)
-    const parts = dateStr.split('-').map(Number);
+    const parts = dateStr.split('T')[0].split('-').map(Number);
     if (parts.length !== 3 || parts.some(isNaN)) return dateStr;
     const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
+      calendar: 'gregory',
     };
-    return new Date(parts[0], parts[1] - 1, parts[2]).toLocaleDateString(lang === 'ar' ? 'ar-SA' : 'en-US', options);
+    try {
+      const d = new Date(parts[0], parts[1] - 1, parts[2]);
+      if (isNaN(d.getTime())) return dateStr;
+      return d.toLocaleDateString(lang === 'ar' ? 'ar-EG' : 'en-US', options);
+    } catch {
+      return dateStr;
+    }
   };
 
   const stripHtml = (html: string) => {
@@ -141,11 +152,12 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
                   dir={lang === 'ar' ? 'rtl' : 'ltr'}
                 >
                   {/* Image / Branded Cover */}
-                  {post.imageUrl ? (
+                  {post.imageUrl && !failedImages[post.id] && post.imageUrl !== 'https://d-arrow.com/_headers' ? (
                     <div className="w-full h-48 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] relative overflow-hidden">
                       <img
                         src={post.imageUrl}
                         alt={post.title}
+                        onError={() => handleImageError(post.id)}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>

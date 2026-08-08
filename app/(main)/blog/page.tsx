@@ -37,7 +37,7 @@ const FALLBACK_POSTS = [
     date: '2026-07-15',
     time: '10:30:00',
     readTime: 8,
-    imageUrl: 'https://d-arrow.com/_headers',
+    imageUrl: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=1200&auto=format&fit=crop&q=80',
     tags: ['SEO', 'السعودية', 'Digital Marketing', 'التسويق الرقمي'],
     status: 'published',
     createdAt: '2026-07-15T10:30:00.000Z',

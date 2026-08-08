@@ -202,8 +202,15 @@ export default function PostsListPage() {
               {filteredPosts.map(post => (
                 <tr key={post.id}>
                   <td>
-                    {post.imageUrl ? (
-                      <Image src={post.imageUrl} alt="Post image" width={40} height={40} style={{ width: 40, height: 40, borderRadius: 8, objectFit: 'cover' }} unoptimized />
+                    {post.imageUrl && post.imageUrl !== 'https://d-arrow.com/_headers' ? (
+                      <img
+                        src={post.imageUrl}
+                        alt="Post thumbnail"
+                        style={{ width: 40, height: 40, borderRadius: 8, objectFit: 'cover' }}
+                        onError={(e) => {
+                          (e.target as HTMLElement).style.display = 'none';
+                        }}
+                      />
                     ) : (
                       <div style={{
                         width: 40, height: 40, borderRadius: 8,
