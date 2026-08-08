@@ -208,7 +208,7 @@ Make it informative, engaging, and optimized for web readers in BOTH languages.`
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/(^-|-$)/g, '')
         .slice(0, 60) || `post-${Date.now()}`;
-      const slug = `${slugBase}-${Date.now().toString(36)}`;
+      const slug = `${slugBase}-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
       dbPost = await prisma.blogPost.create({
         data: {
           title: blogPost.title,
@@ -220,7 +220,13 @@ Make it informative, engaging, and optimized for web readers in BOTH languages.`
           excerptAr: blogPost.excerptAr,
           author: blogPost.author,
           category,
-          categoryAr: '',
+          categoryAr: category === 'AI & Technology' ? 'الذكاء الاصطناعي والتقنية'
+            : category === 'Innovation' ? 'الابتكار'
+            : category === 'Business' ? 'الأعمال'
+            : category === 'Strategy' ? 'الاستراتيجية'
+            : category === 'Tips & Tricks' ? 'نصائح وحيل'
+            : category === 'Digital Marketing' ? 'التسويق الرقمي'
+            : '',
           date: blogPost.date,
           time: blogPost.time,
           readTime: blogPost.readTime,
