@@ -138,36 +138,6 @@ const ADVANTAGES = [
   },
 ];
 
-const CITIES = [
-  {
-    nameAr: 'الأحساء',
-    nameEn: 'Al-Ahsa',
-    focusAr: 'المحلات العائلية والقطاع التجاري',
-    focusEn: 'Family businesses & commercial sector',
-    descAr: 'عرض باقة الانطلاقة بسعر تأسيسي لأول 20 عميل، مع التركيز على القطاع الزراعي والتجاري المحلي الراسخ.',
-    descEn: 'Starter package at a founding price for the first 20 clients, focusing on the established agricultural and local commercial sector.',
-    gradient: 'linear-gradient(180deg, rgba(255,77,109,0.06), #12203E)',
-  },
-  {
-    nameAr: 'الخبر',
-    nameEn: 'Khobar',
-    focusAr: 'المطاعم والعيادات وقطاع الجمال',
-    focusEn: 'Restaurants, clinics & beauty sector',
-    descAr: 'محتوى مرئي قوي بالريلز نظراً لارتفاع التفاعل، مع شراكات مع مصورين ومؤثرين محليين بدل الاعتماد على الرياض.',
-    descEn: 'Strong visual Reels content due to high engagement, with local photographer & influencer partnerships instead of relying on Riyadh.',
-    gradient: 'linear-gradient(180deg, rgba(255,154,60,0.06), #12203E)',
-  },
-  {
-    nameAr: 'الدمام',
-    nameEn: 'Dammam',
-    focusAr: 'الشركات الصناعية والمقاولين',
-    focusEn: 'Industrial companies & contractors',
-    descAr: 'باقة الأعمال بمحتوى ثنائي اللغة موجّه مباشرة لصناع القرار في القطاع الصناعي والمقاولات الكبرى.',
-    descEn: 'Business package with bilingual content directed at decision-makers in the industrial sector and major contracting companies.',
-    gradient: 'linear-gradient(180deg, rgba(255,77,109,0.06), #12203E)',
-  },
-];
-
 /* ───────── Component ───────── */
 export default function PricingPage() {
   const { lang } = useLanguage();
@@ -232,23 +202,6 @@ export default function PricingPage() {
               <div className={styles.advIcon}>{adv.icon}</div>
               <h4 className={styles.advTitle}>{t(adv.titleAr, adv.titleEn)}</h4>
               <p className={styles.advDesc}>{t(adv.descAr, adv.descEn)}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── CITIES ── */}
-      <section className={styles.section}>
-        <div className={styles.sectionHead}>
-          <span className={styles.tag}>{t('خطة الدخول للسوق', 'Market Entry Strategy')}</span>
-          <h2 className={styles.sectionTitle}>{t('استراتيجية مدينة بمدينة', 'City-by-City Strategy')}</h2>
-        </div>
-        <div className={styles.citiesGrid}>
-          {CITIES.map((city, i) => (
-            <div key={i} className={styles.cityCard} style={{ background: city.gradient }}>
-              <h3 className={styles.cityName}>{t(city.nameAr, city.nameEn)}</h3>
-              <div className={styles.cityFocus}>{t(city.focusAr, city.focusEn)}</div>
-              <p className={styles.cityDesc}>{t(city.descAr, city.descEn)}</p>
             </div>
           ))}
         </div>
