@@ -162,7 +162,7 @@ export default function PricingPage() {
           {PACKAGES.map((pkg) => (
             <div key={pkg.id} className={`${styles.pkg} ${pkg.featured ? styles.pkgFeatured : ''}`}>
               {pkg.featured && (
-                <span className={styles.badge}>{t(pkg.badgeAr, pkg.badgeEn)}</span>
+                <span className={styles.pkgBadge}>{t(pkg.badgeAr, pkg.badgeEn)}</span>
               )}
               <div className={styles.pkgName}>{t(pkg.nameAr, pkg.nameEn)}</div>
               <div className={styles.pkgAudience}>{t(pkg.audienceAr, pkg.audienceEn)}</div>
@@ -207,27 +207,6 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* ── FOOTER CTA ── */}
-      <footer className={styles.footerCta}>
-        <h2 className={styles.footerTitle}>
-          {t('جاهز تبدأ نموّك الرقمي في المنطقة الشرقية؟', 'Ready to Start Your Digital Growth in the Eastern Province?')}
-        </h2>
-        <p className={styles.footerSub}>
-          {t(
-            'تواصل معنا الحين واحصل على استشارة مجانية وخطة مخصصة لنشاطك',
-            'Contact us now and get a free consultation & custom plan for your business'
-          )}
-        </p>
-        <Link href="/contact" className={styles.ctaBig}>
-          {t('اطلب عرض سعر مجاني', 'Request a Free Quote')}
-        </Link>
-        <div className={styles.footBottom}>
-          {t(
-            '© 2026 دي آرو للتسويق الرقمي — المنطقة الشرقية، المملكة العربية السعودية',
-            '© 2026 D-Arrow Digital Marketing — Eastern Province, Saudi Arabia'
-          )}
-        </div>
-      </footer>
     </div>
   );
 }

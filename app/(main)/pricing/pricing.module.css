@@ -208,28 +208,54 @@
   max-width: 1240px;
   margin: 0 auto;
 }
+/* Identity card treatment: dark-navy → secondary-dark gradient,
+   subtle brand-pink border + backdrop blur (matches site-wide cards) */
 .pkg {
-  background: var(--navy-card);
-  border: 1px solid var(--navy-line);
+  background: linear-gradient(
+    to bottom right,
+    var(--navy-deep) 0%,
+    rgba(20, 22, 46, 0.8) 50%,
+    rgba(11, 13, 31, 0.9) 100%
+  );
+  border: 1px solid rgba(255, 77, 109, 0.15);
   border-radius: 20px;
   padding: 34px 26px;
   display: flex;
   flex-direction: column;
   position: relative;
+  backdrop-filter: blur(10px);
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 .pkg:hover {
   transform: translateY(-6px);
+  border-color: rgba(255, 77, 109, 0.4);
   box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 }
 .pkgFeatured {
-  border: 1.5px solid var(--pink) !important;
-  background: linear-gradient(180deg, rgba(255,77,109,0.08), var(--navy-card) 30%);
+  border: 1.5px solid rgba(255, 77, 109, 0.5) !important;
+  background: linear-gradient(
+    to bottom right,
+    var(--navy-deep) 0%,
+    rgba(20, 22, 46, 0.85) 50%,
+    rgba(11, 13, 31, 0.95) 100%
+  );
+  box-shadow: 0 0 40px rgba(255, 77, 109, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 .pkgFeatured:hover {
-  box-shadow: 0 20px 60px rgba(255,77,109,0.2);
+  box-shadow: 0 20px 60px rgba(255,77,109,0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
+/* Inline gradient pill — used for Process step numbers (Process.tsx) */
 .badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--brand-gradient-mid), var(--brand-orange));
+  color: var(--brand-white);
+  padding: 6px 10px;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(255, 77, 109, 0.2);
+}
+/* Floating ribbon — used for the featured package card */
+.pkgBadge {
   position: absolute;
   top: -13px; right: 26px;
   background: linear-gradient(135deg, var(--pink), var(--orange));
@@ -342,11 +368,17 @@
   gap: 20px;
 }
 .advItem {
-  background: var(--navy-card);
-  border: 1px solid var(--navy-line);
+  background: linear-gradient(
+    to bottom right,
+    var(--navy-deep) 0%,
+    rgba(20, 22, 46, 0.8) 50%,
+    rgba(11, 13, 31, 0.9) 100%
+  );
+  border: 1px solid rgba(255, 77, 109, 0.15);
   border-radius: 14px;
   padding: 24px 20px;
   text-align: center;
+  backdrop-filter: blur(10px);
   transition: transform 0.3s ease, border-color 0.3s ease;
 }
 .advItem:hover {
@@ -423,58 +455,138 @@
   line-height: 1.8;
 }
 
-/* ===== FOOTER CTA ===== */
-.footerCta {
-  text-align: center;
-  padding: 100px 6vw 70px;
-  position: relative;
-  overflow: hidden;
+/* ===== SHARED CARD CLASSES (used by Process.tsx / ServiceCard.tsx) =====
+   Restored from the original site design — identity card treatment */
+.serviceCard {
+  background: linear-gradient(
+    to bottom right,
+    var(--dark-navy) 0%,
+    rgba(20, 22, 46, 0.8) 50%,
+    rgba(11, 13, 31, 0.9) 100%
+  );
+  border: 1px solid rgba(255, 77, 109, 0.15);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  display: flex;
+  height: 400px;
+  flex-direction: column;
+  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  backdrop-filter: blur(10px);
 }
-.footerCta::before {
-  content: "";
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at 50% 30%, rgba(255,77,109,0.15), transparent 55%);
-  pointer-events: none;
+
+.processCard {
+  background: linear-gradient(
+    to bottom right,
+    var(--dark-navy) 0%,
+    rgba(20, 22, 46, 0.8) 50%,
+    rgba(11, 13, 31, 0.9) 100%
+  );
+  border: 1px solid rgba(255, 77, 109, 0.15);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  display: flex;
+  min-height: 420px;
+  flex-direction: column;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
-.footerTitle {
-  font-size: clamp(26px, 4vw, 40px);
-  font-weight: 900;
-  max-width: 680px;
-  margin: 0 auto 18px;
+
+.featured {
+  border-color: rgba(255, 77, 109, 0.5);
+  box-shadow: 0 0 40px rgba(255, 77, 109, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   position: relative;
+  transform: scale(1.02);
+}
+
+.cardTitleprocess1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
   font-family: 'Cairo', sans-serif;
+  color: var(--brand-white);
 }
-.footerSub {
-  color: var(--muted);
-  margin-bottom: 36px;
-  position: relative;
-  font-size: 16px;
+
+.cardTop { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+
+.iconWrap {
+  width: 56px; height: 56px;
+  border-radius: 12px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  box-shadow: inset 0 -6px 18px rgba(0,0,0,0.25);
+  font-size: 22px;
 }
-.ctaBig {
-  display: inline-block;
-  background: linear-gradient(135deg, var(--pink), var(--orange));
-  padding: 17px 46px;
-  border-radius: 100px;
-  font-weight: 800;
-  color: var(--white);
-  text-decoration: none;
-  font-size: 16px;
-  position: relative;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  cursor: pointer;
+
+.cardBody { display: flex; flex-direction: column; gap: 0.75rem; flex: 1; justify-content: space-between; min-height: 0; }
+
+.divider { height: 1px; background: linear-gradient(90deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)); margin: 6px 0 8px; }
+
+.check {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(255, 77, 109, 0.2), rgba(255, 154, 60, 0.1));
+  border: 1px solid rgba(255, 77, 109, 0.3);
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.ctaButton {
+  background: linear-gradient(135deg, var(--brand-pink) 0%, var(--brand-gradient-mid) 50%, var(--brand-orange) 100%);
+  color: var(--brand-white) !important;
+  padding: 0.9rem 1.5rem;
+  border-radius: 0.85rem;
+  font-weight: 700;
+  text-align: center;
   border: none;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  font-family: 'TT Hoves Pro', 'Gilroy', system-ui, sans-serif;
+  box-shadow: 0 8px 24px rgba(255, 77, 109, 0.25);
+  flex-shrink: 0;
+  margin-top: auto;
+  text-decoration: none;
 }
-.ctaBig:hover {
-  opacity: 0.9;
-  transform: scale(1.03);
-}
-.footBottom {
-  margin-top: 70px;
-  padding-top: 26px;
-  border-top: 1px solid var(--navy-line);
-  color: var(--muted-2);
-  font-size: 12.5px;
+
+.heroMeta {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
   position: relative;
+  z-index: 20;
+}
+
+.heroBadge {
+  background: linear-gradient(135deg, rgba(255, 77, 109, 0.15), rgba(255, 154, 60, 0.1));
+  color: var(--brand-pink);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  box-shadow: 0 8px 24px rgba(255, 77, 109, 0.15);
+  border: 1px solid rgba(255, 77, 109, 0.3);
+}
+
+.heroPill {
+  background: rgba(255, 77, 109, 0.05);
+  color: var(--brand-white);
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  border: 1px solid rgba(255, 77, 109, 0.2);
 }
 
 /* ===== RESPONSIVE ===== */
