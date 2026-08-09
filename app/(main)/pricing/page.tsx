@@ -175,7 +175,7 @@ export default function PricingPage() {
   const t = (ar: string, en: string) => isAr ? ar : en;
 
   return (
-      <div className="pt-28 md:pt-36">
+    <div className={`${styles.page} pt-28 md:pt-36`} dir={isAr ? 'rtl' : 'ltr'}>
         {/* ── PACKAGES ── */}
         <section className={styles.section} id="packages">
         <div className={styles.sectionHead}>
