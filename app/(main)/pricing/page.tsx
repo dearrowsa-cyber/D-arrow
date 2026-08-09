@@ -107,30 +107,6 @@ const PACKAGES = [
   },
 ];
 
-const WHY_CARDS = [
-  {
-    num: '01',
-    titleAr: 'تنوع اقتصادي فريد',
-    titleEn: 'Unique Economic Diversity',
-    descAr: 'قطاع صناعي وبترولي ضخم في الدمام، تجارة عائلية راسخة في الأحساء، وقطاع خدمي وترفيهي متسارع في الخبر — كل سوق يحتاج لغة مختلفة.',
-    descEn: 'A huge industrial and petrochemical sector in Dammam, established family businesses in Al-Ahsa, and a fast-growing service & entertainment sector in Khobar — each market needs a different approach.',
-  },
-  {
-    num: '02',
-    titleAr: 'جمهور ثنائي اللغة',
-    titleEn: 'Bilingual Audience',
-    descAr: 'نسبة كبيرة من المقيمين والشركات المرتبطة بالقطاع الصناعي تتطلب محتوى عربي وإنجليزي معاً، وهذا مدمج في باقاتنا من الأساس.',
-    descEn: 'A large percentage of residents and companies linked to the industrial sector require both Arabic and English content, which is built into our packages from the start.',
-  },
-  {
-    num: '03',
-    titleAr: 'فرصة تفوق حقيقية',
-    titleEn: 'A Real Competitive Edge',
-    descAr: 'المنافسة أقل احترافية مقارنة بالمدن الكبرى، وهذا يفتح المجال لتنفيذ أعلى جودة بسعر أذكى يكسب حصة سوقية بسرعة.',
-    descEn: 'Competition is less professional compared to major cities, opening the door for higher-quality execution at smarter prices to capture market share quickly.',
-  },
-];
-
 const ADVANTAGES = [
   {
     icon: '0%',
@@ -199,80 +175,9 @@ export default function PricingPage() {
   const t = (ar: string, en: string) => isAr ? ar : en;
 
   return (
-    <div className={styles.page} dir={isAr ? 'rtl' : 'ltr'}>
-
-      {/* ── HERO ── */}
-      <header className={styles.hero}>
-        <svg className={styles.bigArrowBg} viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="0,0 200,100 0,200" fill="url(#pkgG1)" />
-          <defs>
-            <linearGradient id="pkgG1" x1="0" y1="0" x2="200" y2="200">
-              <stop offset="0%" stopColor="#FF4D6D" />
-              <stop offset="100%" stopColor="#FF9A3C" />
-            </linearGradient>
-          </defs>
-        </svg>
-
-        <span className={styles.eyebrow}>
-          {t('دي آرو للتسويق', 'D-Arrow Marketing')} <b className={styles.eyebrowAccent}>|</b> {t('باقات التسويق الرقمي 2026', 'Digital Marketing Packages 2026')}
-        </span>
-
-        <h1 className={`${styles.heroTitle} ${styles.display}`}>
-          {t('نوصّلك ', 'We get you ')}
-          <span className={styles.grad}>{t('قدّام', 'ahead of')}</span>
-          {t(' السوق', ' the market')}
-          <br />
-          {t('في الأحساء، الخبر والدمام', 'in Al-Ahsa, Khobar & Dammam')}
-        </h1>
-
-        <p className={styles.heroSub}>
-          {t(
-            'باقات متكاملة، أسعار تنافسية، وتنفيذ احترافي مصمم خصيصاً لطبيعة المنطقة الشرقية — لأن دي آرو دايماً للأمام.',
-            'Integrated packages, competitive prices, and professional execution designed specifically for the Eastern Province — because D-Arrow is always ahead.'
-          )}
-        </p>
-
-        <div className={styles.heroStats}>
-          <div className={styles.stat}>
-            <b className={styles.statNum}>3</b>
-            <span className={styles.statLabel}>{t('مدن نغطيها بعمق', 'Cities we deeply cover')}</span>
-          </div>
-          <div className={styles.stat}>
-            <b className={styles.statNum}>4</b>
-            <span className={styles.statLabel}>{t('باقات متدرجة', 'Tiered packages')}</span>
-          </div>
-          <div className={styles.stat}>
-            <b className={styles.statNum}>20%</b>
-            <span className={styles.statLabel}>{t('خصم إطلاق للعملاء الجدد', 'Launch discount for new clients')}</span>
-          </div>
-        </div>
-      </header>
-
-      {/* ── WHY SECTION ── */}
-      <section className={`${styles.section} ${styles.why}`}>
-        <div className={styles.sectionHead}>
-          <span className={styles.tag}>{t('لماذا المنطقة الشرقية مختلفة', 'Why the Eastern Province is Different')}</span>
-          <h2 className={styles.sectionTitle}>{t('سوق نعرفه بالتفصيل', 'A Market We Know Inside Out')}</h2>
-          <p className={styles.sectionDesc}>
-            {t(
-              'ما هي عبارة عن نسخة مكررة من باقات الرياض وجدة — كل باقة مبنية على طبيعة العملاء هنا فعلاً',
-              'These aren\'t copy-pasted Riyadh & Jeddah packages — every package is built on the reality of clients here'
-            )}
-          </p>
-        </div>
-        <div className={styles.whyGrid}>
-          {WHY_CARDS.map((card) => (
-            <div key={card.num} className={styles.whyCard}>
-              <span className={styles.whyNum}>{card.num}</span>
-              <h3 className={styles.whyCardTitle}>{t(card.titleAr, card.titleEn)}</h3>
-              <p className={styles.whyCardDesc}>{t(card.descAr, card.descEn)}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── PACKAGES ── */}
-      <section className={styles.section} id="packages">
+      <div className="pt-28 md:pt-36">
+        {/* ── PACKAGES ── */}
+        <section className={styles.section} id="packages">
         <div className={styles.sectionHead}>
           <span className={styles.tag}>{t('الباقات', 'Packages')}</span>
           <h2 className={styles.sectionTitle}>{t('اختر السرعة اللي تناسب نموّك', 'Choose the Speed That Fits Your Growth')}</h2>
