@@ -195,18 +195,19 @@ const FALLBACK_POSTS: Record<string, any> = {
 // Generate dynamic SEO metadata for each blog post
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
+  const decodedId = decodeURIComponent(id);
   let post: any = null;
 
   try {
     post = await prisma.blogPost.findFirst({
-      where: { OR: [{ id }, { slug: id }] }
+      where: { OR: [{ id }, { slug: id }, { slug: decodedId }, { id: decodedId }] }
     });
   } catch {
     post = null;
   }
 
-  if (!post && FALLBACK_POSTS[id]) {
-    post = FALLBACK_POSTS[id];
+  if (!post && (FALLBACK_POSTS[id] || FALLBACK_POSTS[decodedId])) {
+    post = FALLBACK_POSTS[id] || FALLBACK_POSTS[decodedId];
   }
 
   if (!post) return { title: 'مقال غير موجود | D Arrow' };
@@ -232,7 +233,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     openGraph: {
       title,
       description,
-      url: `https://d-arrow.com/blog/${post.id}`,
+      url: `https://d-arrow.com/blog/${post.slug || post.id}`,
       type: 'article',
       publishedTime: post.date,
       authors: [post.author],
@@ -248,18 +249,19 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       images: post.imageUrl ? [post.imageUrl] : undefined,
     },
     alternates: {
-      canonical: `https://d-arrow.com/blog/${post.id}`,
+      canonical: `https://d-arrow.com/blog/${post.slug || post.id}`,
     },
   };
 }
 
 export default async function BlogPostPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const decodedId = decodeURIComponent(id);
   let post: any = null;
 
   try {
     const rawPost = await prisma.blogPost.findFirst({
-      where: { OR: [{ id }, { slug: id }] }
+      where: { OR: [{ id }, { slug: id }, { slug: decodedId }, { id: decodedId }] }
     });
     if (rawPost) {
       post = {
@@ -273,8 +275,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ id: s
     console.error('Error fetching single blog post, trying fallback:', error);
   }
 
-  if (!post && FALLBACK_POSTS[id]) {
-    post = FALLBACK_POSTS[id];
+  if (!post && (FALLBACK_POSTS[id] || FALLBACK_POSTS[decodedId])) {
+    post = FALLBACK_POSTS[id] || FALLBACK_POSTS[decodedId];
   }
 
   if (!post) return notFound();

@@ -79,8 +79,8 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
     return html.replace(/<[^>]*>?/gm, '');
   };
 
-  const getDisplayText = (enText: string, arText: string | undefined) => {
-    return lang === 'ar' ? (arText || enText) : enText;
+  const getDisplayText = (enText: string | undefined, arText: string | undefined) => {
+    return lang === 'ar' ? (arText || enText || '') : (enText || arText || '');
   };
 
   const getCategoryIcon = (category: string) => {
@@ -146,7 +146,10 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
           {filteredPosts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredPosts.map(post => {
-                const targetSlug = (post as any).slug || post.id;
+                let targetSlug = (post as any).slug || post.id;
+                if (typeof targetSlug === 'string' && (targetSlug.startsWith('http://') || targetSlug.startsWith('https://'))) {
+                  targetSlug = targetSlug.split('/blog/').pop() || targetSlug.split('/').pop() || post.id;
+                }
                 return (
                   <article
                     key={post.id}
