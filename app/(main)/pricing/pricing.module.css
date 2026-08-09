@@ -1,14 +1,18 @@
-/* ===== PACKAGES / PRICING PAGE ===== */
+/* ===== PACKAGES / PRICING PAGE =====
+   Colors aliased to the global D-Arrow brand tokens (app/globals.css)
+   so the page stays in sync with the website identity:
+   --dark-navy #0B0D1F | --secondary-dark #14162E | --brand-pink #FF4D6D
+   --brand-orange #FF9A3C | --brand-white #FFFFFF | --soft-white #E6E6EA | --text-light #6B7280 */
 .page {
-  --navy-deep: #080F1E;
-  --navy-mid: #0F1B33;
-  --navy-card: #12203E;
-  --navy-line: #233457;
-  --pink: #FF4D6D;
-  --orange: #FF9A3C;
-  --white: #FFFFFF;
-  --muted: #8B96B8;
-  --muted-2: #5E6A8C;
+  --navy-deep: var(--dark-navy);
+  --navy-mid: var(--secondary-dark);
+  --navy-card: var(--secondary-dark);
+  --navy-line: rgba(255, 77, 109, 0.3);
+  --pink: var(--brand-pink);
+  --orange: var(--brand-orange);
+  --white: var(--brand-white);
+  --muted: var(--soft-white);
+  --muted-2: var(--text-light);
   background: var(--navy-deep);
   color: var(--white);
   font-family: 'Tajawal', sans-serif;
@@ -278,7 +282,7 @@
   display: flex;
   gap: 10px;
   font-size: 14px;
-  color: #C9D2EA;
+  color: var(--soft-white);
   margin-bottom: 14px;
   align-items: flex-start;
 }
