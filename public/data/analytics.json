@@ -1,9 +1,9 @@
 {
-  "totalVisitors": 53,
-  "todayViews": 12,
+  "totalVisitors": 61,
+  "todayViews": 8,
   "pageViews": {
-    "/": 28,
-    "/blog": 3,
+    "/": 30,
+    "/blog": 6,
     "/blog/123": 1,
     "/blog/cmog6f88m0000iizx792fjazo": 1,
     "/contact": 1,
@@ -16,7 +16,8 @@
     "/demo/real-estate": 5,
     "/demo/real-estate/apartment-alolaya-riyadh": 1,
     "/demo/real-estate/villa-hittin-riyadh": 3,
-    "/demo/real-estate/admin": 2
+    "/demo/real-estate/admin": 2,
+    "/blog/seo-saudi-market": 3
   },
-  "lastResetDate": "2026-08-25"
+  "lastResetDate": "2026-09-12"
 }

@@ -70,6 +70,7 @@ body:has(.admin-login-page) footer {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  /* overflow-x:auto */
 }
 
 .admin-nav-item {

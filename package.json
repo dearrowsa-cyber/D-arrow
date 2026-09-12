@@ -10,6 +10,9 @@
     "analyze": "cross-env ANALYZE=true next build",
     "postinstall": "prisma generate"
   },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "dependencies": {
     "@prisma/client": "^5.22.0",
     "@react-three/drei": "^10.7.7",

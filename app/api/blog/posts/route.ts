@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { FALLBACK_POSTS } from '@/lib/blog/fallback-posts';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,27 +16,40 @@ export async function GET(req: NextRequest) {
       ...post,
       tags: post.tags ? JSON.parse(post.tags) : [],
     }));
-    
+
     return NextResponse.json({
       success: true,
+      source: 'database',
       posts,
       count: posts.length,
     });
   } catch (error) {
-    console.error('Error fetching blog posts:', error);
+    console.error('Error fetching blog posts, falling back to FALLBACK_POSTS:', error);
     return NextResponse.json({
-      success: false,
-      error: 'Failed to fetch blog posts',
-      posts: [],
-    }, { status: 500 });
+      success: true,
+      source: 'fallback',
+      dbError: error instanceof Error ? error.message : String(error),
+      posts: FALLBACK_POSTS,
+      count: FALLBACK_POSTS.length,
+    });
   }
+}
+
+function normalizeSlug(input: string): string {
+  return input
+    .trim()
+    .toLowerCase()
+    .replace(/[^\w\u0600-\u06FF\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
 }
 
 // Add a new blog post
 export async function POST(req: NextRequest) {
   try {
     const newPost = await req.json();
-    
+
     const hasTitle = newPost.title || newPost.titleAr;
     const hasContent = newPost.content || newPost.contentAr;
 
@@ -50,7 +64,7 @@ export async function POST(req: NextRequest) {
       data: {
         title: newPost.title || '',
         titleAr: newPost.titleAr || '',
-        slug: newPost.slug || null,
+        slug: newPost.slug ? normalizeSlug(newPost.slug) : null,
         content: newPost.content || '',
         contentAr: newPost.contentAr || '',
         excerpt: newPost.excerpt || (newPost.content ? newPost.content.substring(0, 150) : ''),
@@ -78,10 +92,15 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error('Error creating blog post:', error);
+    const message = error instanceof Error ? error.message : String(error);
+    const duplicateSlug = /Unique constraint failed/.test(message) || /P2002/.test(message);
     return NextResponse.json({
       success: false,
-      error: 'Failed to create blog post',
-    }, { status: 500 });
+      error: duplicateSlug
+        ? 'الرابط (Slug) مستخدم بالفعل — اختر رابطاً آخر'
+        : 'Failed to create blog post: ' + message,
+      details: message,
+    }, { status: duplicateSlug ? 409 : 500 });
   }
 }
 
@@ -89,7 +108,7 @@ export async function POST(req: NextRequest) {
 export async function PUT(req: NextRequest) {
   try {
     const updates = await req.json();
-    
+
     if (!updates.id) {
       return NextResponse.json({ success: false, error: 'Missing post ID' }, { status: 400 });
     }
@@ -100,6 +119,11 @@ export async function PUT(req: NextRequest) {
     // Serialize tags array to JSON string if present
     if (updateData.tags && Array.isArray(updateData.tags)) {
       updateData.tags = JSON.stringify(updateData.tags);
+    }
+
+    // Normalize slug if present
+    if (updateData.slug) {
+      updateData.slug = normalizeSlug(updateData.slug);
     }
 
     const post = await prisma.blogPost.update({
@@ -114,7 +138,8 @@ export async function PUT(req: NextRequest) {
     });
   } catch (error) {
     console.error('Error updating blog post:', error);
-    return NextResponse.json({ success: false, error: 'Failed to update post' }, { status: 500 });
+    const message = error instanceof Error ? error.message : String(error);
+    return NextResponse.json({ success: false, error: 'Failed to update post: ' + message }, { status: 500 });
   }
 }
 
@@ -123,7 +148,7 @@ export async function DELETE(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
-    
+
     if (!id) {
       return NextResponse.json({ success: false, error: 'Missing post ID' }, { status: 400 });
     }

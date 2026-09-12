@@ -75,6 +75,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/lib ./lib
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 
@@ -90,8 +91,21 @@ ENV HOSTNAME=0.0.0.0
 COPY <<'EOF' /app/entrypoint.sh
 #!/usr/bin/env bash
 set -euo pipefail
-echo "[entrypoint] Applying pending Prisma migrations..."
-npx prisma migrate deploy || echo "[entrypoint] WARNING: prisma migrate deploy failed (skip if dev.db unused)"
+
+# Ensure Prisma always has a database to talk to. If the orchestrator did not
+# inject DATABASE_URL (e.g. a Portainer stack built from an older compose),
+# derive it from the stack's own PostgreSQL service settings.
+if [ -z "${DATABASE_URL:-}" ]; then
+  export DATABASE_URL="postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@${PGHOST:-d-arrow-postgres}:${PGPORT:-5432}/${POSTGRES_DATABASE:-darrow}?schema=public"
+  echo "[entrypoint] DATABASE_URL was missing — derived from stack PostgreSQL settings."
+fi
+
+if npx prisma migrate deploy; then
+  echo "[entrypoint] Migrations OK. Seeding fallback blog posts into the DB..."
+  npx prisma db seed || echo "[entrypoint] WARNING: prisma db seed failed (continuing with FALLBACK_POSTS)"
+else
+  echo "[entrypoint] WARNING: prisma migrate deploy failed — DB may be unreachable (continuing with FALLBACK_POSTS)"
+fi
 echo "[entrypoint] Starting Next.js server on ${HOSTNAME}:${PORT}"
 exec node_modules/.bin/next start -H "${HOSTNAME}" -p "${PORT}"
 EOF
