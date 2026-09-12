@@ -8,6 +8,7 @@ import {
   Wallet, Landmark, Clock, AlertCircle, Copy,
   CheckCircle2, Package, Sparkles, ArrowRight, Eye, EyeOff, Shield
 } from 'lucide-react';
+import { useCart } from '@/components/store/CartContext';
 import '@/app/(main)/demo/store/demo-store.css';
 
 type CheckoutStep = 'shipping' | 'payment' | 'review' | 'processing' | 'confirmed';
@@ -74,7 +75,17 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('mada');
   const [card, setCard] = useState<CardInfo>({ number: '', name: '', expiry: '', cvv: '' });
   const [showCvv, setShowCvv] = useState(false);
-  const [cart] = useState(DEMO_CART);
+  const { items: cartItems } = useCart();
+  const cart = cartItems && cartItems.length > 0
+    ? cartItems.map(item => ({
+        id: item.productId,
+        name: item.nameAr || item.name,
+        image: item.image || 'https://images.unsplash.com/photo-1556742049-0a67c5574f73?auto=format&fit=crop&w=200&q=80',
+        price: item.salePrice || item.price,
+        oldPrice: item.price,
+        quantity: item.quantity
+      }))
+    : DEMO_CART;
   const [coupon, setCoupon] = useState('');
   const [discountPct, setDiscountPct] = useState(0);
   const [couponMsg, setCouponMsg] = useState('');

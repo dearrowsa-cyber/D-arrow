@@ -1,583 +1,1007 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
   ShoppingBag, 
-  ExternalLink, 
+  ShoppingCart,
+  ArrowUpRight, 
   Sparkles, 
   Check, 
   ShieldCheck, 
   Zap, 
   CreditCard, 
-  Smartphone, 
-  BarChart3, 
-  ArrowRight, 
   MessageCircle, 
   Lock, 
   CheckCircle2, 
-  Layers, 
-  Layout, 
-  Settings, 
-  Globe, 
   Star,
-  Clock,
-  ChevronLeft,
   Bot,
-  Users,
   Building2,
-  Home,
-  MapPin
+  Search,
+  SlidersHorizontal,
+  X,
+  Plus,
+  Minus,
+  Trash2,
+  Award,
+  Eye,
+  Flame,
+  Server
 } from 'lucide-react';
 import { useLanguage } from '@/components/LanguageProvider';
+import { useCart } from '@/components/store/CartContext';
 
-export default function StoreServicePage() {
+export interface StoreProduct {
+  id: string;
+  slug: string;
+  name: string;
+  nameAr: string;
+  category: 'templates' | 'realestate' | 'payments' | 'ai' | 'hosting';
+  categoryNameAr: string;
+  categoryNameEn: string;
+  price: number;
+  originalPrice: number;
+  rating: number;
+  reviewsCount: number;
+  ordersCount: number;
+  badge?: string;
+  badgeIcon?: any;
+  badgeColor?: string;
+  image: string;
+  descriptionAr: string;
+  descriptionEn: string;
+  keyHighlightAr: string;
+  keyHighlightEn: string;
+  featuresAr: string[];
+  featuresEn: string[];
+  demoUrl?: string;
+  deliveryTimeAr: string;
+  deliveryTimeEn: string;
+  isPopular?: boolean;
+}
+
+const STORE_PRODUCTS: StoreProduct[] = [
+  {
+    id: 'saudi-ecommerce-store-template',
+    slug: 'saudi-ecommerce-store-template',
+    name: 'Saudi E-Commerce Store System & Template',
+    nameAr: 'نظام وقالب المتجر الإلكتروني السعودي',
+    category: 'templates',
+    categoryNameAr: 'قوالب المتاجر',
+    categoryNameEn: 'Store Templates',
+    price: 349,
+    originalPrice: 699,
+    rating: 4.9,
+    reviewsCount: 142,
+    ordersCount: 380,
+    badge: 'الأكثر طلباً',
+    badgeIcon: Flame,
+    badgeColor: 'from-[#FF4D6D] to-[#FF9A3C]',
+    image: '/store/ecommerce.jpg',
+    descriptionAr: 'حل تقني متكامل لبناء متجر إلكتروني سعودي فائق السرعة، مجهز ببوابات الدفع (مدى، Apple Pay، تمارا، تابي)، وسلة تسوق ذكية ولوحة تحكم حية للتاجر.',
+    descriptionEn: 'Turnkey Saudi e-commerce SaaS template with sub-second loading, built-in Mada, Apple Pay, Tamara, Tabby, cart engine, and merchant dashboard.',
+    keyHighlightAr: 'مدى وApple Pay وتمارا + لوحة تحكم للتاجر',
+    keyHighlightEn: 'Mada, Apple Pay, Tamara + Merchant Panel',
+    featuresAr: [
+      'بوابات دفع سعودية مدمجة (مدى، أبل باي، تمارا، تابي)',
+      'سلة تسوق تسويقية وسلسلة شراء سريعة (1-Click Checkout)',
+      'لوحة تحكم كاملة للتاجر وإدارة المنتجات والطلبات',
+      'سرعة فائقة وتحسين 100% لتجربة المستخدم على الجوال',
+      'كود نظيف مع دعم فني وتثبيت مباشر'
+    ],
+    featuresEn: [
+      'Integrated Saudi Payments (Mada, Apple Pay, Tamara, Tabby)',
+      'High-converting 1-Click Checkout & smart cart',
+      'Full merchant management dashboard',
+      'Sub-second page speed & 100% mobile optimized',
+      'Clean source code with direct onboarding support'
+    ],
+    demoUrl: '/demo/store',
+    deliveryTimeAr: 'تسليم وتشغيل فوري خلال 24 ساعة',
+    deliveryTimeEn: 'Instant setup & delivery within 24h',
+    isPopular: true,
+  },
+  {
+    id: 'saudi-real-estate-platform',
+    slug: 'saudi-real-estate-platform',
+    name: 'Saudi Real Estate Platform & Website System',
+    nameAr: 'نظام ومنصة الموقع العقاري السعودي',
+    category: 'realestate',
+    categoryNameAr: 'الأنظمة العقارية',
+    categoryNameEn: 'Real Estate Systems',
+    price: 399,
+    originalPrice: 799,
+    rating: 4.9,
+    reviewsCount: 88,
+    ordersCount: 195,
+    badge: 'إصدار معتمد',
+    badgeIcon: Building2,
+    badgeColor: 'from-[#FF9A3C] to-[#FF4D6D]',
+    image: '/store/realestate.jpg',
+    descriptionAr: 'منصة عقارية متكاملة مخصصة للسوق السعودي، لعرض العقارات (بيع وإيجار)، فلترة حسب الأحياء والمدن، خرائط جوجل تفاعلية، وحجز المعاينات.',
+    descriptionEn: 'Enterprise real estate portal template for Saudi developers & brokers with live map search, district filtering, and viewing appointment booking.',
+    keyHighlightAr: 'خرائط قوقل تفاعلية + حجز معاينات آلي',
+    keyHighlightEn: 'Interactive Maps + Auto Tour Booking',
+    featuresAr: [
+      'عرض تفاعلي للشقق والفلل والأراضي والمشاريع',
+      'خرائط قوقل مدمجة مع الفلترة بالحي والمدينة',
+      'نموذج استقبال طلبات العملاء وحجز المعاينات تلقائياً',
+      'معرض صور وفيديوهات بتقنية 360 درجة للعقارات',
+      'متوافق 100% مع الهيئة العامة للعقار وفال'
+    ],
+    featuresEn: [
+      'Interactive listings for villas, apartments & compounds',
+      'Integrated Google Maps with district search',
+      'Automated client inquiry & viewing booking forms',
+      'High-res photo & 360-degree video showcase',
+      'Fully aligned with Saudi REGA & Val regulations'
+    ],
+    demoUrl: '/demo/real-estate',
+    deliveryTimeAr: 'تسليم وتشغيل فوري',
+    deliveryTimeEn: 'Instant deployment ready',
+    isPopular: true,
+  },
+  {
+    id: 'payment-gateways-integration-pack',
+    slug: 'payment-gateways-integration-pack',
+    name: 'Saudi Payment Gateways & Checkout Engine',
+    nameAr: 'نظام بوابات الدفع والربط المالي السعودي',
+    category: 'payments',
+    categoryNameAr: 'بوابات الدفع',
+    categoryNameEn: 'Payment Gateways',
+    price: 249,
+    originalPrice: 499,
+    rating: 5.0,
+    reviewsCount: 112,
+    ordersCount: 290,
+    badge: 'دفع معتمد',
+    badgeIcon: CreditCard,
+    badgeColor: 'from-[#FF4D6D] to-[#FF9A3C]',
+    image: '/store/payments.jpg',
+    descriptionAr: 'نظام ربط بنكي ومالي آمن ومباشر لجميع طرق الدفع السعودية (مدى، أبل باي، فيزا، ماستركارد، تمارا، تابي، STC Pay) مع حماية ضد الاحتيال.',
+    descriptionEn: 'Enterprise payment integration engine supporting Mada, Apple Pay, Visa, Mastercard, Tamara, Tabby & STC Pay with 256-bit fraud protection.',
+    keyHighlightAr: 'مدى وApple Pay وتابي + تشفير 256-bit',
+    keyHighlightEn: 'Mada, Apple Pay, Tabby + 256-bit Encryption',
+    featuresAr: [
+      'تفعيل فوري لمدى و Apple Pay بدون تعقيدات',
+      'دمج برامج التقسيط (تمارا و تابي) لزيادة المبيعات +40%',
+      'تشفير بنكي 256-bit وحماية معتمدة ضد الاحتيال',
+      'إشعارات فورية عبر الواتساب والبريد لكل عملية دفع ناجحة'
+    ],
+    featuresEn: [
+      'Instant activation for Mada & Apple Pay',
+      'Tamara & Tabby installment widgets to boost conversions +40%',
+      '256-bit SSL financial encryption & anti-fraud guards',
+      'Instant WhatsApp and email alerts for every successful order'
+    ],
+    demoUrl: '/demo/store/checkout',
+    deliveryTimeAr: 'ربط وتشغيل فوري',
+    deliveryTimeEn: 'Instant integration setup',
+  },
+  {
+    id: 'ai-customer-support-bot',
+    slug: 'ai-customer-support-bot',
+    name: 'D-Arrow AI Customer Support & Sales Chatbot',
+    nameAr: 'مساعد الذكاء الاصطناعي والمبيعات الذكي',
+    category: 'ai',
+    categoryNameAr: 'الذكاء الاصطناعي',
+    categoryNameEn: 'AI & Chatbots',
+    price: 299,
+    originalPrice: 599,
+    rating: 4.8,
+    reviewsCount: 76,
+    ordersCount: 160,
+    badge: 'شات بوت 24/7',
+    badgeIcon: Bot,
+    badgeColor: 'from-[#FF4D6D] to-[#FF9A3C]',
+    image: '/store/ai-chatbot.jpg',
+    descriptionAr: 'شات بوت ذكي مخصص مدرب باللغة العربية والإنجليزية واللهجة السعودية، للرد الفوري على العملاء 24 ساعة، اقتراح المنتجات، وتجميع البيانات.',
+    descriptionEn: 'Custom conversational AI chatbot trained on your business data to handle customer inquiries 24/7, recommend products, and capture warm leads.',
+    keyHighlightAr: 'لهجة سعودية أصيلة + رد فوري 24 ساعة',
+    keyHighlightEn: 'Native Saudi AI + 24/7 Auto Response',
+    featuresAr: [
+      'فهم دقيق للهجة السعودية واللغة العربية والإنجليزية',
+      'ردود فورية على استفسارات الأسعار والمخزون والشحن 24/7',
+      'تجميع بيانات العملاء (الاسم، الجوال، الإيميل) وحفظها تلقائياً',
+      'ربط سهل وسريع مع موقعك ومتجرك وقنوات التواصل'
+    ],
+    featuresEn: [
+      'Deep understanding of Saudi dialect, Arabic & English',
+      'Instant 24/7 answers regarding pricing, stock, and shipping',
+      'Automated lead capture (Name, Phone, Email)',
+      '1-click widget integration on web and mobile'
+    ],
+    deliveryTimeAr: 'تدريب وتشغيل خلال 24 ساعة',
+    deliveryTimeEn: 'Trained & deployed in 24h',
+  },
+  {
+    id: 'high-speed-saudi-cloud-infrastructure',
+    slug: 'high-speed-saudi-cloud-infrastructure',
+    name: 'High-Speed Saudi Cloud Hosting & Server Infrastructure',
+    nameAr: 'الاستضافة السحابية والبنية التحتية السعودية',
+    category: 'hosting',
+    categoryNameAr: 'الاستضافة والسيرفرات',
+    categoryNameEn: 'Cloud Hosting',
+    price: 199,
+    originalPrice: 399,
+    rating: 4.9,
+    reviewsCount: 82,
+    ordersCount: 210,
+    badge: 'سرعة فائقة',
+    badgeIcon: Server,
+    badgeColor: 'from-[#FF7544] to-[#FF9A3C]',
+    image: '/store/hosting.png',
+    descriptionAr: 'بنية تحتية سحابية موثوقة داخل المملكة العربية السعودية، تضمن سرعة تصفح فائقة، حماية متقدمة ضد هجمات DDoS، وجاهزية 99.9%.',
+    descriptionEn: 'Ultra-fast Saudi-hosted cloud infrastructure with 99.9% uptime SLA, automated daily backups, enterprise DDoS protection, and free SSL.',
+    keyHighlightAr: 'سيرفرات سريعة <50ms + حماية DDoS معتمدة',
+    keyHighlightEn: 'Saudi Local Servers + Anti-DDoS Shield',
+    featuresAr: [
+      'سيرفرات سحابية سريعة داخل المملكة (زمن استجابة أقل من 50ms)',
+      'شهادة أمان SSL مجانية مع حماية ضد هجمات حجب الخدمة DDoS',
+      'نسخ احتياطي يومي آلي واستعادة بضغطة زر واحدة',
+      'دعم فني متخصص على مدار الساعة 24/7'
+    ],
+    featuresEn: [
+      'Saudi local cloud servers with <50ms sub-second latency',
+      'Free SSL cert with automated anti-DDoS shielding',
+      'Automated daily backups & 1-click restore',
+      '24/7 dedicated DevOps & technical support'
+    ],
+    deliveryTimeAr: 'تفعيل فوري خلال دقائق',
+    deliveryTimeEn: 'Instant provisioning in minutes',
+  }
+];
+
+export default function StorePage() {
   const { lang } = useLanguage();
   const isAr = lang === 'ar';
-  const [activeTab, setActiveTab] = useState<'all' | 'ecommerce' | 'realestate' | 'saas'>('all');
+  const { items, addItem, removeItem, updateQuantity, itemCount, subtotal } = useCart();
+
+  // State filters
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [sortBy, setSortBy] = useState<'popular' | 'price-asc' | 'price-desc' | 'rating'>('popular');
+  const [isCartDrawerOpen, setIsCartDrawerOpen] = useState<boolean>(false);
+  const [quickViewProduct, setQuickViewProduct] = useState<StoreProduct | null>(null);
+  const [lastAddedProduct, setLastAddedProduct] = useState<StoreProduct | null>(null);
+  const [showAddedToast, setShowAddedToast] = useState<boolean>(false);
+
+  // Categories list
+  const categories = [
+    { id: 'all', nameAr: 'جميع الأنظمة والحلول', nameEn: 'All Systems', icon: Sparkles },
+    { id: 'templates', nameAr: 'قوالب المتاجر', nameEn: 'Store Templates', icon: ShoppingBag },
+    { id: 'realestate', nameAr: 'الأنظمة العقارية', nameEn: 'Real Estate', icon: Building2 },
+    { id: 'payments', nameAr: 'بوابات الدفع', nameEn: 'Payment Gateways', icon: CreditCard },
+    { id: 'ai', nameAr: 'الذكاء الاصطناعي', nameEn: 'AI & Chatbots', icon: Bot },
+    { id: 'hosting', nameAr: 'الاستضافة والسيرفرات', nameEn: 'Cloud Hosting', icon: Server },
+  ];
+
+  // Filtered Products
+  const filteredProducts = useMemo(() => {
+    return STORE_PRODUCTS.filter(product => {
+      if (selectedCategory !== 'all' && product.category !== selectedCategory) {
+        return false;
+      }
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase().trim();
+        const matchesName = product.nameAr.toLowerCase().includes(q) || product.name.toLowerCase().includes(q);
+        const matchesDesc = product.descriptionAr.toLowerCase().includes(q) || product.descriptionEn.toLowerCase().includes(q);
+        const matchesCategory = product.categoryNameAr.toLowerCase().includes(q) || product.categoryNameEn.toLowerCase().includes(q);
+        if (!matchesName && !matchesDesc && !matchesCategory) return false;
+      }
+      return true;
+    }).sort((a, b) => {
+      if (sortBy === 'popular') return (b.ordersCount || 0) - (a.ordersCount || 0);
+      if (sortBy === 'price-asc') return a.price - b.price;
+      if (sortBy === 'price-desc') return b.price - a.price;
+      if (sortBy === 'rating') return b.rating - a.rating;
+      return 0;
+    });
+  }, [selectedCategory, searchQuery, sortBy]);
+
+  // Handle Add to Cart
+  const handleAddToCart = (product: StoreProduct, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    addItem({
+      productId: product.id,
+      name: product.name,
+      nameAr: product.nameAr,
+      price: product.originalPrice,
+      salePrice: product.price,
+      image: product.image,
+    }, 1);
+
+    setLastAddedProduct(product);
+    setShowAddedToast(true);
+    setTimeout(() => setShowAddedToast(false), 3500);
+  };
 
   return (
-    <div className="min-h-screen bg-[#0A0C1E] text-white pt-28 pb-20 px-4 sm:px-6 lg:px-12 relative overflow-hidden" dir={isAr ? 'rtl' : 'ltr'}>
+    <div className="min-h-screen bg-[#070913] text-white pt-24 pb-20 relative overflow-hidden" dir={isAr ? 'rtl' : 'ltr'}>
       {/* Background Ambient Glows */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-[#FF4D6D]/20 to-[#FF9A3C]/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-[#FF4D6D]/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-gradient-to-b from-[#FF4D6D]/15 via-[#FF9A3C]/10 to-transparent rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-1/3 -right-40 w-[500px] h-[500px] bg-[#FF4D6D]/10 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -left-40 w-[500px] h-[500px] bg-[#FF9A3C]/10 rounded-full blur-[160px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto space-y-16 relative z-10">
-
-        {/* Hero Section */}
-        <section className="text-center space-y-6 pt-2 max-w-4xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 border border-[#FF4D6D]/30 text-sm font-semibold text-[#FF4D6D] backdrop-blur-md shadow-inner">
-            <Sparkles className="w-4 h-4 text-[#FF9A3C] animate-pulse" />
-            <span>{isAr ? '🇸🇦 متجر تطبيقات وحلول دي آرو الرقمية (D-Arrow SaaS App Store)' : '🇸🇦 D-Arrow SaaS Applications & Digital Store'}</span>
+      {/* Top E-Commerce Promo Banner */}
+      <div className="bg-gradient-to-r from-[#FF4D6D] via-[#FF6F4F] to-[#FF9A3C] text-white py-2.5 px-4 text-xs sm:text-sm font-bold shadow-lg">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <span className="bg-black/20 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold backdrop-blur-sm border border-white/20 flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-white" />
+              <span>عروض دي آرو الحصرية</span>
+            </span>
+            <span>{isAr ? 'خصومات تصل إلى 50% على القوالب والأنظمة السحابية مع تشغيل فوري وبوابات دفع معتمدة' : 'Up to 50% OFF on Turnkey Cloud Solutions & Templates + Instant Setup'}</span>
           </div>
-
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black leading-tight text-white">
-            {isAr ? (
-              <>
-                متجر <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C]">التطبيقات والأنظمة السحابية</span> المتقدمة
-              </>
-            ) : (
-              <>
-                D-Arrow <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C]">Digital Applications & SaaS Store</span>
-              </>
-            )}
-          </h1>
-
-          <p className="text-base sm:text-lg lg:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-light">
-            {isAr ? (
-              'تصفح باقتنا الحصرية من الأنظمة والتطبيقات السحابية المجهزة للتثبيت والتشغيل الفوري لخدمة وتطوير تجارتك وأعمالك بالسوق السعودي والخارجي.'
-            ) : (
-              'Explore our suite of ready-to-deploy cloud applications, store templates, and digital systems built for Saudi & global business growth.'
-            )}
-          </p>
-        </section>
-
-        {/* Featured Main Application Item: E-Commerce Store System */}
-        <section className="bg-gradient-to-br from-[#14162E] via-[#161836] to-[#0A0C1E] border border-[#FF4D6D]/40 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-[#FF4D6D]/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#FF9A3C]/15 rounded-full blur-3xl pointer-events-none" />
-
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
-            <div className="space-y-4 max-w-2xl text-center lg:text-right">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF4D6D]/15 border border-[#FF4D6D]/40 text-[#FF4D6D] text-xs font-bold">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#FF4D6D] animate-ping" />
-                <span>{isAr ? '🔥 التطبيق الأكثر طلباً | نسخة تجريبية حية جاهزة للاختبار' : '🔥 Flagship App | Live Interactive Demo Ready'}</span>
-              </div>
-
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
-                {isAr ? 'نظام وقالب المتجر الإلكتروني السعودي (Saudi E-Commerce App)' : 'Saudi E-Commerce Store System & Template'}
-              </h2>
-
-              <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                {isAr ? (
-                  'حل تقني سحابي متكامل لبناء متجر إلكتروني سعودي فائق السرعة، مجهز بأحدث معايير UI/UX، مدمج بجميع بوابات الدفع المحلية (مدى، أبل باي، تمارا، تابي)، مع سلة تسويقية ولوحة تحكم حية للتاجر.'
-                ) : (
-                  'Complete SaaS e-commerce solution with ultra-fast sub-second loading, built-in Mada, Apple Pay, Tamara, Tabby gateways, interactive cart, and live merchant control panel.'
-                )}
-              </p>
-
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2 text-xs font-semibold text-slate-300">
-                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
-                  <CheckCircle2 className="w-4 h-4 text-[#FF9A3C]" /> {isAr ? 'دفع مدى وأبل باي' : 'Mada & Apple Pay'}
-                </span>
-                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
-                  <CheckCircle2 className="w-4 h-4 text-[#FF4D6D]" /> {isAr ? 'تقسيط تابي وتمارا' : 'Tabby & Tamara'}
-                </span>
-                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
-                  <CheckCircle2 className="w-4 h-4 text-[#FF9A3C]" /> {isAr ? 'لوحة تحكم كاملة' : 'Admin Panel'}
-                </span>
-              </div>
-            </div>
-
-            {/* Action Buttons for Featured Application */}
-            <div className="flex flex-col gap-3.5 w-full lg:w-auto flex-shrink-0">
-              <a
-                href="/demo/store"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-4 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-black text-center flex items-center justify-center gap-3 shadow-lg shadow-[#FF4D6D]/30 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 group cursor-pointer"
-              >
-                <ShoppingBag className="w-5 h-5 text-white group-hover:rotate-12 transition-transform" />
-                <span className="text-white">{isAr ? 'فتح المتجر التفاعلي المباشر ↗️' : 'Open Live Demo Store ↗️'}</span>
-                <Sparkles className="w-4 h-4 text-white opacity-90 animate-pulse" />
-              </a>
-              
-              <a
-                href="/demo/store/checkout"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3.5 rounded-xl bg-[#14162E] hover:bg-[#FF4D6D]/15 text-white font-bold text-center flex items-center justify-center gap-2.5 border border-[#FF4D6D]/40 hover:border-[#FF4D6D] transition-all duration-300"
-              >
-                <CreditCard className="w-4 h-4 text-[#FF4D6D]" />
-                <span className="text-white">{isAr ? 'صفحة الدفع المباشرة ↗️' : 'Live Checkout Demo ↗️'}</span>
-                <ExternalLink className="w-3.5 h-3.5 text-[#FF4D6D]" />
-              </a>
-
-              <a
-                href="/demo/store/admin"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3.5 rounded-xl bg-[#14162E] hover:bg-[#FF9A3C]/15 text-white font-bold text-center flex items-center justify-center gap-2.5 border border-[#FF9A3C]/40 hover:border-[#FF9A3C] transition-all duration-300"
-              >
-                <Layout className="w-4 h-4 text-[#FF9A3C]" />
-                <span className="text-white">{isAr ? 'لوحة تحكم التاجر ↗️' : 'Merchant Dashboard ↗️'}</span>
-                <ExternalLink className="w-3.5 h-3.5 text-[#FF9A3C]" />
-              </a>
-            </div>
+          <div className="hidden md:flex items-center gap-4 text-xs font-semibold">
+            <span className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-white" /> {isAr ? 'دفع آمن 100%' : '100% Secure Checkout'}</span>
+            <span className="flex items-center gap-1.5"><Zap className="w-4 h-4 text-white" /> {isAr ? 'تسليم فوري للأكواد' : 'Instant Delivery'}</span>
+            <span className="flex items-center gap-1.5"><CreditCard className="w-4 h-4 text-white" /> {isAr ? 'تقسيط تابي وتمارا' : 'Tabby & Tamara Ready'}</span>
           </div>
-        </section>
+        </div>
+      </div>
 
-        {/* Featured Real Estate Template Section */}
-        <section className="bg-gradient-to-br from-[#14162E] via-[#161836] to-[#0A0C1E] border border-[#FF9A3C]/40 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-48 h-48 bg-[#FF9A3C]/15 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#FF4D6D]/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 relative z-10 pt-8">
 
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 relative z-10">
-            <div className="space-y-4 max-w-2xl text-center lg:text-right">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF9A3C]/15 border border-[#FF9A3C]/40 text-[#FF9A3C] text-xs font-bold">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#FF9A3C] animate-ping" />
-                <span>{isAr ? '🆕 إصدار جديد حديثاً | قالب العقار السعودي' : '🆕 New Release | Saudi Real Estate Template'}</span>
-              </div>
+        {/* E-Commerce Store Hero & Header */}
+        <section className="flex flex-col lg:flex-row items-center justify-between gap-8 bg-gradient-to-br from-[#12142B]/95 via-[#171A38]/90 to-[#0A0C1E]/95 border border-[#FF4D6D]/25 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-xl">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#FF4D6D]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#FF9A3C]/15 rounded-full blur-3xl pointer-events-none" />
 
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight">
-                {isAr ? 'نظام وقالب الموقع العقاري السعودي (Saudi Real Estate App)' : 'Saudi Real Estate Website System & Template'}
-              </h2>
-
-              <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
-                {isAr ? (
-                  'قالب موقع عقاري متكامل مخصص للسوق السعودي، مع عرض العقارات للبيع والإيجار، البحث المتقدم حسب الحي والمدينة والمنطقة، معرض صور تفاعلي، خريطة مدمجة، استعلامات العملاء، وحجز مواعيد المعاينة.'
-                ) : (
-                  'Complete real estate website template tailored for Saudi market. Features property listings for sale/rent, advanced search by district/city/region, interactive gallery, embedded maps, client inquiry forms, and viewing appointment booking.'
-                )}
-              </p>
-
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2 text-xs font-semibold text-slate-300">
-                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
-                  <Home className="w-4 h-4 text-[#FF9A3C]" /> {isAr ? 'شقق - فلل - أراضي' : 'Apartments - Villas - Land'}
-                </span>
-                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
-                  <MapPin className="w-4 h-4 text-[#FF9A3C]" /> {isAr ? 'خريطة جوجل مدمجة' : 'Google Maps Integration'}
-                </span>
-                <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
-                  <CheckCircle2 className="w-4 h-4 text-[#FF4D6D]" /> {isAr ? 'نموذج طلبات وحجوزات' : 'Inquiry & Booking Forms'}
-                </span>
-              </div>
+          <div className="space-y-4 max-w-2xl text-center lg:text-right relative z-10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 border border-[#FF4D6D]/30 text-[#FF4D6D] text-xs sm:text-sm font-bold shadow-inner">
+              <ShoppingBag className="w-4 h-4 text-[#FF9A3C]" />
+              <span>{isAr ? 'متجر دي آرو للأنظمة الرقمية' : 'D-Arrow Software & Store Systems'}</span>
             </div>
 
-            {/* Action Buttons for Real Estate Template */}
-            <div className="flex flex-col gap-3.5 w-full lg:w-auto flex-shrink-0">
-              <a
-                href="/demo/real-estate"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-4 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-black text-center flex items-center justify-center gap-3 shadow-lg shadow-[#FF4D6D]/30 hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 group cursor-pointer"
-              >
-                <Building2 className="w-5 h-5 text-white group-hover:rotate-12 transition-transform" />
-                <span className="text-white">{isAr ? 'فتح المنصة العقارية المباشرة ↗️' : 'Open Live Real Estate Demo ↗️'}</span>
-                <ExternalLink className="w-4 h-4 text-white" />
-              </a>
-              
-              <Link
-                href="/contact"
-                className="px-6 py-3.5 rounded-xl bg-[#14162E] hover:bg-[#FF4D6D]/15 text-white font-bold text-center flex items-center justify-center gap-2.5 border border-[#FF4D6D]/40 hover:border-[#FF4D6D] transition-all duration-300"
-              >
-                <MessageCircle className="w-4 h-4 text-[#FF4D6D]" />
-                <span className="text-white">{isAr ? 'طلب شراء القالب العقاري' : 'Request Real Estate Template Purchase'}</span>
-              </Link>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
+              {isAr ? (
+                <>
+                  اختر نظامك البرمجي، <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] via-[#FF6F4F] to-[#FF9A3C]">أضفه للسلة</span> وانطلق فوراً
+                </>
+              ) : (
+                <>
+                  Select Your Software System, <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] via-[#FF6F4F] to-[#FF9A3C]">Add to Cart</span> & Launch
+                </>
+              )}
+            </h1>
 
-              <Link
-                href="/projects"
-                className="px-6 py-3.5 rounded-xl bg-[#14162E] hover:bg-[#FF9A3C]/15 text-white font-bold text-center flex items-center justify-center gap-2.5 border border-[#FF9A3C]/40 hover:border-[#FF9A3C] transition-all duration-300"
-              >
-                <Layout className="w-4 h-4 text-[#FF9A3C]" />
-                <span className="text-white">{isAr ? 'مشاهدة مشاريعنا العقارية السابقة' : 'View Past Real Estate Projects'}</span>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* D-Arrow Applications & Templates Catalog Grid */}
-        <section className="space-y-8">
-          <div className="text-center space-y-4">
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
-              {isAr ? 'كتالوج التطبيقات والقوالب السحابية' : 'Applications & Templates Catalog'}
-            </h2>
-            <p className="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">
-              {isAr ? 'اختر التصفية المناسبة لاستعراض قوالب المتاجر، الحلول العقارية، والأنظمة السحابية' : 'Select a filter category to explore store templates, real estate solutions, and SaaS applications'}
+            <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-light">
+              {isAr ? (
+                'تسوّق قوالب المتاجر الإلكترونية الجاهزة، المنصات العقارية، أنظمة الربط المالي، بوتات الذكاء الاصطناعي والاستضافة السحابية فائقة السرعة.'
+              ) : (
+                'Shop ready-to-deploy e-commerce store templates, real estate portals, payment gateways, AI chatbots, and cloud infrastructure with instant delivery.'
+              )}
             </p>
 
-            {/* Filter Tabs */}
-            <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
-              <button
-                onClick={() => setActiveTab('all')}
-                className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all ${
-                  activeTab === 'all'
-                    ? 'bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white shadow-lg shadow-[#FF4D6D]/30 scale-105'
-                    : 'bg-[#14162E] text-slate-300 border border-white/10 hover:border-white/30'
-                }`}
-              >
-                {isAr ? '✨ الكل' : '✨ All Solutions'}
-              </button>
-              <button
-                onClick={() => setActiveTab('ecommerce')}
-                className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all ${
-                  activeTab === 'ecommerce'
-                    ? 'bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white shadow-lg shadow-[#FF4D6D]/30 scale-105'
-                    : 'bg-[#14162E] text-slate-300 border border-white/10 hover:border-white/30'
-                }`}
-              >
-                {isAr ? '🛒 قوالب المتاجر الإلكترونية' : '🛒 E-Commerce Templates'}
-              </button>
-              <button
-                onClick={() => setActiveTab('realestate')}
-                className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all ${
-                  activeTab === 'realestate'
-                    ? 'bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white shadow-lg shadow-[#FF4D6D]/30 scale-105'
-                    : 'bg-[#14162E] text-slate-300 border border-white/10 hover:border-white/30'
-                }`}
-              >
-                {isAr ? '🏢 قوالب التطوير العقاري' : '🏢 Real Estate Templates'}
-              </button>
-              <button
-                onClick={() => setActiveTab('saas')}
-                className={`px-5 py-2.5 rounded-full text-xs sm:text-sm font-bold transition-all ${
-                  activeTab === 'saas'
-                    ? 'bg-gradient-to-r from-[#FF9A3C] to-[#FF4D6D] text-white shadow-lg shadow-[#FF9A3C]/30 scale-105'
-                    : 'bg-[#14162E] text-slate-300 border border-white/10 hover:border-white/30'
-                }`}
-              >
-                {isAr ? '⚙️ الأنظمة والتطبيقات السحابية' : '⚙️ SaaS Applications'}
-              </button>
+            {/* Quick Benefits Tags */}
+            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-2 text-xs font-semibold text-slate-200">
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 shadow-sm">
+                <CreditCard className="w-4 h-4 text-[#FF9A3C]" /> {isAr ? 'دفع مدى وأبل باي وفيزا' : 'Mada & Apple Pay'}
+              </span>
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 shadow-sm">
+                <ShieldCheck className="w-4 h-4 text-[#FF4D6D]" /> {isAr ? 'تقسيط تابي وتمارا بدون فوائد' : 'Tabby & Tamara 0% Interest'}
+              </span>
+              <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 shadow-sm">
+                <Zap className="w-4 h-4 text-[#FF9A3C]" /> {isAr ? 'تسليم فوري وضمان تشغيل' : 'Instant Setup & SLA'}
+              </span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            {/* App Item 1: Store System */}
-            {(activeTab === 'all' || activeTab === 'ecommerce') && (
-              <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-[#FF4D6D]/40 hover:border-[#FF4D6D] transition-all duration-300 space-y-4 group flex flex-col justify-between relative overflow-hidden">
-                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF4D6D]/20 border border-[#FF4D6D]/40 text-[#FF4D6D] text-[10px] font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF4D6D] animate-ping" /> {isAr ? 'المتجر الإلكتروني' : 'E-Commerce'}
-                </div>
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF4D6D]/20 to-[#FF9A3C]/20 border border-[#FF4D6D]/30 flex items-center justify-center text-[#FF4D6D] group-hover:scale-110 transition-transform">
-                    <ShoppingBag className="w-6 h-6 text-[#FF4D6D]" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">{isAr ? 'نظام وقالب المتجر الإلكتروني السعودي 🛒' : 'Saudi E-Commerce Store Template 🛒'}</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">
-                    {isAr ? 'متجر إلكتروني شامل مجهز بالدفع الرقمي المحلي (مدى، أبل باي، تمارا، تابي)، السلة التسويقية، وثيم سعودي عصري.' : 'Complete e-commerce store with built-in payments (Mada, Apple Pay, Tamara, Tabby), cart, and modern Saudi design.'}
-                  </p>
-                </div>
-
-                <div className="space-y-2.5 mt-4">
-                  <a
-                    href="/demo/store"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
-                  >
-                    <span>{isAr ? 'رابط المعاينة المباشرة ↗️' : 'Live Preview Link ↗️'}</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                  <a
-                    href="/demo/store/admin"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#FF9A3C]/40 hover:border-[#FF9A3C] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
-                  >
-                    <Layout className="w-3.5 h-3.5 text-[#FF9A3C]" />
-                    <span>{isAr ? 'لوحة تحكم التاجر ↗️' : 'Merchant Dashboard ↗️'}</span>
-                  </a>
-                </div>
+          {/* Top Hero Quick Cart Summary Widget */}
+          <div className="w-full lg:w-80 bg-[#0B0D21]/95 border border-[#FF4D6D]/30 rounded-2xl p-5 space-y-4 shadow-xl relative z-10 flex-shrink-0 backdrop-blur-md">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div className="flex items-center gap-2">
+                <ShoppingCart className="w-5 h-5 text-[#FF4D6D]" />
+                <span className="font-bold text-sm text-white">{isAr ? 'سلة مشترياتك الحالية' : 'Your Shopping Cart'}</span>
               </div>
-            )}
+              <span className="px-2.5 py-0.5 rounded-full bg-[#FF4D6D]/20 border border-[#FF4D6D]/30 text-[#FF4D6D] text-xs font-bold font-mono">
+                {itemCount} {isAr ? 'عناصر' : 'Items'}
+              </span>
+            </div>
 
-            {/* App Item 2: Real Estate Template */}
-            {(activeTab === 'all' || activeTab === 'realestate') && (
-              <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-[#FF9A3C]/40 hover:border-[#FF9A3C] transition-all duration-300 space-y-4 group flex flex-col justify-between relative overflow-hidden">
-                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF9A3C]/20 border border-[#FF9A3C]/40 text-[#FF9A3C] text-[10px] font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF9A3C]" /> {isAr ? 'العقار والتطوير' : 'Real Estate'}
-                </div>
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF9A3C]/20 to-[#FF4D6D]/20 border border-[#FF9A3C]/30 flex items-center justify-center text-[#FF9A3C] group-hover:scale-110 transition-transform">
-                    <Building2 className="w-6 h-6 text-[#FF9A3C]" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">{isAr ? 'نظام وقالب الموقع العقاري السعودي 🏢' : 'Saudi Real Estate Website Template 🏢'}</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">
-                    {isAr ? 'قالب موقع عقاري متكامل لعرض العقارات، فلترة حسب الأحياء والمدن، خرائط تفاعلية، وحجوزات المعاينة المباشرة.' : 'Full real estate template with property listings, district filter, Google Maps, and viewing appointment bookings.'}
-                  </p>
-                </div>
-
-                <div className="space-y-2.5 mt-4">
-                  <a
-                    href="/demo/real-estate"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
-                  >
-                    <span>{isAr ? 'رابط المعاينة المباشرة ↗️' : 'Live Demo Link ↗️'}</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                  <Link
-                    href="/projects"
-                    className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#FF9A3C]/40 hover:border-[#FF9A3C] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
-                  >
-                    <Building2 className="w-3.5 h-3.5 text-[#FF9A3C]" />
-                    <span>{isAr ? 'نماذج مشاريع عقارية' : 'Real Estate Portfolio'}</span>
-                  </Link>
-                </div>
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs text-slate-300">
+                <span>{isAr ? 'إجمالي المشتريات:' : 'Subtotal:'}</span>
+                <span className="font-bold text-white font-mono">{subtotal.toFixed(2)} {isAr ? 'ر.س' : 'SAR'}</span>
               </div>
-            )}
-
-            {/* App Item 3: Influencer Platform System (SaaS) */}
-            {(activeTab === 'all' || activeTab === 'saas') && (
-              <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
-                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF9A3C]/20 border border-[#FF9A3C]/40 text-[#FF9A3C] text-[10px] font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FF9A3C] animate-ping" /> {isAr ? 'منصة سحابية' : 'SaaS Platform'}
-                </div>
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF9A3C]/20 to-[#FF4D6D]/20 border border-[#FF9A3C]/30 flex items-center justify-center text-[#FF9A3C] group-hover:scale-110 transition-transform">
-                    <Users className="w-6 h-6 text-[#FF9A3C]" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">{isAr ? 'منصة إدارة حملات المؤثرين السحابية 🌟' : 'Influencer Campaign SaaS Platform 🌟'}</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">
-                    {isAr ? 'منصة سحابية متكاملة لربط العلامات التجارية بالمؤثرين وإدارة التعاقدات والنتائج والتحليلات تلقائياً.' : 'Cloud SaaS platform connecting brands with influencers, managing contracts, analytics & results.'}
-                  </p>
-                </div>
-
-                <div className="space-y-2.5 mt-4">
-                  <a
-                    href="/influencer"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF9A3C] to-[#FF4D6D] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
-                  >
-                    <span>{isAr ? 'رابط المعاينة المباشرة ↗️' : 'Live Platform Demo ↗️'}</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                  <Link
-                    href="/contact"
-                    className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#FF9A3C]/40 hover:border-[#FF9A3C] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
-                  >
-                    <MessageCircle className="w-3.5 h-3.5 text-[#FF9A3C]" />
-                    <span>{isAr ? 'طلب نسخة مخصصة' : 'Request Custom Build'}</span>
-                  </Link>
-                </div>
+              <div className="flex justify-between text-xs text-[#FF9A3C]">
+                <span>{isAr ? 'التسليم والتفعيل:' : 'Setup & Delivery:'}</span>
+                <span className="font-bold flex items-center gap-1"><Zap className="w-3 h-3" /> {isAr ? 'فوري ومجاني' : 'Instant & Free'}</span>
               </div>
-            )}
+            </div>
 
-            {/* App Item 4: Payment Gateway System */}
-            {(activeTab === 'all' || activeTab === 'saas') && (
-              <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
-                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF4D6D]/20 border border-[#FF4D6D]/40 text-[#FF4D6D] text-[10px] font-bold">
-                  {isAr ? 'الدفع الرقمي' : 'Digital Payments'}
-                </div>
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF4D6D]/20 to-[#FF9A3C]/20 border border-[#FF4D6D]/30 flex items-center justify-center text-[#FF4D6D] group-hover:scale-110 transition-transform">
-                    <CreditCard className="w-6 h-6 text-[#FF4D6D]" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">{isAr ? 'نظام بوابات الدفع والربط المالي 💳' : 'Payment Gateways Integration System 💳'}</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">
-                    {isAr ? 'نظام ربط مالي مباشر وشامل مع مدى، أبل باي، تمارا، تابي، STC Pay لتأمين التحصيل المالي للمتاجر والشركات.' : 'Complete payment system integrating Mada, Apple Pay, Tamara, Tabby, STC Pay for stores & businesses.'}
-                  </p>
-                </div>
+            <div className="pt-2 space-y-2">
+              <button
+                onClick={() => setIsCartDrawerOpen(true)}
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#FF4D6D]/20 hover:opacity-95 active:scale-[0.98] transition cursor-pointer"
+              >
+                <ShoppingCart className="w-4 h-4" />
+                <span>{isAr ? 'عرض السلة وإتمام الدفع' : 'View Cart & Checkout'}</span>
+              </button>
 
-                <div className="space-y-2.5 mt-4">
-                  <a
-                    href="/demo/store/checkout"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
-                  >
-                    <span>{isAr ? 'تجربة الدفع المباشرة ↗️' : 'Live Payment Demo ↗️'}</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                  <Link
-                    href="/demo/store/admin"
-                    className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#FF9A3C]/40 hover:border-[#FF9A3C] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
-                  >
-                    <Settings className="w-3.5 h-3.5 text-[#FF9A3C]" />
-                    <span>{isAr ? 'إعدادات الدفع' : 'Dashboard Settings'}</span>
-                  </Link>
-                </div>
-              </div>
-            )}
-
-            {/* App Item 5: AI Customer Support Bot */}
-            {(activeTab === 'all' || activeTab === 'saas') && (
-              <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
-                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF9A3C]/20 border border-[#FF9A3C]/40 text-[#FF9A3C] text-[10px] font-bold">
-                  {isAr ? 'ذكاء اصطناعي' : 'AI Powered'}
-                </div>
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF9A3C]/20 to-[#FF4D6D]/20 border border-[#FF9A3C]/30 flex items-center justify-center text-[#FF9A3C] group-hover:scale-110 transition-transform">
-                    <Bot className="w-6 h-6 text-[#FF9A3C]" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">{isAr ? 'مساعد الذكاء الاصطناعي التفاعلي 🤖' : 'Interactive AI Smart Assistant 🤖'}</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">
-                    {isAr ? 'بوت دردشة ذكي مخصص باللغة العربية والإنجليزية للتفاعل الفوري مع عملائك والإجابة على الاستفسارات وتوليد العملاء المحتملين 24/7.' : 'Smart bilingual (AR/EN) AI chatbot for 24/7 instant customer support & lead generation automation.'}
-                  </p>
-                </div>
-
-                <div className="space-y-2.5 mt-4">
-                  <a
-                    href="/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF9A3C] to-[#FF4D6D] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
-                  >
-                    <span>{isAr ? 'جرب البوت على الموقع ↗️' : 'Try Bot on Homepage ↗️'}</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                  <Link
-                    href="/contact"
-                    className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#FF9A3C]/40 hover:border-[#FF9A3C] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
-                  >
-                    <MessageCircle className="w-3.5 h-3.5 text-[#FF9A3C]" />
-                    <span>{isAr ? 'طلب بوت مخصص' : 'Request Custom Bot'}</span>
-                  </Link>
-                </div>
-              </div>
-            )}
-
-            {/* App Item 6: High Speed Infrastructure */}
-            {(activeTab === 'all' || activeTab === 'saas') && (
-              <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
-                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF4D6D]/20 border border-[#FF4D6D]/40 text-[#FF4D6D] text-[10px] font-bold">
-                  {isAr ? 'سرعة فائقة' : 'High-Speed'}
-                </div>
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF4D6D]/20 to-[#FF9A3C]/20 border border-[#FF4D6D]/30 flex items-center justify-center text-[#FF4D6D] group-hover:scale-110 transition-transform">
-                    <Zap className="w-6 h-6 text-[#FF4D6D]" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">{isAr ? 'استضافة سحابية سرعة فائقة ⚡' : 'High-Speed Cloud Hosting Infrastructure ⚡'}</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">
-                    {isAr ? 'بنية تحتية سحابية مخصصة بسيرفرات بالسعودية (Riyadh/Al-Ahsa) تضمن سرعة تصفح فائقة ومعدل جاهزية 99.9% وCDN عالمي للمتاجر الكبرى.' : 'Saudi-based cloud infrastructure (Riyadh/Al-Ahsa) with 99.9% uptime, global CDN & ultra-fast speeds for enterprise stores.'}
-                  </p>
-                </div>
-
-                <div className="space-y-2.5 mt-4">
-                  <Link
-                    href="/services"
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
-                  >
-                    <span>{isAr ? 'تفاصيل الاستضافة' : 'Hosting Details'}</span>
-                    <ArrowRight className="w-4 h-4 rotate-180" />
-                  </Link>
-                  <a
-                    href="/demo/store"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#FF4D6D]/40 hover:border-[#FF4D6D] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
-                  >
-                    <Zap className="w-3.5 h-3.5 text-[#FF4D6D]" />
-                    <span>{isAr ? 'اختبر السرعة بنفسك ↗️' : 'Test Live Speed Demo ↗️'}</span>
-                  </a>
-                </div>
-              </div>
-            )}
-
-            {/* App Item 7: SEO & Analytics Integration */}
-            {(activeTab === 'all' || activeTab === 'saas') && (
-              <div className="p-6 rounded-2xl bg-[#14162E]/80 border border-slate-800 hover:border-[#FF4D6D]/60 transition-all duration-300 space-y-4 group flex flex-col justify-between">
-                <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#FF9A3C]/20 border border-[#FF9A3C]/40 text-[#FF9A3C] text-[10px] font-bold">
-                  {isAr ? 'تحليلات متقدمة' : 'Advanced Analytics'}
-                </div>
-                <div className="space-y-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#FF9A3C]/20 to-[#FF4D6D]/20 border border-[#FF9A3C]/30 flex items-center justify-center text-[#FF9A3C] group-hover:scale-110 transition-transform">
-                    <BarChart3 className="w-6 h-6 text-[#FF9A3C]" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white">{isAr ? 'نظام تحليلات وبكسلات التتبع 📊' : 'Analytics & Tracking Pixels System 📊'}</h3>
-                  <p className="text-slate-300 text-sm leading-relaxed">
-                    {isAr ? 'ربط تلقائي ومتكامل مع سناب شات، تيك توك، ميتا، جوجل أناليتكس 4، وتبييت لتبعيات المبيعات والتحويلات، مع لوحة تحكم موحدة.' : 'Fully integrated analytics: Snap, TikTok, Meta, GA4, & Tabby/Tamara conversion tracking with a unified dashboard.'}
-                  </p>
-                </div>
-
-                <div className="space-y-2.5 mt-4">
-                  <a
-                    href="/demo/store/admin"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF9A3C] to-[#FF4D6D] text-white font-bold text-center text-sm flex items-center justify-center gap-2 hover:opacity-95 transition cursor-pointer"
-                  >
-                    <span>{isAr ? 'لوحة التحليلات المباشرة ↗️' : 'Live Analytics Dashboard ↗️'}</span>
-                    <ExternalLink className="w-4 h-4" />
-                  </a>
-                  <Link
-                    href="/services"
-                    className="w-full py-2.5 rounded-xl bg-[#14162E] border border-[#FF9A3C]/40 hover:border-[#FF9A3C] text-slate-300 hover:text-white font-semibold text-center text-xs flex items-center justify-center gap-2 transition"
-                  >
-                    <Globe className="w-3.5 h-3.5 text-[#FF9A3C]" />
-                    <span>{isAr ? 'استكشف خدمات التتبع' : 'Explore Tracking Services'}</span>
-                  </Link>
-                </div>
-              </div>
-            )}
-
+              <Link
+                href="/store/checkout"
+                className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 hover:text-white font-semibold text-xs flex items-center justify-center gap-1.5 border border-white/10 transition"
+              >
+                <CreditCard className="w-3.5 h-3.5 text-[#FF9A3C]" />
+                <span>{isAr ? 'الدفع السريع المباشر' : 'Direct Quick Checkout'}</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
+              </Link>
+            </div>
           </div>
         </section>
 
-        {/* Order CTA Section with D-Arrow Brand Colors */}
-        <section className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-[#14162E] via-[#1A1D3B] to-[#14162E] border border-[#FF4D6D]/40 text-center space-y-6 relative overflow-hidden shadow-2xl">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#FF4D6D]/10 rounded-full blur-3xl pointer-events-none" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#FF9A3C]/10 rounded-full blur-3xl pointer-events-none" />
+        {/* Search & Categories Filter Bar */}
+        <section className="space-y-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-[#12142B]/90 border border-white/10 rounded-2xl p-4 backdrop-blur-md">
+            {/* Search Input */}
+            <div className="relative w-full md:w-96">
+              <Search className={`w-4 h-4 text-slate-400 absolute top-1/2 -translate-y-1/2 ${isAr ? 'right-3.5' : 'left-3.5'}`} />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder={isAr ? 'ابحث عن نظام، قالب، استضافة...' : 'Search system, template, hosting...'}
+                className={`w-full bg-[#090B1B] border border-white/15 focus:border-[#FF4D6D] rounded-xl py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none transition ${
+                  isAr ? 'pr-11 pl-9' : 'pl-11 pr-9'
+                }`}
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className={`absolute top-1/2 -translate-y-1/2 text-slate-400 hover:text-white ${isAr ? 'left-3' : 'right-3'} cursor-pointer`}
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
 
-          <h2 className="text-2xl sm:text-4xl font-extrabold text-white relative z-10">
-            {isAr ? 'ترغب في اقتناء أحد تطبيقات أو قوالب دي آرو؟' : 'Looking to Acquire D-Arrow Applications or Templates?'}
-          </h2>
-          <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto font-light relative z-10 leading-relaxed">
-            {isAr ? (
-              'تواصل مباشرة مع فريق الاستشارات والحلول التقنية بوكالة دي آرو للحصول على العرض والترخيص المخصص لنشاطك التجاري.'
-            ) : (
-              'Contact D-Arrow solution specialists now to acquire licenses or customized builds for your business.'
-            )}
-          </p>
+            {/* Results count & Sort */}
+            <div className="flex items-center justify-between w-full md:w-auto gap-4">
+              <span className="text-xs sm:text-sm text-slate-400">
+                {isAr ? `عرض ${filteredProducts.length} نظام برمجي` : `Showing ${filteredProducts.length} systems`}
+              </span>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-2 relative z-10">
-            <a
-              href="https://wa.me/966500000000?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%88%D9%83%D8%A7%D9%84%D8%A9%20%D8%AF%D9%8A%20%D8%A2%D8%B1%D9%88%E2%80%8E%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D9%88%D8%B7%D9%84%D8%A8%20%D8%AA%D8%B7%D8%A8%D9%8A%D9%82%20%D9%88%D9%85%D8%AA%D8%AC%D8%B1%20%D8%A5%D9%84%D9%83%D8%AA%D8%B1%D9%88%D9%86%D9%8A"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-4 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-black text-lg flex items-center gap-3 shadow-lg shadow-[#FF4D6D]/30 hover:scale-105 active:scale-95 transition-all"
-            >
-              <MessageCircle className="w-6 h-6 text-white fill-current" />
-              <span className="text-white">{isAr ? 'تواصل عبر الواتساب مباشرة' : 'Contact on WhatsApp Directly'}</span>
-            </a>
+              <div className="flex items-center gap-2">
+                <SlidersHorizontal className="w-4 h-4 text-[#FF9A3C]" />
+                <select
+                  value={sortBy}
+                  onChange={(e: any) => setSortBy(e.target.value)}
+                  className="bg-[#090B1B] border border-white/15 text-slate-200 text-xs sm:text-sm rounded-xl px-3 py-2 focus:outline-none focus:border-[#FF4D6D] cursor-pointer"
+                >
+                  <option value="popular">{isAr ? 'الأكثر طلباً ومبيعاً' : 'Most Popular'}</option>
+                  <option value="rating">{isAr ? 'الأعلى تقييماً' : 'Highest Rated'}</option>
+                  <option value="price-asc">{isAr ? 'السعر: من الأقل للأعلى' : 'Price: Low to High'}</option>
+                  <option value="price-desc">{isAr ? 'السعر: من الأعلى للأقل' : 'Price: High to Low'}</option>
+                </select>
+              </div>
+            </div>
+          </div>
 
-            <a
-              href="/demo/store"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-4 rounded-xl bg-[#14162E] hover:bg-[#FF4D6D]/15 text-white font-bold text-lg border border-[#FF4D6D]/40 hover:border-[#FF4D6D] flex items-center gap-3 transition-all"
-            >
-              <span className="text-white">{isAr ? 'معاينة المتجر المباشرة ↗️' : 'View Live Demo Store ↗️'}</span>
-              <ExternalLink className="w-5 h-5 text-white" />
-            </a>
+          {/* Category Filter Pills */}
+          <div className="flex items-center gap-2.5 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-700">
+            {categories.map((cat) => {
+              const Icon = cat.icon;
+              const isSelected = selectedCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 whitespace-nowrap transition-all duration-300 cursor-pointer ${
+                    isSelected
+                      ? 'bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white shadow-lg shadow-[#FF4D6D]/25 border border-transparent scale-102'
+                      : 'bg-[#12142B] text-slate-300 border border-white/10 hover:border-[#FF4D6D]/40 hover:text-white'
+                  }`}
+                >
+                  <Icon className="w-4 h-4 text-[#FF9A3C]" />
+                  <span>{isAr ? cat.nameAr : cat.nameEn}</span>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* E-Commerce Products Grid: Square-Proportioned Balanced Cards with Full Visible Titles */}
+        <section className="space-y-6">
+          {filteredProducts.length === 0 ? (
+            <div className="text-center py-16 bg-[#12142B]/50 border border-white/10 rounded-3xl space-y-4">
+              <ShoppingBag className="w-16 h-16 text-slate-500 mx-auto" />
+              <h3 className="text-xl font-bold text-white">{isAr ? 'لا توجد أنظمة مطابقة لبحثك' : 'No systems found'}</h3>
+              <p className="text-slate-400 text-sm">{isAr ? 'جرب البحث بكلمات أخرى أو اختر قسماً مختلفاً' : 'Try searching with different keywords or choose another category'}</p>
+              <button
+                onClick={() => { setSelectedCategory('all'); setSearchQuery(''); }}
+                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white text-sm font-bold cursor-pointer"
+              >
+                {isAr ? 'عرض جميع الأنظمة' : 'View All Systems'}
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 items-stretch">
+              {filteredProducts.map((product) => {
+                const savings = product.originalPrice - product.price;
+                const installmentAmount = (product.price / 4).toFixed(2);
+                const inCart = items.some(i => i.productId === product.id);
+                const BadgeIcon = product.badgeIcon || Flame;
+
+                return (
+                  <div
+                    key={product.id}
+                    className="bg-[#0D0F22] hover:bg-[#121530] border border-white/12 hover:border-[#FF4D6D]/80 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl hover:shadow-[#FF4D6D]/20 transition-all duration-300 flex flex-col justify-between group relative backdrop-blur-md"
+                  >
+                    {/* Media Container with Square-feel aspect */}
+                    <Link href={`/store/${product.slug}`} className="relative aspect-[16/11] w-full overflow-hidden bg-slate-950 border-b border-white/10 block">
+                      <Image
+                        src={product.image}
+                        alt={isAr ? product.nameAr : product.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                        unoptimized
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0D0F22] via-transparent to-black/40" />
+
+                      {/* Top Vector Badge */}
+                      {product.badge && (
+                        <div className={`absolute top-2.5 ${isAr ? 'right-2.5' : 'left-2.5'} px-2.5 py-0.5 rounded-full text-[10px] font-bold text-white bg-gradient-to-r ${product.badgeColor || 'from-[#FF4D6D] to-[#FF9A3C]'} shadow-md border border-white/20 flex items-center gap-1 backdrop-blur-md`}>
+                          <BadgeIcon className="w-3 h-3 text-white" />
+                          <span>{product.badge}</span>
+                        </div>
+                      )}
+
+                      {/* Discount Pill */}
+                      <div className={`absolute top-2.5 ${isAr ? 'left-2.5' : 'right-2.5'} px-2 py-0.5 rounded-lg text-[10px] font-extrabold bg-[#FF4D6D] text-white shadow-sm border border-white/20 font-mono`}>
+                        {isAr ? `وفر ${savings} ر.س` : `Save ${savings} SAR`}
+                      </div>
+
+                      {/* Demo Link Badge if available */}
+                      {product.demoUrl && (
+                        <div className="absolute bottom-2 left-2 right-2 py-1 px-2 rounded-lg bg-black/85 text-white text-[11px] font-semibold backdrop-blur-md border border-white/20 flex items-center justify-center gap-1">
+                          <Eye className="w-3 h-3 text-[#FF9A3C]" />
+                          <span>{isAr ? 'معاينة حية وتفاصيل النظام ↗' : 'Live Demo & Specs ↗'}</span>
+                        </div>
+                      )}
+                    </Link>
+
+                    {/* Card Body - Crisp, Clear, Full Title Visible */}
+                    <div className="p-4 sm:p-5 space-y-3 flex-1 flex flex-col justify-between">
+                      <div className="space-y-2">
+                        {/* Category & Rating */}
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="font-bold text-[#FF9A3C]">
+                            {isAr ? product.categoryNameAr : product.categoryNameEn}
+                          </span>
+                          <div className="flex items-center gap-1 text-amber-400 font-bold">
+                            <Star className="w-3.5 h-3.5 fill-amber-400" />
+                            <span>{product.rating}</span>
+                          </div>
+                        </div>
+
+                        {/* Title - Fully Visible, No Truncation, clickable */}
+                        <Link href={`/store/${product.slug}`} className="block">
+                          <h3 className="font-extrabold text-white text-sm sm:text-base leading-snug group-hover:text-[#FF9A3C] transition-colors min-h-[2.8rem] flex items-center">
+                            {isAr ? product.nameAr : product.name}
+                          </h3>
+                        </Link>
+
+                        {/* 1 Key Highlight Line */}
+                        <div className="flex items-center gap-1.5 text-xs text-slate-300">
+                          <Check className="w-3.5 h-3.5 text-[#FF4D6D] flex-shrink-0" />
+                          <span className="truncate">{isAr ? product.keyHighlightAr : product.keyHighlightEn}</span>
+                        </div>
+                      </div>
+
+                      {/* Pricing & Single Main Action Row */}
+                      <div className="pt-3 border-t border-white/10 space-y-2.5">
+                        <div className="flex items-baseline justify-between">
+                          <div className="flex items-baseline gap-1.5">
+                            <span className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] font-mono">
+                              {product.price} {isAr ? 'ر.س' : 'SAR'}
+                            </span>
+                            <span className="text-xs text-slate-500 line-through font-mono">
+                              {product.originalPrice}
+                            </span>
+                          </div>
+                          <span className="text-xs text-slate-400 font-mono">
+                            {isAr ? `أقساط: ${installmentAmount} ر.س` : `${installmentAmount}/mo`}
+                          </span>
+                        </div>
+
+                        {/* Unified Action Buttons */}
+                        <div className="flex items-center gap-2">
+                          <button
+                            onClick={(e) => handleAddToCart(product, e)}
+                            className={`flex-1 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md ${
+                              inCart
+                                ? 'bg-[#FF4D6D]/20 border border-[#FF4D6D] text-[#FF9A3C] hover:bg-[#FF4D6D]/30'
+                                : 'bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white hover:opacity-95 active:scale-[0.98] shadow-[#FF4D6D]/20'
+                            }`}
+                          >
+                            <ShoppingCart className="w-4 h-4" />
+                            <span>{inCart ? (isAr ? 'بالسلة ✓' : 'In Cart ✓') : (isAr ? 'أضف للسلة' : 'Add to Cart')}</span>
+                          </button>
+
+                          <Link
+                            href={`/store/${product.slug}`}
+                            className="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 hover:text-white border border-white/10 font-bold text-xs flex items-center gap-1 transition"
+                            title={isAr ? 'صفحة وتفاصيل المنتج' : 'Product Details'}
+                          >
+                            <span>{isAr ? 'التفاصيل' : 'Details'}</span>
+                            <ArrowUpRight className="w-3.5 h-3.5 text-[#FF9A3C]" />
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </section>
+
+        {/* Trust & E-Commerce Guarantees Banner */}
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-6">
+          <div className="bg-[#12142B]/80 border border-[#FF4D6D]/20 rounded-2xl p-5 space-y-2 backdrop-blur-md shadow-lg">
+            <div className="w-10 h-10 rounded-xl bg-[#FF4D6D]/20 border border-[#FF4D6D]/30 flex items-center justify-center text-[#FF4D6D]">
+              <CreditCard className="w-5 h-5" />
+            </div>
+            <h4 className="font-bold text-white text-sm">{isAr ? 'بوابات دفع سعودية معتمدة' : 'Verified Saudi Payments'}</h4>
+            <p className="text-xs text-slate-400 leading-relaxed">{isAr ? 'دعم كامل لمدى، أبل باي، فيزا، ماستركارد، وتقسيط تابي وتمارا بدون فوائد.' : 'Full support for Mada, Apple Pay, Tamara, Tabby with zero interest.'}</p>
+          </div>
+
+          <div className="bg-[#12142B]/80 border border-[#FF9A3C]/20 rounded-2xl p-5 space-y-2 backdrop-blur-md shadow-lg">
+            <div className="w-10 h-10 rounded-xl bg-[#FF9A3C]/20 border border-[#FF9A3C]/30 flex items-center justify-center text-[#FF9A3C]">
+              <Zap className="w-5 h-5" />
+            </div>
+            <h4 className="font-bold text-white text-sm">{isAr ? 'تسليم وتشغيل فوري' : 'Instant Setup & Delivery'}</h4>
+            <p className="text-xs text-slate-400 leading-relaxed">{isAr ? 'استلام ملفات المصدر، تراخيص التشغيل، ودليل التثبيت والمساعدة الفنية المباشرة.' : 'Direct access to source files, licenses, deployment docs & support.'}</p>
+          </div>
+
+          <div className="bg-[#12142B]/80 border border-[#FF4D6D]/20 rounded-2xl p-5 space-y-2 backdrop-blur-md shadow-lg">
+            <div className="w-10 h-10 rounded-xl bg-[#FF4D6D]/20 border border-[#FF4D6D]/30 flex items-center justify-center text-[#FF4D6D]">
+              <ShieldCheck className="w-5 h-5" />
+            </div>
+            <h4 className="font-bold text-white text-sm">{isAr ? 'ضمان الجودة والدعم الفني' : 'Quality SLA & Direct Support'}</h4>
+            <p className="text-xs text-slate-400 leading-relaxed">{isAr ? 'فريق هندسي متخصص لمساعدتك في التخصيص والربط والتشغيل على سيرفراتك.' : 'Dedicated technical team to assist with custom setup and hosting.'}</p>
+          </div>
+
+          <div className="bg-[#12142B]/80 border border-[#FF9A3C]/20 rounded-2xl p-5 space-y-2 backdrop-blur-md shadow-lg">
+            <div className="w-10 h-10 rounded-xl bg-[#FF9A3C]/20 border border-[#FF9A3C]/30 flex items-center justify-center text-[#FF9A3C]">
+              <Lock className="w-5 h-5" />
+            </div>
+            <h4 className="font-bold text-white text-sm">{isAr ? 'أمان وتشفير 256-bit' : '256-Bit Financial Encryption'}</h4>
+            <p className="text-xs text-slate-400 leading-relaxed">{isAr ? 'معاملات مالية وبيانات محمية بأعلى معايير الأمن السيبراني المعتمدة.' : 'Bank-grade cybersecurity standards protecting all customer data.'}</p>
+          </div>
+        </section>
+
+        {/* Custom Solution & WhatsApp Inquiries */}
+        <section className="bg-gradient-to-r from-[#141630] via-[#1A1D3D] to-[#141630] border border-[#FF4D6D]/30 rounded-3xl p-8 sm:p-12 text-center space-y-6 relative overflow-hidden shadow-2xl">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#FF4D6D]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#FF9A3C]/15 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="relative z-10 max-w-3xl mx-auto space-y-4">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF4D6D]/20 border border-[#FF4D6D]/30 text-[#FF4D6D] text-xs font-bold shadow-inner">
+              <MessageCircle className="w-4 h-4 text-[#FF9A3C]" />
+              <span>{isAr ? 'خدمة الاستشارات والتخصيص المباشرة' : 'Custom Builds & Enterprise Support'}</span>
+            </div>
+
+            <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
+              {isAr ? 'هل تحتاج إلى نظام برمجي مخصص أو تعديل خاص لنشاطك التجاري؟' : 'Need a Custom System or Tailored Software for Your Brand?'}
+            </h2>
+
+            <p className="text-slate-300 text-sm sm:text-base font-light leading-relaxed">
+              {isAr ? (
+                'مهندسونا ومستشارو دي آرو جاهزون لتخصيص القوالب، ربط الأنظمة المحاسبية والـ ERP، أو بناء متجر سحابي مخصص بالكامل لعلامتك التجارية.'
+              ) : (
+                'Our engineers are ready to customize templates, integrate ERP systems, or build tailored digital solutions for your business.'
+              )}
+            </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+              <a
+                href="https://wa.me/966500000000?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D9%88%D9%83%D8%A7%D9%84%D8%A9%20%D8%AF%D9%8A%20%D8%A2%D8%B1%D9%88%D8%8C%20%D8%A3%D8%B1%D8%BA%D8%A8%20%D9%81%D9%8A%20%D8%B7%D9%84%D8%A8%20%D8%A7%D8%B3%D8%AA%D8%B4%D8%A7%D8%B1%D8%A9%20%D9%88%D8%AA%D8%AE%D8%B5%D9%8A%D8%B5%20%D9%86%D8%B8%D8%A7%D9%85%20%D9%85%D9%86%20%D8%A7%D9%84%D9%85%D8%AA%D8%AC%D8%B1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-black text-sm sm:text-base flex items-center gap-2.5 shadow-lg shadow-[#FF4D6D]/30 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+              >
+                <MessageCircle className="w-5 h-5 fill-current" />
+                <span>{isAr ? 'محادثة المستشار عبر الواتساب' : 'Chat with Specialist on WhatsApp'}</span>
+              </a>
+
+              <Link
+                href="/contact"
+                className="px-6 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 hover:text-white font-bold text-sm sm:text-base border border-white/15 transition-all"
+              >
+                {isAr ? 'طلب عرض سعر مفصل' : 'Request Custom Quote'}
+              </Link>
+            </div>
           </div>
         </section>
 
       </div>
+
+      {/* Floating Sticky Cart Button */}
+      <div className={`fixed bottom-6 ${isAr ? 'left-6' : 'right-6'} z-40`}>
+        <button
+          onClick={() => setIsCartDrawerOpen(true)}
+          className="px-5 py-3.5 rounded-2xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-bold shadow-2xl shadow-[#FF4D6D]/50 hover:scale-105 active:scale-95 transition-all flex items-center gap-3 border border-white/20 cursor-pointer"
+        >
+          <div className="relative">
+            <ShoppingCart className="w-5 h-5" />
+            {itemCount > 0 && (
+              <span className="absolute -top-2.5 -right-2.5 w-5 h-5 rounded-full bg-white text-[#FF4D6D] font-extrabold text-[11px] flex items-center justify-center shadow font-mono">
+                {itemCount}
+              </span>
+            )}
+          </div>
+          <span className="text-xs sm:text-sm font-extrabold">{isAr ? 'السلة' : 'Cart'}</span>
+          {subtotal > 0 && (
+            <span className="bg-black/25 px-2 py-0.5 rounded-lg text-xs font-mono font-bold">
+              {subtotal.toFixed(0)} {isAr ? 'ر.س' : 'SAR'}
+            </span>
+          )}
+        </button>
+      </div>
+
+      {/* Slide-out Side Cart Drawer */}
+      {isCartDrawerOpen && (
+        <div className="fixed inset-0 z-50 flex justify-end">
+          <div 
+            onClick={() => setIsCartDrawerOpen(false)}
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
+          />
+
+          <div className={`relative w-full max-w-md bg-[#0D0F24] border-l border-white/15 h-full flex flex-col justify-between shadow-2xl z-10 p-6 overflow-y-auto ${isAr ? 'text-right' : 'text-left'}`}>
+            <div>
+              <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
+                <div className="flex items-center gap-2.5">
+                  <ShoppingCart className="w-5 h-5 text-[#FF4D6D]" />
+                  <h3 className="text-lg font-bold text-white">{isAr ? 'سلة المشتريات' : 'Shopping Cart'}</h3>
+                  <span className="px-2.5 py-0.5 rounded-full bg-[#FF4D6D]/20 text-[#FF4D6D] border border-[#FF4D6D]/30 text-xs font-bold font-mono">
+                    {itemCount} {isAr ? 'عناصر' : 'Items'}
+                  </span>
+                </div>
+                <button
+                  onClick={() => setIsCartDrawerOpen(false)}
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Cart Items List */}
+              {items.length === 0 ? (
+                <div className="text-center py-16 space-y-4">
+                  <ShoppingCart className="w-16 h-16 text-slate-600 mx-auto" />
+                  <h4 className="text-base font-bold text-slate-300">{isAr ? 'سلة المشتريات فارغة' : 'Your cart is empty'}</h4>
+                  <p className="text-xs text-slate-400">{isAr ? 'تصفح باقة القوالب والأنظمة وأضف ما يناسب مشروعك' : 'Explore templates & systems to add items to your cart'}</p>
+                </div>
+              ) : (
+                <div className="space-y-4 max-h-[55vh] overflow-y-auto pr-1">
+                  {items.map((item) => {
+                    const unitPrice = item.salePrice || item.price;
+                    return (
+                      <div key={item.productId} className="bg-[#141630] border border-white/10 rounded-xl p-3.5 flex items-center gap-3.5">
+                        {item.image ? (
+                          <img src={item.image} alt="" className="w-14 h-14 rounded-lg object-cover flex-shrink-0" />
+                        ) : (
+                          <div className="w-14 h-14 rounded-lg bg-[#FF4D6D]/10 flex items-center justify-center text-[#FF4D6D] flex-shrink-0">
+                            <ShoppingBag className="w-6 h-6" />
+                          </div>
+                        )}
+
+                        <div className="flex-1 min-w-0">
+                          <h5 className="font-bold text-white text-xs sm:text-sm truncate">{item.nameAr || item.name}</h5>
+                          <span className="text-xs font-black text-[#FF9A3C] font-mono">{unitPrice} {isAr ? 'ر.س' : 'SAR'}</span>
+
+                          <div className="flex items-center gap-2 mt-2">
+                            <div className="flex items-center bg-black/40 rounded-lg px-2 py-0.5 border border-white/10">
+                              <button
+                                onClick={() => updateQuantity(item.productId, item.quantity - 1)}
+                                className="text-slate-400 hover:text-white p-0.5 cursor-pointer"
+                              >
+                                <Minus className="w-3 h-3" />
+                              </button>
+                              <span className="text-xs font-bold text-white px-2 font-mono">{item.quantity}</span>
+                              <button
+                                onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                                className="text-slate-400 hover:text-white p-0.5 cursor-pointer"
+                              >
+                                <Plus className="w-3 h-3" />
+                              </button>
+                            </div>
+                            <button
+                              onClick={() => removeItem(item.productId)}
+                              className="text-red-400 hover:text-red-300 p-1 text-xs cursor-pointer"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* Drawer Footer & Checkout */}
+            {items.length > 0 && (
+              <div className="border-t border-white/10 pt-4 space-y-4">
+                <div className="space-y-1.5 text-xs">
+                  <div className="flex justify-between text-slate-300">
+                    <span>{isAr ? 'المجموع الفرعي:' : 'Subtotal:'}</span>
+                    <span className="font-bold text-white font-mono">{subtotal.toFixed(2)} {isAr ? 'ر.س' : 'SAR'}</span>
+                  </div>
+                  <div className="flex justify-between text-[#FF9A3C]">
+                    <span>{isAr ? 'التسليم والتفعيل:' : 'Deployment:'}</span>
+                    <span className="font-bold flex items-center gap-1"><Zap className="w-3 h-3" /> {isAr ? 'مجاني وسريع' : 'Instant & Free'}</span>
+                  </div>
+                  <div className="flex justify-between text-base font-extrabold text-white pt-2 border-t border-white/10">
+                    <span>{isAr ? 'الإجمالي النهائي:' : 'Total:'}</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] font-mono">
+                      {subtotal.toFixed(2)} {isAr ? 'ر.س' : 'SAR'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <Link
+                    href="/store/checkout"
+                    onClick={() => setIsCartDrawerOpen(false)}
+                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#FF4D6D]/30 hover:opacity-95 active:scale-[0.98] transition cursor-pointer"
+                  >
+                    <CreditCard className="w-4 h-4" />
+                    <span>{isAr ? 'متابعة الدفع الآمن (مدى / أبل باي)' : 'Proceed to Checkout (Mada / Apple Pay)'}</span>
+                  </Link>
+
+                  <Link
+                    href="/store/cart"
+                    onClick={() => setIsCartDrawerOpen(false)}
+                    className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-semibold text-xs flex items-center justify-center gap-1 border border-white/10 transition"
+                  >
+                    <span>{isAr ? 'عرض صفحة السلة الكاملة' : 'View Full Cart Page'}</span>
+                  </Link>
+                </div>
+              </div>
+            )}
+
+          </div>
+        </div>
+      )}
+
+      {/* Quick View Product Modal */}
+      {quickViewProduct && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div 
+            onClick={() => setQuickViewProduct(null)}
+            className="absolute inset-0 bg-black/85 backdrop-blur-md"
+          />
+
+          <div className={`relative w-full max-w-2xl bg-[#0F1128] border border-[#FF4D6D]/30 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 max-h-[90vh] overflow-y-auto ${isAr ? 'text-right' : 'text-left'}`}>
+            <button
+              onClick={() => setQuickViewProduct(null)}
+              className={`absolute top-4 ${isAr ? 'left-4' : 'right-4'} p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition cursor-pointer`}
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="space-y-6">
+              <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-slate-950 border border-white/10">
+                <Image
+                  src={quickViewProduct.image}
+                  alt={isAr ? quickViewProduct.nameAr : quickViewProduct.name}
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+                {quickViewProduct.badge && (
+                  <span className={`absolute top-3 ${isAr ? 'right-3' : 'left-3'} px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${quickViewProduct.badgeColor || 'from-[#FF4D6D] to-[#FF9A3C]'} shadow-lg border border-white/20 flex items-center gap-1.5`}>
+                    <Sparkles className="w-3.5 h-3.5" />
+                    <span>{quickViewProduct.badge}</span>
+                  </span>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-[#FF9A3C]">
+                    {isAr ? quickViewProduct.categoryNameAr : quickViewProduct.categoryNameEn}
+                  </span>
+                  <div className="flex items-center gap-1 text-amber-400 font-bold text-xs">
+                    <Star className="w-4 h-4 fill-amber-400" />
+                    <span>{quickViewProduct.rating}</span>
+                    <span className="text-slate-400">({quickViewProduct.reviewsCount} {isAr ? 'تقييم' : 'reviews'})</span>
+                  </div>
+                </div>
+
+                <h2 className="text-xl sm:text-2xl font-black text-white">
+                  {isAr ? quickViewProduct.nameAr : quickViewProduct.name}
+                </h2>
+
+                <div className="flex items-baseline gap-3 pt-1">
+                  <span className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] font-mono">
+                    {quickViewProduct.price} {isAr ? 'ر.س' : 'SAR'}
+                  </span>
+                  <span className="text-sm text-slate-500 line-through font-mono">
+                    {quickViewProduct.originalPrice} {isAr ? 'ر.س' : 'SAR'}
+                  </span>
+                  <span className="text-xs bg-[#FF4D6D]/20 text-[#FF4D6D] font-bold px-2.5 py-0.5 rounded-lg border border-[#FF4D6D]/30">
+                    {isAr ? `خصم ${(100 - (quickViewProduct.price / quickViewProduct.originalPrice * 100)).toFixed(0)}%` : 'Special Discount'}
+                  </span>
+                </div>
+              </div>
+
+              <p className="text-sm text-slate-300 leading-relaxed font-light">
+                {isAr ? quickViewProduct.descriptionAr : quickViewProduct.descriptionEn}
+              </p>
+
+              <div className="space-y-2 bg-[#141630] border border-white/10 rounded-2xl p-4">
+                <h4 className="text-xs font-bold text-white flex items-center gap-2">
+                  <Award className="w-4 h-4 text-[#FF9A3C]" />
+                  <span>{isAr ? 'المميزات والخصائص المرفقة مع هذا النظام:' : 'Included Features & Capabilities:'}</span>
+                </h4>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                  {(isAr ? quickViewProduct.featuresAr : quickViewProduct.featuresEn).map((feat, i) => (
+                    <div key={i} className="flex items-start gap-2 text-xs text-slate-300">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#FF4D6D] flex-shrink-0 mt-0.5" />
+                      <span>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
+                <button
+                  onClick={() => {
+                    handleAddToCart(quickViewProduct);
+                    setQuickViewProduct(null);
+                    setIsCartDrawerOpen(true);
+                  }}
+                  className="w-full sm:flex-1 py-3.5 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#FF4D6D]/30 hover:opacity-95 active:scale-[0.98] transition cursor-pointer"
+                >
+                  <ShoppingCart className="w-4 h-4" />
+                  <span>{isAr ? 'إضافة للسلة وإتمام الشراء' : 'Add to Cart & Checkout'}</span>
+                </button>
+
+                {quickViewProduct.demoUrl && (
+                  <a
+                    href={quickViewProduct.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full sm:w-auto py-3.5 px-6 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm flex items-center justify-center gap-2 border border-white/15 transition cursor-pointer"
+                  >
+                    <span>{isAr ? 'المعاينة المباشرة' : 'Live Demo'}</span>
+                    <ArrowUpRight className="w-4 h-4" />
+                  </a>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Added to Cart Floating Toast */}
+      {showAddedToast && lastAddedProduct && (
+        <div className={`fixed top-24 ${isAr ? 'left-6' : 'right-6'} z-50 animate-bounce`}>
+          <div className="bg-[#12142B] border border-[#FF4D6D]/50 rounded-2xl p-4 shadow-2xl flex items-center gap-3 text-white max-w-sm backdrop-blur-xl">
+            <div className="w-10 h-10 rounded-xl bg-[#FF4D6D]/20 text-[#FF4D6D] border border-[#FF4D6D]/40 flex items-center justify-center flex-shrink-0">
+              <Check className="w-5 h-5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h5 className="font-bold text-xs truncate">{isAr ? lastAddedProduct.nameAr : lastAddedProduct.name}</h5>
+              <p className="text-[11px] text-[#FF9A3C] font-semibold">{isAr ? 'تمت الإضافة إلى السلة بنجاح!' : 'Added to cart successfully!'}</p>
+            </div>
+            <button
+              onClick={() => setIsCartDrawerOpen(true)}
+              className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white text-[11px] font-extrabold whitespace-nowrap shadow-md cursor-pointer"
+            >
+              {isAr ? 'عرض السلة' : 'View Cart'}
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

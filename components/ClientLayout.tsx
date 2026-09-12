@@ -31,23 +31,25 @@ interface ClientLayoutProps {
 }
 
 export default function ClientLayout({ children }: ClientLayoutProps) {
-  const [showLoadingScreen, setShowLoadingScreen] = useState(true);
+  const pathname = usePathname();
+  const isStandaloneDemo = pathname?.startsWith('/demo/store') || pathname?.startsWith('/demo/real-estate') || pathname?.startsWith('/sara');
+
+  const [showLoadingScreen, setShowLoadingScreen] = useState(!isStandaloneDemo);
   const [showChatBot, setShowChatBot] = useState(false);
   const { lang } = useLanguage();
 
   // Hide loading screen after minimum delay (reduced for much faster FCP)
   useEffect(() => {
+    if (isStandaloneDemo) return;
     const timer = setTimeout(() => setShowLoadingScreen(false), 400);
     return () => clearTimeout(timer);
-  }, []);
+  }, [isStandaloneDemo]);
 
   // Display Chatbot widget quickly after page load
   useEffect(() => {
     const chatTimer = setTimeout(() => setShowChatBot(true), 800);
     return () => clearTimeout(chatTimer);
   }, []);
-
-  const pathname = usePathname();
 
   useEffect(() => {
     // Send a highly fire-and-forget payload for analytics tracking
@@ -99,21 +101,21 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
         {showLoadingScreen && <LoadingScreen />}
       </AnimatePresence>
 
-      <NetworkBackground />
-      <div className="grid-background w-full overflow-x-hidden relative z-10 bg-[#0b0d1f] text-white min-h-screen min-h-[100dvh]">
-        <Header />
-        <main className="pt-24">
+      {!isStandaloneDemo && <NetworkBackground />}
+      <div className={`w-full overflow-x-hidden relative z-10 ${isStandaloneDemo ? 'bg-transparent text-slate-900' : 'bg-[#070913] text-white grid-background'} min-h-screen min-h-[100dvh]`}>
+        {!isStandaloneDemo && <Header />}
+        <main className={!isStandaloneDemo ? "pt-24" : "w-full min-h-screen p-0 m-0"}>
           {children}
         </main>
-        <Footer />
+        {!isStandaloneDemo && <Footer />}
       </div>
 
-      {showChatBot && <ChatBot />}
+      {!isStandaloneDemo && showChatBot && <ChatBot />}
       
       {/* Delayed rendering for WhatsApp to improve performance */}
-      {showChatBot && <WhatsAppWidget />}
+      {!isStandaloneDemo && showChatBot && <WhatsAppWidget />}
       
-      <CookieConsent />
+      {!isStandaloneDemo && <CookieConsent />}
       <Analytics />
     </>
   );

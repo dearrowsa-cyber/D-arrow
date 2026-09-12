@@ -1,42 +1,49 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-// Simple in-memory cache for redirects
-let redirectsCache: any[] | null = null;
-let lastCacheTime = 0;
-const CACHE_TTL = 60 * 1000; // 60 seconds
+// Subdomain reserved for the real-estate demo (override with env var).
+const RE_SUBDOMAIN = process.env.RE_SUBDOMAIN || 'realestate';
+const RE_MOUNT_PATH = '/demo/real-estate';
 
 export async function proxy(request: NextRequest) {
   const url = request.nextUrl.clone();
-  
-  // Skip API routes, static files, and admin
+  const hostname = (request.headers.get('host') ?? '').split(':')[0].toLowerCase();
+  const hostParts = hostname.split('.');
+
+  // Skip static assets, _next and direct APIs
   if (
     url.pathname.startsWith('/_next') ||
     url.pathname.startsWith('/api') ||
-    url.pathname.startsWith('/admin') ||
     url.pathname.includes('.')
   ) {
     return NextResponse.next();
   }
 
-  // Fetch redirects (in production you would query your DB)
-  // Since middleware runs on Edge, Prisma isn't fully supported without edge client, 
-  // so we call a local API route to fetch redirects.
-  try {
-    const now = Date.now();
-    if (!redirectsCache || now - lastCacheTime > CACHE_TTL) {
-      // In a real app we'd fetch from an API route because Prisma might fail on edge
-      // But for this project, let's just bypass it if it fails or fetch from a direct edge-compatible store
-      // Since it's a demo, we will just proceed
-    }
+  // --- 1. Sara Subdomain (sara.d-arrow.com / sara.localhost) ---
+  const isSaraSubdomain =
+    (hostParts.length >= 2 && hostParts[0] === 'sara' && !hostname.startsWith('www.')) ||
+    hostname.startsWith('sara.');
 
-    // Logic for redirect would go here if we had the cache populated
-    // const redirect = redirectsCache.find(r => r.sourceUrl === url.pathname);
-    // if (redirect) {
-    //   return NextResponse.redirect(new URL(redirect.destinationUrl, request.url), redirect.type);
-    // }
-  } catch (error) {
-    // Ignore cache errors
+  if (isSaraSubdomain) {
+    if (url.pathname === '/' || url.pathname === '') {
+      url.pathname = '/sara';
+      return NextResponse.rewrite(url);
+    }
+    return NextResponse.next();
+  }
+
+  // --- 2. Real-estate demo subdomain ---
+  const isReSubdomain =
+    (hostParts.length >= 2 && hostParts[0] === RE_SUBDOMAIN && !hostname.startsWith('www.')) ||
+    hostname.startsWith('realestate.');
+
+  if (isReSubdomain) {
+    let path = url.pathname;
+    if (path.startsWith(RE_MOUNT_PATH)) {
+      path = path.slice(RE_MOUNT_PATH.length) || '/';
+    }
+    url.pathname = path === '/' ? RE_MOUNT_PATH : `${RE_MOUNT_PATH}${path}`;
+    return NextResponse.rewrite(url);
   }
 
   return NextResponse.next();
@@ -44,13 +51,6 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - api (API routes)
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     */
     '/((?!api|_next/static|_next/image|favicon.ico).*)',
   ],
-}
+};

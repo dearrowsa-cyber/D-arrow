@@ -29,11 +29,22 @@ export default function JoinInfluencerPage() {
           <div className={`flex flex-col lg:flex-row items-center gap-12 ${isAr ? 'lg:flex-row-reverse' : ''}`}>
             {/* Text Content */}
             <div className={`flex-1 text-center ${isAr ? 'lg:text-right' : 'lg:text-left'}`}>
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FF4D6D]/10 border border-[#FF4D6D]/20 mb-6 backdrop-blur-sm">
-                <Star className="w-5 h-5 text-[#FF4D6D] fill-[#FF4D6D] animate-pulse" />
-                <span className="text-sm font-medium tracking-wide text-[#FF4D6D]">
-                  {isAr ? 'برنامج شركاء النجاح' : 'Success Partners Program'}
-                </span>
+              <div className="flex items-center justify-center lg:justify-start gap-3 mb-6">
+                <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 bg-white/5 p-2 rounded-2xl border border-white/10 backdrop-blur-md shadow-lg shadow-[#FF4D6D]/10">
+                  <Image
+                    src="/influencer-logo.png"
+                    alt="D-Arrow Influencer Logo"
+                    fill
+                    className="object-contain p-1"
+                    unoptimized
+                  />
+                </div>
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#FF4D6D]/10 border border-[#FF4D6D]/20 backdrop-blur-sm">
+                  <Star className="w-4 h-4 text-[#FF4D6D] fill-[#FF4D6D] animate-pulse" />
+                  <span className="text-xs sm:text-sm font-bold tracking-wide text-[#FF4D6D]">
+                    {isAr ? 'منصة وشبكة مؤثري دي آرو' : 'D-Arrow Influencer Network'}
+                  </span>
+                </div>
               </div>
               
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
@@ -69,30 +80,98 @@ export default function JoinInfluencerPage() {
               </div>
             </div>
 
-            {/* Video/Image Content */}
-            <div className="flex-1 w-full max-w-lg lg:max-w-none relative">
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#FF4D6D] to-[#FF9A3C] rounded-3xl blur-[60px] opacity-20 animate-pulse"></div>
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl group flex items-center justify-center">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
-                <Image 
-                  src="/influencer-ai-hero-saudi-logo.webp" 
-                  alt="Influencer Model"
-                  width={600}
-                  height={800}
-                  priority
-                  className="w-full h-auto object-cover rounded-3xl transition-transform duration-700 group-hover:scale-105"
+            {/* Hero Video Content */}
+            <div className="flex-1 w-full max-w-lg lg:max-w-xl relative flex items-center justify-center">
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#FF4D6D] to-[#FF9A3C] rounded-3xl blur-[50px] opacity-25 animate-pulse"></div>
+              <div className="relative w-full max-w-[480px] aspect-square rounded-3xl overflow-hidden shadow-[0_0_40px_rgba(255,77,109,0.2)] border border-white/10 group flex items-center justify-center bg-[#0B0D1F]">
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  src="/influencer-video.mp4"
+                  className="w-full h-full object-cover rounded-3xl transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute bottom-6 left-6 right-6 z-20 flex justify-between items-end opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  <div className="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl">
-                    <div className="flex gap-1 mb-2">
-                      <Star className="w-4 h-4" fill="url(#brandGradient)" stroke="url(#brandGradient)" />
-                      <Star className="w-4 h-4" fill="url(#brandGradient)" stroke="url(#brandGradient)" />
-                      <Star className="w-4 h-4" fill="url(#brandGradient)" stroke="url(#brandGradient)" />
-                      <Star className="w-4 h-4" fill="url(#brandGradient)" stroke="url(#brandGradient)" />
-                      <Star className="w-4 h-4" fill="url(#brandGradient)" stroke="url(#brandGradient)" />
-                    </div>
-                    <p className="text-sm font-medium text-white/90">{isAr ? 'انضم إلى نخبة المؤثرين' : 'Join Elite Influencers'}</p>
-                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured VIP Influencer Spotlight */}
+      <section className="py-12 relative z-10">
+        <div className="w-full max-w-7xl mx-auto px-6 md:px-12">
+          <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-[#171a38] via-[#10142b] to-[#0d0f22] border border-white/15 relative overflow-hidden shadow-2xl">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-[#FF4D6D]/15 rounded-full blur-[100px] pointer-events-none" />
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#FF9A3C]/15 rounded-full blur-[100px] pointer-events-none" />
+
+            <div className={`flex flex-col lg:flex-row items-center gap-10 ${isAr ? 'lg:flex-row-reverse' : ''}`}>
+              {/* Photo Thumbnail */}
+              <div className="relative w-48 h-48 sm:w-60 sm:h-60 rounded-3xl overflow-hidden border-2 border-[#FF4D6D]/40 bg-[#0d0f22] shadow-xl shadow-[#FF4D6D]/20 shrink-0 group">
+                <Image
+                  src="/influencers/mahmoud-sorour/sorour-hero-cutout.png"
+                  alt="الفنان محمود سرور"
+                  fill
+                  className="object-contain p-2 group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
+                  <span className="text-xs font-bold text-amber-300">عازف الكمان الأول بالوطن العربي</span>
+                </div>
+              </div>
+
+              {/* Spotlight Content */}
+              <div className={`flex-1 text-center ${isAr ? 'lg:text-right' : 'lg:text-left'} space-y-4`}>
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF4D6D]/10 border border-[#FF4D6D]/20 text-[#FF4D6D] text-xs font-bold">
+                  <Star className="w-3.5 h-3.5 fill-[#FF4D6D]" />
+                  {isAr ? 'نجم ومؤثر مميز في شبكة دي آرو' : 'Featured VIP Influencer'}
+                </div>
+
+                <h3 className="text-2xl sm:text-4xl font-black text-white">
+                  {isAr ? 'الفنان عازف الكمان محمود سرور' : 'Violin Virtuoso Mahmoud Sorour'}
+                </h3>
+
+                <p className="text-gray-300 text-sm sm:text-base leading-relaxed max-w-2xl">
+                  {isAr 
+                    ? 'عازف الكمان الأول بالوطن العربي والحائز على جائزة دار الأوبرا المصرية، مؤسس معهد سرور بالرياض، وعازف صولوهات أكثر من 90% من الأغاني الوطنية السعودية وأكثر من 1500 عمل سينمائي ودرامي.'
+                    : 'The Arab world’s leading violin virtuoso, Cairo Opera House award winner, founder of Sorour Music Institute in Riyadh, and soloist on 90%+ of Saudi national anthems and 1500+ cinema & TV drama scores.'}
+                </p>
+
+                <div className={`flex flex-wrap items-center gap-4 justify-center ${isAr ? 'lg:justify-start lg:flex-row-reverse' : 'lg:justify-start'} pt-2`}>
+                  <a
+                    href="https://in.d-arrow.com/mahmoud-sorour"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-bold text-sm shadow-lg shadow-[#FF4D6D]/30 hover:scale-105 transition flex items-center gap-2"
+                  >
+                    {isAr ? 'الصفحة الرسمية على منصة المؤثرين' : 'Official Page on Influencers Platform'}
+                    <ArrowRight className={`w-4 h-4 ${isAr ? 'rotate-180' : ''}`} />
+                  </a>
+
+                  <Link
+                    href="/influencer/mahmoud-sorour"
+                    className="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-bold text-sm transition flex items-center gap-2"
+                  >
+                    {isAr ? 'السيرة الفنية التفصيلية' : 'Detailed Portfolio'}
+                  </Link>
+
+                  <a
+                    href="https://www.youtube.com/user/abokoza"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-5 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-bold text-gray-200 transition"
+                  >
+                    YouTube Official
+                  </a>
+
+                  <a
+                    href="https://www.instagram.com/mhmoudsorour/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-5 py-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs sm:text-sm font-bold text-gray-200 transition"
+                  >
+                    Instagram
+                  </a>
                 </div>
               </div>
             </div>

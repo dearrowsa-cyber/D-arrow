@@ -10,109 +10,123 @@ const getPricingDataPath = () => {
   return path.join(dataDir, 'pricing-data.json');
 };
 
-const defaultPricingData = {
-  marketing: [
-    {
-      id: 'basic',
-      name: { en: 'Basic', ar: 'أساسي' },
-      price: '3,500',
-      currency: 'SAR',
-      period: { en: '/month', ar: '/شهرياً' },
-      features: [
-        { en: '8 social media posts / month', ar: '8 منشورات على وسائل التواصل الاجتماعي / شهرياً' },
-        { en: 'Basic creatives & captions', ar: 'تصاميم وتعليقات أساسية' },
-        { en: 'Hashtag research', ar: 'بحث علامات التجزئة' },
-        { en: 'Monthly performance report', ar: 'تقرير الأداء الشهري' },
-        { en: 'Account insights & recommendations', ar: 'رؤى الحساب والتوصيات' },
-      ],
-      popular: false,
-    },
-    {
-      id: 'growth',
-      name: { en: 'Growth', ar: 'النمو' },
-      price: '7,500',
-      currency: 'SAR',
-      period: { en: '/month', ar: '/شهرياً' },
-      features: [
-        { en: '12 posts / month + content calendar', ar: '12 منشور / شهرياً + تقويم المحتوى' },
-        { en: 'Community engagement (comments & DMs)', ar: 'مشاركة المجتمع (التعليقات والرسائل المباشرة)' },
-        { en: 'Basic ad spend management', ar: 'إدارة الإنفاق الإعلاني الأساسية' },
-        { en: 'Weekly optimization & reporting', ar: 'التحسين والإبلاغ الأسبوعي' },
-        { en: 'Audience growth strategy', ar: 'استراتيجية نمو الجمهور' },
-      ],
-      popular: true,
-    },
-    {
-      id: 'professional',
-      name: { en: 'Professional', ar: 'احترافي' },
-      price: '9,000',
-      currency: 'SAR',
-      period: { en: '/month', ar: '/شهرياً' },
-      features: [
-        { en: 'Strategy & campaign planning', ar: 'الاستراتيجية وتخطيط الحملة' },
-        { en: 'Targeted paid ads (Facebook/Instagram)', ar: 'إعلانات مدفوعة موجهة (Facebook/Instagram)' },
-        { en: 'Landing page creatives', ar: 'تصاميم صفحة الهبوط' },
-        { en: 'Advanced monthly analytics report', ar: 'تقرير التحليلات المتقدم الشهري' },
-        { en: 'A/B testing & monthly optimization', ar: 'اختبار A/B والتحسين الشهري' },
-      ],
-      popular: false,
-    },
-  ],
-  development: [
-    {
-      id: 'starter',
-      name: { en: 'Starter Package', ar: 'حزمة البداية' },
-      price: '4,000',
-      currency: 'SAR',
-      period: { en: '', ar: '' },
-      features: [
-        { en: '5 Pages Website', ar: 'موقع إلكتروني من 5 صفحات' },
-        { en: 'Responsive Design', ar: 'تصميم متجاوب' },
-        { en: 'Basic UI/UX Design', ar: 'تصميم واجهة المستخدم الأساسي' },
-        { en: 'Contact Form Integration', ar: 'تكامل نموذج الاتصال' },
-        { en: 'Basic SEO Setup', ar: 'إعداد SEO الأساسي' },
-        { en: '1 Month Support', ar: 'دعم شهر واحد' },
-      ],
-      popular: false,
-    },
-    {
-      id: 'business',
-      name: { en: 'Business Package', ar: 'حزمة الأعمال' },
-      price: '7,000',
-      currency: 'SAR',
-      period: { en: '', ar: '' },
-      features: [
-        { en: '8–12 Pages Website', ar: 'موقع إلكتروني من 8-12 صفحة' },
-        { en: 'Custom UI/UX Design', ar: 'تصميم واجهة المستخدم المخصص' },
-        { en: 'Admin Panel (Content Management)', ar: 'لوحة التحكم (إدارة المحتوى)' },
-        { en: 'Speed Optimization', ar: 'تحسين السرعة' },
-        { en: 'On-Page SEO Optimization', ar: 'تحسين SEO داخل الصفحة' },
-        { en: '2 Months Support', ar: 'دعم شهرين' },
-      ],
-      popular: true,
-    },
-    {
-      id: 'ecommerce',
-      name: { en: 'E-Commerce Package', ar: 'حزمة التجارة الإلكترونية' },
-      price: '12,000',
-      currency: 'SAR',
-      period: { en: '', ar: '' },
-      features: [
-        { en: 'Full E-Commerce Website', ar: 'موقع تجارة إلكترونية كامل' },
-        { en: 'Product Management System', ar: 'نظام إدارة المنتجات' },
-        { en: 'Payment Gateway Integration', ar: 'تكامل بوابة الدفع' },
-        { en: 'Order & Invoice System', ar: 'نظام الطلبات والفواتير' },
-        { en: 'Advanced Security Setup', ar: 'إعداد الأمان المتقدم' },
-        { en: '3 Months Support', ar: 'دعم ثلاثة أشهر' },
-      ],
-      popular: false,
-    },
-  ],
-};
+// Default packages mirror the public /pricing page content. This file is the
+// single source of truth shared between the admin dashboard and the live page.
+const defaultPricingData = [
+  {
+    id: 'starter',
+    nameAr: 'الانطلاقة',
+    nameEn: 'Starter',
+    audienceAr: 'محلات، عيادات فردية، مشاريع ناشئة',
+    audienceEn: 'Small shops, clinics, startups',
+    priceRange: '1,800 - 2,500',
+    priceUnitAr: 'ر.س / شهرياً',
+    priceUnitEn: 'SAR / month',
+    noteAr: '+ ميزانية إعلانات منفصلة',
+    noteEn: '+ Separate ad budget',
+    featured: false,
+    badgeAr: '',
+    badgeEn: '',
+    features: [
+      { ar: 'منصتين سوشيال ميديا - 12 منشور شهرياً', en: '2 social platforms – 12 posts/month' },
+      { ar: 'تصاميم جرافيك بهوية العميل', en: 'Branded graphic designs' },
+      { ar: 'إدارة حملة إعلانية واحدة', en: '1 ad campaign management' },
+      { ar: 'تقرير أداء شهري مبسّط', en: 'Simple monthly performance report' },
+      { ar: 'رد على الرسائل خلال الدوام', en: 'Message replies during business hours' },
+    ],
+    ctaAr: 'ابدأ بهذي الباقة',
+    ctaEn: 'Get Started',
+  },
+  {
+    id: 'professional',
+    nameAr: 'الاحتراف',
+    nameEn: 'Professional',
+    audienceAr: 'شركات تجارية، سلاسل مطاعم، عقارات، عيادات',
+    audienceEn: 'Businesses, restaurant chains, real estate, clinics',
+    priceRange: '4,500 - 6,500',
+    priceUnitAr: 'ر.س / شهرياً',
+    priceUnitEn: 'SAR / month',
+    noteAr: 'مدير حساب مخصص',
+    noteEn: 'Dedicated account manager',
+    featured: true,
+    badgeAr: 'الأكثر طلباً',
+    badgeEn: 'Most Popular',
+    features: [
+      { ar: '3-4 منصات - 20 منشور + 8 فيديوهات', en: '3-4 platforms – 20 posts + 8 videos' },
+      { ar: 'جلسة تصوير احترافي شهرية', en: 'Monthly professional photoshoot' },
+      { ar: 'إدارة كاملة Meta + Google + Snapchat', en: 'Full Meta + Google + Snapchat management' },
+      { ar: 'SEO بكلمات محلية (خبر، دمام، أحساء)', en: 'Local SEO (Khobar, Dammam, Al-Ahsa)' },
+      { ar: 'إدارة واتساب بزنس', en: 'WhatsApp Business management' },
+      { ar: 'تقارير أسبوعية + تحليل شهري', en: 'Weekly reports + monthly analytics' },
+    ],
+    ctaAr: 'ابدأ بهذي الباقة',
+    ctaEn: 'Get Started',
+  },
+  {
+    id: 'business',
+    nameAr: 'الأعمال',
+    nameEn: 'Business',
+    audienceAr: 'مقاولات، موردين، معدات صناعية، B2B',
+    audienceEn: 'Contractors, suppliers, industrial, B2B',
+    priceRange: '8,000 - 12,000',
+    priceUnitAr: 'ر.س / شهرياً',
+    priceUnitEn: 'SAR / month',
+    noteAr: 'استراتيجية ربع سنوية',
+    noteEn: 'Quarterly strategy',
+    featured: false,
+    badgeAr: '',
+    badgeEn: '',
+    features: [
+      { ar: 'كل خدمات باقة الاحتراف', en: 'All Professional package services' },
+      { ar: 'محتوى ثنائي اللغة (عربي / إنجليزي)', en: 'Bilingual content (Arabic / English)' },
+      { ar: 'حملات LinkedIn لصناع القرار', en: 'LinkedIn campaigns for decision makers' },
+      { ar: 'إدارة وتحسين الموقع الإلكتروني', en: 'Website management & optimization' },
+      { ar: 'فيديو تعريفي كل ربع سنة', en: 'Quarterly promo video' },
+      { ar: 'اجتماع استراتيجي شهري', en: 'Monthly strategic meeting' },
+    ],
+    ctaAr: 'ابدأ بهذي الباقة',
+    ctaEn: 'Get Started',
+  },
+  {
+    id: 'enterprise',
+    nameAr: 'المؤسسية',
+    nameEn: 'Enterprise',
+    audienceAr: 'مجموعات شركات، مصانع، سلاسل متعددة الفروع',
+    audienceEn: 'Corporate groups, factories, multi-branch chains',
+    priceRange: '15,000+',
+    priceUnitAr: 'ر.س / شهرياً',
+    priceUnitEn: 'SAR / month',
+    noteAr: 'فريق مخصص بالكامل',
+    noteEn: 'Fully dedicated team',
+    featured: false,
+    badgeAr: '',
+    badgeEn: '',
+    features: [
+      { ar: 'كل خدمات باقة الأعمال', en: 'All Business package services' },
+      { ar: 'فريق متكامل: مصمم، كاتب، معلن، مدير حساب', en: 'Full team: designer, writer, advertiser, account manager' },
+      { ar: 'تغطية فعاليات ومعارض صناعية', en: 'Events & industrial exhibitions coverage' },
+      { ar: 'إدارة سمعة رقمية ومراجعات', en: 'Digital reputation & reviews management' },
+      { ar: 'تقارير تنفيذية مرتبطة بالمبيعات', en: 'Executive reports linked to sales' },
+      { ar: 'دعم أسبوعي على مدار الساعة', en: '24/7 weekly support' },
+    ],
+    ctaAr: 'تواصل معنا',
+    ctaEn: 'Contact Us',
+  },
+];
 
 const initializePricingData = () => {
   const filePath = getPricingDataPath();
   if (!fs.existsSync(filePath)) {
+    fs.writeFileSync(filePath, JSON.stringify(defaultPricingData, null, 2));
+    return;
+  }
+  try {
+    const content = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    if (!Array.isArray(content)) {
+      // Convert legacy object format to standard 4 packages array
+      fs.writeFileSync(filePath, JSON.stringify(defaultPricingData, null, 2));
+    }
+  } catch {
     fs.writeFileSync(filePath, JSON.stringify(defaultPricingData, null, 2));
   }
 };
@@ -121,8 +135,15 @@ export async function GET() {
   try {
     initializePricingData();
     const filePath = getPricingDataPath();
-    const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-    return NextResponse.json({ success: true, data });
+    let data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    if (!Array.isArray(data)) {
+      data = defaultPricingData;
+      fs.writeFileSync(filePath, JSON.stringify(defaultPricingData, null, 2));
+    }
+    return NextResponse.json(
+      { success: true, data },
+      { headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' } }
+    );
   } catch (error) {
     return NextResponse.json({ success: false, error: 'Failed to fetch pricing data' }, { status: 500 });
   }
@@ -131,7 +152,9 @@ export async function GET() {
 export async function PUT(req: NextRequest) {
   try {
     const updates = await req.json();
-    initializePricingData();
+    if (!Array.isArray(updates)) {
+      return NextResponse.json({ success: false, error: 'Invalid data format' }, { status: 400 });
+    }
     const filePath = getPricingDataPath();
     fs.writeFileSync(filePath, JSON.stringify(updates, null, 2));
     return NextResponse.json({ success: true, data: updates, message: 'تم تحديث الأسعار بنجاح' });

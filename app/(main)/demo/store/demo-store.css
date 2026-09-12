@@ -1,122 +1,100 @@
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: none; }
+/* Curated Luxury Dynamic Phosphor Design System */
+:root {
+  --store-primary: #FFE600;
+  --store-accent: #FFD700;
+  --store-page-bg: #120E04;
+  --store-card-bg: #1C1707;
+  --store-header-bg: #161205;
+  --store-footer-bg: #0C0903;
 }
 
-@keyframes slideInRight {
-  from { transform: translateX(100%); }
-  to { transform: translateX(0); }
+.demo-store-root {
+  font-family: '29LT-Bukra', var(--font-cairo, 'Cairo'), system-ui, sans-serif;
+  color: #FFFFFF;
+  background-color: var(--store-page-bg, #120E04);
 }
 
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.92); }
-  to { opacity: 1; transform: scale(1); }
+/* Ambient glow gradient background on dark base */
+.phosphor-bg-mesh {
+  background-color: var(--store-page-bg, #120E04) !important;
+  background-image: 
+    radial-gradient(circle at 15% 15%, color-mix(in srgb, var(--store-primary, #FFE600) 22%, transparent) 0%, transparent 45%),
+    radial-gradient(circle at 85% 20%, color-mix(in srgb, var(--store-accent, #FFD700) 18%, transparent) 0%, transparent 45%),
+    radial-gradient(circle at 50% 60%, color-mix(in srgb, var(--store-primary, #FFE600) 14%, transparent) 0%, transparent 50%),
+    radial-gradient(circle at 20% 85%, color-mix(in srgb, var(--store-accent, #FFD700) 12%, transparent) 0%, transparent 45%) !important;
 }
 
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 15px rgba(255, 77, 109, 0.4); }
-  50% { box-shadow: 0 0 30px rgba(255, 77, 109, 0.8); }
+.demo-store-root input[type="text"],
+.demo-store-root input[type="number"],
+.demo-store-root input[type="email"],
+.demo-store-root input[type="tel"],
+.demo-store-root select,
+.demo-store-root textarea {
+  background-color: var(--store-card-bg, #1C1707) !important;
+  color: #FFFFFF !important;
+  border: 1.5px solid #382E0E !important;
+  border-radius: 1rem !important;
+  font-size: 0.875rem !important;
+  line-height: 1.5 !important;
+  transition: all 0.25s ease !important;
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+.demo-store-root input[type="text"]:focus,
+.demo-store-root input[type="number"]:focus,
+.demo-store-root input[type="email"]:focus,
+.demo-store-root input[type="tel"]:focus,
+.demo-store-root select:focus,
+.demo-store-root textarea:focus {
+  border-color: var(--store-primary, #FFE600) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--store-primary, #FFE600) 40%, transparent) !important;
+  background-color: color-mix(in srgb, var(--store-card-bg, #1C1707) 80%, white 10%) !important;
 }
 
+.demo-store-root input::placeholder,
+.demo-store-root textarea::placeholder {
+  color: #B39B54 !important;
+}
+
+/* Phosphor Card Hover & Glow */
 .demo-card {
-  transition: all 0.35s ease;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1.5px solid #33290D;
+  background: var(--store-card-bg, #1C1707);
+  color: #FFFFFF;
 }
 
 .demo-card:hover {
-  border-color: rgba(255, 77, 109, 0.35) !important;
   transform: translateY(-6px) !important;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35) !important;
+  border-color: var(--store-primary, #FFE600) !important;
+  box-shadow: 0 20px 35px -10px color-mix(in srgb, var(--store-primary, #FFE600) 40%, transparent), 0 0 25px color-mix(in srgb, var(--store-primary, #FFE600) 20%, transparent) !important;
+  background: color-mix(in srgb, var(--store-card-bg, #1C1707) 80%, white 8%) !important;
 }
 
-.demo-card:hover .demo-card-img {
-  transform: scale(1.08);
+/* Phosphor Pure Electric Button Glow */
+.btn-phosphor {
+  background: linear-gradient(135deg, var(--store-primary, #FFE600) 0%, var(--store-accent, #FFD700) 100%) !important;
+  color: #000000 !important;
+  font-weight: 900 !important;
+  box-shadow: 0 8px 25px -4px color-mix(in srgb, var(--store-primary, #FFE600) 60%, transparent) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.7) !important;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-.demo-card-img {
-  transition: transform 0.5s ease;
+.btn-phosphor:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 14px 34px -4px color-mix(in srgb, var(--store-primary, #FFE600) 80%, transparent) !important;
 }
 
-.demo-btn-add:hover {
-  box-shadow: 0 6px 20px rgba(255, 77, 109, 0.4);
+.btn-phosphor:active {
+  transform: scale(0.98) !important;
 }
 
-/* Promotional Poster Banner */
-.promo-banner-slide {
-  transition: opacity 0.5s ease-in-out;
-}
+/* Hide scrollbar while keeping scroll behavior */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-.promo-poster-card {
-  transition: all 0.35s ease;
-  overflow: hidden;
-  position: relative;
-}
-
-.promo-poster-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
-}
-
-.promo-poster-card:hover img {
-  transform: scale(1.06);
-}
-
-.promo-poster-card img {
-  transition: transform 0.6s ease;
-}
-
-/* Flash Sale Countdown Box */
-.countdown-box {
-  background: rgba(11, 13, 31, 0.8);
-  border: 1px solid rgba(255, 77, 109, 0.3);
-  box-shadow: 0 8px 24px rgba(255, 77, 109, 0.15);
-  border-radius: 12px;
-  padding: 8px 14px;
-  min-width: 54px;
-  text-align: center;
-}
-
-/* Floating WhatsApp / Support Button */
-.floating-support-btn {
-  position: fixed;
-  bottom: 28px;
-  left: 28px;
-  z-index: 99;
-  background: linear-gradient(135deg, #FF4D6D, #FF9A3C);
-  color: white;
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 25px rgba(255, 77, 109, 0.4);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  animation: float 3s ease-in-out infinite;
-}
-
-.floating-support-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 12px 35px rgba(255, 77, 109, 0.6);
-}
-
-/* Trust Badge Cards */
-.trust-badge-item {
-  background: rgba(20, 22, 46, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 16px;
-  padding: 20px 16px;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.trust-badge-item:hover {
-  border-color: rgba(255, 77, 109, 0.25);
-  background: rgba(20, 22, 46, 0.85);
-  transform: translateY(-4px);
+/* Ensure no demo store element ever inherits global pink/orange gradients */
+.demo-store-root button:not(.btn-phosphor):not([class*="bg-red"]) {
+  background-image: none !important;
 }

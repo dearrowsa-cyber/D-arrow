@@ -8,6 +8,9 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+
+  // Mark prisma as external package so Next.js doesn't try to bundle/hash it with local path dependencies
+  serverExternalPackages: ['@prisma/client', 'prisma'],
   
   async redirects() {
     return [

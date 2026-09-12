@@ -256,3 +256,59 @@ model ProductReview {
   approved        Boolean  @default(false)
   createdAt       DateTime @default(now())
 }
+
+// =============================================
+// REAL ESTATE DEMO MODELS
+// =============================================
+
+model RealEstateAgent {
+  id           String @id @default(cuid())
+  name         String
+  nameEn       String?
+  jobTitle     String
+  phone        String
+  whatsapp     String?
+  email        String?
+  avatarUrl    String?
+  rating       Float  @default(4.8)
+  dealsClosed  Int    @default(0)
+  createdAt    DateTime @default(now())
+
+  properties RealEstateProperty[]
+}
+
+model RealEstateProperty {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  title       String
+  description String
+  type        String  @default("villa") // villa, apartment, townhouse, land, office
+  listingType String  @default("sale")  // sale, rent
+  price       Float
+  currency    String  @default("SAR")
+  city        String
+  district    String
+  bedrooms    Int     @default(0)
+  bathrooms   Int     @default(0)
+  areaSqm     Int
+  features    String? // JSON array of feature strings (Arabic)
+  images      String? // JSON array of image URLs
+  latitude    Float?
+  longitude   Float?
+  featured    Boolean @default(false)
+  status      String  @default("available") // available, sold, reserved
+  agentId     String?
+  agent       RealEstateAgent? @relation(fields: [agentId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model RealEstateInquiry {
+  id         String   @id @default(cuid())
+  propertyId String?
+  name       String
+  phone      String
+  email      String?
+  message    String?
+  createdAt  DateTime @default(now())
+}

@@ -3,9 +3,10 @@
 import { useLanguage } from '@/components/LanguageProvider';
 import Link from 'next/link';
 import styles from './pricing.module.css';
+import { useEffect, useState } from 'react';
 
-/* ───────── Data ───────── */
-const PACKAGES = [
+/* ───────── Default data (fallback if /data/pricing-data.json is unavailable) ───────── */
+const DEFAULT_PACKAGES = [
   {
     id: 'starter',
     nameAr: 'الانطلاقة',
@@ -138,11 +139,111 @@ const ADVANTAGES = [
   },
 ];
 
+interface PricingFeature {
+  ar: string;
+  en: string;
+}
+
+interface PricingPackage {
+  id: string;
+  nameAr: string;
+  nameEn: string;
+  audienceAr: string;
+  audienceEn: string;
+  priceRange: string;
+  priceUnitAr: string;
+  priceUnitEn: string;
+  noteAr: string;
+  noteEn: string;
+  featured: boolean;
+  badgeAr: string;
+  badgeEn: string;
+  features: PricingFeature[];
+  ctaAr: string;
+  ctaEn: string;
+}
+
+const normalizePricingArray = (raw: unknown): PricingPackage[] | null => {
+  let list: unknown[] = [];
+  if (Array.isArray(raw)) {
+    list = raw;
+  } else if (raw && typeof raw === 'object') {
+    const obj = raw as Record<string, unknown>;
+    if (Array.isArray(obj.marketing)) {
+      list = obj.marketing;
+    } else {
+      list = Object.values(obj).flat();
+    }
+  }
+
+  if (!list.length) return null;
+
+  return list.map((item: any) => ({
+    id: String(item.id || ''),
+    nameAr: String(item.nameAr || item.name?.ar || ''),
+    nameEn: String(item.nameEn || item.name?.en || ''),
+    audienceAr: String(item.audienceAr || ''),
+    audienceEn: String(item.audienceEn || ''),
+    priceRange: String(item.priceRange || item.price || ''),
+    priceUnitAr: String(item.priceUnitAr || item.period?.ar || 'ر.س / شهرياً'),
+    priceUnitEn: String(item.priceUnitEn || item.period?.en || 'SAR / month'),
+    noteAr: String(item.noteAr || ''),
+    noteEn: String(item.noteEn || ''),
+    featured: Boolean(item.featured || item.popular),
+    badgeAr: String(item.badgeAr || (item.popular ? 'الأكثر طلباً' : '')),
+    badgeEn: String(item.badgeEn || (item.popular ? 'Most Popular' : '')),
+    features: Array.isArray(item.features)
+      ? item.features.map((f: any) =>
+          typeof f === 'string'
+            ? { ar: f, en: f }
+            : { ar: String(f?.ar || ''), en: String(f?.en || '') }
+        )
+      : [],
+    ctaAr: String(item.ctaAr || 'ابدأ بهذي الباقة'),
+    ctaEn: String(item.ctaEn || 'Get Started'),
+  }));
+};
+
 /* ───────── Component ───────── */
 export default function PricingPage() {
   const { lang } = useLanguage();
   const isAr = lang === 'ar';
   const t = (ar: string, en: string) => isAr ? ar : en;
+  const [packages, setPackages] = useState<PricingPackage[]>(DEFAULT_PACKAGES);
+
+  // Load dynamic pricing data edited from the admin dashboard.
+  // Falls back to static file or built-in packages if unavailable.
+  useEffect(() => {
+    let cancelled = false;
+    fetch('/api/admin/pricing', { cache: 'no-store' })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json) => {
+        const norm = normalizePricingArray(json?.data ?? json);
+        if (!cancelled && norm) {
+          setPackages(norm);
+        } else {
+          fetch('/data/pricing-data.json', { cache: 'no-store' })
+            .then((r) => (r.ok ? r.json() : null))
+            .then((d) => {
+              const normStatic = normalizePricingArray(d);
+              if (!cancelled && normStatic) setPackages(normStatic);
+            })
+            .catch(() => {});
+        }
+      })
+      .catch(() => {
+        fetch('/data/pricing-data.json', { cache: 'no-store' })
+          .then((r) => (r.ok ? r.json() : null))
+          .then((d) => {
+            const normStatic = normalizePricingArray(d);
+            if (!cancelled && normStatic) setPackages(normStatic);
+          })
+          .catch(() => {});
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
     <div className={`${styles.page} pt-28 md:pt-36`} dir={isAr ? 'rtl' : 'ltr'}>
@@ -159,7 +260,7 @@ export default function PricingPage() {
           </p>
         </div>
         <div className={styles.packagesGrid}>
-          {PACKAGES.map((pkg) => (
+          {packages.map((pkg) => (
             <div key={pkg.id} className={`${styles.pkg} ${pkg.featured ? styles.pkgFeatured : ''}`}>
               {pkg.featured && (
                 <span className={styles.pkgBadge}>{t(pkg.badgeAr, pkg.badgeEn)}</span>

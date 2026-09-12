@@ -1,8 +1,8 @@
 {
-  "totalVisitors": 41,
-  "todayViews": 4,
+  "totalVisitors": 53,
+  "todayViews": 12,
   "pageViews": {
-    "/": 27,
+    "/": 28,
     "/blog": 3,
     "/blog/123": 1,
     "/blog/cmog6f88m0000iizx792fjazo": 1,
@@ -12,7 +12,11 @@
     "/services": 1,
     "/services/dm_marketing": 1,
     "/store": 2,
-    "/store/ecommerce-store-admin-template": 1
+    "/store/ecommerce-store-admin-template": 1,
+    "/demo/real-estate": 5,
+    "/demo/real-estate/apartment-alolaya-riyadh": 1,
+    "/demo/real-estate/villa-hittin-riyadh": 3,
+    "/demo/real-estate/admin": 2
   },
-  "lastResetDate": "2026-08-01"
+  "lastResetDate": "2026-08-25"
 }

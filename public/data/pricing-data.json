@@ -1,0 +1,282 @@
+{
+  "marketing": [
+    {
+      "id": "starter",
+      "name": {
+        "ar": "الانطلاقة",
+        "en": "Starter"
+      },
+      "price": "1,800 - 2,500",
+      "currency": "SAR",
+      "period": {
+        "ar": "ر.س / شهرياً",
+        "en": "SAR / month"
+      },
+      "popular": false,
+      "features": [
+        {
+          "ar": "منصتين سوشيال ميديا - 12 منشور شهرياً",
+          "en": "2 social platforms – 12 posts/month"
+        },
+        {
+          "ar": "تصاميم جرافيك بهوية العميل",
+          "en": "Branded graphic designs"
+        },
+        {
+          "ar": "إدارة حملة إعلانية واحدة",
+          "en": "1 ad campaign management"
+        },
+        {
+          "ar": "تقرير أداء شهري مبسّط",
+          "en": "Simple monthly performance report"
+        },
+        {
+          "ar": "رد على الرسائل خلال الدوام",
+          "en": "Message replies during business hours"
+        }
+      ]
+    },
+    {
+      "id": "professional",
+      "name": {
+        "ar": "الاحتراف",
+        "en": "Professional"
+      },
+      "price": "4,500 - 6,500",
+      "currency": "SAR",
+      "period": {
+        "ar": "ر.س / شهرياً",
+        "en": "SAR / month"
+      },
+      "popular": true,
+      "features": [
+        {
+          "ar": "3-4 منصات - 20 منشور + 8 فيديوهات",
+          "en": "3-4 platforms – 20 posts + 8 videos"
+        },
+        {
+          "ar": "جلسة تصوير احترافي شهرية",
+          "en": "Monthly professional photoshoot"
+        },
+        {
+          "ar": "إدارة كاملة Meta + Google + Snapchat",
+          "en": "Full Meta + Google + Snapchat management"
+        },
+        {
+          "ar": "SEO بكلمات محلية (خبر، دمام، أحساء)",
+          "en": "Local SEO (Khobar, Dammam, Al-Ahsa)"
+        },
+        {
+          "ar": "إدارة واتساب بزنس",
+          "en": "WhatsApp Business management"
+        },
+        {
+          "ar": "تقارير أسبوعية + تحليل شهري",
+          "en": "Weekly reports + monthly analytics"
+        }
+      ]
+    },
+    {
+      "id": "business",
+      "name": {
+        "ar": "الأعمال",
+        "en": "Business"
+      },
+      "price": "8,000 - 12,000",
+      "currency": "SAR",
+      "period": {
+        "ar": "ر.س / شهرياً",
+        "en": "SAR / month"
+      },
+      "popular": false,
+      "features": [
+        {
+          "ar": "كل خدمات باقة الاحتراف",
+          "en": "All Professional package services"
+        },
+        {
+          "ar": "محتوى ثنائي اللغة (عربي / إنجليزي)",
+          "en": "Bilingual content (Arabic / English)"
+        },
+        {
+          "ar": "حملات LinkedIn لصناع القرار",
+          "en": "LinkedIn campaigns for decision makers"
+        },
+        {
+          "ar": "إدارة وتحسين الموقع الإلكتروني",
+          "en": "Website management & optimization"
+        },
+        {
+          "ar": "فيديو تعريفي كل ربع سنة",
+          "en": "Quarterly promo video"
+        },
+        {
+          "ar": "اجتماع استراتيجي شهري",
+          "en": "Monthly strategic meeting"
+        }
+      ]
+    },
+    {
+      "id": "enterprise",
+      "name": {
+        "ar": "المؤسسية",
+        "en": "Enterprise"
+      },
+      "price": "15,000+",
+      "currency": "SAR",
+      "period": {
+        "ar": "ر.س / شهرياً",
+        "en": "SAR / month"
+      },
+      "popular": false,
+      "features": [
+        {
+          "ar": "كل خدمات باقة الأعمال",
+          "en": "All Business package services"
+        },
+        {
+          "ar": "فريق متكامل: مصمم، كاتب، معلن، مدير حساب",
+          "en": "Full team: designer, writer, advertiser, account manager"
+        },
+        {
+          "ar": "تغطية فعاليات ومعارض صناعية",
+          "en": "Events & industrial exhibitions coverage"
+        },
+        {
+          "ar": "إدارة سمعة رقمية ومراجعات",
+          "en": "Digital reputation & reviews management"
+        },
+        {
+          "ar": "تقارير تنفيذية مرتبطة بالمبيعات",
+          "en": "Executive reports linked to sales"
+        },
+        {
+          "ar": "دعم أسبوعي على مدار الساعة",
+          "en": "24/7 weekly support"
+        }
+      ]
+    }
+  ],
+  "development": [
+    {
+      "id": "dev-starter",
+      "name": {
+        "ar": "حزمة البداية",
+        "en": "Starter Package"
+      },
+      "price": "4,000",
+      "currency": "SAR",
+      "period": {
+        "ar": "",
+        "en": ""
+      },
+      "popular": false,
+      "features": [
+        {
+          "ar": "موقع إلكتروني من 5 صفحات",
+          "en": "5 Pages Website"
+        },
+        {
+          "ar": "تصميم متجاوب لكافة الشاشات",
+          "en": "Responsive Design"
+        },
+        {
+          "ar": "تصميم واجهة المستخدم الأساسي",
+          "en": "Basic UI/UX Design"
+        },
+        {
+          "ar": "تكامل نموذج الاتصال",
+          "en": "Contact Form Integration"
+        },
+        {
+          "ar": "إعداد SEO الأساسي",
+          "en": "Basic SEO Setup"
+        },
+        {
+          "ar": "دعم فني شهر واحد",
+          "en": "1 Month Support"
+        }
+      ]
+    },
+    {
+      "id": "dev-business",
+      "name": {
+        "ar": "حزمة الأعمال",
+        "en": "Business Package"
+      },
+      "price": "7,000",
+      "currency": "SAR",
+      "period": {
+        "ar": "",
+        "en": ""
+      },
+      "popular": true,
+      "features": [
+        {
+          "ar": "موقع إلكتروني من 8-12 صفحة",
+          "en": "8–12 Pages Website"
+        },
+        {
+          "ar": "تصميم واجهة مستخدم مخصص واحترافي",
+          "en": "Custom UI/UX Design"
+        },
+        {
+          "ar": "لوحة تحكم لإدارة المحتوى",
+          "en": "Admin Panel (Content Management)"
+        },
+        {
+          "ar": "تحسين سرعة وأداء الموقع",
+          "en": "Speed Optimization"
+        },
+        {
+          "ar": "تحسين SEO داخل الصفحة",
+          "en": "On-Page SEO Optimization"
+        },
+        {
+          "ar": "دعم فني شهرين",
+          "en": "2 Months Support"
+        }
+      ]
+    },
+    {
+      "id": "dev-ecommerce",
+      "name": {
+        "ar": "حزمة التجارة الإلكترونية",
+        "en": "E-Commerce Package"
+      },
+      "price": "12,000",
+      "currency": "SAR",
+      "period": {
+        "ar": "",
+        "en": ""
+      },
+      "popular": false,
+      "features": [
+        {
+          "ar": "متجر تجارة إلكترونية متكامل",
+          "en": "Full E-Commerce Website"
+        },
+        {
+          "ar": "نظام متقدم لإدارة المنتجات والمخزون",
+          "en": "Product Management System"
+        },
+        {
+          "ar": "تكامل بوابات الدفع الإلكتروني (مدى، فيزا، ماستركارد)",
+          "en": "Payment Gateway Integration"
+        },
+        {
+          "ar": "نظام الطلبات والفواتير التلقائي",
+          "en": "Order & Invoice System"
+        },
+        {
+          "ar": "إعدادات أمان وحماية متقدمة",
+          "en": "Advanced Security Setup"
+        },
+        {
+          "ar": "دعم فني وتدريب 3 أشهر",
+          "en": "3 Months Support"
+        }
+      ]
+    }
+  ]
+}

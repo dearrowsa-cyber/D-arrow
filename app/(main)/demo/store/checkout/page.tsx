@@ -186,10 +186,11 @@ export default function CheckoutPage() {
     <div dir="rtl" style={{ background: '#0B0D1F', color: '#E6E6EA', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
 
       {/* Top security banner */}
-      <div style={{ background: 'linear-gradient(90deg, #064E3B, #047857)', color: 'white', padding: '10px 20px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10, fontSize: 13, fontWeight: 600 }}>
-        <Lock size={14} />
-        <span>🔒 اتصال مشفر 256-bit SSL — جميع بياناتك محمية ومعتمدة (PCI-DSS Compliant) 🇸🇦</span>
-        <ShieldCheck size={14} />
+      <div style={{ background: 'linear-gradient(90deg, #3F6212, #047857)', color: 'white', padding: '8px 16px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, fontWeight: 600, flexWrap: 'wrap', textAlign: 'center' }} className="text-[11px] sm:text-sm">
+        <Lock size={13} />
+        <span className="hidden sm:inline">🔒 اتصال مشفر 256-bit SSL — جميع بياناتك محمية ومعتمدة (PCI-DSS Compliant) 🇸🇦</span>
+        <span className="sm:hidden">🔒 دفع آمن SSL 256-bit</span>
+        <ShieldCheck size={13} />
       </div>
 
       {/* Header */}
@@ -211,7 +212,7 @@ export default function CheckoutPage() {
 
       {/* Stepper */}
       {step !== 'processing' && step !== 'confirmed' && (
-        <div style={{ maxWidth: 700, margin: '24px auto 0', padding: '0 24px' }}>
+      <div style={{ maxWidth: 700, margin: '16px auto 0' }} className="px-3 sm:px-6">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0 }}>
             {steps.map((s, idx) => {
               const isActive = idx === currentStepIdx;
@@ -221,15 +222,15 @@ export default function CheckoutPage() {
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
                     <div style={{
                       width: 40, height: 40, borderRadius: '50%',
-                      background: isDone ? '#10B981' : isActive ? 'linear-gradient(135deg,#FF4D6D,#FF9A3C)' : 'rgba(255,255,255,0.06)',
-                      border: `2px solid ${isDone ? '#10B981' : isActive ? '#FF4D6D' : 'rgba(255,255,255,0.1)'}`,
+                      background: isDone ? '#10B981' : isActive ? 'linear-gradient(135deg,#10B981,#06B6D4)' : 'rgba(255,255,255,0.06)',
+                      border: `2px solid ${isDone ? '#10B981' : isActive ? '#10B981' : 'rgba(255,255,255,0.1)'}`,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                       color: isDone || isActive ? 'white' : '#6B7280',
                       transition: 'all 0.3s ease'
                     }}>
                       {isDone ? <Check size={18} /> : s.icon}
                     </div>
-                    <span style={{ fontSize: 11, fontWeight: isActive ? 700 : 500, color: isActive ? '#FF4D6D' : isDone ? '#10B981' : '#6B7280', whiteSpace: 'nowrap' }}>
+                    <span style={{ fontSize: 11, fontWeight: isActive ? 700 : 500, color: isActive ? '#10B981' : isDone ? '#10B981' : '#6B7280', whiteSpace: 'nowrap' }}>
                       {s.label}
                     </span>
                   </div>
@@ -243,8 +244,9 @@ export default function CheckoutPage() {
         </div>
       )}
 
-      <div style={{ maxWidth: 1100, margin: '28px auto 60px', padding: '0 24px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: step === 'processing' || step === 'confirmed' ? '1fr' : '1fr 380px', gap: 32, alignItems: 'start' }}>
+      <div style={{ maxWidth: 1100, margin: '20px auto 60px' }} className="px-3 sm:px-6">
+        <div className="flex flex-col lg:grid gap-6 lg:gap-8 items-start" style={{ gridTemplateColumns: step === 'processing' || step === 'confirmed' ? '1fr' : '1fr 360px' }}>
+          {step !== 'processing' && step !== 'confirmed' && false && null /* force responsive */}
 
           {/* ════════ LEFT: MAIN CONTENT ════════ */}
           <div>
@@ -253,8 +255,8 @@ export default function CheckoutPage() {
             {step === 'shipping' && (
               <div style={{ background: 'rgba(20,22,46,0.7)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: 24, padding: 32, animation: 'fadeIn 0.4s ease' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(255,77,109,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <MapPin size={20} style={{ color: '#FF4D6D' }} />
+                  <div style={{ width: 40, height: 40, borderRadius: 12, background: 'rgba(16,185,129,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <MapPin size={20} style={{ color: '#10B981' }} />
                   </div>
                   <div>
                     <h2 style={{ fontSize: 20, fontWeight: 800, margin: 0, color: 'white' }}>عنوان الشحن بالمملكة 🇸🇦</h2>
@@ -262,7 +264,7 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   {/* Full Name */}
                   <div style={{ gridColumn: '1 / -1' }}>
                     <label style={{ fontSize: 13, color: '#9CA3AF', display: 'flex', alignItems: 'center', gap: 4, marginBottom: 6 }}><User size={13} /> الاسم الكامل *</label>
@@ -374,7 +376,7 @@ export default function CheckoutPage() {
 
                 <button
                   onClick={() => { if (validateShipping()) setStep('payment'); }}
-                  style={{ width: '100%', marginTop: 24, padding: 16, borderRadius: 14, background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', border: 'none', fontWeight: 800, fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, boxShadow: '0 8px 30px rgba(255,77,109,0.3)' }}
+                  style={{ width: '100%', marginTop: 24, padding: 16, borderRadius: 14, background: 'linear-gradient(135deg,#10B981,#06B6D4)', color: 'white', border: 'none', fontWeight: 800, fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, boxShadow: '0 8px 30px rgba(16,185,129,0.3)' }}
                 >
                   متابعة إلى بوابة الدفع <ArrowRight size={18} />
                 </button>
@@ -663,7 +665,7 @@ export default function CheckoutPage() {
                   </button>
                   <button
                     onClick={() => setStep('review')}
-                    style={{ flex: 1, padding: 14, borderRadius: 14, background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', border: 'none', fontWeight: 800, fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, boxShadow: '0 8px 30px rgba(255,77,109,0.3)' }}
+                    style={{ flex: 1, padding: 14, borderRadius: 14, background: 'linear-gradient(135deg,#10B981,#06B6D4)', color: 'white', border: 'none', fontWeight: 800, fontSize: 16, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, boxShadow: '0 8px 30px rgba(16,185,129,0.3)' }}
                   >
                     مراجعة الطلب النهائية <ArrowRight size={18} />
                   </button>
@@ -763,7 +765,7 @@ export default function CheckoutPage() {
                     disabled={!agreedToTerms}
                     style={{
                       flex: 1, padding: 16, borderRadius: 14,
-                      background: agreedToTerms ? 'linear-gradient(135deg,#10B981,#059669)' : '#374151',
+                      background: agreedToTerms ? 'linear-gradient(135deg,#10B981,#FFE600)' : '#374151',
                       color: 'white', border: 'none', fontWeight: 800, fontSize: 16,
                       cursor: agreedToTerms ? 'pointer' : 'not-allowed',
                       display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
@@ -862,7 +864,7 @@ export default function CheckoutPage() {
 
                   {/* Actions */}
                   <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                    <Link href="/demo/store" style={{ flex: 1, padding: 14, borderRadius: 14, background: 'linear-gradient(135deg,#FF4D6D,#FF9A3C)', color: 'white', textDecoration: 'none', fontWeight: 700, fontSize: 14, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                    <Link href="/demo/store" style={{ flex: 1, padding: 14, borderRadius: 14, background: 'linear-gradient(135deg,#10B981,#06B6D4)', color: 'white', textDecoration: 'none', fontWeight: 700, fontSize: 14, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                       <Sparkles size={16} /> متابعة التسوق
                     </Link>
                     <Link href="/demo/store/admin" style={{ flex: 1, padding: 14, borderRadius: 14, background: 'rgba(16,185,129,0.12)', border: '1px solid rgba(16,185,129,0.25)', color: '#10B981', textDecoration: 'none', fontWeight: 700, fontSize: 14, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
