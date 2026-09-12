@@ -1,1 +1,5 @@
-export { default } from '../influencer/mahmoud-sorour/page';
+import { redirect } from 'next/navigation';
+
+export default function MahmoudSorourDirectPage() {
+  redirect('https://in.d-arrow.com/mahmoud-sorour');
+}

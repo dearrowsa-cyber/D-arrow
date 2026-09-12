@@ -25,6 +25,16 @@ const nextConfig = {
         destination: 'https://d-arrow.com/:path*',
         permanent: true,
       },
+      {
+        source: '/influencer/mahmoud-sorour',
+        destination: 'https://in.d-arrow.com/mahmoud-sorour',
+        permanent: true,
+      },
+      {
+        source: '/mahmoud-sorour',
+        destination: 'https://in.d-arrow.com/mahmoud-sorour',
+        permanent: true,
+      },
     ];
   },
   
