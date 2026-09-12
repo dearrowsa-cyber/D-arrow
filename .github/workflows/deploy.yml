@@ -33,10 +33,10 @@ jobs:
             git pull origin main
             
             echo "🔨 [Docker] Rebuilding Next.js application container..."
-            docker compose build d-arrow-app --no-cache || docker compose build app --no-cache
+            docker compose -p d-arrow-new build d-arrow-app --no-cache
             
             echo "🔄 [Docker] Starting updated container..."
-            docker compose up -d d-arrow-app || docker compose up -d app
+            docker compose -p d-arrow-new up -d --no-deps d-arrow-app
             
             echo "🧹 [Docker] Cleaning up dangling images..."
             docker image prune -f
