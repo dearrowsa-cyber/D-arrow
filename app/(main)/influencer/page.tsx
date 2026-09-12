@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useLanguage } from '@/components/LanguageProvider';
-import { Globe, TrendingUp, Users, ArrowRight, ShieldCheck, Sparkles, Layout } from 'lucide-react';
+import { Star, Globe, TrendingUp, Users, ArrowRight, ShieldCheck, Sparkles, Layout } from 'lucide-react';
 
 export default function JoinInfluencerPage() {
   const { lang } = useLanguage();
