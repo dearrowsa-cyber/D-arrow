@@ -149,14 +149,30 @@
 * **الرابط:** [https://apps.d-arrow.com](https://apps.d-arrow.com)
 * **المسار على السيرفر:** `/data/compose/17` و `/home/darrow/project`
 
-### 2. تشغيل الـ Stack يدوياً على السيرفر:
+### 2. تشغيل الـ Stack يدوياً واستكشاف الأخطاء (Troubleshooting):
 ```bash
+# 1) دفع التحديثات من جهازك المحلي
+git commit -m "your commit message"
+git push origin main
+
+# 2) التوصيل بالـ VPS والتحقق من وجود متغير DATABASE_URL
+ssh root@your-vps-ip
+docker inspect d-arrow-app | grep DATABASE_URL
+
+# 3) في حال غياب المتغير، يمكن تعيينه مؤقتاً داخل الحاوية الحالية
+docker exec d-arrow-app sh -c 'export DATABASE_URL="postgresql://darrow:changeme_postgres_in_env@d-arrow-postgres:5432/darrow?schema=public"'
+
+# 4) إعادة بناء وتفعيل الحاوية بالرمز والصورة الجديدة والبيئات المحدثة
 cd /home/darrow/project
-# بناء الحاوية بأحدث كود
-docker compose build d-arrow-app --no-cache
-# تشغيل الحاوية في الخلفية
-docker compose up -d d-arrow-app
+docker compose -p d-arrow-new build d-arrow-app --no-cache
+docker compose -p d-arrow-new up -d --no-deps d-arrow-app
+
+# 5) التحقق من عمل الـ API بنجاح
+curl https://d-arrow.com/api/blog/posts
 ```
+
+> 💡 **ملاحظة حول متغيرات البيئة:**  
+> تنفيذ `docker exec ... export` ينطبق فقط على جلسة Shell الحالية ولا يستمر عند إعادة تشغيل الحاوية. الحل الدائم هو إضافة `DATABASE_URL` (أو متغيرات Postgres) في بيئة Portainer Stack أو ملف `docker-compose.yml`. أمر `docker compose up` في الخطوة 4 يقوم بتحميل وتطبيق المتغيرات من `docker-compose.yml` تلقائياً.
 
 ### 3. إعداد الـ Reverse Proxy (Nginx):
 يتم توجيه حركة المرور من النطاق الخارجي `d-arrow.com` إلى منفذ التطبيق المحلي:
