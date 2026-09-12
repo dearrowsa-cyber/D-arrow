@@ -1,6 +1,7 @@
 <div align="center">
 
 # 🚀 D-Arrow Digital Marketing & Intelligent Software
+
 ### منصة دي آرو الرقمية — حلول التسويق والأنظمة البرمجية الذكية
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.0-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
@@ -26,6 +27,7 @@
 منصة **D-Arrow** هي نظام رقمي شامل مبني بأحدث تقنيات الويب الحديثة، ومصمم لتلبية متطلبات السوق السعودي والخليجي وفق أعلى معايير الأداء والجمالية وتجربة المستخدم.
 
 تجمع المنصة بين:
+
 1. **واجهة وكالة التسويق والحلول الرقمية (Corporate Agency Portal):** استعراض الهوية، الخدمات، سابقة الأعمال، ونماذج التواصل التفاعلية.
 2. **متجر دي آرو الرقمي والديمو التفاعلي (`/demo/store` & `/store`):** نظام متاجر إلكترونية تجريبي وحي يدعم تخصيص القوالب المباشر، سلة المشتريات، وتتبع الطلبات المباشر.
 3. **منصة التقنية العقارية المتطورة (`/demo/real-estate`):** عروض عقارية تفاعلية في الرياض ومختلف مناطق المملكة مع فلاتر ذكية وحاسبة أقساط ونظام استفسارات فوري.
@@ -63,71 +65,81 @@
 └─────────────────────────────────────────────────────────────┘
 ```
 
-| الطبقة | التقنية المستخدمة | الوصف |
-| :--- | :--- | :--- |
-| **Frontend Framework** | **Next.js 15 (App Router)** | أداء فائق وسرعة تحميل عبر SSR & Client Components |
-| **Language & Typing** | **TypeScript** | أمان نمطي كامل وقابلية صيانة عالية للكود |
-| **Styling** | **Tailwind CSS & Vanilla CSS Tokens** | تصميم هوية داكنة فاخرة، وتأثيرات بصرية حديثة |
-| **Database & ORM** | **PostgreSQL 16 + Prisma ORM** | قاعدة بيانات موثوقة مع إدارة المخطط عبر Prisma |
-| **AI Integration** | **Multi-Model AI Engine** | محرك ذكاء اصطناعي للمساعد الآلي ونماذج n8n |
-| **Containerization** | **Docker & Docker Compose** | بيئة حاويات مستقلة ومعزولة للإنتاج |
-| **Server Management** | **Portainer CE** | لوحة تحكم سحابية لإدارة الـ Stacks والحاويات |
-| **CI / CD** | **GitHub Actions** | أتمتة كاملة للسحب والبناء وإعادة التشغيل عند كل Push |
+| الطبقة                 | التقنية المستخدمة                     | الوصف                                                |
+| :--------------------- | :------------------------------------ | :--------------------------------------------------- |
+| **Frontend Framework** | **Next.js 15 (App Router)**           | أداء فائق وسرعة تحميل عبر SSR & Client Components    |
+| **Language & Typing**  | **TypeScript**                        | أمان نمطي كامل وقابلية صيانة عالية للكود             |
+| **Styling**            | **Tailwind CSS & Vanilla CSS Tokens** | تصميم هوية داكنة فاخرة، وتأثيرات بصرية حديثة         |
+| **Database & ORM**     | **PostgreSQL 16 + Prisma ORM**        | قاعدة بيانات موثوقة مع إدارة المخطط عبر Prisma       |
+| **AI Integration**     | **Multi-Model AI Engine**             | محرك ذكاء اصطناعي للمساعد الآلي ونماذج n8n           |
+| **Containerization**   | **Docker & Docker Compose**           | بيئة حاويات مستقلة ومعزولة للإنتاج                   |
+| **Server Management**  | **Portainer CE**                      | لوحة تحكم سحابية لإدارة الـ Stacks والحاويات         |
+| **CI / CD**            | **GitHub Actions**                    | أتمتة كاملة للسحب والبناء وإعادة التشغيل عند كل Push |
 
 ---
 
 ## ✨ الأقسام والميزات الرئيسية (Key Modules)
 
 ### 1. المتجر الإلكتروني والديمو التفاعلي (`/demo/store`)
-* **Live Theme Customizer:** درج تفاعلي لتغيير سمة المتجر في الوقت الفعلي (عصري، كلاسيكي، فاخر).
-* **Smart Cart & Checkout:** سلة مشتريات منبثقة، وتوجيه سريع لإنهاء الطلب عبر الواتساب أو الدفع الإلكتروني.
-* **Order Tracking (`/demo/store/track`):** نظام محاكاة تتبع مباشر لمراحل معالجة وشحن وتوصيل الطلبات مع إشعارات حالة واقعية.
+
+- **Live Theme Customizer:** درج تفاعلي لتغيير سمة المتجر في الوقت الفعلي (عصري، كلاسيكي، فاخر).
+- **Smart Cart & Checkout:** سلة مشتريات منبثقة، وتوجيه سريع لإنهاء الطلب عبر الواتساب أو الدفع الإلكتروني.
+- **Order Tracking (`/demo/store/track`):** نظام محاكاة تتبع مباشر لمراحل معالجة وشحن وتوصيل الطلبات مع إشعارات حالة واقعية.
 
 ### 2. منصة العقارات الذكية (`/demo/real-estate`)
-* استعراض العقارات والمشاريع السكنية والتجارية مع فلاتر حسب المدينة، السعر، ونوع العقار.
-* حاسبة تمويل عقاري وأقساط شهرية تفاعلية.
-* لوحة استفسارات فورية للربط بين العميل وفريق المبيعات.
+
+- استعراض العقارات والمشاريع السكنية والتجارية مع فلاتر حسب المدينة، السعر، ونوع العقار.
+- حاسبة تمويل عقاري وأقساط شهرية تفاعلية.
+- لوحة استفسارات فورية للربط بين العميل وفريق المبيعات.
 
 ### 3. منصة المؤثرين وصناع المحتوى (`/influencer`)
-* صفحات خاصة للمؤثرين (مثل `/influencer/mahmoud-sorour` و `/sara`).
-* عرض الإحصائيات الديموغرافية ومعدلات التفاعل ونماذج الفيديو عالية الجودة.
-* باقات وحملات تسويقية جاهزة للشركات والجهات الراغبة في التعاون.
+
+- صفحات خاصة للمؤثرين (مثل `/influencer/mahmoud-sorour` و `/sara`).
+- عرض الإحصائيات الديموغرافية ومعدلات التفاعل ونماذج الفيديو عالية الجودة.
+- باقات وحملات تسويقية جاهزة للشركات والجهات الراغبة في التعاون.
 
 ### 4. مركز التحكم وتحسين محركات البحث (`/admin`)
-* **Pricing Engine:** إدارة باقات وأسعار الخدمات وتحديثها ديناميكياً.
-* **SEO Command Center:** تخصيص الـ Meta Tags، ملف `robots.txt`، ومخططات `Schema.org` المهيكلة.
-* **Analytics Dashboard:** إحصائيات حية لعدد الزيارات والتحويلات.
+
+- **Pricing Engine:** إدارة باقات وأسعار الخدمات وتحديثها ديناميكياً.
+- **SEO Command Center:** تخصيص الـ Meta Tags، ملف `robots.txt`، ومخططات `Schema.org` المهيكلة.
+- **Analytics Dashboard:** إحصائيات حية لعدد الزيارات والتحويلات.
 
 ---
 
 ## 🚀 البدء والتشغيل المحلي (Local Development)
 
 ### المتطلبات الأساسية:
-* **Node.js**: الإصدار 18 أو أحدث (يوصى بـ Node 20+)
-* **npm** أو **pnpm**
-* **Docker Desktop** (اختياري، في حال رغبت بتشغيل قاعدة البيانات محلياً عبر Docker)
+
+- **Node.js**: الإصدار 18 أو أحدث (يوصى بـ Node 20+)
+- **npm** أو **pnpm**
+- **Docker Desktop** (اختياري، في حال رغبت بتشغيل قاعدة البيانات محلياً عبر Docker)
 
 ### خطوات التثبيت والتشغيل:
 
 1. **استنساخ المستودع (Clone):**
+
    ```bash
    git clone https://github.com/dearrowsa-cyber/D-arrow.git
    cd D-arrow
    ```
 
 2. **تثبيت الحزم (Install Dependencies):**
+
    ```bash
    npm install
    ```
 
 3. **إعداد متغيرات البيئة (Environment Variables):**
    قم بإنشاء ملف `.env` بناءً على النموذج:
+
    ```bash
    cp .env.example .env
    ```
-   *(قم بملء بيانات الاتصال بقاعدة البيانات والمفاتيح السرية)*
+
+   _(قم بملء بيانات الاتصال بقاعدة البيانات والمفاتيح السرية)_
 
 4. **تحديث قاعدة البيانات عبر Prisma:**
+
    ```bash
    npx prisma generate
    npx prisma db push
@@ -146,38 +158,26 @@
 المشروع لا يعتمد على منصات استضافة خارجية محدودة مثل Vercel، بل يعمل بالكامل على خادم VPS خاص تحت إدارة **Portainer** عبر Docker Compose:
 
 ### 1. الوصول إلى لوحة إدارة Portainer:
-* **الرابط:** [https://apps.d-arrow.com](https://apps.d-arrow.com)
-* **المسار على السيرفر:** `/data/compose/17` و `/home/darrow/project`
 
-### 2. تشغيل الـ Stack يدوياً واستكشاف الأخطاء (Troubleshooting):
+- **الرابط:** [https://apps.d-arrow.com](https://apps.d-arrow.com)
+- **المسار على السيرفر:** `/data/compose/17` و `/home/darrow/project`
+
+### 2. تشغيل الـ Stack يدوياً على السيرفر:
+
 ```bash
-# 1) دفع التحديثات من جهازك المحلي
-git commit -m "your commit message"
-git push origin main
-
-# 2) التوصيل بالـ VPS والتحقق من وجود متغير DATABASE_URL
-ssh root@your-vps-ip
-docker inspect d-arrow-app | grep DATABASE_URL
-
-# 3) في حال غياب المتغير، يمكن تعيينه مؤقتاً داخل الحاوية الحالية
-docker exec d-arrow-app sh -c 'export DATABASE_URL="postgresql://darrow:changeme_postgres_in_env@d-arrow-postgres:5432/darrow?schema=public"'
-
-# 4) إعادة بناء وتفعيل الحاوية بالرمز والصورة الجديدة والبيئات المحدثة
 cd /home/darrow/project
-docker compose -p d-arrow-new build d-arrow-app --no-cache
-docker compose -p d-arrow-new up -d --no-deps d-arrow-app
-
-# 5) التحقق من عمل الـ API بنجاح
-curl https://d-arrow.com/api/blog/posts
+# بناء الحاوية بأحدث كود
+docker compose build d-arrow-app --no-cache
+# تشغيل الحاوية في الخلفية
+docker compose up -d d-arrow-app
 ```
 
-> 💡 **ملاحظة حول متغيرات البيئة:**  
-> تنفيذ `docker exec ... export` ينطبق فقط على جلسة Shell الحالية ولا يستمر عند إعادة تشغيل الحاوية. الحل الدائم هو إضافة `DATABASE_URL` (أو متغيرات Postgres) في بيئة Portainer Stack أو ملف `docker-compose.yml`. أمر `docker compose up` في الخطوة 4 يقوم بتحميل وتطبيق المتغيرات من `docker-compose.yml` تلقائياً.
-
 ### 3. إعداد الـ Reverse Proxy (Nginx):
+
 يتم توجيه حركة المرور من النطاق الخارجي `d-arrow.com` إلى منفذ التطبيق المحلي:
-* **Host Port:** `127.0.0.1:3031`
-* **Internal Container Port:** `3000`
+
+- **Host Port:** `127.0.0.1:3031`
+- **Internal Container Port:** `3000`
 
 ---
 
@@ -187,6 +187,7 @@ curl https://d-arrow.com/api/blog/posts
 📂 [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
 
 ### كيف يعمل النشر التلقائي؟
+
 ```
 [المطور يعمل Push لـ main]
            │
@@ -207,11 +208,13 @@ curl https://d-arrow.com/api/blog/posts
 ```
 
 ### المتغيرات السرية في GitHub Secrets:
+
 تم تكوين المتغيرات التالية مسبقاً في إعدادات المستودع لضمان أمان الاتصال:
-* `VPS_HOST`: عنوان الـ IP للسيرفر.
-* `VPS_USER`: اسم المستخدم المصرح له (`root`).
-* `VPS_SSH_KEY`: مفتاح SSH المشفر للاتصال.
-* `VPS_PORT`: منفذ الاتصال (`22`).
+
+- `VPS_HOST`: عنوان الـ IP للسيرفر.
+- `VPS_USER`: اسم المستخدم المصرح له (`root`).
+- `VPS_SSH_KEY`: مفتاح SSH المشفر للاتصال.
+- `VPS_PORT`: منفذ الاتصال (`22`).
 
 ---
 
@@ -252,6 +255,7 @@ D-arrow/
 ## 🤝 تعليمات المساهمة والتعاون (Collaboration Guidelines)
 
 للحفاظ على استقرار بيئة الإنتاج على الـ VPS:
+
 1. يمنع الرفع المباشر على فرع `main` لأي ميزات تجريبية.
 2. قم بإنشاء فرع جديد لعملك:
    ```bash
