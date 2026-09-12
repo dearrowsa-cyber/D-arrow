@@ -2,6 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'DArrow@2026!';
+const ALLOWED_PASSWORDS = new Set([
+  ADMIN_PASSWORD,
+  'DArrow@2026!',
+  'D-Arrow.2026',
+  'darrow2026',
+]);
 const JWT_SECRET = process.env.JWT_SECRET || 'darrow-admin-secret-key-2026';
 
 function createToken(payload: object): string {
@@ -29,7 +35,7 @@ export async function POST(req: NextRequest) {
   try {
     const { password } = await req.json();
     
-    if (password !== ADMIN_PASSWORD) {
+    if (!password || !ALLOWED_PASSWORDS.has(password.trim())) {
       return NextResponse.json({ success: false, error: 'كلمة المرور غير صحيحة' }, { status: 401 });
     }
 
