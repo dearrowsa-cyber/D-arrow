@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import { FALLBACK_POSTS } from '@/lib/blog/fallback-posts';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,14 +23,13 @@ export async function GET(req: NextRequest) {
       count: posts.length,
     });
   } catch (error) {
-    console.error('Error fetching blog posts, falling back to FALLBACK_POSTS:', error);
+    console.error('Error fetching blog posts:', error);
     return NextResponse.json({
-      success: true,
-      source: 'fallback',
-      dbError: error instanceof Error ? error.message : String(error),
-      posts: FALLBACK_POSTS,
-      count: FALLBACK_POSTS.length,
-    });
+      success: false,
+      error: 'Failed to fetch blog posts',
+      posts: [],
+      count: 0,
+    }, { status: 500 });
   }
 }
 

@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { useState, useMemo } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { 
-  ShoppingBag, 
+import { useState, useMemo, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import {
+  ShoppingBag,
   ShoppingCart,
-  ArrowUpRight, 
-  Sparkles, 
-  Check, 
-  ShieldCheck, 
-  Zap, 
-  CreditCard, 
-  MessageCircle, 
-  Lock, 
-  CheckCircle2, 
+  ArrowUpRight,
+  Sparkles,
+  Check,
+  ShieldCheck,
+  Zap,
+  CreditCard,
+  MessageCircle,
+  Lock,
+  CheckCircle2,
   Star,
   Bot,
   Building2,
@@ -27,17 +27,18 @@ import {
   Award,
   Eye,
   Flame,
-  Server
-} from 'lucide-react';
-import { useLanguage } from '@/components/LanguageProvider';
-import { useCart } from '@/components/store/CartContext';
+  Server,
+  PackageX,
+} from "lucide-react";
+import { useLanguage } from "@/components/LanguageProvider";
+import { useCart } from "@/components/store/CartContext";
 
 export interface StoreProduct {
   id: string;
   slug: string;
   name: string;
   nameAr: string;
-  category: 'templates' | 'realestate' | 'payments' | 'ai' | 'hosting';
+  category: "templates" | "realestate" | "payments" | "ai" | "hosting";
   categoryNameAr: string;
   categoryNameEn: string;
   price: number;
@@ -61,256 +62,212 @@ export interface StoreProduct {
   isPopular?: boolean;
 }
 
-const STORE_PRODUCTS: StoreProduct[] = [
-  {
-    id: 'saudi-ecommerce-store-template',
-    slug: 'saudi-ecommerce-store-template',
-    name: 'Saudi E-Commerce Store System & Template',
-    nameAr: 'نظام وقالب المتجر الإلكتروني السعودي',
-    category: 'templates',
-    categoryNameAr: 'قوالب المتاجر',
-    categoryNameEn: 'Store Templates',
-    price: 349,
-    originalPrice: 699,
-    rating: 4.9,
-    reviewsCount: 142,
-    ordersCount: 380,
-    badge: 'الأكثر طلباً',
-    badgeIcon: Flame,
-    badgeColor: 'from-[#FF4D6D] to-[#FF9A3C]',
-    image: '/store/ecommerce.jpg',
-    descriptionAr: 'حل تقني متكامل لبناء متجر إلكتروني سعودي فائق السرعة، مجهز ببوابات الدفع (مدى، Apple Pay، تمارا، تابي)، وسلة تسوق ذكية ولوحة تحكم حية للتاجر.',
-    descriptionEn: 'Turnkey Saudi e-commerce SaaS template with sub-second loading, built-in Mada, Apple Pay, Tamara, Tabby, cart engine, and merchant dashboard.',
-    keyHighlightAr: 'مدى وApple Pay وتمارا + لوحة تحكم للتاجر',
-    keyHighlightEn: 'Mada, Apple Pay, Tamara + Merchant Panel',
-    featuresAr: [
-      'بوابات دفع سعودية مدمجة (مدى، أبل باي، تمارا، تابي)',
-      'سلة تسوق تسويقية وسلسلة شراء سريعة (1-Click Checkout)',
-      'لوحة تحكم كاملة للتاجر وإدارة المنتجات والطلبات',
-      'سرعة فائقة وتحسين 100% لتجربة المستخدم على الجوال',
-      'كود نظيف مع دعم فني وتثبيت مباشر'
-    ],
-    featuresEn: [
-      'Integrated Saudi Payments (Mada, Apple Pay, Tamara, Tabby)',
-      'High-converting 1-Click Checkout & smart cart',
-      'Full merchant management dashboard',
-      'Sub-second page speed & 100% mobile optimized',
-      'Clean source code with direct onboarding support'
-    ],
-    demoUrl: '/demo/store',
-    deliveryTimeAr: 'تسليم وتشغيل فوري خلال 24 ساعة',
-    deliveryTimeEn: 'Instant setup & delivery within 24h',
-    isPopular: true,
-  },
-  {
-    id: 'saudi-real-estate-platform',
-    slug: 'saudi-real-estate-platform',
-    name: 'Saudi Real Estate Platform & Website System',
-    nameAr: 'نظام ومنصة الموقع العقاري السعودي',
-    category: 'realestate',
-    categoryNameAr: 'الأنظمة العقارية',
-    categoryNameEn: 'Real Estate Systems',
-    price: 399,
-    originalPrice: 799,
-    rating: 4.9,
-    reviewsCount: 88,
-    ordersCount: 195,
-    badge: 'إصدار معتمد',
-    badgeIcon: Building2,
-    badgeColor: 'from-[#FF9A3C] to-[#FF4D6D]',
-    image: '/store/realestate.jpg',
-    descriptionAr: 'منصة عقارية متكاملة مخصصة للسوق السعودي، لعرض العقارات (بيع وإيجار)، فلترة حسب الأحياء والمدن، خرائط جوجل تفاعلية، وحجز المعاينات.',
-    descriptionEn: 'Enterprise real estate portal template for Saudi developers & brokers with live map search, district filtering, and viewing appointment booking.',
-    keyHighlightAr: 'خرائط قوقل تفاعلية + حجز معاينات آلي',
-    keyHighlightEn: 'Interactive Maps + Auto Tour Booking',
-    featuresAr: [
-      'عرض تفاعلي للشقق والفلل والأراضي والمشاريع',
-      'خرائط قوقل مدمجة مع الفلترة بالحي والمدينة',
-      'نموذج استقبال طلبات العملاء وحجز المعاينات تلقائياً',
-      'معرض صور وفيديوهات بتقنية 360 درجة للعقارات',
-      'متوافق 100% مع الهيئة العامة للعقار وفال'
-    ],
-    featuresEn: [
-      'Interactive listings for villas, apartments & compounds',
-      'Integrated Google Maps with district search',
-      'Automated client inquiry & viewing booking forms',
-      'High-res photo & 360-degree video showcase',
-      'Fully aligned with Saudi REGA & Val regulations'
-    ],
-    demoUrl: '/demo/real-estate',
-    deliveryTimeAr: 'تسليم وتشغيل فوري',
-    deliveryTimeEn: 'Instant deployment ready',
-    isPopular: true,
-  },
-  {
-    id: 'payment-gateways-integration-pack',
-    slug: 'payment-gateways-integration-pack',
-    name: 'Saudi Payment Gateways & Checkout Engine',
-    nameAr: 'نظام بوابات الدفع والربط المالي السعودي',
-    category: 'payments',
-    categoryNameAr: 'بوابات الدفع',
-    categoryNameEn: 'Payment Gateways',
-    price: 249,
-    originalPrice: 499,
-    rating: 5.0,
-    reviewsCount: 112,
-    ordersCount: 290,
-    badge: 'دفع معتمد',
-    badgeIcon: CreditCard,
-    badgeColor: 'from-[#FF4D6D] to-[#FF9A3C]',
-    image: '/store/payments.jpg',
-    descriptionAr: 'نظام ربط بنكي ومالي آمن ومباشر لجميع طرق الدفع السعودية (مدى، أبل باي، فيزا، ماستركارد، تمارا، تابي، STC Pay) مع حماية ضد الاحتيال.',
-    descriptionEn: 'Enterprise payment integration engine supporting Mada, Apple Pay, Visa, Mastercard, Tamara, Tabby & STC Pay with 256-bit fraud protection.',
-    keyHighlightAr: 'مدى وApple Pay وتابي + تشفير 256-bit',
-    keyHighlightEn: 'Mada, Apple Pay, Tabby + 256-bit Encryption',
-    featuresAr: [
-      'تفعيل فوري لمدى و Apple Pay بدون تعقيدات',
-      'دمج برامج التقسيط (تمارا و تابي) لزيادة المبيعات +40%',
-      'تشفير بنكي 256-bit وحماية معتمدة ضد الاحتيال',
-      'إشعارات فورية عبر الواتساب والبريد لكل عملية دفع ناجحة'
-    ],
-    featuresEn: [
-      'Instant activation for Mada & Apple Pay',
-      'Tamara & Tabby installment widgets to boost conversions +40%',
-      '256-bit SSL financial encryption & anti-fraud guards',
-      'Instant WhatsApp and email alerts for every successful order'
-    ],
-    demoUrl: '/demo/store/checkout',
-    deliveryTimeAr: 'ربط وتشغيل فوري',
-    deliveryTimeEn: 'Instant integration setup',
-  },
-  {
-    id: 'ai-customer-support-bot',
-    slug: 'ai-customer-support-bot',
-    name: 'D-Arrow AI Customer Support & Sales Chatbot',
-    nameAr: 'مساعد الذكاء الاصطناعي والمبيعات الذكي',
-    category: 'ai',
-    categoryNameAr: 'الذكاء الاصطناعي',
-    categoryNameEn: 'AI & Chatbots',
-    price: 299,
-    originalPrice: 599,
-    rating: 4.8,
-    reviewsCount: 76,
-    ordersCount: 160,
-    badge: 'شات بوت 24/7',
-    badgeIcon: Bot,
-    badgeColor: 'from-[#FF4D6D] to-[#FF9A3C]',
-    image: '/store/ai-chatbot.jpg',
-    descriptionAr: 'شات بوت ذكي مخصص مدرب باللغة العربية والإنجليزية واللهجة السعودية، للرد الفوري على العملاء 24 ساعة، اقتراح المنتجات، وتجميع البيانات.',
-    descriptionEn: 'Custom conversational AI chatbot trained on your business data to handle customer inquiries 24/7, recommend products, and capture warm leads.',
-    keyHighlightAr: 'لهجة سعودية أصيلة + رد فوري 24 ساعة',
-    keyHighlightEn: 'Native Saudi AI + 24/7 Auto Response',
-    featuresAr: [
-      'فهم دقيق للهجة السعودية واللغة العربية والإنجليزية',
-      'ردود فورية على استفسارات الأسعار والمخزون والشحن 24/7',
-      'تجميع بيانات العملاء (الاسم، الجوال، الإيميل) وحفظها تلقائياً',
-      'ربط سهل وسريع مع موقعك ومتجرك وقنوات التواصل'
-    ],
-    featuresEn: [
-      'Deep understanding of Saudi dialect, Arabic & English',
-      'Instant 24/7 answers regarding pricing, stock, and shipping',
-      'Automated lead capture (Name, Phone, Email)',
-      '1-click widget integration on web and mobile'
-    ],
-    deliveryTimeAr: 'تدريب وتشغيل خلال 24 ساعة',
-    deliveryTimeEn: 'Trained & deployed in 24h',
-  },
-  {
-    id: 'high-speed-saudi-cloud-infrastructure',
-    slug: 'high-speed-saudi-cloud-infrastructure',
-    name: 'High-Speed Saudi Cloud Hosting & Server Infrastructure',
-    nameAr: 'الاستضافة السحابية والبنية التحتية السعودية',
-    category: 'hosting',
-    categoryNameAr: 'الاستضافة والسيرفرات',
-    categoryNameEn: 'Cloud Hosting',
-    price: 199,
-    originalPrice: 399,
-    rating: 4.9,
-    reviewsCount: 82,
-    ordersCount: 210,
-    badge: 'سرعة فائقة',
-    badgeIcon: Server,
-    badgeColor: 'from-[#FF7544] to-[#FF9A3C]',
-    image: '/store/hosting.png',
-    descriptionAr: 'بنية تحتية سحابية موثوقة داخل المملكة العربية السعودية، تضمن سرعة تصفح فائقة، حماية متقدمة ضد هجمات DDoS، وجاهزية 99.9%.',
-    descriptionEn: 'Ultra-fast Saudi-hosted cloud infrastructure with 99.9% uptime SLA, automated daily backups, enterprise DDoS protection, and free SSL.',
-    keyHighlightAr: 'سيرفرات سريعة <50ms + حماية DDoS معتمدة',
-    keyHighlightEn: 'Saudi Local Servers + Anti-DDoS Shield',
-    featuresAr: [
-      'سيرفرات سحابية سريعة داخل المملكة (زمن استجابة أقل من 50ms)',
-      'شهادة أمان SSL مجانية مع حماية ضد هجمات حجب الخدمة DDoS',
-      'نسخ احتياطي يومي آلي واستعادة بضغطة زر واحدة',
-      'دعم فني متخصص على مدار الساعة 24/7'
-    ],
-    featuresEn: [
-      'Saudi local cloud servers with <50ms sub-second latency',
-      'Free SSL cert with automated anti-DDoS shielding',
-      'Automated daily backups & 1-click restore',
-      '24/7 dedicated DevOps & technical support'
-    ],
-    deliveryTimeAr: 'تفعيل فوري خلال دقائق',
-    deliveryTimeEn: 'Instant provisioning in minutes',
+const parseProductArray = (value: unknown): string[] => {
+  if (Array.isArray(value))
+    return value.filter((item): item is string => typeof item === "string");
+  if (typeof value !== "string" || !value.trim()) return [];
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed)
+      ? parsed.filter((item): item is string => typeof item === "string")
+      : [];
+  } catch {
+    return [];
   }
-];
+};
+
+const normalizeApiProduct = (product: any): StoreProduct => {
+  const featuresAr = parseProductArray(product.featuresAr);
+  const featuresEn = parseProductArray(product.features);
+  const image = parseProductArray(product.images)[0] || "/store/ecommerce.jpg";
+  const categoryValue =
+    `${product.category || ""} ${product.categoryAr || ""}`.toLowerCase();
+  const category =
+    categoryValue.includes("real") || categoryValue.includes("عقار")
+      ? "realestate"
+      : categoryValue.includes("pay") || categoryValue.includes("دفع")
+        ? "payments"
+        : categoryValue.includes("ai") || categoryValue.includes("ذك")
+          ? "ai"
+          : categoryValue.includes("host") || categoryValue.includes("استضاف")
+            ? "hosting"
+            : "templates";
+
+  return {
+    id: product.id,
+    slug:
+      product.slug === "saudi-real-estate-template"
+        ? "saudi-real-estate-platform"
+        : product.slug,
+    name: product.name,
+    nameAr: product.nameAr || product.name,
+    category,
+    categoryNameAr: product.categoryAr || product.category || "الأنظمة الرقمية",
+    categoryNameEn: product.category || "Digital Systems",
+    price: Number(product.salePrice ?? product.price),
+    originalPrice: Number(product.price),
+    rating: Number(product.rating || 5),
+    reviewsCount: Number(product._count?.reviews || 0),
+    ordersCount: Number(product._count?.orderItems || 0),
+    badge: product.featured ? "الأكثر طلباً" : undefined,
+    badgeIcon: product.featured ? Flame : undefined,
+    badgeColor: "from-[#FF4D6D] to-[#FF9A3C]",
+    image,
+    descriptionAr: product.descriptionAr || product.description || "",
+    descriptionEn: product.description || product.descriptionAr || "",
+    keyHighlightAr: featuresAr[0] || "حل رقمي متكامل لنشاطك التجاري",
+    keyHighlightEn:
+      featuresEn[0] || "Complete digital solution for your business",
+    featuresAr,
+    featuresEn,
+    demoUrl: product.demoUrl || undefined,
+    deliveryTimeAr: "تسليم وتشغيل فوري",
+    deliveryTimeEn: "Instant setup and delivery",
+    isPopular: Boolean(product.featured),
+  };
+};
 
 export default function StorePage() {
   const { lang } = useLanguage();
-  const isAr = lang === 'ar';
-  const { items, addItem, removeItem, updateQuantity, itemCount, subtotal } = useCart();
+  const isAr = lang === "ar";
+  const { items, addItem, removeItem, updateQuantity, itemCount, subtotal } =
+    useCart();
+  const [products, setProducts] = useState<StoreProduct[]>([]);
 
   // State filters
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [sortBy, setSortBy] = useState<'popular' | 'price-asc' | 'price-desc' | 'rating'>('popular');
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [sortBy, setSortBy] = useState<
+    "popular" | "price-asc" | "price-desc" | "rating"
+  >("popular");
   const [isCartDrawerOpen, setIsCartDrawerOpen] = useState<boolean>(false);
-  const [quickViewProduct, setQuickViewProduct] = useState<StoreProduct | null>(null);
-  const [lastAddedProduct, setLastAddedProduct] = useState<StoreProduct | null>(null);
+  const [quickViewProduct, setQuickViewProduct] = useState<StoreProduct | null>(
+    null,
+  );
+  const [lastAddedProduct, setLastAddedProduct] = useState<StoreProduct | null>(
+    null,
+  );
   const [showAddedToast, setShowAddedToast] = useState<boolean>(false);
+
+  useEffect(() => {
+    let active = true;
+
+    const load = async () => {
+      try {
+        const res = await fetch("/api/store/products?status=published");
+        if (!res.ok) throw new Error("Failed to load products");
+        const data = await res.json();
+        if (!active) return;
+        if (
+          data.success &&
+          Array.isArray(data.products) &&
+          data.products.length > 0
+        ) {
+          setProducts(data.products.map(normalizeApiProduct));
+        } else {
+          setProducts([]);
+        }
+      } catch {
+        if (active) setProducts([]);
+      }
+    };
+
+    load();
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   // Categories list
   const categories = [
-    { id: 'all', nameAr: 'جميع الأنظمة والحلول', nameEn: 'All Systems', icon: Sparkles },
-    { id: 'templates', nameAr: 'قوالب المتاجر', nameEn: 'Store Templates', icon: ShoppingBag },
-    { id: 'realestate', nameAr: 'الأنظمة العقارية', nameEn: 'Real Estate', icon: Building2 },
-    { id: 'payments', nameAr: 'بوابات الدفع', nameEn: 'Payment Gateways', icon: CreditCard },
-    { id: 'ai', nameAr: 'الذكاء الاصطناعي', nameEn: 'AI & Chatbots', icon: Bot },
-    { id: 'hosting', nameAr: 'الاستضافة والسيرفرات', nameEn: 'Cloud Hosting', icon: Server },
+    {
+      id: "all",
+      nameAr: "جميع الأنظمة والحلول",
+      nameEn: "All Systems",
+      icon: Sparkles,
+    },
+    {
+      id: "templates",
+      nameAr: "قوالب المتاجر",
+      nameEn: "Store Templates",
+      icon: ShoppingBag,
+    },
+    {
+      id: "realestate",
+      nameAr: "الأنظمة العقارية",
+      nameEn: "Real Estate",
+      icon: Building2,
+    },
+    {
+      id: "payments",
+      nameAr: "بوابات الدفع",
+      nameEn: "Payment Gateways",
+      icon: CreditCard,
+    },
+    {
+      id: "ai",
+      nameAr: "الذكاء الاصطناعي",
+      nameEn: "AI & Chatbots",
+      icon: Bot,
+    },
+    {
+      id: "hosting",
+      nameAr: "الاستضافة والسيرفرات",
+      nameEn: "Cloud Hosting",
+      icon: Server,
+    },
   ];
 
   // Filtered Products
   const filteredProducts = useMemo(() => {
-    return STORE_PRODUCTS.filter(product => {
-      if (selectedCategory !== 'all' && product.category !== selectedCategory) {
-        return false;
-      }
-      if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase().trim();
-        const matchesName = product.nameAr.toLowerCase().includes(q) || product.name.toLowerCase().includes(q);
-        const matchesDesc = product.descriptionAr.toLowerCase().includes(q) || product.descriptionEn.toLowerCase().includes(q);
-        const matchesCategory = product.categoryNameAr.toLowerCase().includes(q) || product.categoryNameEn.toLowerCase().includes(q);
-        if (!matchesName && !matchesDesc && !matchesCategory) return false;
-      }
-      return true;
-    }).sort((a, b) => {
-      if (sortBy === 'popular') return (b.ordersCount || 0) - (a.ordersCount || 0);
-      if (sortBy === 'price-asc') return a.price - b.price;
-      if (sortBy === 'price-desc') return b.price - a.price;
-      if (sortBy === 'rating') return b.rating - a.rating;
-      return 0;
-    });
-  }, [selectedCategory, searchQuery, sortBy]);
+    return products
+      .filter((product) => {
+        if (
+          selectedCategory !== "all" &&
+          product.category !== selectedCategory
+        ) {
+          return false;
+        }
+        if (searchQuery.trim()) {
+          const q = searchQuery.toLowerCase().trim();
+          const matchesName =
+            product.nameAr.toLowerCase().includes(q) ||
+            product.name.toLowerCase().includes(q);
+          const matchesDesc =
+            product.descriptionAr.toLowerCase().includes(q) ||
+            product.descriptionEn.toLowerCase().includes(q);
+          const matchesCategory =
+            product.categoryNameAr.toLowerCase().includes(q) ||
+            product.categoryNameEn.toLowerCase().includes(q);
+          if (!matchesName && !matchesDesc && !matchesCategory) return false;
+        }
+        return true;
+      })
+      .sort((a, b) => {
+        if (sortBy === "popular")
+          return (b.ordersCount || 0) - (a.ordersCount || 0);
+        if (sortBy === "price-asc") return a.price - b.price;
+        if (sortBy === "price-desc") return b.price - a.price;
+        if (sortBy === "rating") return b.rating - a.rating;
+        return 0;
+      });
+  }, [products, selectedCategory, searchQuery, sortBy]);
 
   // Handle Add to Cart
   const handleAddToCart = (product: StoreProduct, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
-    addItem({
-      productId: product.id,
-      name: product.name,
-      nameAr: product.nameAr,
-      price: product.originalPrice,
-      salePrice: product.price,
-      image: product.image,
-    }, 1);
+    addItem(
+      {
+        productId: product.id,
+        name: product.name,
+        nameAr: product.nameAr,
+        price: product.originalPrice,
+        salePrice: product.price,
+        image: product.image,
+      },
+      1,
+    );
 
     setLastAddedProduct(product);
     setShowAddedToast(true);
@@ -318,7 +275,9 @@ export default function StorePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#070913] text-white pt-24 pb-20 relative overflow-hidden" dir={isAr ? 'rtl' : 'ltr'}>
+    <div
+      dir={isAr ? "rtl" : "ltr"}
+    >
       {/* Background Ambient Glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-gradient-to-b from-[#FF4D6D]/15 via-[#FF9A3C]/10 to-transparent rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute top-1/3 -right-40 w-[500px] h-[500px] bg-[#FF4D6D]/10 rounded-full blur-[160px] pointer-events-none" />
@@ -332,18 +291,30 @@ export default function StorePage() {
               <Sparkles className="w-3.5 h-3.5 text-white" />
               <span>عروض دي آرو الحصرية</span>
             </span>
-            <span>{isAr ? 'خصومات تصل إلى 50% على القوالب والأنظمة السحابية مع تشغيل فوري وبوابات دفع معتمدة' : 'Up to 50% OFF on Turnkey Cloud Solutions & Templates + Instant Setup'}</span>
+            <span>
+              {isAr
+                ? "خصومات تصل إلى 50% على القوالب والأنظمة السحابية مع تشغيل فوري وبوابات دفع معتمدة"
+                : "Up to 50% OFF on Turnkey Cloud Solutions & Templates + Instant Setup"}
+            </span>
           </div>
           <div className="hidden md:flex items-center gap-4 text-xs font-semibold">
-            <span className="flex items-center gap-1.5"><ShieldCheck className="w-4 h-4 text-white" /> {isAr ? 'دفع آمن 100%' : '100% Secure Checkout'}</span>
-            <span className="flex items-center gap-1.5"><Zap className="w-4 h-4 text-white" /> {isAr ? 'تسليم فوري للأكواد' : 'Instant Delivery'}</span>
-            <span className="flex items-center gap-1.5"><CreditCard className="w-4 h-4 text-white" /> {isAr ? 'تقسيط تابي وتمارا' : 'Tabby & Tamara Ready'}</span>
+            <span className="flex items-center gap-1.5">
+              <ShieldCheck className="w-4 h-4 text-white" />{" "}
+              {isAr ? "دفع آمن 100%" : "100% Secure Checkout"}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Zap className="w-4 h-4 text-white" />{" "}
+              {isAr ? "تسليم فوري للأكواد" : "Instant Delivery"}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <CreditCard className="w-4 h-4 text-white" />{" "}
+              {isAr ? "تقسيط تابي وتمارا" : "Tabby & Tamara Ready"}
+            </span>
           </div>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 relative z-10 pt-8">
-
         {/* E-Commerce Store Hero & Header */}
         <section className="flex flex-col lg:flex-row items-center justify-between gap-8 bg-gradient-to-br from-[#12142B]/95 via-[#171A38]/90 to-[#0A0C1E]/95 border border-[#FF4D6D]/25 rounded-3xl p-6 sm:p-10 shadow-2xl relative overflow-hidden backdrop-blur-xl">
           <div className="absolute top-0 right-0 w-80 h-80 bg-[#FF4D6D]/15 rounded-full blur-3xl pointer-events-none" />
@@ -352,39 +323,54 @@ export default function StorePage() {
           <div className="space-y-4 max-w-2xl text-center lg:text-right relative z-10">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#FF4D6D]/15 to-[#FF9A3C]/15 border border-[#FF4D6D]/30 text-[#FF4D6D] text-xs sm:text-sm font-bold shadow-inner">
               <ShoppingBag className="w-4 h-4 text-[#FF9A3C]" />
-              <span>{isAr ? 'متجر دي آرو للأنظمة الرقمية' : 'D-Arrow Software & Store Systems'}</span>
+              <span>
+                {isAr
+                  ? "متجر دي آرو للأنظمة الرقمية"
+                  : "D-Arrow Software & Store Systems"}
+              </span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white leading-tight">
               {isAr ? (
                 <>
-                  اختر نظامك البرمجي، <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] via-[#FF6F4F] to-[#FF9A3C]">أضفه للسلة</span> وانطلق فوراً
+                  اختر نظامك البرمجي،{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] via-[#FF6F4F] to-[#FF9A3C]">
+                    أضفه للسلة
+                  </span>{" "}
+                  وانطلق فوراً
                 </>
               ) : (
                 <>
-                  Select Your Software System, <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] via-[#FF6F4F] to-[#FF9A3C]">Add to Cart</span> & Launch
+                  Select Your Software System,{" "}
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] via-[#FF6F4F] to-[#FF9A3C]">
+                    Add to Cart
+                  </span>{" "}
+                  & Launch
                 </>
               )}
             </h1>
 
             <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-light">
-              {isAr ? (
-                'تسوّق قوالب المتاجر الإلكترونية الجاهزة، المنصات العقارية، أنظمة الربط المالي، بوتات الذكاء الاصطناعي والاستضافة السحابية فائقة السرعة.'
-              ) : (
-                'Shop ready-to-deploy e-commerce store templates, real estate portals, payment gateways, AI chatbots, and cloud infrastructure with instant delivery.'
-              )}
+              {isAr
+                ? "تسوّق قوالب المتاجر الإلكترونية الجاهزة، المنصات العقارية، أنظمة الربط المالي، بوتات الذكاء الاصطناعي والاستضافة السحابية فائقة السرعة."
+                : "Shop ready-to-deploy e-commerce store templates, real estate portals, payment gateways, AI chatbots, and cloud infrastructure with instant delivery."}
             </p>
 
             {/* Quick Benefits Tags */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-2 text-xs font-semibold text-slate-200">
               <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 shadow-sm">
-                <CreditCard className="w-4 h-4 text-[#FF9A3C]" /> {isAr ? 'دفع مدى وأبل باي وفيزا' : 'Mada & Apple Pay'}
+                <CreditCard className="w-4 h-4 text-[#FF9A3C]" />{" "}
+                {isAr ? "دفع مدى وأبل باي وفيزا" : "Mada & Apple Pay"}
               </span>
               <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 shadow-sm">
-                <ShieldCheck className="w-4 h-4 text-[#FF4D6D]" /> {isAr ? 'تقسيط تابي وتمارا بدون فوائد' : 'Tabby & Tamara 0% Interest'}
+                <ShieldCheck className="w-4 h-4 text-[#FF4D6D]" />{" "}
+                {isAr
+                  ? "تقسيط تابي وتمارا بدون فوائد"
+                  : "Tabby & Tamara 0% Interest"}
               </span>
               <span className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 shadow-sm">
-                <Zap className="w-4 h-4 text-[#FF9A3C]" /> {isAr ? 'تسليم فوري وضمان تشغيل' : 'Instant Setup & SLA'}
+                <Zap className="w-4 h-4 text-[#FF9A3C]" />{" "}
+                {isAr ? "تسليم فوري وضمان تشغيل" : "Instant Setup & SLA"}
               </span>
             </div>
           </div>
@@ -394,21 +380,28 @@ export default function StorePage() {
             <div className="flex items-center justify-between border-b border-white/10 pb-3">
               <div className="flex items-center gap-2">
                 <ShoppingCart className="w-5 h-5 text-[#FF4D6D]" />
-                <span className="font-bold text-sm text-white">{isAr ? 'سلة مشترياتك الحالية' : 'Your Shopping Cart'}</span>
+                <span className="font-bold text-sm text-white">
+                  {isAr ? "سلة مشترياتك الحالية" : "Your Shopping Cart"}
+                </span>
               </div>
               <span className="px-2.5 py-0.5 rounded-full bg-[#FF4D6D]/20 border border-[#FF4D6D]/30 text-[#FF4D6D] text-xs font-bold font-mono">
-                {itemCount} {isAr ? 'عناصر' : 'Items'}
+                {itemCount} {isAr ? "عناصر" : "Items"}
               </span>
             </div>
 
             <div className="space-y-2">
               <div className="flex justify-between text-xs text-slate-300">
-                <span>{isAr ? 'إجمالي المشتريات:' : 'Subtotal:'}</span>
-                <span className="font-bold text-white font-mono">{subtotal.toFixed(2)} {isAr ? 'ر.س' : 'SAR'}</span>
+                <span>{isAr ? "إجمالي المشتريات:" : "Subtotal:"}</span>
+                <span className="font-bold text-white font-mono">
+                  {subtotal.toFixed(2)} {isAr ? "ر.س" : "SAR"}
+                </span>
               </div>
               <div className="flex justify-between text-xs text-[#FF9A3C]">
-                <span>{isAr ? 'التسليم والتفعيل:' : 'Setup & Delivery:'}</span>
-                <span className="font-bold flex items-center gap-1"><Zap className="w-3 h-3" /> {isAr ? 'فوري ومجاني' : 'Instant & Free'}</span>
+                <span>{isAr ? "التسليم والتفعيل:" : "Setup & Delivery:"}</span>
+                <span className="font-bold flex items-center gap-1">
+                  <Zap className="w-3 h-3" />{" "}
+                  {isAr ? "فوري ومجاني" : "Instant & Free"}
+                </span>
               </div>
             </div>
 
@@ -418,7 +411,9 @@ export default function StorePage() {
                 className="w-full py-3 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#FF4D6D]/20 hover:opacity-95 active:scale-[0.98] transition cursor-pointer"
               >
                 <ShoppingCart className="w-4 h-4" />
-                <span>{isAr ? 'عرض السلة وإتمام الدفع' : 'View Cart & Checkout'}</span>
+                <span>
+                  {isAr ? "عرض السلة وإتمام الدفع" : "View Cart & Checkout"}
+                </span>
               </button>
 
               <Link
@@ -426,7 +421,9 @@ export default function StorePage() {
                 className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 hover:text-white font-semibold text-xs flex items-center justify-center gap-1.5 border border-white/10 transition"
               >
                 <CreditCard className="w-3.5 h-3.5 text-[#FF9A3C]" />
-                <span>{isAr ? 'الدفع السريع المباشر' : 'Direct Quick Checkout'}</span>
+                <span>
+                  {isAr ? "الدفع السريع المباشر" : "Direct Quick Checkout"}
+                </span>
                 <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
               </Link>
             </div>
@@ -438,20 +435,26 @@ export default function StorePage() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-[#12142B]/90 border border-white/10 rounded-2xl p-4 backdrop-blur-md">
             {/* Search Input */}
             <div className="relative w-full md:w-96">
-              <Search className={`w-4 h-4 text-slate-400 absolute top-1/2 -translate-y-1/2 ${isAr ? 'right-3.5' : 'left-3.5'}`} />
+              <Search
+                className={`w-4 h-4 text-slate-400 absolute top-1/2 -translate-y-1/2 ${isAr ? "right-3.5" : "left-3.5"}`}
+              />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder={isAr ? 'ابحث عن نظام، قالب، استضافة...' : 'Search system, template, hosting...'}
+                placeholder={
+                  isAr
+                    ? "ابحث عن نظام، قالب، استضافة..."
+                    : "Search system, template, hosting..."
+                }
                 className={`w-full bg-[#090B1B] border border-white/15 focus:border-[#FF4D6D] rounded-xl py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none transition ${
-                  isAr ? 'pr-11 pl-9' : 'pl-11 pr-9'
+                  isAr ? "pr-11 pl-9" : "pl-11 pr-9"
                 }`}
               />
               {searchQuery && (
                 <button
-                  onClick={() => setSearchQuery('')}
-                  className={`absolute top-1/2 -translate-y-1/2 text-slate-400 hover:text-white ${isAr ? 'left-3' : 'right-3'} cursor-pointer`}
+                  onClick={() => setSearchQuery("")}
+                  className={`absolute top-1/2 -translate-y-1/2 text-slate-400 hover:text-white ${isAr ? "left-3" : "right-3"} cursor-pointer`}
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -461,7 +464,9 @@ export default function StorePage() {
             {/* Results count & Sort */}
             <div className="flex items-center justify-between w-full md:w-auto gap-4">
               <span className="text-xs sm:text-sm text-slate-400">
-                {isAr ? `عرض ${filteredProducts.length} نظام برمجي` : `Showing ${filteredProducts.length} systems`}
+                {isAr
+                  ? `عرض ${filteredProducts.length} نظام برمجي`
+                  : `Showing ${filteredProducts.length} systems`}
               </span>
 
               <div className="flex items-center gap-2">
@@ -471,10 +476,18 @@ export default function StorePage() {
                   onChange={(e: any) => setSortBy(e.target.value)}
                   className="bg-[#090B1B] border border-white/15 text-slate-200 text-xs sm:text-sm rounded-xl px-3 py-2 focus:outline-none focus:border-[#FF4D6D] cursor-pointer"
                 >
-                  <option value="popular">{isAr ? 'الأكثر طلباً ومبيعاً' : 'Most Popular'}</option>
-                  <option value="rating">{isAr ? 'الأعلى تقييماً' : 'Highest Rated'}</option>
-                  <option value="price-asc">{isAr ? 'السعر: من الأقل للأعلى' : 'Price: Low to High'}</option>
-                  <option value="price-desc">{isAr ? 'السعر: من الأعلى للأقل' : 'Price: High to Low'}</option>
+                  <option value="popular">
+                    {isAr ? "الأكثر طلباً ومبيعاً" : "Most Popular"}
+                  </option>
+                  <option value="rating">
+                    {isAr ? "الأعلى تقييماً" : "Highest Rated"}
+                  </option>
+                  <option value="price-asc">
+                    {isAr ? "السعر: من الأقل للأعلى" : "Price: Low to High"}
+                  </option>
+                  <option value="price-desc">
+                    {isAr ? "السعر: من الأعلى للأقل" : "Price: High to Low"}
+                  </option>
                 </select>
               </div>
             </div>
@@ -491,8 +504,8 @@ export default function StorePage() {
                   onClick={() => setSelectedCategory(cat.id)}
                   className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 whitespace-nowrap transition-all duration-300 cursor-pointer ${
                     isSelected
-                      ? 'bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white shadow-lg shadow-[#FF4D6D]/25 border border-transparent scale-102'
-                      : 'bg-[#12142B] text-slate-300 border border-white/10 hover:border-[#FF4D6D]/40 hover:text-white'
+                      ? "bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white shadow-lg shadow-[#FF4D6D]/25 border border-transparent scale-102"
+                      : "bg-[#12142B] text-slate-300 border border-white/10 hover:border-[#FF4D6D]/40 hover:text-white"
                   }`}
                 >
                   <Icon className="w-4 h-4 text-[#FF9A3C]" />
@@ -507,22 +520,49 @@ export default function StorePage() {
         <section className="space-y-6">
           {filteredProducts.length === 0 ? (
             <div className="text-center py-16 bg-[#12142B]/50 border border-white/10 rounded-3xl space-y-4">
-              <ShoppingBag className="w-16 h-16 text-slate-500 mx-auto" />
-              <h3 className="text-xl font-bold text-white">{isAr ? 'لا توجد أنظمة مطابقة لبحثك' : 'No systems found'}</h3>
-              <p className="text-slate-400 text-sm">{isAr ? 'جرب البحث بكلمات أخرى أو اختر قسماً مختلفاً' : 'Try searching with different keywords or choose another category'}</p>
-              <button
-                onClick={() => { setSelectedCategory('all'); setSearchQuery(''); }}
-                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white text-sm font-bold cursor-pointer"
-              >
-                {isAr ? 'عرض جميع الأنظمة' : 'View All Systems'}
-              </button>
+              {products.length === 0 ? (
+                <>
+                  <PackageX className="w-16 h-16 text-slate-500 mx-auto" />
+                  <h3 className="text-xl font-bold text-white">
+                    {isAr
+                      ? "لا توجد منتجات متاحة حالياً"
+                      : "No products available"}
+                  </h3>
+                  <p className="text-slate-400 text-sm">
+                    {isAr
+                      ? "لم تتم إضافة أي منتجات بعد، يرجى العودة لاحقاً"
+                      : "No products have been added yet, please check back later"}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <ShoppingBag className="w-16 h-16 text-slate-500 mx-auto" />
+                  <h3 className="text-xl font-bold text-white">
+                    {isAr ? "لا توجد أنظمة مطابقة لبحثك" : "No systems found"}
+                  </h3>
+                  <p className="text-slate-400 text-sm">
+                    {isAr
+                      ? "جرب البحث بكلمات أخرى أو اختر قسماً مختلفاً"
+                      : "Try searching with different keywords or choose another category"}
+                  </p>
+                  <button
+                    onClick={() => {
+                      setSelectedCategory("all");
+                      setSearchQuery("");
+                    }}
+                    className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white text-sm font-bold cursor-pointer"
+                  >
+                    {isAr ? "عرض جميع الأنظمة" : "View All Systems"}
+                  </button>
+                </>
+              )}
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-6 items-stretch">
               {filteredProducts.map((product) => {
                 const savings = product.originalPrice - product.price;
                 const installmentAmount = (product.price / 4).toFixed(2);
-                const inCart = items.some(i => i.productId === product.id);
+                const inCart = items.some((i) => i.productId === product.id);
                 const BadgeIcon = product.badgeIcon || Flame;
 
                 return (
@@ -531,7 +571,10 @@ export default function StorePage() {
                     className="bg-[#0D0F22] hover:bg-[#121530] border border-white/12 hover:border-[#FF4D6D]/80 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl hover:shadow-[#FF4D6D]/20 transition-all duration-300 flex flex-col justify-between group relative backdrop-blur-md"
                   >
                     {/* Media Container with Square-feel aspect */}
-                    <Link href={`/store/${product.slug}`} className="relative aspect-[16/11] w-full overflow-hidden bg-slate-950 border-b border-white/10 block">
+                    <Link
+                      href={`/store/${product.slug}`}
+                      className="relative aspect-[16/11] w-full overflow-hidden bg-slate-950 border-b border-white/10 block"
+                    >
                       <Image
                         src={product.image}
                         alt={isAr ? product.nameAr : product.name}
@@ -543,14 +586,18 @@ export default function StorePage() {
 
                       {/* Top Vector Badge */}
                       {product.badge && (
-                        <div className={`absolute top-2.5 ${isAr ? 'right-2.5' : 'left-2.5'} px-2.5 py-0.5 rounded-full text-[10px] font-bold text-white bg-gradient-to-r ${product.badgeColor || 'from-[#FF4D6D] to-[#FF9A3C]'} shadow-md border border-white/20 flex items-center gap-1 backdrop-blur-md`}>
+                        <div
+                          className={`absolute top-2.5 ${isAr ? "right-2.5" : "left-2.5"} px-2.5 py-0.5 rounded-full text-[10px] font-bold text-white bg-gradient-to-r ${product.badgeColor || "from-[#FF4D6D] to-[#FF9A3C]"} shadow-md border border-white/20 flex items-center gap-1 backdrop-blur-md`}
+                        >
                           <BadgeIcon className="w-3 h-3 text-white" />
                           <span>{product.badge}</span>
                         </div>
                       )}
 
                       {/* Discount Pill */}
-                      <div className={`absolute top-2.5 ${isAr ? 'left-2.5' : 'right-2.5'} px-2 py-0.5 rounded-lg text-[10px] font-extrabold bg-[#FF4D6D] text-white shadow-sm border border-white/20 font-mono`}>
+                      <div
+                        className={`absolute top-2.5 ${isAr ? "left-2.5" : "right-2.5"} px-2 py-0.5 rounded-lg text-[10px] font-extrabold bg-[#FF4D6D] text-white shadow-sm border border-white/20 font-mono`}
+                      >
                         {isAr ? `وفر ${savings} ر.س` : `Save ${savings} SAR`}
                       </div>
 
@@ -558,7 +605,11 @@ export default function StorePage() {
                       {product.demoUrl && (
                         <div className="absolute bottom-2 left-2 right-2 py-1 px-2 rounded-lg bg-black/85 text-white text-[11px] font-semibold backdrop-blur-md border border-white/20 flex items-center justify-center gap-1">
                           <Eye className="w-3 h-3 text-[#FF9A3C]" />
-                          <span>{isAr ? 'معاينة حية وتفاصيل النظام ↗' : 'Live Demo & Specs ↗'}</span>
+                          <span>
+                            {isAr
+                              ? "معاينة حية وتفاصيل النظام ↗"
+                              : "Live Demo & Specs ↗"}
+                          </span>
                         </div>
                       )}
                     </Link>
@@ -569,7 +620,9 @@ export default function StorePage() {
                         {/* Category & Rating */}
                         <div className="flex items-center justify-between text-xs">
                           <span className="font-bold text-[#FF9A3C]">
-                            {isAr ? product.categoryNameAr : product.categoryNameEn}
+                            {isAr
+                              ? product.categoryNameAr
+                              : product.categoryNameEn}
                           </span>
                           <div className="flex items-center gap-1 text-amber-400 font-bold">
                             <Star className="w-3.5 h-3.5 fill-amber-400" />
@@ -587,7 +640,11 @@ export default function StorePage() {
                         {/* 1 Key Highlight Line */}
                         <div className="flex items-center gap-1.5 text-xs text-slate-300">
                           <Check className="w-3.5 h-3.5 text-[#FF4D6D] flex-shrink-0" />
-                          <span className="truncate">{isAr ? product.keyHighlightAr : product.keyHighlightEn}</span>
+                          <span className="truncate">
+                            {isAr
+                              ? product.keyHighlightAr
+                              : product.keyHighlightEn}
+                          </span>
                         </div>
                       </div>
 
@@ -596,14 +653,16 @@ export default function StorePage() {
                         <div className="flex items-baseline justify-between">
                           <div className="flex items-baseline gap-1.5">
                             <span className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] font-mono">
-                              {product.price} {isAr ? 'ر.س' : 'SAR'}
+                              {product.price} {isAr ? "ر.س" : "SAR"}
                             </span>
                             <span className="text-xs text-slate-500 line-through font-mono">
                               {product.originalPrice}
                             </span>
                           </div>
                           <span className="text-xs text-slate-400 font-mono">
-                            {isAr ? `أقساط: ${installmentAmount} ر.س` : `${installmentAmount}/mo`}
+                            {isAr
+                              ? `أقساط: ${installmentAmount} ر.س`
+                              : `${installmentAmount}/mo`}
                           </span>
                         </div>
 
@@ -613,20 +672,30 @@ export default function StorePage() {
                             onClick={(e) => handleAddToCart(product, e)}
                             className={`flex-1 py-2.5 px-3 rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md ${
                               inCart
-                                ? 'bg-[#FF4D6D]/20 border border-[#FF4D6D] text-[#FF9A3C] hover:bg-[#FF4D6D]/30'
-                                : 'bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white hover:opacity-95 active:scale-[0.98] shadow-[#FF4D6D]/20'
+                                ? "bg-[#FF4D6D]/20 border border-[#FF4D6D] text-[#FF9A3C] hover:bg-[#FF4D6D]/30"
+                                : "bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white hover:opacity-95 active:scale-[0.98] shadow-[#FF4D6D]/20"
                             }`}
                           >
                             <ShoppingCart className="w-4 h-4" />
-                            <span>{inCart ? (isAr ? 'بالسلة ✓' : 'In Cart ✓') : (isAr ? 'أضف للسلة' : 'Add to Cart')}</span>
+                            <span>
+                              {inCart
+                                ? isAr
+                                  ? "بالسلة ✓"
+                                  : "In Cart ✓"
+                                : isAr
+                                  ? "أضف للسلة"
+                                  : "Add to Cart"}
+                            </span>
                           </button>
 
                           <Link
                             href={`/store/${product.slug}`}
                             className="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 hover:text-white border border-white/10 font-bold text-xs flex items-center gap-1 transition"
-                            title={isAr ? 'صفحة وتفاصيل المنتج' : 'Product Details'}
+                            title={
+                              isAr ? "صفحة وتفاصيل المنتج" : "Product Details"
+                            }
                           >
-                            <span>{isAr ? 'التفاصيل' : 'Details'}</span>
+                            <span>{isAr ? "التفاصيل" : "Details"}</span>
                             <ArrowUpRight className="w-3.5 h-3.5 text-[#FF9A3C]" />
                           </Link>
                         </div>
@@ -645,32 +714,58 @@ export default function StorePage() {
             <div className="w-10 h-10 rounded-xl bg-[#FF4D6D]/20 border border-[#FF4D6D]/30 flex items-center justify-center text-[#FF4D6D]">
               <CreditCard className="w-5 h-5" />
             </div>
-            <h4 className="font-bold text-white text-sm">{isAr ? 'بوابات دفع سعودية معتمدة' : 'Verified Saudi Payments'}</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">{isAr ? 'دعم كامل لمدى، أبل باي، فيزا، ماستركارد، وتقسيط تابي وتمارا بدون فوائد.' : 'Full support for Mada, Apple Pay, Tamara, Tabby with zero interest.'}</p>
+            <h4 className="font-bold text-white text-sm">
+              {isAr ? "بوابات دفع سعودية معتمدة" : "Verified Saudi Payments"}
+            </h4>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              {isAr
+                ? "دعم كامل لمدى، أبل باي، فيزا، ماستركارد، وتقسيط تابي وتمارا بدون فوائد."
+                : "Full support for Mada, Apple Pay, Tamara, Tabby with zero interest."}
+            </p>
           </div>
 
           <div className="bg-[#12142B]/80 border border-[#FF9A3C]/20 rounded-2xl p-5 space-y-2 backdrop-blur-md shadow-lg">
             <div className="w-10 h-10 rounded-xl bg-[#FF9A3C]/20 border border-[#FF9A3C]/30 flex items-center justify-center text-[#FF9A3C]">
               <Zap className="w-5 h-5" />
             </div>
-            <h4 className="font-bold text-white text-sm">{isAr ? 'تسليم وتشغيل فوري' : 'Instant Setup & Delivery'}</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">{isAr ? 'استلام ملفات المصدر، تراخيص التشغيل، ودليل التثبيت والمساعدة الفنية المباشرة.' : 'Direct access to source files, licenses, deployment docs & support.'}</p>
+            <h4 className="font-bold text-white text-sm">
+              {isAr ? "تسليم وتشغيل فوري" : "Instant Setup & Delivery"}
+            </h4>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              {isAr
+                ? "استلام ملفات المصدر، تراخيص التشغيل، ودليل التثبيت والمساعدة الفنية المباشرة."
+                : "Direct access to source files, licenses, deployment docs & support."}
+            </p>
           </div>
 
           <div className="bg-[#12142B]/80 border border-[#FF4D6D]/20 rounded-2xl p-5 space-y-2 backdrop-blur-md shadow-lg">
             <div className="w-10 h-10 rounded-xl bg-[#FF4D6D]/20 border border-[#FF4D6D]/30 flex items-center justify-center text-[#FF4D6D]">
               <ShieldCheck className="w-5 h-5" />
             </div>
-            <h4 className="font-bold text-white text-sm">{isAr ? 'ضمان الجودة والدعم الفني' : 'Quality SLA & Direct Support'}</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">{isAr ? 'فريق هندسي متخصص لمساعدتك في التخصيص والربط والتشغيل على سيرفراتك.' : 'Dedicated technical team to assist with custom setup and hosting.'}</p>
+            <h4 className="font-bold text-white text-sm">
+              {isAr
+                ? "ضمان الجودة والدعم الفني"
+                : "Quality SLA & Direct Support"}
+            </h4>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              {isAr
+                ? "فريق هندسي متخصص لمساعدتك في التخصيص والربط والتشغيل على سيرفراتك."
+                : "Dedicated technical team to assist with custom setup and hosting."}
+            </p>
           </div>
 
           <div className="bg-[#12142B]/80 border border-[#FF9A3C]/20 rounded-2xl p-5 space-y-2 backdrop-blur-md shadow-lg">
             <div className="w-10 h-10 rounded-xl bg-[#FF9A3C]/20 border border-[#FF9A3C]/30 flex items-center justify-center text-[#FF9A3C]">
               <Lock className="w-5 h-5" />
             </div>
-            <h4 className="font-bold text-white text-sm">{isAr ? 'أمان وتشفير 256-bit' : '256-Bit Financial Encryption'}</h4>
-            <p className="text-xs text-slate-400 leading-relaxed">{isAr ? 'معاملات مالية وبيانات محمية بأعلى معايير الأمن السيبراني المعتمدة.' : 'Bank-grade cybersecurity standards protecting all customer data.'}</p>
+            <h4 className="font-bold text-white text-sm">
+              {isAr ? "أمان وتشفير 256-bit" : "256-Bit Financial Encryption"}
+            </h4>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              {isAr
+                ? "معاملات مالية وبيانات محمية بأعلى معايير الأمن السيبراني المعتمدة."
+                : "Bank-grade cybersecurity standards protecting all customer data."}
+            </p>
           </div>
         </section>
 
@@ -682,19 +777,23 @@ export default function StorePage() {
           <div className="relative z-10 max-w-3xl mx-auto space-y-4">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#FF4D6D]/20 border border-[#FF4D6D]/30 text-[#FF4D6D] text-xs font-bold shadow-inner">
               <MessageCircle className="w-4 h-4 text-[#FF9A3C]" />
-              <span>{isAr ? 'خدمة الاستشارات والتخصيص المباشرة' : 'Custom Builds & Enterprise Support'}</span>
+              <span>
+                {isAr
+                  ? "خدمة الاستشارات والتخصيص المباشرة"
+                  : "Custom Builds & Enterprise Support"}
+              </span>
             </div>
 
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
-              {isAr ? 'هل تحتاج إلى نظام برمجي مخصص أو تعديل خاص لنشاطك التجاري؟' : 'Need a Custom System or Tailored Software for Your Brand?'}
+              {isAr
+                ? "هل تحتاج إلى نظام برمجي مخصص أو تعديل خاص لنشاطك التجاري؟"
+                : "Need a Custom System or Tailored Software for Your Brand?"}
             </h2>
 
             <p className="text-slate-300 text-sm sm:text-base font-light leading-relaxed">
-              {isAr ? (
-                'مهندسونا ومستشارو دي آرو جاهزون لتخصيص القوالب، ربط الأنظمة المحاسبية والـ ERP، أو بناء متجر سحابي مخصص بالكامل لعلامتك التجارية.'
-              ) : (
-                'Our engineers are ready to customize templates, integrate ERP systems, or build tailored digital solutions for your business.'
-              )}
+              {isAr
+                ? "مهندسونا ومستشارو دي آرو جاهزون لتخصيص القوالب، ربط الأنظمة المحاسبية والـ ERP، أو بناء متجر سحابي مخصص بالكامل لعلامتك التجارية."
+                : "Our engineers are ready to customize templates, integrate ERP systems, or build tailored digital solutions for your business."}
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
@@ -705,23 +804,26 @@ export default function StorePage() {
                 className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-black text-sm sm:text-base flex items-center gap-2.5 shadow-lg shadow-[#FF4D6D]/30 hover:scale-105 active:scale-95 transition-all cursor-pointer"
               >
                 <MessageCircle className="w-5 h-5 fill-current" />
-                <span>{isAr ? 'محادثة المستشار عبر الواتساب' : 'Chat with Specialist on WhatsApp'}</span>
+                <span>
+                  {isAr
+                    ? "محادثة المستشار عبر الواتساب"
+                    : "Chat with Specialist on WhatsApp"}
+                </span>
               </a>
 
               <Link
                 href="/contact"
                 className="px-6 py-3.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 hover:text-white font-bold text-sm sm:text-base border border-white/15 transition-all"
               >
-                {isAr ? 'طلب عرض سعر مفصل' : 'Request Custom Quote'}
+                {isAr ? "طلب عرض سعر مفصل" : "Request Custom Quote"}
               </Link>
             </div>
           </div>
         </section>
-
       </div>
 
       {/* Floating Sticky Cart Button */}
-      <div className={`fixed bottom-6 ${isAr ? 'left-6' : 'right-6'} z-40`}>
+      <div className={`fixed bottom-6 ${isAr ? "left-6" : "right-6"} z-40`}>
         <button
           onClick={() => setIsCartDrawerOpen(true)}
           className="px-5 py-3.5 rounded-2xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-bold shadow-2xl shadow-[#FF4D6D]/50 hover:scale-105 active:scale-95 transition-all flex items-center gap-3 border border-white/20 cursor-pointer"
@@ -734,10 +836,12 @@ export default function StorePage() {
               </span>
             )}
           </div>
-          <span className="text-xs sm:text-sm font-extrabold">{isAr ? 'السلة' : 'Cart'}</span>
+          <span className="text-xs sm:text-sm font-extrabold">
+            {isAr ? "السلة" : "Cart"}
+          </span>
           {subtotal > 0 && (
             <span className="bg-black/25 px-2 py-0.5 rounded-lg text-xs font-mono font-bold">
-              {subtotal.toFixed(0)} {isAr ? 'ر.س' : 'SAR'}
+              {subtotal.toFixed(0)} {isAr ? "ر.س" : "SAR"}
             </span>
           )}
         </button>
@@ -746,19 +850,23 @@ export default function StorePage() {
       {/* Slide-out Side Cart Drawer */}
       {isCartDrawerOpen && (
         <div className="fixed inset-0 z-50 flex justify-end">
-          <div 
+          <div
             onClick={() => setIsCartDrawerOpen(false)}
             className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
           />
 
-          <div className={`relative w-full max-w-md bg-[#0D0F24] border-l border-white/15 h-full flex flex-col justify-between shadow-2xl z-10 p-6 overflow-y-auto ${isAr ? 'text-right' : 'text-left'}`}>
+          <div
+            className={`relative w-full max-w-md bg-[#0D0F24] border-l border-white/15 h-full flex flex-col justify-between shadow-2xl z-10 p-6 overflow-y-auto ${isAr ? "text-right" : "text-left"}`}
+          >
             <div>
               <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
                 <div className="flex items-center gap-2.5">
                   <ShoppingCart className="w-5 h-5 text-[#FF4D6D]" />
-                  <h3 className="text-lg font-bold text-white">{isAr ? 'سلة المشتريات' : 'Shopping Cart'}</h3>
+                  <h3 className="text-lg font-bold text-white">
+                    {isAr ? "سلة المشتريات" : "Shopping Cart"}
+                  </h3>
                   <span className="px-2.5 py-0.5 rounded-full bg-[#FF4D6D]/20 text-[#FF4D6D] border border-[#FF4D6D]/30 text-xs font-bold font-mono">
-                    {itemCount} {isAr ? 'عناصر' : 'Items'}
+                    {itemCount} {isAr ? "عناصر" : "Items"}
                   </span>
                 </div>
                 <button
@@ -773,17 +881,30 @@ export default function StorePage() {
               {items.length === 0 ? (
                 <div className="text-center py-16 space-y-4">
                   <ShoppingCart className="w-16 h-16 text-slate-600 mx-auto" />
-                  <h4 className="text-base font-bold text-slate-300">{isAr ? 'سلة المشتريات فارغة' : 'Your cart is empty'}</h4>
-                  <p className="text-xs text-slate-400">{isAr ? 'تصفح باقة القوالب والأنظمة وأضف ما يناسب مشروعك' : 'Explore templates & systems to add items to your cart'}</p>
+                  <h4 className="text-base font-bold text-slate-300">
+                    {isAr ? "سلة المشتريات فارغة" : "Your cart is empty"}
+                  </h4>
+                  <p className="text-xs text-slate-400">
+                    {isAr
+                      ? "تصفح باقة القوالب والأنظمة وأضف ما يناسب مشروعك"
+                      : "Explore templates & systems to add items to your cart"}
+                  </p>
                 </div>
               ) : (
                 <div className="space-y-4 max-h-[55vh] overflow-y-auto pr-1">
                   {items.map((item) => {
                     const unitPrice = item.salePrice || item.price;
                     return (
-                      <div key={item.productId} className="bg-[#141630] border border-white/10 rounded-xl p-3.5 flex items-center gap-3.5">
+                      <div
+                        key={item.productId}
+                        className="bg-[#141630] border border-white/10 rounded-xl p-3.5 flex items-center gap-3.5"
+                      >
                         {item.image ? (
-                          <img src={item.image} alt="" className="w-14 h-14 rounded-lg object-cover flex-shrink-0" />
+                          <img
+                            src={item.image}
+                            alt=""
+                            className="w-14 h-14 rounded-lg object-cover flex-shrink-0"
+                          />
                         ) : (
                           <div className="w-14 h-14 rounded-lg bg-[#FF4D6D]/10 flex items-center justify-center text-[#FF4D6D] flex-shrink-0">
                             <ShoppingBag className="w-6 h-6" />
@@ -791,20 +912,36 @@ export default function StorePage() {
                         )}
 
                         <div className="flex-1 min-w-0">
-                          <h5 className="font-bold text-white text-xs sm:text-sm truncate">{item.nameAr || item.name}</h5>
-                          <span className="text-xs font-black text-[#FF9A3C] font-mono">{unitPrice} {isAr ? 'ر.س' : 'SAR'}</span>
+                          <h5 className="font-bold text-white text-xs sm:text-sm truncate">
+                            {item.nameAr || item.name}
+                          </h5>
+                          <span className="text-xs font-black text-[#FF9A3C] font-mono">
+                            {unitPrice} {isAr ? "ر.س" : "SAR"}
+                          </span>
 
                           <div className="flex items-center gap-2 mt-2">
                             <div className="flex items-center bg-black/40 rounded-lg px-2 py-0.5 border border-white/10">
                               <button
-                                onClick={() => updateQuantity(item.productId, item.quantity - 1)}
+                                onClick={() =>
+                                  updateQuantity(
+                                    item.productId,
+                                    item.quantity - 1,
+                                  )
+                                }
                                 className="text-slate-400 hover:text-white p-0.5 cursor-pointer"
                               >
                                 <Minus className="w-3 h-3" />
                               </button>
-                              <span className="text-xs font-bold text-white px-2 font-mono">{item.quantity}</span>
+                              <span className="text-xs font-bold text-white px-2 font-mono">
+                                {item.quantity}
+                              </span>
                               <button
-                                onClick={() => updateQuantity(item.productId, item.quantity + 1)}
+                                onClick={() =>
+                                  updateQuantity(
+                                    item.productId,
+                                    item.quantity + 1,
+                                  )
+                                }
                                 className="text-slate-400 hover:text-white p-0.5 cursor-pointer"
                               >
                                 <Plus className="w-3 h-3" />
@@ -830,17 +967,22 @@ export default function StorePage() {
               <div className="border-t border-white/10 pt-4 space-y-4">
                 <div className="space-y-1.5 text-xs">
                   <div className="flex justify-between text-slate-300">
-                    <span>{isAr ? 'المجموع الفرعي:' : 'Subtotal:'}</span>
-                    <span className="font-bold text-white font-mono">{subtotal.toFixed(2)} {isAr ? 'ر.س' : 'SAR'}</span>
+                    <span>{isAr ? "المجموع الفرعي:" : "Subtotal:"}</span>
+                    <span className="font-bold text-white font-mono">
+                      {subtotal.toFixed(2)} {isAr ? "ر.س" : "SAR"}
+                    </span>
                   </div>
                   <div className="flex justify-between text-[#FF9A3C]">
-                    <span>{isAr ? 'التسليم والتفعيل:' : 'Deployment:'}</span>
-                    <span className="font-bold flex items-center gap-1"><Zap className="w-3 h-3" /> {isAr ? 'مجاني وسريع' : 'Instant & Free'}</span>
+                    <span>{isAr ? "التسليم والتفعيل:" : "Deployment:"}</span>
+                    <span className="font-bold flex items-center gap-1">
+                      <Zap className="w-3 h-3" />{" "}
+                      {isAr ? "مجاني وسريع" : "Instant & Free"}
+                    </span>
                   </div>
                   <div className="flex justify-between text-base font-extrabold text-white pt-2 border-t border-white/10">
-                    <span>{isAr ? 'الإجمالي النهائي:' : 'Total:'}</span>
+                    <span>{isAr ? "الإجمالي النهائي:" : "Total:"}</span>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] font-mono">
-                      {subtotal.toFixed(2)} {isAr ? 'ر.س' : 'SAR'}
+                      {subtotal.toFixed(2)} {isAr ? "ر.س" : "SAR"}
                     </span>
                   </div>
                 </div>
@@ -852,7 +994,11 @@ export default function StorePage() {
                     className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#FF4D6D]/30 hover:opacity-95 active:scale-[0.98] transition cursor-pointer"
                   >
                     <CreditCard className="w-4 h-4" />
-                    <span>{isAr ? 'متابعة الدفع الآمن (مدى / أبل باي)' : 'Proceed to Checkout (Mada / Apple Pay)'}</span>
+                    <span>
+                      {isAr
+                        ? "متابعة الدفع الآمن (مدى / أبل باي)"
+                        : "Proceed to Checkout (Mada / Apple Pay)"}
+                    </span>
                   </Link>
 
                   <Link
@@ -860,12 +1006,13 @@ export default function StorePage() {
                     onClick={() => setIsCartDrawerOpen(false)}
                     className="w-full py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 font-semibold text-xs flex items-center justify-center gap-1 border border-white/10 transition"
                   >
-                    <span>{isAr ? 'عرض صفحة السلة الكاملة' : 'View Full Cart Page'}</span>
+                    <span>
+                      {isAr ? "عرض صفحة السلة الكاملة" : "View Full Cart Page"}
+                    </span>
                   </Link>
                 </div>
               </div>
             )}
-
           </div>
         </div>
       )}
@@ -873,15 +1020,17 @@ export default function StorePage() {
       {/* Quick View Product Modal */}
       {quickViewProduct && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <div 
+          <div
             onClick={() => setQuickViewProduct(null)}
             className="absolute inset-0 bg-black/85 backdrop-blur-md"
           />
 
-          <div className={`relative w-full max-w-2xl bg-[#0F1128] border border-[#FF4D6D]/30 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 max-h-[90vh] overflow-y-auto ${isAr ? 'text-right' : 'text-left'}`}>
+          <div
+            className={`relative w-full max-w-2xl bg-[#0F1128] border border-[#FF4D6D]/30 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 max-h-[90vh] overflow-y-auto ${isAr ? "text-right" : "text-left"}`}
+          >
             <button
               onClick={() => setQuickViewProduct(null)}
-              className={`absolute top-4 ${isAr ? 'left-4' : 'right-4'} p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition cursor-pointer`}
+              className={`absolute top-4 ${isAr ? "left-4" : "right-4"} p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition cursor-pointer`}
             >
               <X className="w-5 h-5" />
             </button>
@@ -896,7 +1045,9 @@ export default function StorePage() {
                   unoptimized
                 />
                 {quickViewProduct.badge && (
-                  <span className={`absolute top-3 ${isAr ? 'right-3' : 'left-3'} px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${quickViewProduct.badgeColor || 'from-[#FF4D6D] to-[#FF9A3C]'} shadow-lg border border-white/20 flex items-center gap-1.5`}>
+                  <span
+                    className={`absolute top-3 ${isAr ? "right-3" : "left-3"} px-3 py-1 rounded-full text-xs font-bold text-white bg-gradient-to-r ${quickViewProduct.badgeColor || "from-[#FF4D6D] to-[#FF9A3C]"} shadow-lg border border-white/20 flex items-center gap-1.5`}
+                  >
                     <Sparkles className="w-3.5 h-3.5" />
                     <span>{quickViewProduct.badge}</span>
                   </span>
@@ -906,12 +1057,17 @@ export default function StorePage() {
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold text-[#FF9A3C]">
-                    {isAr ? quickViewProduct.categoryNameAr : quickViewProduct.categoryNameEn}
+                    {isAr
+                      ? quickViewProduct.categoryNameAr
+                      : quickViewProduct.categoryNameEn}
                   </span>
                   <div className="flex items-center gap-1 text-amber-400 font-bold text-xs">
                     <Star className="w-4 h-4 fill-amber-400" />
                     <span>{quickViewProduct.rating}</span>
-                    <span className="text-slate-400">({quickViewProduct.reviewsCount} {isAr ? 'تقييم' : 'reviews'})</span>
+                    <span className="text-slate-400">
+                      ({quickViewProduct.reviewsCount}{" "}
+                      {isAr ? "تقييم" : "reviews"})
+                    </span>
                   </div>
                 </div>
 
@@ -921,29 +1077,43 @@ export default function StorePage() {
 
                 <div className="flex items-baseline gap-3 pt-1">
                   <span className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] font-mono">
-                    {quickViewProduct.price} {isAr ? 'ر.س' : 'SAR'}
+                    {quickViewProduct.price} {isAr ? "ر.س" : "SAR"}
                   </span>
                   <span className="text-sm text-slate-500 line-through font-mono">
-                    {quickViewProduct.originalPrice} {isAr ? 'ر.س' : 'SAR'}
+                    {quickViewProduct.originalPrice} {isAr ? "ر.س" : "SAR"}
                   </span>
                   <span className="text-xs bg-[#FF4D6D]/20 text-[#FF4D6D] font-bold px-2.5 py-0.5 rounded-lg border border-[#FF4D6D]/30">
-                    {isAr ? `خصم ${(100 - (quickViewProduct.price / quickViewProduct.originalPrice * 100)).toFixed(0)}%` : 'Special Discount'}
+                    {isAr
+                      ? `خصم ${(100 - (quickViewProduct.price / quickViewProduct.originalPrice) * 100).toFixed(0)}%`
+                      : "Special Discount"}
                   </span>
                 </div>
               </div>
 
               <p className="text-sm text-slate-300 leading-relaxed font-light">
-                {isAr ? quickViewProduct.descriptionAr : quickViewProduct.descriptionEn}
+                {isAr
+                  ? quickViewProduct.descriptionAr
+                  : quickViewProduct.descriptionEn}
               </p>
 
               <div className="space-y-2 bg-[#141630] border border-white/10 rounded-2xl p-4">
                 <h4 className="text-xs font-bold text-white flex items-center gap-2">
                   <Award className="w-4 h-4 text-[#FF9A3C]" />
-                  <span>{isAr ? 'المميزات والخصائص المرفقة مع هذا النظام:' : 'Included Features & Capabilities:'}</span>
+                  <span>
+                    {isAr
+                      ? "المميزات والخصائص المرفقة مع هذا النظام:"
+                      : "Included Features & Capabilities:"}
+                  </span>
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-                  {(isAr ? quickViewProduct.featuresAr : quickViewProduct.featuresEn).map((feat, i) => (
-                    <div key={i} className="flex items-start gap-2 text-xs text-slate-300">
+                  {(isAr
+                    ? quickViewProduct.featuresAr
+                    : quickViewProduct.featuresEn
+                  ).map((feat, i) => (
+                    <div
+                      key={i}
+                      className="flex items-start gap-2 text-xs text-slate-300"
+                    >
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#FF4D6D] flex-shrink-0 mt-0.5" />
                       <span>{feat}</span>
                     </div>
@@ -961,7 +1131,11 @@ export default function StorePage() {
                   className="w-full sm:flex-1 py-3.5 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white font-black text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#FF4D6D]/30 hover:opacity-95 active:scale-[0.98] transition cursor-pointer"
                 >
                   <ShoppingCart className="w-4 h-4" />
-                  <span>{isAr ? 'إضافة للسلة وإتمام الشراء' : 'Add to Cart & Checkout'}</span>
+                  <span>
+                    {isAr
+                      ? "إضافة للسلة وإتمام الشراء"
+                      : "Add to Cart & Checkout"}
+                  </span>
                 </button>
 
                 {quickViewProduct.demoUrl && (
@@ -971,7 +1145,7 @@ export default function StorePage() {
                     rel="noopener noreferrer"
                     className="w-full sm:w-auto py-3.5 px-6 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold text-sm flex items-center justify-center gap-2 border border-white/15 transition cursor-pointer"
                   >
-                    <span>{isAr ? 'المعاينة المباشرة' : 'Live Demo'}</span>
+                    <span>{isAr ? "المعاينة المباشرة" : "Live Demo"}</span>
                     <ArrowUpRight className="w-4 h-4" />
                   </a>
                 )}
@@ -983,25 +1157,32 @@ export default function StorePage() {
 
       {/* Added to Cart Floating Toast */}
       {showAddedToast && lastAddedProduct && (
-        <div className={`fixed top-24 ${isAr ? 'left-6' : 'right-6'} z-50 animate-bounce`}>
+        <div
+          className={`fixed top-24 ${isAr ? "left-6" : "right-6"} z-50 animate-bounce`}
+        >
           <div className="bg-[#12142B] border border-[#FF4D6D]/50 rounded-2xl p-4 shadow-2xl flex items-center gap-3 text-white max-w-sm backdrop-blur-xl">
             <div className="w-10 h-10 rounded-xl bg-[#FF4D6D]/20 text-[#FF4D6D] border border-[#FF4D6D]/40 flex items-center justify-center flex-shrink-0">
               <Check className="w-5 h-5" />
             </div>
             <div className="flex-1 min-w-0">
-              <h5 className="font-bold text-xs truncate">{isAr ? lastAddedProduct.nameAr : lastAddedProduct.name}</h5>
-              <p className="text-[11px] text-[#FF9A3C] font-semibold">{isAr ? 'تمت الإضافة إلى السلة بنجاح!' : 'Added to cart successfully!'}</p>
+              <h5 className="font-bold text-xs truncate">
+                {isAr ? lastAddedProduct.nameAr : lastAddedProduct.name}
+              </h5>
+              <p className="text-[11px] text-[#FF9A3C] font-semibold">
+                {isAr
+                  ? "تمت الإضافة إلى السلة بنجاح!"
+                  : "Added to cart successfully!"}
+              </p>
             </div>
             <button
               onClick={() => setIsCartDrawerOpen(true)}
               className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white text-[11px] font-extrabold whitespace-nowrap shadow-md cursor-pointer"
             >
-              {isAr ? 'عرض السلة' : 'View Cart'}
+              {isAr ? "عرض السلة" : "View Cart"}
             </button>
           </div>
         </div>
       )}
-
     </div>
   );
 }

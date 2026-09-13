@@ -1,6 +1,5 @@
 import { MetadataRoute } from 'next';
 import prisma from '@/lib/prisma';
-import { FALLBACK_POSTS } from '@/lib/blog/fallback-posts';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://d-arrow.com';
@@ -39,26 +38,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }
     });
   } catch (e) {
-    console.error('Error fetching blog posts for sitemap, using FALLBACK_POSTS');
-    FALLBACK_POSTS.forEach((post) => {
-      routes.push({
-        url: `${baseUrl}/blog/${post.slug || post.id}`,
-        lastModified: lastModified,
-        changeFrequency: 'weekly',
-        priority: 0.8,
-      });
-    });
+    console.error('Error fetching blog posts for sitemap:', e);
   }
 
   try {
     const seoEntries = await prisma.seoMeta.findMany({
       where: { NOT: { robots: { contains: 'noindex' } } }
     });
-    
+
     seoEntries.forEach(entry => {
       // Avoid duplication of the root URL from SeoMeta
       if (entry.slug === '' || entry.slug === '/') return;
-      
+
       const fullUrl = encodeURI(`${baseUrl}${entry.slug.startsWith('/') ? entry.slug : '/' + entry.slug}`);
       const exists = routes.find(r => r.url === fullUrl);
       if (!exists) {
