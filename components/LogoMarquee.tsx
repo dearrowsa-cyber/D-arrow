@@ -13,7 +13,7 @@ const LogoMarquee = () => {
   ];
 
   return (
-    <div style={{ width: '100%', overflow: 'hidden', padding: '2.5rem 0', position: 'relative' }}>
+    <div style={{ width: '100%', overflow: 'hidden', padding: '1rem 0', position: 'relative' }}>
       {/* Left fade */}
       <div style={{
         position: 'absolute', top: 0, bottom: 0, left: 0, width: '80px',
@@ -60,7 +60,7 @@ const LogoMarquee = () => {
         }
       `}</style>
 
-      <div dir="ltr" style={{ overflow: 'hidden' }}>
+      <div dir="ltr" style={{ overflow: 'hidden', padding: '1.5rem 0' }}>
         <div className="logo-scroll-track">
           {/* Set 1 - original logos */}
           {logos.map((logo, i) => (

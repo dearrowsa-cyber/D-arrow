@@ -72,23 +72,26 @@ const Portfolio = () => {
                 <Link href={`/provisions/${project.slug}`} className="block h-full relative group">
                   <div className="flex flex-col h-full rounded-2xl overflow-hidden bg-[#12142b] border border-white/[0.06] transition-all duration-500 group-hover:-translate-y-1.5 group-hover:shadow-[0_16px_48px_rgba(255,77,109,0.12)] group-hover:border-brand-pink/20">
                     
-                    {/* Image Area */}
-                    <div className="relative aspect-[4/3] bg-[#0a0c1e] overflow-hidden flex items-center justify-center p-3">
+                    {/* Image Area — uniform aspect + object-cover for identical size on every card */}
+                    <div className="relative aspect-[4/3] w-full bg-[#0a0c1e] overflow-hidden">
                       <Image 
                         src={project.imageUrl} 
                         alt={project.title[lang]} 
-                        width={600} 
-                        height={450} 
-                        className="object-contain w-full h-full rounded-lg transition-transform duration-700 group-hover:scale-[1.03]" 
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" 
                         priority={i < 6}
                         placeholder="blur" 
                         blurDataURL={DARK_BLUR} 
                       />
                       
-                      {/* Hover overlay with arrow */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none flex items-end justify-end p-4">
-                        <span className="w-9 h-9 rounded-full bg-white/90 backdrop-blur flex items-center justify-center shadow-lg translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                          <ArrowUpRight className="w-4 h-4 text-brand-pink" />
+                      {/* Hover overlay with arrow — bulletproof brand gradient bubble */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none flex items-end justify-end p-4">
+                        <span
+                          className="isolate flex-shrink-0 w-9 h-9 rounded-full flex items-center justify-center bg-[#FF4D6D] bg-gradient-to-br from-[#FF4D6D] to-[#FF9A3C] ring-1 ring-white/30 shadow-[0_8px_24px_rgba(255,77,109,0.45)] translate-y-2 group-hover:translate-y-0 transition-transform duration-300"
+                          style={{ backgroundImage: 'linear-gradient(135deg, #FF4D6D 0%, #FF9A3C 100%)' }}
+                        >
+                          <ArrowUpRight className="w-4 h-4 text-white" strokeWidth={2.5} />
                         </span>
                       </div>
                     </div>

@@ -30,7 +30,6 @@ async function getPosts(): Promise<any[]> {
 
 export default async function BlogPage() {
   const posts = await getPosts();
-  console.log(posts)
   return (
     <Suspense
       fallback={

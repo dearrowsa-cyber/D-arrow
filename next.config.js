@@ -1,17 +1,19 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  
+
+  reactCompiler: true,
+
   productionBrowserSourceMaps: false,
   compress: true,
   poweredByHeader: false,
+
   typescript: {
     ignoreBuildErrors: true,
   },
 
-  // Mark prisma as external package so Next.js doesn't try to bundle/hash it with local path dependencies
   serverExternalPackages: ['@prisma/client', 'prisma'],
-  
+
   async redirects() {
     return [
       {
@@ -37,9 +39,10 @@ const nextConfig = {
       },
     ];
   },
-  
+
   images: {
     unoptimized: true,
+
     remotePatterns: [
       {
         protocol: 'https',
@@ -66,21 +69,30 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+
     formats: ['image/avif', 'image/webp'],
     dangerouslyAllowSVG: true,
   },
-  
+
   headers: async () => [
     {
       source: '/:path*',
       headers: [
-        { key: 'Cache-Control', value: 'no-cache, no-store, must-revalidate' },
-        { key: 'Pragma', value: 'no-cache' },
-        { key: 'Expires', value: '0' },
+        {
+          key: 'Cache-Control',
+          value: 'no-cache, no-store, must-revalidate',
+        },
+        {
+          key: 'Pragma',
+          value: 'no-cache',
+        },
+        {
+          key: 'Expires',
+          value: '0',
+        },
       ],
     },
   ],
-  
 };
 
 module.exports = nextConfig;

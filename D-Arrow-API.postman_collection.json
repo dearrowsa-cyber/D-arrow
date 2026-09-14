@@ -1,0 +1,1007 @@
+{
+  "info": {
+    "name": "D-Arrow API",
+    "description": "Postman collection for the D-Arrow platform API (Next.js). Primary consumer: mobile app.\n\nBase URL variables:\n  - {{baseUrl}}  = Production https://www.d-arrow.com  (default)\n  - {{localUrl}} = Local dev http://localhost:3000\nSwitch to {{localUrl}} when testing against a local server.\n\nAdmin-only endpoints require a JWT token:\n  1. Call POST /api/admin/auth with the admin password.\n  2. The response contains a `token`.\n  3. Save it in the `adminToken` collection variable (or run the login request and copy it).\n\nAll JSON responses follow: { \"success\": true|false, ...payload } except the email-based endpoints (contact / pricing / chat-log) which return { \"ok\": true }.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": null,
+  "event": [],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://www.d-arrow.com",
+      "type": "string"
+    },
+    {
+      "key": "localUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Store",
+      "item": [
+        {
+          "name": "Products",
+          "item": [
+            {
+              "name": "List Products",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/products?status=published&featured=true",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "products"],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "published",
+                      "description": "Optional filter: published | draft | archived"
+                    },
+                    {
+                      "key": "category",
+                      "value": "",
+                      "description": "Optional filter by category slug/name",
+                      "disabled": true
+                    },
+                    {
+                      "key": "featured",
+                      "value": "true",
+                      "description": "Optional filter: true returns featured only"
+                    }
+                  ]
+                },
+                "description": "Public. Returns all products with approved reviews and order counts.\nResponse: { \"success\": true, \"products\": [...], \"count\": n }"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Product by ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/products/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "products", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "REPLACE_WITH_PRODUCT_ID",
+                      "description": "Product UUID"
+                    }
+                  ]
+                },
+                "description": "Public. Single product with approved reviews.\nResponse: { \"success\": true, \"product\": {...} }"
+              },
+              "response": []
+            },
+            {
+              "name": "Create Product",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Premium SEO Package\",\n    \"nameAr\": \"باقة السيو الاحترافية\",\n    \"description\": \"Full SEO optimization for 90 days\",\n    \"descriptionAr\": \"تحسين شامل لمحركات البحث لمدة 90 يوم\",\n    \"price\": 3500,\n    \"salePrice\": 2999,\n    \"currency\": \"SAR\",\n    \"images\": [\"https://www.d-arrow.com/uploads/example.jpg\"],\n    \"category\": \"SEO\",\n    \"categoryAr\": \"سيو\",\n    \"type\": \"digital\",\n    \"downloadUrl\": \"https://www.d-arrow.com/uploads/guide.pdf\",\n    \"demoUrl\": null,\n    \"features\": [\"Keyword research\", \"On-page audit\"],\n    \"featuresAr\": [\"بحث الكلمات المفتاحية\", \"تدقيق داخلي\"],\n    \"status\": \"published\",\n    \"featured\": true\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/products",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "products"]
+                },
+                "description": "Admin. Required: name or nameAr, and price. Slug is auto-generated from name if omitted."
+              },
+              "response": []
+            },
+            {
+              "name": "Update Product",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Premium SEO Package\",\n    \"price\": 3200,\n    \"salePrice\": 2799,\n    \"featured\": true,\n    \"status\": \"published\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/products/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "products", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "REPLACE_WITH_PRODUCT_ID"
+                    }
+                  ]
+                },
+                "description": "Admin. Send only the fields you want to change. id, createdAt, updatedAt and relations are ignored."
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Product",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/products/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "products", ":id"],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "value": "REPLACE_WITH_PRODUCT_ID"
+                    }
+                  ]
+                },
+                "description": "Admin. Deletes a product."
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Orders",
+          "item": [
+            {
+              "name": "List Orders",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/orders",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "orders"]
+                },
+                "description": "Admin. Returns all orders with their items.\nResponse: { \"success\": true, \"orders\": [...], \"count\": n }"
+              },
+              "response": []
+            },
+            {
+              "name": "Create Order / Checkout",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"customerName\": \"Ahmed Alsaudi\",\n    \"customerEmail\": \"ahmed@example.com\",\n    \"customerPhone\": \"+966500000000\",\n    \"items\": [\n        {\n            \"productId\": \"REPLACE_WITH_PRODUCT_ID\",\n            \"quantity\": 1\n        }\n    ],\n    \"couponCode\": \"DISCOUNT10\",\n    \"paymentMethod\": \"bank_transfer\",\n    \"notes\": \"Deliver credentials by email\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/orders",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "orders"]
+                },
+                "description": "Public. Required: customerName, customerEmail, items[].\nCreates the order (paymentStatus: pending), sends a WhatsApp notification and a confirmation email.\npaymentMethod options: bank_transfer | card | tabby | stripe\nResponse: { \"success\": true, \"message\": \"تم إنشاء الطلب بنجاح\", \"order\": {...} }"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Order Status",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": \"REPLACE_WITH_ORDER_ID\",\n    \"status\": \"processing\",\n    \"paymentStatus\": \"paid\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/orders",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "orders"]
+                },
+                "description": "Admin. Update order status/paymentStatus. status options: pending | processing | completed | cancelled | delivered"
+              },
+              "response": []
+            },
+            {
+              "name": "Track Order",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/orders/track?orderNumber=DA-01001&email=ahmed%40example.com",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "orders", "track"],
+                  "query": [
+                    {
+                      "key": "orderNumber",
+                      "value": "DA-01001"
+                    },
+                    {
+                      "key": "email",
+                      "value": "ahmed@example.com"
+                    }
+                  ]
+                },
+                "description": "Public. Track an order using its number + customer email.\nOrder notes are hidden until the order status is 'completed'.\nResponse: { \"success\": true, \"order\": {...} }"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Reviews",
+          "item": [
+            {
+              "name": "List Reviews",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/reviews?productId=REPLACE_WITH_PRODUCT_ID",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "reviews"],
+                  "query": [
+                    {
+                      "key": "productId",
+                      "value": "REPLACE_WITH_PRODUCT_ID",
+                      "description": "Optional. Filter by product."
+                    },
+                    {
+                      "key": "all",
+                      "value": "",
+                      "description": "Admin flag. When set, returns unapproved reviews too.",
+                      "disabled": true
+                    }
+                  ]
+                },
+                "description": "Public. Returns approved reviews only (unless ?all=true is set by admin)."
+              },
+              "response": []
+            },
+            {
+              "name": "Submit Review",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"productId\": \"REPLACE_WITH_PRODUCT_ID\",\n    \"customerName\": \"Sara Ahmed\",\n    \"customerEmail\": \"sara@example.com\",\n    \"rating\": 5,\n    \"comment\": \"Amazing service and fast delivery\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/reviews",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "reviews"]
+                },
+                "description": "Public. Required: productId, customerName, rating (1-5).\nReviews are created with approved=false and shown only after admin approval."
+              },
+              "response": []
+            },
+            {
+              "name": "Approve / Reject Review",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": \"REPLACE_WITH_REVIEW_ID\",\n    \"approved\": true\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/reviews",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "reviews"]
+                },
+                "description": "Admin. Approve (true) or reject (false) a review."
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Review",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/reviews?id=REPLACE_WITH_REVIEW_ID",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "reviews"],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "REPLACE_WITH_REVIEW_ID"
+                    }
+                  ]
+                },
+                "description": "Admin. Deletes a review by id query param."
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Coupons",
+          "item": [
+            {
+              "name": "List Coupons",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/coupons",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "coupons"]
+                },
+                "description": "Admin. Returns all coupons."
+              },
+              "response": []
+            },
+            {
+              "name": "Create Coupon",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"code\": \"DISCOUNT10\",\n    \"type\": \"percentage\",\n    \"value\": 10,\n    \"minOrder\": 500,\n    \"maxUses\": 100,\n    \"expiresAt\": \"2027-01-01T00:00:00.000Z\",\n    \"active\": true\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/coupons",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "coupons"]
+                },
+                "description": "Admin. Required: code, value. type: percentage | fixed"
+              },
+              "response": []
+            },
+            {
+              "name": "Update Coupon",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": \"REPLACE_WITH_COUPON_ID\",\n    \"value\": 15,\n    \"maxUses\": 200,\n    \"active\": true\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/coupons",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "coupons"]
+                },
+                "description": "Admin. Send only fields to update. id is required."
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Coupon",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/coupons?id=REPLACE_WITH_COUPON_ID",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "coupons"],
+                  "query": [
+                    {
+                      "key": "id",
+                      "value": "REPLACE_WITH_COUPON_ID"
+                    }
+                  ]
+                },
+                "description": "Admin. Deletes a coupon by id query param."
+              },
+              "response": []
+            },
+            {
+              "name": "Validate Coupon",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"code\": \"DISCOUNT10\",\n    \"orderTotal\": 500\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/coupons/validate",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "coupons", "validate"]
+                },
+                "description": "Public. Validate + compute discount for a coupon.\nResponse: { \"success\": true, \"coupon\": { code, type, value, discount } }"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Checkout (Payments)",
+          "item": [
+            {
+              "name": "Stripe Checkout (redirect)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/checkout/stripe?orderId=REPLACE_WITH_ORDER_ID",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "checkout", "stripe"],
+                  "query": [
+                    {
+                      "key": "orderId",
+                      "value": "REPLACE_WITH_ORDER_ID"
+                    }
+                  ]
+                },
+                "description": "Public. Creates a Stripe Checkout Session for an existing order and redirects the caller to Stripe's hosted payment page. Requires STRIPE_SECRET_KEY on the server. Returns a 307 redirect (follow it manually in Postman to inspect)."
+              },
+              "response": []
+            },
+            {
+              "name": "Payment Webhook (n8n / Moyasar / PayTabs)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"orderId\": \"REPLACE_WITH_ORDER_ID\",\n    \"status\": \"paid\",\n    \"transactionId\": \"MOYASAR-TRANS-123\",\n    \"paymentMethod\": \"moyasar\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/store/checkout/webhook",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "store", "checkout", "webhook"]
+                },
+                "description": "Server-to-server. Used by payment gateways (n8n, Moyasar, PayTabs) to mark an order as paid. status='paid' sets paymentStatus to 'paid'."
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Chat & WhatsApp",
+      "item": [
+        {
+          "name": "AI Chatbot",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"message\": \"كم سعر باقة النمو؟\",\n    \"language\": \"ar\",\n    \"history\": []\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/chat",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "chat"]
+            },
+            "description": "Public. D-Arrow sales chatbot. language: 'ar' or 'en'. history is an array of { user, bot } turns (last 3 used).\nResponse: { \"success\": true, \"reply\": \"...\", \"language\": \"ar\", \"source\": \"...\" }"
+          },
+          "response": []
+        },
+        {
+          "name": "Log Chat Conversation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"messages\": [\n        {\n            \"user\": \"مرحبا, كم سعر الباقة الأساسية؟\",\n            \"bot\": \"يا هلا بك! باقة الأساس بـ 3,500 ريال شهرياً.\"\n        }\n    ],\n    \"language\": \"ar\",\n    \"sessionId\": \"mobile-app-session-001\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/chat-log",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "chat-log"]
+            },
+            "description": "Public/internal. Sends a conversation transcript to the team by email. Requires at least one message with a non-empty user text.\nResponse: { \"ok\": true, \"logged\": \"email\" | \"console\" | \"error\" }"
+          },
+          "response": []
+        },
+        {
+          "name": "WhatsApp Webhook (verify)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/whatsapp",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "whatsapp"]
+            },
+            "description": "Webhook health-check / verification for the WAHA WhatsApp server. Response: { \"status\": \"ok\", \"webhook\": \"whatsapp\" }"
+          },
+          "response": []
+        },
+        {
+          "name": "WhatsApp Webhook (incoming message)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"event\": \"message\",\n    \"payload\": {\n        \"from\": \"966500000000@c.us\",\n        \"body\": \"وش الخدمات اللي عندكم؟\",\n        \"fromMe\": false\n    }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/whatsapp",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "whatsapp"]
+            },
+            "description": "Webhook endpoint called by the WAHA server when a customer sends a WhatsApp message. The bot replies via WAHA sendText and logs the conversation. Not normally called by the mobile app."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Blog",
+      "item": [
+        {
+          "name": "List Blog Posts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/blog/posts",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "blog", "posts"]
+            },
+            "description": "Public. Returns published posts (newest first) with tags parsed to an array.\nResponse: { \"success\": true, \"source\": \"database\", \"posts\": [...], \"count\": n }"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Blog Post",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"Top 10 SEO Tips for 2026\",\n    \"titleAr\": \"أفضل 10 نصائح للسيو في 2026\",\n    \"slug\": \"top-10-seo-tips-2026\",\n    \"content\": \"Full article content in English...\",\n    \"contentAr\": \"محتوى المقال كاملاً بالعربي...\",\n    \"excerpt\": \"Short summary\",\n    \"excerptAr\": \"ملخص قصير\",\n    \"author\": \"D-Arrow\",\n    \"category\": \"Digital Marketing\",\n    \"categoryAr\": \"التسويق الرقمي\",\n    \"date\": \"2026-09-13\",\n    \"readTime\": 5,\n    \"imageUrl\": \"https://www.d-arrow.com/uploads/article.jpg\",\n    \"tags\": [\"SEO\", \"Marketing\"],\n    \"status\": \"published\",\n    \"isGated\": false,\n    \"ctaType\": \"default\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/blog/posts",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "blog", "posts"]
+            },
+            "description": "Authorized. Required: title or titleAr AND content or contentAr. Slug must be unique (otherwise 409)."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Blog Post",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"id\": \"REPLACE_WITH_POST_ID\",\n    \"title\": \"Top 10 SEO Tips for 2026 (Updated)\",\n    \"status\": \"published\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/blog/posts",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "blog", "posts"]
+            },
+            "description": "Authorized. Send only fields to update. id is required."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Blog Post",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/blog/posts?id=REPLACE_WITH_POST_ID",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "blog", "posts"],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "REPLACE_WITH_POST_ID"
+                }
+              ]
+            },
+            "description": "Authorized. Deletes a blog post by id query param."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Contact & Leads",
+      "item": [
+        {
+          "name": "Contact Form",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Khaled Ali\",\n    \"email\": \"khaled@example.com\",\n    \"phone\": \"+966500000000\",\n    \"company\": \"Example Co\",\n    \"service\": \"SEO Optimization\",\n    \"message\": \"We need help ranking higher on Google.\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/contact",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "contact"]
+            },
+            "description": "Public. Sends the contact inquiry to the team by email.\nResponse: { \"ok\": true } (or { \"ok\": true, \"preview\": \"...\" } when SMTP is not configured)."
+          },
+          "response": []
+        },
+        {
+          "name": "Pricing Inquiry (single package)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Khaled Ali\",\n    \"email\": \"khaled@example.com\",\n    \"phone\": \"+966500000000\",\n    \"company\": \"Example Co\",\n    \"selectedPackage\": \"Growth Plan\",\n    \"budget\": \"7,500 SAR\",\n    \"timeline\": \"6 months\",\n    \"additionalInfo\": \"We want to grow our Instagram audience.\",\n    \"isCustomServicesInquiry\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/pricing",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pricing"]
+            },
+            "description": "Public. Sends a pricing/package inquiry email.\nResponse: { \"ok\": true }."
+          },
+          "response": []
+        },
+        {
+          "name": "Pricing Inquiry (custom services)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Sara Nasser\",\n    \"email\": \"sara@example.com\",\n    \"phone\": \"+966500000000\",\n    \"company\": \"Example Co\",\n    \"selectedServices\": [\n        {\n            \"id\": \"seo\",\n            \"label\": \"SEO Optimization\",\n            \"price\": 3500\n        },\n        {\n            \"id\": \"social\",\n            \"label\": \"Social Media Management\",\n            \"price\": 4500\n        }\n    ],\n    \"budget\": \"10,000 SAR\",\n    \"timeline\": \"3 months\",\n    \"additionalInfo\": \"Custom package for a retail brand\",\n    \"totalAmount\": 8000,\n    \"isCustomServicesInquiry\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/pricing",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "pricing"]
+            },
+            "description": "Public. When isCustomServicesInquiry=true and selectedServices is non-empty, sends a custom-services inquiry email with a total.\nResponse: { \"ok\": true }."
+          },
+          "response": []
+        },
+        {
+          "name": "Capture Lead",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"lead@example.com\",\n    \"name\": \"Lead Name\",\n    \"source\": \"mobile-app\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/leads/capture",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "leads", "capture"]
+            },
+            "description": "Public. Required: email. Stores a captured lead in the database.\nResponse: { \"success\": true, \"message\": \"Lead captured successfully\", \"leadId\": \"...\" }"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Real Estate (Demo)",
+      "item": [
+        {
+          "name": "Submit Property Inquiry",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"Fahad Alotaibi\",\n    \"phone\": \"+966500000000\",\n    \"email\": \"fahad@example.com\",\n    \"message\": \"I want to schedule a viewing\",\n    \"propertyId\": \"PROP-001\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/demo/real-estate/inquiry",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "demo", "real-estate", "inquiry"]
+            },
+            "description": "Public. Required: name, phone. Stores a property viewing request. In demo mode it always returns success.\nResponse: { \"success\": true, \"id\": \"...\" } or { \"success\": true, \"demo\": true }"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Files & Uploads",
+      "item": [
+        {
+          "name": "Serve Uploaded File",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/uploads/:filename",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "uploads", ":filename"],
+              "variable": [
+                {
+                  "key": "filename",
+                  "value": "1740000000000-abc123.png",
+                  "description": "File name returned by the upload endpoint"
+                }
+              ]
+            },
+            "description": "Public/read-only. Streams an image from public/uploads (jpg, png, webp, gif, svg). 404 if missing. Response is the raw image binary."
+          },
+          "response": []
+        },
+        {
+          "name": "Upload Image (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": "/path/to/your/image.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "upload"]
+            },
+            "description": "Admin. multipart/form-data with a single file field named 'file'.\nAllowed types: JPG, PNG, WebP, GIF, SVG. Max size: 5MB.\nResponse: { \"success\": true, \"url\": \"/api/uploads/<name>\", \"filename\": \"uploads/<name>\", \"size\": n, \"type\": \"...\" }"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin (Auth + Tracking)",
+      "item": [
+        {
+          "name": "Admin Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"password\": \"REPLACE_WITH_ADMIN_PASSWORD\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/auth",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "auth"]
+            },
+            "description": "Returns a JWT token valid for 24h. Copy the token into the 'adminToken' collection variable.\nResponse: { \"success\": true, \"token\": \"...\", \"message\": \"تم تسجيل الدخول بنجاح\" }"
+          },
+          "response": []
+        },
+        {
+          "name": "Verify Admin Token",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/auth",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "auth"]
+            },
+            "description": "Check whether the current adminToken is still valid. Response: { \"success\": true, \"message\": \"Token valid\" }"
+          },
+          "response": []
+        },
+        {
+          "name": "Track Page View",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"path\": \"/store\",\n    \"source\": \"mobile-app\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/track",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "track"]
+            },
+            "description": "Internal analytics tracking. Records a page view. Not shown in normal UI.",
+            "response": []
+          }
+        }
+      ]
+    }
+  ]
+}

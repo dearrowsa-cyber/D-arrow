@@ -433,10 +433,13 @@ export default function StorePage() {
         {/* Search & Categories Filter Bar */}
         <section className="space-y-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-[#12142B]/90 border border-white/10 rounded-2xl p-4 backdrop-blur-md">
+
             {/* Search Input */}
             <div className="relative w-full md:w-96">
               <Search
-                className={`w-4 h-4 text-slate-400 absolute top-1/2 -translate-y-1/2 ${isAr ? "right-3.5" : "left-3.5"}`}
+                className={`w-4 h-4 text-slate-400 absolute top-1/2 -translate-y-1/2 pointer-events-none z-10 ${
+                  isAr ? "right-3" : "left-3"
+                }`}
               />
               <input
                 type="text"
@@ -447,14 +450,21 @@ export default function StorePage() {
                     ? "ابحث عن نظام، قالب، استضافة..."
                     : "Search system, template, hosting..."
                 }
-                className={`w-full bg-[#090B1B] border border-white/15 focus:border-[#FF4D6D] rounded-xl py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none transition ${
-                  isAr ? "pr-11 pl-9" : "pl-11 pr-9"
+                style={{
+                  backgroundColor: "#090B1B",
+                  color: "#ffffff",
+                  caretColor: "#FF9A3C",
+                }}
+                className={`w-full !bg-[#090B1B] !text-white border border-white/15 focus:border-[#FF4D6D] rounded-xl py-2.5 text-sm placeholder:!text-slate-500 focus:outline-none transition ${
+                  isAr ? "!pr-10 !pl-10" : "!pl-10 !pr-10"
                 }`}
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className={`absolute top-1/2 -translate-y-1/2 text-slate-400 hover:text-white ${isAr ? "left-3" : "right-3"} cursor-pointer`}
+                  className={`absolute top-1/2 -translate-y-1/2 text-slate-400 hover:text-white z-10 ${
+                    isAr ? "left-4" : "right-4"
+                  } cursor-pointer`}
                 >
                   <X className="w-4 h-4" />
                 </button>
@@ -474,18 +484,36 @@ export default function StorePage() {
                 <select
                   value={sortBy}
                   onChange={(e: any) => setSortBy(e.target.value)}
-                  className="bg-[#090B1B] border border-white/15 text-slate-200 text-xs sm:text-sm rounded-xl px-3 py-2 focus:outline-none focus:border-[#FF4D6D] cursor-pointer"
+                  style={{
+                    backgroundColor: "#090B1B",
+                    color: "#e2e8f0",
+                  }}
+                  className={`!bg-[#090B1B] !text-slate-200 border border-white/15 text-xs sm:text-sm rounded-xl py-2 focus:outline-none focus:border-[#FF4D6D] cursor-pointer ${
+                    isAr ? "pl-9 pr-3" : "pr-9 pl-3"
+                  }`}
                 >
-                  <option value="popular">
+                  <option
+                    value="popular"
+                    style={{ backgroundColor: "#090B1B", color: "#e2e8f0" }}
+                  >
                     {isAr ? "الأكثر طلباً ومبيعاً" : "Most Popular"}
                   </option>
-                  <option value="rating">
+                  <option
+                    value="rating"
+                    style={{ backgroundColor: "#090B1B", color: "#e2e8f0" }}
+                  >
                     {isAr ? "الأعلى تقييماً" : "Highest Rated"}
                   </option>
-                  <option value="price-asc">
+                  <option
+                    value="price-asc"
+                    style={{ backgroundColor: "#090B1B", color: "#e2e8f0" }}
+                  >
                     {isAr ? "السعر: من الأقل للأعلى" : "Price: Low to High"}
                   </option>
-                  <option value="price-desc">
+                  <option
+                    value="price-desc"
+                    style={{ backgroundColor: "#090B1B", color: "#e2e8f0" }}
+                  >
                     {isAr ? "السعر: من الأعلى للأقل" : "Price: High to Low"}
                   </option>
                 </select>
@@ -516,7 +544,7 @@ export default function StorePage() {
           </div>
         </section>
 
-        {/* E-Commerce Products Grid: Square-Proportioned Balanced Cards with Full Visible Titles */}
+        {/* E-Commerce Products Grid */}
         <section className="space-y-6">
           {filteredProducts.length === 0 ? (
             <div className="text-center py-16 bg-[#12142B]/50 border border-white/10 rounded-3xl space-y-4">
@@ -570,7 +598,7 @@ export default function StorePage() {
                     key={product.id}
                     className="bg-[#0D0F22] hover:bg-[#121530] border border-white/12 hover:border-[#FF4D6D]/80 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl hover:shadow-[#FF4D6D]/20 transition-all duration-300 flex flex-col justify-between group relative backdrop-blur-md"
                   >
-                    {/* Media Container with Square-feel aspect */}
+                    {/* Media Container */}
                     <Link
                       href={`/store/${product.slug}`}
                       className="relative aspect-[16/11] w-full overflow-hidden bg-slate-950 border-b border-white/10 block"
@@ -584,7 +612,6 @@ export default function StorePage() {
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0D0F22] via-transparent to-black/40" />
 
-                      {/* Top Vector Badge */}
                       {product.badge && (
                         <div
                           className={`absolute top-2.5 ${isAr ? "right-2.5" : "left-2.5"} px-2.5 py-0.5 rounded-full text-[10px] font-bold text-white bg-gradient-to-r ${product.badgeColor || "from-[#FF4D6D] to-[#FF9A3C]"} shadow-md border border-white/20 flex items-center gap-1 backdrop-blur-md`}
@@ -594,14 +621,12 @@ export default function StorePage() {
                         </div>
                       )}
 
-                      {/* Discount Pill */}
                       <div
                         className={`absolute top-2.5 ${isAr ? "left-2.5" : "right-2.5"} px-2 py-0.5 rounded-lg text-[10px] font-extrabold bg-[#FF4D6D] text-white shadow-sm border border-white/20 font-mono`}
                       >
                         {isAr ? `وفر ${savings} ر.س` : `Save ${savings} SAR`}
                       </div>
 
-                      {/* Demo Link Badge if available */}
                       {product.demoUrl && (
                         <div className="absolute bottom-2 left-2 right-2 py-1 px-2 rounded-lg bg-black/85 text-white text-[11px] font-semibold backdrop-blur-md border border-white/20 flex items-center justify-center gap-1">
                           <Eye className="w-3 h-3 text-[#FF9A3C]" />
@@ -614,10 +639,9 @@ export default function StorePage() {
                       )}
                     </Link>
 
-                    {/* Card Body - Crisp, Clear, Full Title Visible */}
+                    {/* Card Body */}
                     <div className="p-4 sm:p-5 space-y-3 flex-1 flex flex-col justify-between">
                       <div className="space-y-2">
-                        {/* Category & Rating */}
                         <div className="flex items-center justify-between text-xs">
                           <span className="font-bold text-[#FF9A3C]">
                             {isAr
@@ -630,14 +654,12 @@ export default function StorePage() {
                           </div>
                         </div>
 
-                        {/* Title - Fully Visible, No Truncation, clickable */}
                         <Link href={`/store/${product.slug}`} className="block">
                           <h3 className="font-extrabold text-white text-sm sm:text-base leading-snug group-hover:text-[#FF9A3C] transition-colors min-h-[2.8rem] flex items-center">
                             {isAr ? product.nameAr : product.name}
                           </h3>
                         </Link>
 
-                        {/* 1 Key Highlight Line */}
                         <div className="flex items-center gap-1.5 text-xs text-slate-300">
                           <Check className="w-3.5 h-3.5 text-[#FF4D6D] flex-shrink-0" />
                           <span className="truncate">
@@ -648,7 +670,7 @@ export default function StorePage() {
                         </div>
                       </div>
 
-                      {/* Pricing & Single Main Action Row */}
+                      {/* Pricing & Action Row */}
                       <div className="pt-3 border-t border-white/10 space-y-2.5">
                         <div className="flex items-baseline justify-between">
                           <div className="flex items-baseline gap-1.5">
@@ -666,7 +688,6 @@ export default function StorePage() {
                           </span>
                         </div>
 
-                        {/* Unified Action Buttons */}
                         <div className="flex items-center gap-2">
                           <button
                             onClick={(e) => handleAddToCart(product, e)}

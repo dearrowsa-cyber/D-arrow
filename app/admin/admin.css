@@ -29,7 +29,7 @@ body:has(.admin-login-page) footer {
 /* ---- Sidebar ---- */
 .admin-sidebar {
   width: 260px;
-  min-height: 100vh;
+  height: 100vh;
   background: rgba(11, 13, 31, 0.8);
   backdrop-filter: blur(20px);
   border-right: 1px solid rgba(255, 77, 109, 0.1);
@@ -70,7 +70,7 @@ body:has(.admin-login-page) footer {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  /* overflow-x:auto */
+  overflow-y: auto;
 }
 
 .admin-nav-item {

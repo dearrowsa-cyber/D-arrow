@@ -26,9 +26,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-5 md:px-12">
 
         {/* GRID SECTION */}
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 mb-9 md:mb-16"
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 mb-9 md:mb-16">
 
           {/* LOGO + TAGLINE */}
           <div>
@@ -67,8 +65,9 @@ const Footer = () => {
             </h4>
             <div className="space-y-4 text-white text-sm">
 
-              <div className={`flex items-start gap-3 ${lang === "ar" ? "flex-row-reverse text-right" : ""}`}>
-                <MapPin size={18} className="flex-shrink-0" />
+              {/* Address — icon on the right in AR via parent RTL */}
+              <div className="flex items-start gap-3">
+                <MapPin size={18} className="flex-shrink-0 mt-0.5" />
                 <p>
                   {contact?.address?.[lang] || (lang === "ar"
                     ? "منطقة الأحساء، المملكة العربية السعودية"
@@ -76,17 +75,19 @@ const Footer = () => {
                 </p>
               </div>
 
-              <div className={`flex items-center gap-3 ${lang === "ar" ? "flex-row-reverse text-right" : ""}`}>
+              {/* Email */}
+              <div className="flex items-center gap-3">
                 <Mail size={18} className="flex-shrink-0" />
                 <a
-                  href={`mailto:${contact?.email || 'info@d-arrow.com'}`}
+                  href={`mailto:${contact?.email || 'support@d-arrow.com'}`}
                   className="hover:text-pink-500 transition"
                 >
-                  {contact?.email || 'info@d-arrow.com'}
+                  {contact?.email || 'support@d-arrow.com'}
                 </a>
               </div>
 
-              <div className={`flex items-center gap-3 ${lang === "ar" ? "flex-row-reverse text-right" : ""}`}>
+              {/* Phone */}
+              <div className="flex items-center gap-3">
                 <Phone size={18} className="flex-shrink-0" />
                 <a
                   href={`tel:${contact?.phone || '+966500466349'}`}
@@ -97,13 +98,18 @@ const Footer = () => {
                 </a>
               </div>
 
-              <div className={`flex flex-col gap-3 mt-5 pt-5 border-t border-brand-pink/20 ${lang === "ar" ? "text-right" : "text-left"}`}>
-                <div className={`flex items-center gap-2`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-                  <span className="font-semibold text-white">{lang === 'ar' ? 'السجل التجاري:' : 'CR Number:'}</span>
+              {/* CR + VAT */}
+              <div className="flex flex-col gap-3 mt-5 pt-5 border-t border-brand-pink/20">
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold text-white">
+                    {lang === 'ar' ? 'السجل التجاري:' : 'CR Number:'}
+                  </span>
                   <span className="text-gray-400" dir="ltr">7053575184</span>
                 </div>
-                <div className={`flex items-center gap-2`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-                  <span className="font-semibold text-white">{lang === 'ar' ? 'الرقم الضريبي:' : 'VAT Number:'}</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold text-white">
+                    {lang === 'ar' ? 'الرقم الضريبي:' : 'VAT Number:'}
+                  </span>
                   <span className="text-gray-400" dir="ltr">314611548300003</span>
                 </div>
               </div>

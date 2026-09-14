@@ -246,7 +246,7 @@ export default function PricingPage() {
   }, []);
 
   return (
-    <div className={`${styles.page} pt-28 md:pt-36`} dir={isAr ? 'rtl' : 'ltr'}>
+    <div className={styles.page} dir={isAr ? 'rtl' : 'ltr'}>
         {/* ── PACKAGES ── */}
         <section className={styles.section} id="packages">
         <div className={styles.sectionHead}>

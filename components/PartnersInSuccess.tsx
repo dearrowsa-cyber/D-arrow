@@ -23,7 +23,7 @@ const PartnersInSuccess = () => {
         whileInView="visible"
         viewport={{ once: true, amount: 0.1 }} // Amount kam kiya hai taaki scroll karte hi dikh jaye
       >
-        <div className="text-center">
+        <div className="text-center ">
           <motion.h3 
             className="text-3xl md:text-4xl lg:text-6xl font-bold mb-4 !text-white"
             variants={{
@@ -44,7 +44,7 @@ const PartnersInSuccess = () => {
             {t('trustedByDesc')}
           </motion.p>
 
-          <div className="mt-6">
+          <div className="mt-6 ">
             <LogoMarquee />
           </div>
         </div>

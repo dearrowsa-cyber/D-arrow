@@ -73,9 +73,15 @@ const Hero = () => {
         <div className="flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto w-full px-4">
           {/* Text Content Div */}
           <div suppressHydrationWarning className={`flex-[1] py-18 md:px-6 w-full ${lang === 'ar' ? 'text-right md:text-right' : 'text-center md:text-left'}`} style={{zIndex: 10}}>
-            <div className="inline-block bg-gradient-to-r from-[rgba(255,77,109,0.15)] to-[rgba(255,154,60,0.15)] border border-[rgba(255,77,109,0.3)] rounded-full px-2 py-2 mb-8 h-8">
-              <span suppressHydrationWarning className="text-white text-sm font-semibold bg-gradient-to-r from-brand-pink to-brand-orange bg-clip-text text-transparent" style={{ fontFamily: lang === 'ar' ? "'29LT-Bukra', system-ui" : "'TT Hoves Pro', system-ui" }}>{hero?.badge?.[lang] || t('heroBadge')}</span>
-            </div>
+         <div className="inline-flex items-center justify-center bg-gradient-to-r from-[rgba(255,77,109,0.15)] to-[rgba(255,154,60,0.15)] border border-[rgba(255,77,109,0.3)] rounded-full px-4 py-1.5 mb-8 max-w-full">
+  <span
+    suppressHydrationWarning
+    className="text-sm font-semibold text-white whitespace-nowrap"
+    style={{ fontFamily: lang === 'ar' ? "'29LT-Bukra', system-ui" : "'TT Hoves Pro', system-ui" }}
+  >
+    {hero?.badge?.[lang] || t('heroBadge')}
+  </span>
+</div>
 
             <h1 className="font-bold leading-tight mb-4 bg-gradient-to-r from-brand-pink to-brand-orange bg-clip-text text-transparent" style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.8rem)', fontFamily: lang === 'ar' ? "'29LT-Bukra', system-ui" : "'Gilroy', system-ui" }}>
               {hero?.heading?.[lang] || t('heroHeading')}
@@ -85,7 +91,14 @@ const Hero = () => {
               <HeroServicesCarousel services={featuredServices} />
             </div>
 
-            <div suppressHydrationWarning className={`flex flex-col sm:flex-row flex-wrap md:flex-nowrap justify-center ${lang === 'ar' ? 'md:justify-end' : 'md:justify-start'} gap-4 mt-8 md:mt-12`}>
+            <div
+              suppressHydrationWarning
+              className={`flex flex-col sm:flex-row flex-wrap md:flex-nowrap w-full gap-4 mt-8 md:mt-12 ${
+                lang === 'ar'
+                  ? 'justify-center sm:justify-start'
+                  : 'justify-center md:justify-start'
+              }`}
+            >
               <Link href="/contact" className="w-full sm:w-auto text-center bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] !text-white px-6 py-3 md:px-8 md:py-4 rounded-lg font-semibold text-sm md:text-base transition-transform duration-300 hover:shadow-lg hover:scale-105 active:scale-95" style={{ fontFamily: lang === 'ar' ? "'29LT-Bukra', system-ui" : "'TT Hoves Pro', system-ui" }}>
                 {t('getYourFreeConsultation')}
               </Link>

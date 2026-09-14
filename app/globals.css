@@ -82,7 +82,7 @@
 
   html {
     width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
     scroll-behavior: smooth;
     scroll-padding-top: 80px;
     background-color: #0b0d1f !important;
@@ -113,7 +113,7 @@
     min-height: 100vh;
     min-height: 100dvh;
     width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
     background-color: #0b0d1f !important;
     background: #0b0d1f !important;
     color: var(--brand-white);
@@ -559,6 +559,10 @@ html.lang-ar header nav a {
 header nav a:hover {
   color: var(--brand-pink);
   color: #FF4D6D;
+}
+
+[dir="ltr"] .nav-text {
+  font-size: 95%;
 }
 
 

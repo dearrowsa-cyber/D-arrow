@@ -65,12 +65,12 @@ export default function JoinInfluencerPage() {
                   : 'Join as an influencer and get your own professional blog or page. Share your creations, expand your reach, and let us help you amplify your voice to the world.'}
               </p>
 
-              <div className={`flex flex-col sm:flex-row gap-4 justify-center ${isAr ? 'lg:justify-start lg:flex-row-reverse' : 'lg:justify-start'} items-center`}>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center w-full">
                 <Link 
                   href="https://in.d-arrow.com/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group relative inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] !text-white hover:from-[rgba(255,77,109,0.9)] hover:to-[rgba(255,154,60,0.9)] px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,77,109,0.4)] overflow-hidden w-full sm:w-auto"
+                  className={`group relative inline-flex items-center justify-center gap-2 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] !text-white hover:from-[rgba(255,77,109,0.9)] hover:to-[rgba(255,154,60,0.9)] px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,77,109,0.4)] overflow-hidden w-full sm:w-auto ${isAr ? 'lg:ml-auto' : 'lg:mr-auto'}`}
                 >
                   <span className="relative z-10 flex items-center gap-2">
                     {isAr ? 'انضم إلينا الآن' : 'Join Us Now'}

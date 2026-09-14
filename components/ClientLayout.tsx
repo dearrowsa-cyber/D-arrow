@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
-import Header from '@/components/Header';
+import Header from '@/components/layout/Header';
 import Footer from '@/components/Footer';
 import Analytics from '@/components/Analytics';
 import CookieConsent from '@/components/CookieConsent';
@@ -102,9 +102,9 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       </AnimatePresence>
 
       {!isStandaloneDemo && <NetworkBackground />}
-      <div className={`w-full overflow-x-hidden relative z-10 ${isStandaloneDemo ? 'bg-transparent text-slate-900' : 'bg-[#070913] text-white grid-background'} min-h-screen min-h-[100dvh]`}>
+      <div className={`w-full overflow-x-clip relative z-10 ${isStandaloneDemo ? 'bg-transparent text-slate-900' : 'bg-[#070913] text-white grid-background'} min-h-screen min-h-[100dvh]`}>
         {!isStandaloneDemo && <Header />}
-        <main className={!isStandaloneDemo ? "pt-24" : "w-full min-h-screen p-0 m-0"}>
+        <main className={!isStandaloneDemo ? "" : "w-full min-h-screen p-0 m-0"}>
           {children}
         </main>
         {!isStandaloneDemo && <Footer />}
