@@ -40,7 +40,7 @@ export default function SocialMediaLanding() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-6 md:px-12">
+      <section className="relative pt-20 pb-16 lg:pt-28 lg:pb-24 px-6 md:px-12">
         <div className="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
           <motion.div 
             initial={{ opacity: 0, x: isRTL ? 50 : -50 }}
@@ -60,7 +60,7 @@ export default function SocialMediaLanding() {
             <div className={`flex flex-wrap gap-4 ${isRTL ? 'justify-start' : 'justify-start'}`}>
               <Link 
                 href="/contact"
-                className="px-10 py-5 bg-gradient-to-r from-brand-pink to-brand-orange text-white rounded-xl font-bold text-lg hover:scale-105 transition-transform shadow-[0_0_30px_rgba(255,77,109,0.3)] active:scale-95"
+                className="px-10 py-5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white rounded-xl font-bold text-lg hover:shadow-lg hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(255,77,109,0.3)] active:scale-95"
               >
                 {t('smmLP_cta')}
               </Link>
@@ -90,7 +90,7 @@ export default function SocialMediaLanding() {
             <motion.div 
               animate={{ y: [0, -20, 0] }}
               transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className={`absolute -top-10 ${isRTL ? '-left-10' : '-right-10'} bg-white/10 backdrop-blur-xl p-6 rounded-2xl border border-white/20 shadow-2xl hidden md:block`}
+              className={`absolute -top-10 ${isRTL ? '-left-10' : '-right-10'} z-30 bg-white/10 backdrop-blur-xl p-6 rounded-2xl border border-white/20 shadow-2xl hidden md:block`}
             >
               <div className="text-brand-orange text-3xl font-bold">+320%</div>
               <div className="text-xs text-gray-400 uppercase tracking-widest">Engagement rate</div>
@@ -198,8 +198,7 @@ export default function SocialMediaLanding() {
             </p>
             <Link 
               href="/contact"
-              className="px-12 py-6 bg-white rounded-2xl font-black text-xl hover:scale-105 transition-transform shadow-[0_0_50px_rgba(255,255,255,0.2)] inline-block"
-              style={{ color: '#0a0e27' }}
+              className="px-12 py-6 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white rounded-2xl font-black text-xl hover:scale-105 hover:shadow-lg transition-all duration-300 shadow-[0_0_50px_rgba(255,77,109,0.35)] inline-block active:scale-95"
             >
               {t('smmLP_cta')}
             </Link>

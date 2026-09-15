@@ -1,7 +1,6 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Check } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from './LanguageProvider';
 import styles from '@/app/(main)/pricing/pricing.module.css';
@@ -22,7 +21,6 @@ interface ServiceCardProps {
 
 export default function ServiceCard({ service, index }: ServiceCardProps) {
   const { t } = useLanguage();
-  const featureList = Array.isArray(t(service.featuresKey)) ? t(service.featuresKey) : [];
 
   const resolveBackgroundImage = () => {
     if (service.backgroundImage) return service.backgroundImage;
@@ -37,226 +35,95 @@ export default function ServiceCard({ service, index }: ServiceCardProps) {
     return `/services/${fallbackName}.jpg`;
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: index * 0.1,
-      },
-    },
-  };
+  const serviceId = (() => {
+    const id = (service as any).id || (service.titleKey ? service.titleKey.replace('_title', '') : '');
+    if (id && id !== 'undefined') return id;
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
+    const enTitle = ((service as any).title?.en || '').toLowerCase();
+    if (enTitle.includes('social media')) return 'dm_smm';
+    if (enTitle.includes('digital marketing')) return 'dm_marketing';
+    if (enTitle.includes('visual')) return 'dm_visual';
+    if (enTitle.includes('influencer')) return 'dm_influencer';
+    if (enTitle.includes('content')) return 'dm_content';
+    if (enTitle.includes('exhibition')) return 'dm_exhibitions';
+    if (enTitle.includes('advertising') || enTitle.includes('campaign')) return 'dm_advertising';
+    if (enTitle.includes('consultation')) return 'dm_consultation';
+    if (enTitle.includes('seo')) return 'dm_seo';
+
+    if (enTitle.includes('appraisal')) return 're_appraisal';
+    if (enTitle.includes('marketing')) return 're_marketing';
+    if (enTitle.includes('property management') || enTitle.includes('sales')) return 're_management';
+    if (enTitle.includes('photography')) return 're_photography';
+    if (enTitle.includes('image creation')) return 're_project_images';
+    if (enTitle.includes('evaluation')) return 're_current_eval';
+    if (enTitle.includes('naming')) return 're_project_naming';
+
+    if (enTitle.includes('app') && !enTitle.includes('appraisal')) return 'id_apps';
+    if (enTitle.includes('website') || enTitle.includes('web')) return 'id_website';
+    if (enTitle.includes('branding')) return 'id_branding';
+    if (enTitle.includes('software')) return 'id_software';
+    if (enTitle.includes('cloud')) return 'id_cloud';
+
+    return `service-${index}`;
+  })();
 
   const iconVariants: any = {
     hidden: { scale: 0, rotate: -180 },
-    visible: {
-      scale: 1,
-      rotate: 0,
-      transition: {
-        duration: 0.6,
-      },
-    },
-    hover: {
-      scale: 1.1,
-      rotate: 5,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
-
-  const featureVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: (i: number) => ({
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.4,
-        delay: 0.3 + i * 0.1,
-      },
-    }),
-    hover: {
-      x: 5,
-      transition: {
-        duration: 0.2,
-      },
-    },
-  };
-
-  const buttonVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.4,
-        delay: 0.5,
-      },
-    },
-    hover: {
-      scale: 1.05,
-      transition: {
-        duration: 0.2,
-      },
-    },
-    tap: {
-      scale: 0.98,
-    },
+    visible: { scale: 1, rotate: 0, transition: { duration: 0.6 } },
+    hover: { scale: 1.1, rotate: 5, transition: { duration: 0.3 } },
   };
 
   return (
     <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.5, delay: index * 0.05 }}
       whileHover="hover"
-      className={`${styles.serviceCard} ${service.featured ? styles.featured : ''} group relative overflow-hidden !p-0 bg-[#0A0D1E]`}
-      style={{
-        // Remove general background image to separate image from text
-      }}
+      className="min-w-0 w-full flex"   
     >
-      {/* --- TOP: 100% VISIBLE IMAGE AREA --- */}
-      <div className="relative w-full h-[180px] md:h-[280px] shrink-0 overflow-hidden bg-[#0a0d1e]">
-        <div 
-          className={`absolute inset-0 bg-cover ${
-            ((service as any).title || t(service.titleKey))?.toLowerCase().includes('naming') || 
-            ((service as any).title || t(service.titleKey))?.includes('تسميات') ||
-            ((service as any).title || t(service.titleKey))?.includes('تسمية') 
-              ? 'bg-top' 
-              : 'bg-center'
-          } transition-transform duration-700 group-hover:scale-105`}
-          style={{ backgroundImage: `url('${resolveBackgroundImage().replace(/ /g, '%20')}')` }}
-        />
-        
-        {/* Soft bottom blend to seamlessly connect to the dark text area */}
-        <div className="absolute inset-x-0 bottom-0 h-14 md:h-20 bg-gradient-to-t from-[#0A0D1E] via-[#0A0D1E]/60 to-transparent" />
-      </div>
+      <Link
+        href={`/services/${serviceId}`}
+        className={`${styles.serviceCard} ${service.featured ? styles.featured : ''} group relative flex flex-col min-w-0 w-full h-full overflow-hidden !p-0 bg-[#0A0D1E] cursor-pointer`}
+      >
+        <div className="relative w-full h-[180px] md:h-[280px] shrink-0 overflow-hidden bg-[#0a0d1e]">
+          <div
+            className={`absolute inset-0 bg-cover ${
+              ((service as any).title || t(service.titleKey))?.toLowerCase().includes('naming') ||
+              ((service as any).title || t(service.titleKey))?.includes('تسميات') ||
+              ((service as any).title || t(service.titleKey))?.includes('تسمية')
+                ? 'bg-top'
+                : 'bg-center'
+            } transition-transform duration-700 group-hover:scale-105`}
+            style={{ backgroundImage: `url('${resolveBackgroundImage().replace(/ /g, '%20')}')` }}
+          />
 
-      {/* Overlapping Icon securely placed on the seam - Moved OUTSIDE the overflow-hidden div! */}
-      <div className="absolute top-[155px] md:top-[252px] left-4 md:left-6 z-20">
-        <motion.div
-          className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-[#14162e] backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.4)] flex items-center justify-center"
-          variants={iconVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          whileHover="hover"
-        >
-          <img src={service.icon} alt={(service as any).title || t(service.titleKey)} className="w-7 h-7 md:w-9 md:h-9 object-contain" />
-        </motion.div>
-      </div>
+          <div className="absolute inset-x-0 bottom-0 h-14 md:h-20 bg-gradient-to-t from-[#0A0D1E] via-[#0A0D1E]/60 to-transparent" />
+        </div>
 
-      {/* --- BOTTOM: TEXT CONTENT AREA --- */}
-      <div className={`${styles.cardBody} flex flex-col flex-grow p-4 pt-9 md:p-6 md:pt-12 relative z-10 bg-[#0A0D1E]`}>
-        <motion.h3 variants={itemVariants} className="text-base md:text-xl font-bold text-white mb-1 md:mb-2 group-hover:text-brand-pink transition-colors duration-300">
-          {(service as any).title || t(service.titleKey)}
-        </motion.h3>
-
-        <motion.p variants={itemVariants} className="text-gray-300 text-xs md:text-sm leading-relaxed mb-2 md:mb-4 line-clamp-3 md:line-clamp-none">
-          {(service as any).description || t(service.descKey)}
-        </motion.p>
-
-
-        <motion.div variants={itemVariants} className={styles.divider} />
-
-        <motion.ul
-          className={styles.featureList}
-          style={{ marginBottom: '1.5rem' }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.1,
-              },
-            },
-          }}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {Array.isArray(featureList) && featureList.length > 0
-            ? featureList.map((feature, i) => (
-                <motion.li
-                  key={i}
-                  className={styles.featureItem}
-                  variants={featureVariants}
-                  custom={i}
-                  whileHover="hover"
-                >
-                  <motion.span
-                    className={styles.check}
-                    aria-hidden
-                    whileHover={{ scale: 1.2, rotate: 360 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Check size={16} strokeWidth={3} className="text-white" />
-                  </motion.span>
-                  <span className="text-white group-hover:text-white transition-colors duration-200">
-                    {feature}
-                  </span>
-                </motion.li>
-              ))
-            : null}
-        </motion.ul>
-
-        <motion.div
-          variants={buttonVariants}
-          whileHover="hover"
-          whileTap="tap"
-        >
-          <Link
-            href={`/services/${(() => {
-              const id = (service as any).id || (service.titleKey ? service.titleKey.replace('_title', '') : '');
-              if (id && id !== 'undefined') return id;
-              
-              // Fallback mapping for dynamic siteData
-              const enTitle = ((service as any).title?.en || '').toLowerCase();
-              if (enTitle.includes('social media')) return 'dm_smm';
-              if (enTitle.includes('digital marketing')) return 'dm_marketing';
-              if (enTitle.includes('visual')) return 'dm_visual';
-              if (enTitle.includes('influencer')) return 'dm_influencer';
-              if (enTitle.includes('content')) return 'dm_content';
-              if (enTitle.includes('exhibition')) return 'dm_exhibitions';
-              if (enTitle.includes('advertising') || enTitle.includes('campaign')) return 'dm_advertising';
-              if (enTitle.includes('consultation')) return 'dm_consultation';
-              if (enTitle.includes('seo')) return 'dm_seo';
-              
-              if (enTitle.includes('appraisal')) return 're_appraisal';
-              if (enTitle.includes('marketing')) return 're_marketing';
-              if (enTitle.includes('property management') || enTitle.includes('sales')) return 're_management';
-              if (enTitle.includes('photography')) return 're_photography';
-              if (enTitle.includes('image creation')) return 're_project_images';
-              if (enTitle.includes('evaluation')) return 're_current_eval';
-              if (enTitle.includes('naming')) return 're_project_naming';
-              
-              if (enTitle.includes('app') && !enTitle.includes('appraisal')) return 'id_apps';
-              if (enTitle.includes('website') || enTitle.includes('web')) return 'id_website';
-              if (enTitle.includes('branding')) return 'id_branding';
-              if (enTitle.includes('software')) return 'id_software';
-              if (enTitle.includes('cloud')) return 'id_cloud';
-
-              return `service-${index}`;
-            })()}`}
-            className={styles.ctaButton}
+        <div className="absolute top-[155px] md:top-[252px] left-4 md:left-6 z-20">
+          <motion.div
+            className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-[#14162e] backdrop-blur-md border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.4)] flex items-center justify-center"
+            variants={iconVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            whileHover="hover"
           >
+            <img
+              src={service.icon}
+              alt={(service as any).title || t(service.titleKey)}
+              className="w-7 h-7 md:w-9 md:h-9 object-contain"
+            />
+          </motion.div>
+        </div>
+
+        <div className={`${styles.cardBody} flex flex-col flex-1 min-w-0 w-full p-4 pt-9 pb-6 md:p-6 md:pt-12 md:pb-8 relative z-10 bg-[#0A0D1E]`}>
+          <h3 className="text-base md:text-xl font-bold text-white group-hover:text-brand-pink transition-colors duration-300 break-words [overflow-wrap:anywhere]">
             {(service as any).title || t(service.titleKey)}
-          </Link>
-        </motion.div>
-      </div>
+          </h3>
+        </div>
+      </Link>
     </motion.div>
   );
 }

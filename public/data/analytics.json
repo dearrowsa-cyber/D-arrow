@@ -1,15 +1,15 @@
 {
-  "totalVisitors": 262,
-  "todayViews": 119,
+  "totalVisitors": 286,
+  "todayViews": 24,
   "pageViews": {
-    "/": 52,
+    "/": 54,
     "/blog": 21,
     "/blog/123": 1,
     "/blog/cmog6f88m0000iizx792fjazo": 1,
     "/contact": 9,
-    "/services/dm_smm": 2,
+    "/services/dm_smm": 3,
     "/pricing": 12,
-    "/services": 5,
+    "/services": 12,
     "/services/dm_marketing": 1,
     "/store": 35,
     "/store/ecommerce-store-admin-template": 1,
@@ -23,7 +23,7 @@
     "/store/saudi-real-estate-platform": 4,
     "/store/ai-customer-support-bot": 2,
     "/store/1212121": 1,
-    "/influencer": 66,
+    "/influencer": 69,
     "/store/high-speed-saudi-cloud-infrastructure": 1,
     "/store/payment-gateways-integration-pack": 1,
     "/demo/store": 1,
@@ -32,12 +32,18 @@
     "/test-email": 1,
     "/video-test": 1,
     "/cookies": 1,
-    "/provisions": 5,
+    "/provisions": 9,
     "/provisions/spark-fuel-stations-branding": 1,
     "/blog/d-arrow-digital-marketing-growth-agency": 1,
-    "/why-us": 2,
+    "/why-us": 3,
     "/projects": 4,
-    "/projects/shoes": 1
+    "/projects/shoes": 1,
+    "/lp/social-media": 1,
+    "/provisions/mathwaa-association": 1,
+    "/provisions/d-arrow-social-media": 1,
+    "/services/dm_exhibitions": 1,
+    "/services/dm_content": 1,
+    "/services/dm_influencer": 1
   },
-  "lastResetDate": "2026-09-14"
+  "lastResetDate": "2026-09-15"
 }

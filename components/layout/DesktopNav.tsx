@@ -2,13 +2,31 @@
 
 import { useState, useRef } from 'react';
 import Link from 'next/link';
-import { Coffee, UtensilsCrossed, Wrench, ShoppingBag, Shirt, Star } from 'lucide-react'; // Added Star
+import { Coffee, UtensilsCrossed, Wrench, ShoppingBag, Shirt, Star } from 'lucide-react';
 
 export default function DesktopNav({ lang, t }: { lang: string; t: any }) {
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const [projectsOpen, setProjectsOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<'services' | 'projects' | null>(null);
   const closeTimeoutRef = useRef<number | null>(null);
-  const projectsTimeoutRef = useRef<number | null>(null);
+
+  const openMenu = (name: 'services' | 'projects') => {
+    if (closeTimeoutRef.current) {
+      window.clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setOpenDropdown(name);
+  };
+
+  const scheduleClose = () => {
+    if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current);
+    closeTimeoutRef.current = window.setTimeout(() => setOpenDropdown(null), 120);
+  };
+
+  const cancelClose = () => {
+    if (closeTimeoutRef.current) {
+      window.clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
 
   return (
     <nav className="hidden lg:flex gap-1 items-center flex-1 justify-center px-2 xl:px-4">
@@ -19,33 +37,25 @@ export default function DesktopNav({ lang, t }: { lang: string; t: any }) {
       {/* Services Dropdown */}
       <div
         className="relative"
-        onMouseEnter={() => {
-          if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current);
-          setServicesOpen(true);
-        }}
-        onMouseLeave={() => {
-          closeTimeoutRef.current = window.setTimeout(() => setServicesOpen(false), 200);
-        }}
+        onMouseEnter={() => openMenu('services')}
+        onMouseLeave={scheduleClose}
       >
         <Link href="/services" className="nav-link-hover flex items-center justify-center gap-2 !text-sm xl:!text-base font-medium px-3 py-2 whitespace-nowrap">
           <span className="nav-text !text-white">{t('solutions')}</span>
         </Link>
-        
+
         {/* Mega Menu */}
         <div
-          onMouseEnter={() => {
-            if (closeTimeoutRef.current) window.clearTimeout(closeTimeoutRef.current);
-          }}
-          onMouseLeave={() => {
-            closeTimeoutRef.current = window.setTimeout(() => setServicesOpen(false), 200);
-          }}
+          onMouseEnter={() => openMenu('services')}
+          onMouseLeave={scheduleClose}
           className={`
-            ${servicesOpen
+            ${openDropdown === 'services'
               ? 'opacity-100 translate-y-0 visible pointer-events-auto'
               : 'opacity-0 -translate-y-2 invisible pointer-events-none'}
-            transition-all duration-200 ease-out
+            transition-opacity duration-150 ease-out
             absolute ${lang === 'ar' ? 'right-0' : 'left-0'}
-            mt-2 w-[340px] xl:w-[380px]
+            top-full
+            mt-1 w-[340px] xl:w-[380px]
             bg-[#14162E]
             border border-gray-700
             rounded-lg
@@ -81,32 +91,24 @@ export default function DesktopNav({ lang, t }: { lang: string; t: any }) {
       {/* Projects Dropdown */}
       <div
         className="relative"
-        onMouseEnter={() => {
-          if (projectsTimeoutRef.current) window.clearTimeout(projectsTimeoutRef.current);
-          setProjectsOpen(true);
-        }}
-        onMouseLeave={() => {
-          projectsTimeoutRef.current = window.setTimeout(() => setProjectsOpen(false), 200);
-        }}
+        onMouseEnter={() => openMenu('projects')}
+        onMouseLeave={scheduleClose}
       >
         <Link href="/projects" className="nav-link-hover flex items-center justify-center gap-2 !text-sm xl:!text-base font-medium px-3 py-2 whitespace-nowrap">
           <span className="nav-text !text-white">{lang === 'ar' ? 'طور مشروعك' : 'Grow Your Business'}</span>
         </Link>
-        
+
         <div
-          onMouseEnter={() => {
-            if (projectsTimeoutRef.current) window.clearTimeout(projectsTimeoutRef.current);
-          }}
-          onMouseLeave={() => {
-            projectsTimeoutRef.current = window.setTimeout(() => setProjectsOpen(false), 200);
-          }}
+          onMouseEnter={() => openMenu('projects')}
+          onMouseLeave={scheduleClose}
           className={`
-            ${projectsOpen
+            ${openDropdown === 'projects'
               ? 'opacity-100 translate-y-0 visible pointer-events-auto'
               : 'opacity-0 -translate-y-2 invisible pointer-events-none'}
-            transition-all duration-200 ease-out
+            transition-opacity duration-150 ease-out
             absolute ${lang === 'ar' ? 'right-0' : 'left-0'}
-            mt-2 w-[260px] xl:w-[280px]
+            top-full
+            mt-1 w-[260px] xl:w-[280px]
             bg-[#14162E]
             border border-gray-700
             rounded-lg
@@ -118,24 +120,24 @@ export default function DesktopNav({ lang, t }: { lang: string; t: any }) {
         >
           <div className="flex flex-col gap-1.5 p-1">
             <Link href="/projects/cafe" className="dropdown-item-hover flex items-center gap-3 p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition whitespace-nowrap">
-               <Coffee className="w-4 h-4 text-amber-400" />
-               <span className="text-xs xl:text-sm font-semibold">{lang === 'ar' ? 'كافيهات' : 'Cafés'}</span>
+              <Coffee className="w-4 h-4 text-amber-400" />
+              <span className="text-xs xl:text-sm font-semibold">{lang === 'ar' ? 'كافيهات' : 'Cafés'}</span>
             </Link>
             <Link href="/projects/restaurant" className="dropdown-item-hover flex items-center gap-3 p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition whitespace-nowrap">
-               <UtensilsCrossed className="w-4 h-4 text-orange-400" />
-               <span className="text-xs xl:text-sm font-semibold">{lang === 'ar' ? 'مطاعم' : 'Restaurants'}</span>
+              <UtensilsCrossed className="w-4 h-4 text-orange-400" />
+              <span className="text-xs xl:text-sm font-semibold">{lang === 'ar' ? 'مطاعم' : 'Restaurants'}</span>
             </Link>
             <Link href="/projects/car-workshop" className="dropdown-item-hover flex items-center gap-3 p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition whitespace-nowrap">
-               <Wrench className="w-4 h-4 text-red-400" />
-               <span className="text-xs xl:text-sm font-semibold">{lang === 'ar' ? 'ورش صيانة السيارات' : 'Car Workshops'}</span>
+              <Wrench className="w-4 h-4 text-red-400" />
+              <span className="text-xs xl:text-sm font-semibold">{lang === 'ar' ? 'ورش صيانة السيارات' : 'Car Workshops'}</span>
             </Link>
             <Link href="/projects/shoes" className="dropdown-item-hover flex items-center gap-3 p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition whitespace-nowrap">
-               <ShoppingBag className="w-4 h-4 text-blue-400" />
-               <span className="text-xs xl:text-sm font-semibold">{lang === 'ar' ? 'أحذية' : 'Footwear'}</span>
+              <ShoppingBag className="w-4 h-4 text-blue-400" />
+              <span className="text-xs xl:text-sm font-semibold">{lang === 'ar' ? 'أحذية' : 'Footwear'}</span>
             </Link>
             <Link href="/projects/althob-alshemagh" className="dropdown-item-hover flex items-center gap-3 p-2 rounded-lg hover:bg-[rgba(255,77,109,0.15)] transition whitespace-nowrap">
-               <Shirt className="w-4 h-4 text-purple-400" />
-               <span className="text-xs xl:text-sm font-semibold">{lang === 'ar' ? 'الثوب والشماغ' : 'Thobe & Shemagh'}</span>
+              <Shirt className="w-4 h-4 text-purple-400" />
+              <span className="text-xs xl:text-sm font-semibold">{lang === 'ar' ? 'الثوب والشماغ' : 'Thobe & Shemagh'}</span>
             </Link>
           </div>
         </div>

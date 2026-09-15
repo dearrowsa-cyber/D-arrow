@@ -49,7 +49,7 @@ export default function ProcessPage() {
             <div className={styles.heroMeta}>
               <span className={styles.heroBadge}>{pageData?.process?.badge?.[lang] || t('processHeroBadge') || 'OUR PROCESS'}</span>
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3 !text-black dark:bg-clip-text dark:text-transparent dark:bg-gradient-to-r dark:from-brand-pink dark:to-brand-orange">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3  dark:bg-clip-text dark:text-transparent dark:bg-gradient-to-r dark:from-brand-pink dark:to-brand-orange">
               {pageData?.process?.title?.[lang] || t('ourProvenProcess')}
             </h1>
             <p className="text-lg text-black dark:text-gray-800">

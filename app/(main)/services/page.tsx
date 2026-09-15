@@ -40,25 +40,25 @@ const TITLE_TO_ID: Record<string, string> = {
 
 function resolveServiceId(service: any, index: number): string {
   console.log('Resolving ID for service:', service.titleKey || service.title?.en);
-  
+
   // 1. Already has id
   if (service.id && service.id !== 'undefined') return service.id;
-  
+
   // 2. Has titleKey (hardcoded services)
   if (service.titleKey) {
     const id = service.titleKey.replace('_title', '');
     if (id && id !== 'undefined') return id;
   }
-  
+
   // 3. Match from English title (dynamic siteData services)
   const enTitle = (service.title?.en || '').toLowerCase().trim();
   if (enTitle && TITLE_TO_ID[enTitle]) return TITLE_TO_ID[enTitle];
-  
+
   // 4. Partial match
   for (const [key, id] of Object.entries(TITLE_TO_ID)) {
     if (enTitle.includes(key) || key.includes(enTitle)) return id;
   }
-  
+
   const fallbackId = `service-${index}`;
   console.warn('Fallback ID generated:', fallbackId);
   return fallbackId;
@@ -69,7 +69,6 @@ function ServicesContent() {
   const [expandedCategory, setExpandedCategory] = useState('digital-marketing');
   const searchParams = useSearchParams();
   const pageData = siteData;
-
 
   useEffect(() => {
     const category = searchParams?.get('category') || 'digital-marketing';
@@ -389,7 +388,7 @@ function ServicesContent() {
           }),
         }}
       />
-      
+
       {/* Hero Section */}
       <section className={`relative py-8 lg:py-6 border-b border-gray-800/50`}>
         <div className="w-full mx-auto px-6 md:px-12">
@@ -417,7 +416,6 @@ function ServicesContent() {
       </section>
 
       {/* Animated Services Showcase */}
-   
 
       {/* Category is selected via `?category=` query param from header links */}
 
@@ -429,17 +427,17 @@ function ServicesContent() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 auto-rows-fr [&>*]:min-w-0 [&>*]:h-full [&_*]:break-words"
           >
             {(pageData?.services?.categories?.[expandedCategory] || services[expandedCategory as keyof typeof services] || []).map((service: any, index: number) => {
-               // Normalization to handle both the old hardcoded structure (titleKey, descKey) and the new dynamic structure (title.en, title.ar)
-               const normalizedService = {
-                 ...service,
-                 id: resolveServiceId(service, index),
-                 title: service.title?.[lang] || t(service.titleKey),
-                 description: service.description?.[lang] || t(service.descKey),
-               };
-               return <ServiceCard key={index} service={normalizedService} index={index} />;
+              // Normalization to handle both the old hardcoded structure (titleKey, descKey) and the new dynamic structure (title.en, title.ar)
+              const normalizedService = {
+                ...service,
+                id: resolveServiceId(service, index),
+                title: service.title?.[lang] || t(service.titleKey),
+                description: service.description?.[lang] || t(service.descKey),
+              };
+              return <ServiceCard key={index} service={normalizedService} index={index} />;
             })}
           </motion.div>
         </div>
@@ -483,7 +481,7 @@ function ServicesContent() {
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 viewport={{ once: true }}
                 whileHover={{ y: -5, boxShadow: '0 10px 30px rgba(255, 77, 109, 0.2)' }}
-                className="p-6 border border-gray-800 rounded-lg text-center hover:border-brand-pink/50 transition"
+                className="p-6 border border-gray-800 rounded-lg text-center hover:border-brand-pink/50 transition [&_*]:break-words"
               >
                 <motion.div
                   className="mb-4 flex items-center justify-center h-16"
@@ -508,7 +506,7 @@ function ServicesContent() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-              className="text-3xl text-black dark:text-white md:text-4xl font-bold mb-6"
+            className="text-3xl text-black dark:text-white md:text-4xl font-bold mb-6"
           >
             {t('readyToElevateTitle')}
           </motion.h2>
