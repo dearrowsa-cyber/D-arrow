@@ -13,8 +13,8 @@ FROM node:20-slim AS deps
 WORKDIR /app
 
 # Required for Prisma + native modules (sharp, better-sqlite3, etc.)
-RUN apt-get update -y \
- && apt-get install -y --no-install-recommends \
+RUN apt-get update -o Acquire::Check-Valid-Until=false -o Acquire::AllowInsecureRepositories=true -y \
+ && apt-get install --allow-unauthenticated -y --no-install-recommends \
       ca-certificates \
       curl \
       git \
@@ -35,8 +35,8 @@ RUN npm install --legacy-peer-deps
 FROM node:20-slim AS builder
 WORKDIR /app
 
-RUN apt-get update -y \
- && apt-get install -y --no-install-recommends openssl ca-certificates git \
+RUN apt-get update -o Acquire::Check-Valid-Until=false -o Acquire::AllowInsecureRepositories=true -y \
+ && apt-get install --allow-unauthenticated -y --no-install-recommends openssl ca-certificates git \
  && rm -rf /var/lib/apt/lists/*
 
 ENV NEXT_TELEMETRY_DISABLED=1
@@ -60,8 +60,8 @@ RUN npx prisma generate \
 FROM node:20-slim AS runner
 WORKDIR /app
 
-RUN apt-get update -y \
- && apt-get install -y --no-install-recommends \
+RUN apt-get update -o Acquire::Check-Valid-Until=false -o Acquire::AllowInsecureRepositories=true -y \
+ && apt-get install --allow-unauthenticated -y --no-install-recommends \
       ca-certificates \
       curl \
       openssl \
