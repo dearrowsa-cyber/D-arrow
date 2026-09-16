@@ -17,8 +17,7 @@ export async function POST(req: NextRequest) {
         downloadUrl: '/downloads/ecommerce-store-template.zip',
         demoUrl: '/demo/store',
         images: JSON.stringify([
-          'https://images.unsplash.com/photo-1556742049-0a67e6f49969?auto=format&fit=crop&w=800&q=90',
-          'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=90'
+          '/store/ecommerce.jpg'
         ]),
         featuresAr: JSON.stringify([
           'لوحة تحكم احترافية شاملة لإدارة المنتجات والطلبات والعملاء',
@@ -51,8 +50,7 @@ export async function POST(req: NextRequest) {
         downloadUrl: '/downloads/real-estate-template.zip',
         demoUrl: '/demo/real-estate',
         images: JSON.stringify([
-          'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=90',
-          'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=90'
+          '/store/realestate.jpg'
         ]),
         featuresAr: JSON.stringify([
           'منظومة فلترة وتصفح العقارات بالمخططات والمدن والأسعار',
@@ -82,7 +80,7 @@ export async function POST(req: NextRequest) {
         type: 'software',
         downloadUrl: '/downloads/influencer-platform.zip',
         images: JSON.stringify([
-          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=90'
+          '/store/influencer.jpg'
         ]),
         featuresAr: JSON.stringify([
           'نظام إدارة وتتبع حملات المشاهير والمؤثرين',
@@ -110,7 +108,7 @@ export async function POST(req: NextRequest) {
         type: 'course',
         downloadUrl: '/downloads/seo-course-access.pdf',
         images: JSON.stringify([
-          'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?auto=format&fit=crop&w=800&q=90'
+          '/store/seo.jpg'
         ]),
         featuresAr: JSON.stringify([
           'شرح عملي ومبسط لاستراتيجيات تصدر نتائج البحث الأولى Google',

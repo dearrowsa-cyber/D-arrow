@@ -76,10 +76,28 @@ const parseProductArray = (value: unknown): string[] => {
   }
 };
 
+const SLUG_IMAGE_MAP: Record<string, string> = {
+  "saudi-ecommerce-store-system": "/store/ecommerce.jpg",
+  "saudi-ecommerce-store-template": "/store/ecommerce.jpg",
+  "saudi-real-estate-platform": "/store/realestate.jpg",
+  "saudi-real-estate-template": "/store/realestate.jpg",
+  "influencer-marketing-platform": "/store/influencer.jpg",
+  "digital-marketing-seo-course": "/store/seo.jpg",
+};
+
+const CATEGORY_IMAGE_MAP: Record<string, string> = {
+  templates: "/store/ecommerce.jpg",
+  realestate: "/store/realestate.jpg",
+  influencer: "/store/influencer.jpg",
+  ai: "/store/ai-chatbot.jpg",
+  payments: "/store/payments.jpg",
+  hosting: "/store/hosting.png",
+  seo: "/store/seo.jpg",
+};
+
 const normalizeApiProduct = (product: any): StoreProduct => {
   const featuresAr = parseProductArray(product.featuresAr);
   const featuresEn = parseProductArray(product.features);
-  const image = parseProductArray(product.images)[0] || "/store/ecommerce.jpg";
   const categoryValue =
     `${product.category || ""} ${product.categoryAr || ""}`.toLowerCase();
   const category =
@@ -92,6 +110,13 @@ const normalizeApiProduct = (product: any): StoreProduct => {
           : categoryValue.includes("host") || categoryValue.includes("استضاف")
             ? "hosting"
             : "templates";
+
+  const rawImage = parseProductArray(product.images)[0];
+  const image =
+    SLUG_IMAGE_MAP[product.slug] ||
+    (rawImage && !rawImage.includes("unsplash.com") ? rawImage : null) ||
+    CATEGORY_IMAGE_MAP[category] ||
+    "/store/ecommerce.jpg";
 
   return {
     id: product.id,
@@ -605,10 +630,16 @@ export default function StorePage() {
                     >
                       <Image
                         src={product.image}
-                        alt={isAr ? product.nameAr : product.name}
+                        alt=""
                         fill
                         className="object-cover group-hover:scale-105 transition-transform duration-500"
                         unoptimized
+                        onError={(e) => {
+                          const target = e.currentTarget as HTMLImageElement;
+                          if (target && target.src && !target.src.includes('/store/ecommerce.jpg')) {
+                            target.src = '/store/ecommerce.jpg';
+                          }
+                        }}
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0D0F22] via-transparent to-black/40" />
 
