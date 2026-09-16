@@ -33,10 +33,10 @@ services:
       TZ:                 Asia/Riyadh
     volumes:
       - d_arrow_pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
     networks:
       - backend
-    # Do NOT expose 5432 on the host unless you need external access. Keep it
-    # internal to the compose project — the app reaches it via DNS name.
 
   # ----------------------------
   # 2) D-Arrow Next.js web app
