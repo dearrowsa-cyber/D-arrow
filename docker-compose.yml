@@ -70,13 +70,12 @@ services:
       # --- Chatbot feature toggle ---
       NEXT_PUBLIC_CHATBOT_ENABLED: "${NEXT_PUBLIC_CHATBOT_ENABLED:-true}"
 
-      # --- Prisma / Postgres (internal service name = d-arrow-postgres) ---
-      DATABASE_URL:          "postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@d-arrow-postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public"
-      # Alias vars some codepaths read:
-      POSTGRES_URL:          "postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@d-arrow-postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public"
-      POSTGRES_PRISMA_URL:   "postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@d-arrow-postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public&pgbouncer=false"
-      POSTGRES_URL_NON_POOLING: "postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@d-arrow-postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public"
-      DATABASE_URL_UNPOOLED: "postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@d-arrow-postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public"
+      # --- Prisma / Postgres (reads from .env DATABASE_URL if provided, otherwise defaults to internal d-arrow-postgres) ---
+      DATABASE_URL:          "${DATABASE_URL:-postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@d-arrow-postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public}"
+      POSTGRES_URL:          "${POSTGRES_URL:-${DATABASE_URL:-postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@d-arrow-postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public}}"
+      POSTGRES_PRISMA_URL:   "${POSTGRES_PRISMA_URL:-${DATABASE_URL:-postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@d-arrow-postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public&pgbouncer=false}}"
+      POSTGRES_URL_NON_POOLING: "${POSTGRES_URL_NON_POOLING:-${DATABASE_URL:-postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@d-arrow-postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public}}"
+      DATABASE_URL_UNPOOLED: "${DATABASE_URL_UNPOOLED:-${DATABASE_URL:-postgresql://${POSTGRES_USER:-darrow}:${POSTGRES_PASSWORD:-changeme_postgres_in_env}@d-arrow-postgres:5432/${POSTGRES_DATABASE:-darrow}?schema=public}}"
       PGHOST:                "d-arrow-postgres"
       PGDATABASE:            "${POSTGRES_DATABASE:-darrow}"
       PGUSER:                "${POSTGRES_USER:-darrow}"
