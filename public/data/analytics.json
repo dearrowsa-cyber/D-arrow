@@ -1,6 +1,6 @@
 {
-  "totalVisitors": 286,
-  "todayViews": 24,
+  "totalVisitors": 290,
+  "todayViews": 4,
   "pageViews": {
     "/": 54,
     "/blog": 21,
@@ -11,7 +11,7 @@
     "/pricing": 12,
     "/services": 12,
     "/services/dm_marketing": 1,
-    "/store": 35,
+    "/store": 37,
     "/store/ecommerce-store-admin-template": 1,
     "/demo/real-estate": 7,
     "/demo/real-estate/apartment-alolaya-riyadh": 1,
@@ -23,7 +23,7 @@
     "/store/saudi-real-estate-platform": 4,
     "/store/ai-customer-support-bot": 2,
     "/store/1212121": 1,
-    "/influencer": 69,
+    "/influencer": 71,
     "/store/high-speed-saudi-cloud-infrastructure": 1,
     "/store/payment-gateways-integration-pack": 1,
     "/demo/store": 1,
@@ -45,5 +45,5 @@
     "/services/dm_content": 1,
     "/services/dm_influencer": 1
   },
-  "lastResetDate": "2026-09-15"
+  "lastResetDate": "2026-09-17"
 }

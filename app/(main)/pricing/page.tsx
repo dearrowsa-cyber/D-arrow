@@ -247,6 +247,10 @@ export default function PricingPage() {
 
   return (
     <div className={styles.page} dir={isAr ? 'rtl' : 'ltr'}>
+        {/* SEO H1 - visually hidden but read by search engines */}
+        <h1 style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', borderWidth: 0 }}>
+          {isAr ? 'باقات وأسعار خدمات التسويق الرقمي | دي آرو' : 'Digital Marketing Packages & Pricing | D-Arrow'}
+        </h1>
         {/* ── PACKAGES ── */}
         <section className={styles.section} id="packages">
         <div className={styles.sectionHead}>

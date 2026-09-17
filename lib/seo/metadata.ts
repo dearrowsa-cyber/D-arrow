@@ -5,24 +5,24 @@ import prisma from '@/lib/prisma';
 /** Default metadata per slug — used as fallback when no DB entry exists */
 const DEFAULTS: Record<string, Metadata> = {
   '/': {
-    title: 'D Arrow - Next-Generation Digital Marketing Agency | Get Results Fast',
-    description: 'Award-winning digital marketing agency delivering measurable results through SEO, web design, branding, and digital marketing solutions. Get your free consultation today.',
-    keywords: 'digital marketing, SEO services, web design agency, branding services, marketing agency',
+    title: 'D-Arrow | وكالة التسويق الرقمي السعودية | Digital Marketing Agency Saudi Arabia',
+    description: 'D-Arrow وكالة تسويق رقمي احترافية في السعودية — SEO، إدارة سوشيال ميديا، حملات إعلانية جوجل وميتا، وتصميم هوية بصرية. احصل على استشارة مجانية الآن.',
+    keywords: 'شركة تسويق رقمي السعودية, وكالة تسويق رقمي, digital marketing agency saudi arabia, سيو عربي, ادارة سوشيال ميديا, D-Arrow',
   },
   '/services': {
-    title: 'Digital Marketing Services & Solutions - Get Custom Services - D Arrow',
-    description: 'Explore our comprehensive digital marketing services and solutions including SEO optimization, web design, app development, branding, social media marketing.',
-    keywords: 'digital marketing services, SEO services, web design, app development, branding services',
+    title: 'خدمات التسويق الرقمي | D-Arrow | Digital Marketing Services Saudi Arabia',
+    description: 'خدمات تسويق رقمي شاملة في السعودية: SEO، إدارة حسابات سوشيال ميديا، حملات إعلانية، تصميم مواقع، هوية بصرية. D-Arrow الشريك الرقمي الموثوق.',
+    keywords: 'خدمات تسويق رقمي, سيو السعودية, ادارة سوشيال ميديا, تصميم مواقع السعودية, digital marketing services saudi',
   },
   '/pricing': {
-    title: 'Pricing Plans - D Arrow | Affordable Digital Marketing Solutions',
-    description: 'Explore flexible pricing plans for digital marketing, web design, branding, and more. Starting from 800 SAR. Custom packages available.',
-    keywords: 'digital marketing pricing, web design pricing, branding packages, SEO pricing',
+    title: 'أسعار وباقات التسويق الرقمي | D-Arrow | Digital Marketing Pricing Saudi Arabia',
+    description: 'باقات تسويق رقمي مرنة وشاملة في السعودية تبدأ من 1,800 ريال شهرياً. خدمات SEO، سوشيال ميديا، حملات إعلانية، وتصميم. باقة مخصصة حسب احتياجك.',
+    keywords: 'أسعار تسويق رقمي, باقات تسويق, digital marketing pricing saudi, سعر خدمات سيو, باقات سوشيال ميديا',
   },
   '/process': {
-    title: 'Digital Marketing Process | Get Our Step-by-Step Methodology - D Arrow',
-    description: 'Discover our proven digital marketing process. Get expert guidance through every step from initial consultation to measurable results.',
-    keywords: 'digital marketing process, marketing methodology, strategy development',
+    title: 'منهجية عمل D-Arrow | خطوات التسويق الرقمي الاحترافي',
+    description: 'تعرّف على منهجية العمل الاحترافية في D-Arrow: من التحليل الأولي إلى التنفيذ والقياس. خبرة تسويق رقمي مدعومة بالبيانات والنتائج المثبتة.',
+    keywords: 'منهجية تسويق رقمي, خطوات التسويق, استراتيجية تسويقية, digital marketing process, marketing strategy saudi',
   },
   '/contact': {
     title: 'Contact Us | D Arrow - Free Digital Marketing Consultation',

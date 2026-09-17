@@ -1,7 +1,6 @@
 'use client';
 
 import { useLanguage } from './LanguageProvider';
-import styles from '@/app/(main)/pricing/pricing.module.css';
 import Image from 'next/image';
 
 const processSteps = [
@@ -26,7 +25,7 @@ const processSteps = [
   {
     titleKey: 'step_analysis_title',
     descKey: 'step_analysis_desc',
-    icon: '/icon/mainicons1/analysis.png',
+    icon: '/icon/update/reporting3.png',
     number: 4
   },
 ];
@@ -44,56 +43,104 @@ const Process = () => {
   };
 
   return (
-    <section id="process" className="py-10 lg:py-14 border-t border-gray-800/50">
-      <div className="w-full mx-auto px-6 md:px-12">
+    <section id="process" className="py-12 lg:py-16 border-t border-gray-800/50 relative overflow-hidden">
+      {/* Background subtle glow */}
+      <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-[#FF4D6D]/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
+      <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-[#FF9A3C]/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2" />
+
+      <div className="w-full mx-auto px-6 md:px-12 relative z-10">
         <div suppressHydrationWarning className={`${lang === 'ar' ? 'text-right' : 'text-center'} max-w-3xl mx-auto mb-16`}>
-          <div className={styles.heroMeta}>
-            <span suppressHydrationWarning className={styles.heroBadge}>{t('processHeroBadge')}</span>
-            <span suppressHydrationWarning className={styles.heroPill}>{t('processHeroPill')}</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-[rgba(255,77,109,0.12)] to-[rgba(255,154,60,0.12)] border border-[rgba(255,77,109,0.25)] backdrop-blur-sm mb-4">
+            <span suppressHydrationWarning className="text-xs sm:text-sm font-bold text-[#FF4D6D]">
+              {t('processHeroBadge')}
+            </span>
+            <span className="text-white/40 text-xs">•</span>
+            <span suppressHydrationWarning className="text-xs sm:text-sm font-semibold text-[#FF9A3C]">
+              {t('processHeroPill')}
+            </span>
           </div>
-          <h2 suppressHydrationWarning className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-text-dark dark:bg-clip-text dark:text-transparent dark:bg-gradient-to-r dark:from-brand-pink dark:to-brand-orange">
+          <h2 suppressHydrationWarning className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4 text-white bg-gradient-to-r from-brand-pink via-[#FF6F4F] to-brand-orange bg-clip-text text-transparent">
             {t('ourProvenProcess')}
           </h2>
-          <p suppressHydrationWarning className="text-lg text-text-light dark:text-soft-white">
+          <p suppressHydrationWarning className="text-base sm:text-lg text-gray-300 leading-relaxed">
             {t('processHeroDesc')}
           </p>
         </div>
 
-        <div
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
-        >
-          {processSteps.map((step, i) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+          {processSteps.map((step) => (
             <div
               key={step.number}
-              className={styles.processCard}
+              className="relative group flex flex-col justify-between p-7 rounded-2xl transition-all duration-300 hover:-translate-y-2 border border-white/10 hover:border-[#FF4D6D]/40"
+              style={{
+                background: 'linear-gradient(145deg, rgba(20, 22, 46, 0.95) 0%, rgba(15, 17, 38, 0.85) 50%, rgba(11, 13, 31, 0.98) 100%)',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.35)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)'
+              }}
               role="article"
               aria-label={t(step.titleKey)}
             >
-              <div className={styles.cardTop}>
-                <div className={styles.iconWrap}>
+              {/* Subtle hover gradient ring */}
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] rounded-2xl blur-md opacity-0 group-hover:opacity-20 transition duration-500 pointer-events-none" />
+
+              {/* Card Top: Icon & Step Badge */}
+              <div className="relative z-10 flex items-center justify-between w-full mb-6">
+                {/* Glowing Icon Wrapper */}
+                <div 
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-105"
+                  style={{
+                    background: 'radial-gradient(circle at center, rgba(255, 77, 109, 0.2) 0%, rgba(255, 154, 60, 0.08) 70%, transparent 100%)',
+                    border: '1px solid rgba(255, 77, 109, 0.3)',
+                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.25)'
+                  }}
+                >
                   <Image
                     src={step.icon}
                     alt={t(step.titleKey)}
-                    width={90}
-                    height={90}
-                    className="w-12 h-12 max-w-[48px] max-h-[48px] object-contain mx-auto"
+                    width={48}
+                    height={48}
+                    className="w-10 h-10 object-contain mx-auto"
                     loading="lazy"
                   />
                 </div>
-                <div className={`${styles.badge}`}>
+
+                {/* Step Badge */}
+                <div 
+                  className="px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold text-white shadow-md flex items-center justify-center"
+                  style={{
+                    background: 'linear-gradient(135deg, #FF4D6D 0%, #FF9A3C 100%)',
+                    boxShadow: '0 4px 15px rgba(255, 77, 109, 0.35)',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    fontFamily: lang === 'ar' ? "'29LT-Bukra', 'Cairo', sans-serif" : "'TT Hoves Pro', system-ui"
+                  }}
+                >
                   {t('stepLabel')} {convertToArabicNumbers(step.number)}
                 </div>
               </div>
 
-              <div className={styles.cardBody}>
-                <h3 className={styles.cardTitleprocess1}>{t(step.titleKey)}</h3>
-                <p style={{ color: 'var(--text-dark)', fontSize: '0.95rem', lineHeight: '1.6' }}>
-                  {t(step.descKey)}
-                </p>
-                <div className={styles.divider} />
+              {/* Card Body */}
+              <div className="relative z-10 flex flex-col flex-1 justify-between">
+                <div>
+                  <h3 
+                    className="text-xl sm:text-2xl font-bold text-white mb-3 leading-snug"
+                    style={{ fontFamily: lang === 'ar' ? "'29LT-Bukra', 'Cairo', sans-serif" : "'Gilroy', system-ui" }}
+                  >
+                    {t(step.titleKey)}
+                  </h3>
+                  <p className="text-gray-300 text-sm leading-relaxed mb-6">
+                    {t(step.descKey)}
+                  </p>
+                </div>
 
-                <div style={{ fontSize: '0.9rem', color: 'var(--text-dark)', paddingTop: '0.5rem' }}>
-                  <span style={{ color: '#FF6F4F', fontWeight: 600 }}>{t('phase')} {convertToArabicNumbers(step.number)}</span> {t('ofTheProcess')}
+                <div>
+                  {/* Divider */}
+                  <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent my-4" />
+
+                  {/* Phase Indicator */}
+                  <div className="text-xs sm:text-sm text-gray-400">
+                    <span className="text-[#FF9A3C] font-bold">{t('phase')} {convertToArabicNumbers(step.number)}</span> {t('ofTheProcess')}
+                  </div>
                 </div>
               </div>
             </div>

@@ -32,7 +32,7 @@ export default function JoinInfluencerPage() {
               <div className="flex items-center justify-center lg:justify-start gap-3 mb-6">
                 <div className="relative w-14 h-14 sm:w-16 sm:h-16 flex-shrink-0 bg-white/5 p-2 rounded-2xl border border-white/10 backdrop-blur-md shadow-lg shadow-[#FF4D6D]/10">
                   <Image
-                    src="/influencer-logo.png"
+                    src="/da-in-logo.png?v=2026"
                     alt="D-Arrow Influencer Logo"
                     fill
                     className="object-contain p-1"
