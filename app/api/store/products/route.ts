@@ -24,6 +24,15 @@ const parseJsonArray = (value: unknown) => {
   }
 };
 
+const stripHtml = (value: string | null) =>
+  value
+    ?.replace(/<[^>]*>/g, "")
+    .replace(/&nbsp;/gi, " ")
+    .replace(/&amp;/gi, "&")
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">")
+    .trim() ?? null;
+
 const toProductData = (data: Record<string, unknown>) => ({
   name: String(data.name || data.nameAr || '').trim(),
   nameAr: data.nameAr ? String(data.nameAr).trim() : null,
@@ -72,7 +81,13 @@ export async function GET(req: NextRequest) {
       console.warn('Prisma fetch failed, using default templates', e);
     }
 
-    return NextResponse.json({ success: true, products, count: products.length });
+    const normalizedProducts = products.map((product) => ({
+      ...product,
+      description: stripHtml(product.description),
+      descriptionAr: stripHtml(product.descriptionAr),
+    }));
+
+    return NextResponse.json({ success: true, products: normalizedProducts, count: normalizedProducts.length });
   } catch (error) {
     console.error('Error fetching products:', error);
     return NextResponse.json({ success: false, error: 'Failed to fetch products' }, { status: 500 });

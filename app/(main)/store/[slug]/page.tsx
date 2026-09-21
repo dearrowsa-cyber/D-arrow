@@ -68,6 +68,18 @@ export interface DetailedProduct {
   faqsEn: { q: string; a: string }[];
 }
 
+const toReadableText = (value: unknown) => {
+  if (typeof value !== "string") return "";
+
+  if (typeof document === "undefined") {
+    return value.replace(/<[^>]*>/g, "").replace(/&nbsp;/gi, " ").trim();
+  }
+
+  const container = document.createElement("div");
+  container.innerHTML = value;
+  return (container.textContent || "").replace(/\u00a0/g, " ").trim();
+};
+
 const PRODUCTS_DATABASE: Record<string, DetailedProduct> = {
   "saudi-ecommerce-store-template": {
     id: "saudi-ecommerce-store-template",
@@ -632,6 +644,7 @@ export default function ProductDetailsPage() {
   const [copiedLink, setCopiedLink] = useState<boolean>(false);
   const [addedToast, setAddedToast] = useState<boolean>(false);
   const [apiProduct, setApiProduct] = useState<DetailedProduct | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     let active = true;
@@ -652,9 +665,6 @@ export default function ProductDetailsPage() {
         );
         if (!active || !item) return;
 
-        const fallback =
-          PRODUCTS_DATABASE[slug] ||
-          PRODUCTS_DATABASE["saudi-ecommerce-store-template"];
         const parseArray = (value: unknown, fallbackValue: string[]) => {
           if (Array.isArray(value))
             return value.filter(
@@ -677,49 +687,69 @@ export default function ProductDetailsPage() {
         const category =
           categoryText.includes("real") || categoryText.includes("عقار")
             ? "realestate"
-            : fallback.category;
+            : categoryText.includes("host") ||
+                categoryText.includes("cloud") ||
+                categoryText.includes("استضاف")
+              ? "hosting"
+              : "templates";
         const apiSlug =
           item.slug === "saudi-real-estate-template"
             ? "saudi-real-estate-platform"
             : item.slug;
-        const featuresAr = parseArray(item.featuresAr, fallback.featuresAr);
-        const featuresEn = parseArray(item.features, fallback.featuresEn);
+        const featuresAr = parseArray(item.featuresAr, []);
+        const featuresEn = parseArray(item.features, []);
+        const images = parseArray(item.images, []);
 
         setApiProduct({
-          ...fallback,
           id: item.id,
           slug: apiSlug,
-          name: item.name || fallback.name,
-          nameAr: item.nameAr || fallback.nameAr,
+          name: item.name || "",
+          nameAr: item.nameAr || item.name || "",
           category,
-          categoryNameAr: item.categoryAr || fallback.categoryNameAr,
-          categoryNameEn: item.category || fallback.categoryNameEn,
+          categoryNameAr: item.categoryAr || item.category || "الأنظمة الرقمية",
+          categoryNameEn: item.category || "Digital Systems",
+          categoryIcon:
+            category === "hosting"
+              ? Server
+              : category === "realestate"
+                ? Building2
+                : ShoppingBag,
           price: Number(item.salePrice ?? item.price),
           originalPrice: Number(item.price),
-          image: parseArray(item.images, [fallback.image])[0],
-          descriptionAr: item.descriptionAr || fallback.descriptionAr,
-          descriptionEn: item.description || fallback.descriptionEn,
-          summaryAr: item.descriptionAr || fallback.summaryAr,
-          summaryEn: item.description || fallback.summaryEn,
+          rating: 5,
+          image: images[0] || "/store/hosting.png",
+          descriptionAr: toReadableText(item.descriptionAr || item.description),
+          descriptionEn: toReadableText(item.description),
+          summaryAr: toReadableText(item.descriptionAr || item.description),
+          summaryEn: toReadableText(item.description),
           featuresAr,
           featuresEn,
-          demoUrl: item.demoUrl || fallback.demoUrl,
-          reviewsCount: Number(item._count?.reviews || fallback.reviewsCount),
-          ordersCount: Number(item._count?.orderItems || fallback.ordersCount),
+          demoUrl: item.demoUrl || undefined,
+          reviewsCount: Number(item._count?.reviews || 0),
+          ordersCount: Number(item._count?.orderItems || 0),
+          keyBenefitsAr: [],
+          keyBenefitsEn: [],
+          techStack: [],
+          deliveryTimeAr: "تفعيل وتجهيز فوري",
+          deliveryTimeEn: "Instant setup",
+          faqsAr: [],
+          faqsEn: [],
         });
       })
-      .catch(() => undefined);
+      .catch(() => undefined)
+      .finally(() => {
+        if (active) setIsLoading(false);
+      });
 
     return () => {
       active = false;
     };
   }, [slug]);
 
-  // Lookup product or fallback to e-commerce template
-  const product: DetailedProduct =
-    apiProduct ||
-    PRODUCTS_DATABASE[slug] ||
-    PRODUCTS_DATABASE["saudi-ecommerce-store-template"];
+  if (isLoading) return null;
+  if (!apiProduct) return null;
+
+  const product = apiProduct;
   const inCart = items.some((i) => i.productId === product.id);
   const savings = product.originalPrice - product.price;
   const discountPct = Math.round((savings / product.originalPrice) * 100);
