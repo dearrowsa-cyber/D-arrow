@@ -1,46 +1,57 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { 
-  X, 
-  ShoppingCart, 
-  Trash2, 
-  Plus, 
-  Minus, 
-  CreditCard, 
-  Tag, 
+import React, { useState } from "react";
+import Link from "@util/link";
+import {
+  X,
+  ShoppingCart,
+  Trash2,
+  Plus,
+  Minus,
+  CreditCard,
+  Tag,
   Truck,
   Check,
   ChevronLeft,
   ShieldCheck,
-  Lock
-} from 'lucide-react';
-import { useStore } from './StoreContext';
+  Lock,
+} from "lucide-react";
+import { useStore } from "./StoreContext";
 
 export default function CartDrawer() {
-  const { 
-    cart, 
-    isCartOpen, 
-    setIsCartOpen, 
-    removeFromCart, 
-    updateCartQuantity, 
-    cartSubtotal, 
+  const {
+    cart,
+    isCartOpen,
+    setIsCartOpen,
+    removeFromCart,
+    updateCartQuantity,
+    cartSubtotal,
     settings,
     appliedCoupon,
     applyCoupon,
-    removeCoupon
+    removeCoupon,
   } = useStore();
 
-  const [couponInput, setCouponInput] = useState('');
-  const [couponMessage, setCouponMessage] = useState<{ text: string; success: boolean } | null>(null);
+  const [couponInput, setCouponInput] = useState("");
+  const [couponMessage, setCouponMessage] = useState<{
+    text: string;
+    success: boolean;
+  } | null>(null);
 
   if (!isCartOpen) return null;
 
-  const discountAmount = appliedCoupon ? (cartSubtotal * appliedCoupon.discountPct) / 100 : 0;
+  const discountAmount = appliedCoupon
+    ? (cartSubtotal * appliedCoupon.discountPct) / 100
+    : 0;
   const finalTotal = Math.max(0, cartSubtotal - discountAmount);
-  const freeShippingProgress = Math.min(100, Math.round((finalTotal / settings.freeShippingThreshold) * 100));
-  const remainingForFreeShipping = Math.max(0, settings.freeShippingThreshold - finalTotal);
+  const freeShippingProgress = Math.min(
+    100,
+    Math.round((finalTotal / settings.freeShippingThreshold) * 100),
+  );
+  const remainingForFreeShipping = Math.max(
+    0,
+    settings.freeShippingThreshold - finalTotal,
+  );
   const installment4x = (finalTotal / 4).toFixed(2);
 
   const handleApplyCoupon = (e: React.FormEvent) => {
@@ -48,20 +59,22 @@ export default function CartDrawer() {
     if (!couponInput) return;
     const res = applyCoupon(couponInput);
     setCouponMessage({ text: res.message, success: res.success });
-    if (res.success) setCouponInput('');
+    if (res.success) setCouponInput("");
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden demo-store-root" dir="rtl">
+    <div
+      className="fixed inset-0 z-50 overflow-hidden demo-store-root"
+      dir="rtl"
+    >
       {/* Backdrop */}
-      <div 
+      <div
         onClick={() => setIsCartOpen(false)}
         className="absolute inset-0 bg-black/70 backdrop-blur-sm transition-opacity animate-in fade-in cursor-pointer"
       />
 
       <div className="fixed inset-y-0 left-0 max-w-full flex pl-0 sm:pl-10">
         <div className="w-screen max-w-md bg-[#161205] border-r-2 border-[#382E0E] text-white shadow-2xl flex flex-col animate-in slide-in-from-left duration-300">
-          
           {/* Header */}
           <div className="p-5 border-b border-[#382E0E] flex items-center justify-between bg-[#120E04]">
             <div className="flex items-center gap-3">
@@ -69,12 +82,16 @@ export default function CartDrawer() {
                 <ShoppingCart className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-black text-base text-white">سلة المشتريات</h3>
-                <p className="text-xs text-[#9CA3AF] font-bold">({cart.length} منتجات مضافة)</p>
+                <h3 className="font-black text-base text-white">
+                  سلة المشتريات
+                </h3>
+                <p className="text-xs text-[#9CA3AF] font-bold">
+                  ({cart.length} منتجات مضافة)
+                </p>
               </div>
             </div>
 
-            <button 
+            <button
               onClick={() => setIsCartOpen(false)}
               className="p-2 rounded-xl bg-[#1C1707] hover:bg-[#2D250B] text-[#D1D5DB] hover:text-[#FFE600] border border-[#382E0E] transition cursor-pointer"
             >
@@ -88,18 +105,26 @@ export default function CartDrawer() {
               <span className="flex items-center gap-1 text-[#E2E8F0]">
                 <Truck className="w-4 h-4 text-[#FFE600]" />
                 {remainingForFreeShipping === 0 ? (
-                  <span className="text-[#FFE600] font-bold">مؤهل للشحن المجاني لكافة مدن المملكة</span>
+                  <span className="text-[#FFE600] font-bold">
+                    مؤهل للشحن المجاني لكافة مدن المملكة
+                  </span>
                 ) : (
                   <span>
-                    أضف <strong className="text-[#FFE600] font-black">{remainingForFreeShipping} {settings.currency}</strong> للحصول على شحن مجاني
+                    أضف{" "}
+                    <strong className="text-[#FFE600] font-black">
+                      {remainingForFreeShipping} {settings.currency}
+                    </strong>{" "}
+                    للحصول على شحن مجاني
                   </span>
                 )}
               </span>
-              <span className="text-[#FFE600] font-mono font-bold">{freeShippingProgress}%</span>
+              <span className="text-[#FFE600] font-mono font-bold">
+                {freeShippingProgress}%
+              </span>
             </div>
 
             <div className="w-full h-2 rounded-full bg-[#120E04] border border-[#382E0E] overflow-hidden">
-              <div 
+              <div
                 className="h-full rounded-full transition-all duration-500 bg-gradient-to-r from-[#FFE600] to-[#FFD700]"
                 style={{ width: `${freeShippingProgress}%` }}
               />
@@ -113,7 +138,9 @@ export default function CartDrawer() {
                 <div className="w-16 h-16 rounded-3xl bg-[#1C1707] border border-[#382E0E] mx-auto flex items-center justify-center text-[#FFE600]">
                   <ShoppingCart className="w-8 h-8 opacity-60" />
                 </div>
-                <h4 className="font-bold text-lg text-white">سلة المشتريات فارغة</h4>
+                <h4 className="font-bold text-lg text-white">
+                  سلة المشتريات فارغة
+                </h4>
                 <p className="text-xs text-[#9CA3AF] max-w-xs mx-auto font-medium">
                   تصفح المنتجات وأضف ما يناسبك إلى سلة التسوق
                 </p>
@@ -126,13 +153,20 @@ export default function CartDrawer() {
               </div>
             ) : (
               cart.map(({ product, quantity }) => (
-                <div key={product.id} className="pt-3 first:pt-0 flex gap-3 items-center">
+                <div
+                  key={product.id}
+                  className="pt-3 first:pt-0 flex gap-3 items-center"
+                >
                   <div className="relative w-18 h-18 rounded-2xl overflow-hidden bg-[#120E04] border border-[#382E0E] flex-shrink-0">
-                    <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
 
                   <div className="flex-1 min-w-0 space-y-1">
-                    <Link 
+                    <Link
                       href={`/demo/store/${product.id}`}
                       onClick={() => setIsCartOpen(false)}
                       className="font-black text-xs sm:text-sm text-white truncate block hover:text-[#FFE600] transition"
@@ -155,14 +189,20 @@ export default function CartDrawer() {
                     <div className="flex items-center gap-3 pt-1">
                       <div className="flex items-center bg-[#120E04] border border-[#382E0E] rounded-xl p-0.5">
                         <button
-                          onClick={() => updateCartQuantity(product.id, quantity - 1)}
+                          onClick={() =>
+                            updateCartQuantity(product.id, quantity - 1)
+                          }
                           className="w-6 h-6 rounded-lg flex items-center justify-center hover:bg-[#2D250B] text-white transition cursor-pointer"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
-                        <span className="w-7 text-center text-xs font-mono font-black text-white">{quantity}</span>
+                        <span className="w-7 text-center text-xs font-mono font-black text-white">
+                          {quantity}
+                        </span>
                         <button
-                          onClick={() => updateCartQuantity(product.id, quantity + 1)}
+                          onClick={() =>
+                            updateCartQuantity(product.id, quantity + 1)
+                          }
                           className="w-6 h-6 rounded-lg flex items-center justify-center hover:bg-[#2D250B] text-white transition cursor-pointer"
                         >
                           <Plus className="w-3 h-3" />
@@ -186,17 +226,19 @@ export default function CartDrawer() {
           {/* Footer & Checkout Area */}
           {cart.length > 0 && (
             <div className="p-5 bg-[#120E04] border-t border-[#382E0E] space-y-4">
-              
               {/* Coupon Form */}
               <form onSubmit={handleApplyCoupon} className="space-y-2">
                 {appliedCoupon ? (
                   <div className="p-2.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-between text-xs">
                     <div className="flex items-center gap-2 text-emerald-400 font-bold">
                       <Tag className="w-4 h-4 text-emerald-400" />
-                      <span>كود ({appliedCoupon.code}) مفعّل - خصم {appliedCoupon.discountPct}%</span>
+                      <span>
+                        كود ({appliedCoupon.code}) مفعّل - خصم{" "}
+                        {appliedCoupon.discountPct}%
+                      </span>
                     </div>
-                    <button 
-                      type="button" 
+                    <button
+                      type="button"
                       onClick={removeCoupon}
                       className="text-red-400 hover:text-red-300 font-bold cursor-pointer"
                     >
@@ -221,7 +263,9 @@ export default function CartDrawer() {
                   </div>
                 )}
                 {couponMessage && (
-                  <p className={`text-[11px] font-bold ${couponMessage.success ? 'text-emerald-400' : 'text-red-400'}`}>
+                  <p
+                    className={`text-[11px] font-bold ${couponMessage.success ? "text-emerald-400" : "text-red-400"}`}
+                  >
                     {couponMessage.text}
                   </p>
                 )}
@@ -231,30 +275,40 @@ export default function CartDrawer() {
               <div className="space-y-2 text-xs text-[#D1D5DB] border-t border-[#382E0E] pt-3 font-bold">
                 <div className="flex justify-between">
                   <span>المجموع الفرعي:</span>
-                  <span className="font-mono text-white">{cartSubtotal} {settings.currency}</span>
+                  <span className="font-mono text-white">
+                    {cartSubtotal} {settings.currency}
+                  </span>
                 </div>
                 {appliedCoupon && (
                   <div className="flex justify-between text-emerald-400">
                     <span>خصم الكوبون ({appliedCoupon.discountPct}%):</span>
-                    <span className="font-mono">-{discountAmount.toFixed(2)} {settings.currency}</span>
+                    <span className="font-mono">
+                      -{discountAmount.toFixed(2)} {settings.currency}
+                    </span>
                   </div>
                 )}
                 <div className="flex justify-between">
                   <span>الشحن والتوصيل:</span>
                   <span className="font-mono text-[#FFE600]">
-                    {remainingForFreeShipping === 0 ? 'مجاني' : `25 ${settings.currency}`}
+                    {remainingForFreeShipping === 0
+                      ? "مجاني"
+                      : `25 ${settings.currency}`}
                   </span>
                 </div>
                 <div className="flex justify-between text-base font-black text-white pt-2 border-t border-[#382E0E]">
                   <span>الإجمالي النهائي:</span>
-                  <span className="text-[#FFE600] font-mono text-xl">{finalTotal.toFixed(2)} {settings.currency}</span>
+                  <span className="text-[#FFE600] font-mono text-xl">
+                    {finalTotal.toFixed(2)} {settings.currency}
+                  </span>
                 </div>
               </div>
 
               {/* Installment Badge in Drawer */}
               <div className="p-3 rounded-2xl bg-[#1C1707] border border-[#382E0E] text-xs text-[#D1D5DB] flex items-center justify-between font-bold">
                 <span>أو قسّمها على 4 دفعات مريحة:</span>
-                <span className="font-black text-[#FFE600] font-mono">{installment4x} {settings.currency}/شهر</span>
+                <span className="font-black text-[#FFE600] font-mono">
+                  {installment4x} {settings.currency}/شهر
+                </span>
               </div>
 
               {/* Direct Checkout Action */}
@@ -271,10 +325,8 @@ export default function CartDrawer() {
                 <Lock className="w-3.5 h-3.5 text-[#FFE600]" />
                 <span>دفع إلكتروني آمن ومشفر بتوافق مع البنوك السعودية</span>
               </div>
-
             </div>
           )}
-
         </div>
       </div>
     </div>

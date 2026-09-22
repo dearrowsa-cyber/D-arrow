@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { useLanguage } from '@/components/LanguageProvider';
-import { projectsShowcase } from '@/lib/data/projects-showcase';
+import Image from "next/image";
+import Link from "@util/link";
+import { motion } from "framer-motion";
+import { useLanguage } from "@/components/LanguageProvider";
+import { projectsShowcase } from "@/lib/data/projects-showcase";
 
 const DARK_BLUR =
-  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPj/HwADBwIAMCbHYQAAAABJRU5ErkJggg==';
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPj/HwADBwIAMCbHYQAAAABJRU5ErkJggg==";
 
 export default function ProjectsOverviewPage() {
   const { lang } = useLanguage();
@@ -26,15 +26,17 @@ export default function ProjectsOverviewPage() {
           className="text-center mb-16"
         >
           <span className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-brand-pink mb-3 px-4 py-1.5 rounded-full bg-brand-pink/10 border border-brand-pink/20">
-            {lang === 'ar' ? 'طور مشروعك' : 'Grow Your Business'}
+            {lang === "ar" ? "طور مشروعك" : "Grow Your Business"}
           </span>
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-100 to-brand-pink">
-            {lang === 'ar' ? 'نماذج أعمالنا حسب القطاع' : 'Our Industry Work Samples'}
+            {lang === "ar"
+              ? "نماذج أعمالنا حسب القطاع"
+              : "Our Industry Work Samples"}
           </h1>
           <p className="text-base md:text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
-            {lang === 'ar'
-              ? 'اختر قطاع عملك واكتشف كيف ساعدنا براندات في نفس مجالك على تحقيق نجاحات تسويقية استثنائية.'
-              : 'Select your industry sector and explore how we helped businesses in your field achieve outstanding marketing results.'}
+            {lang === "ar"
+              ? "اختر قطاع عملك واكتشف كيف ساعدنا براندات في نفس مجالك على تحقيق نجاحات تسويقية استثنائية."
+              : "Select your industry sector and explore how we helped businesses in your field achieve outstanding marketing results."}
           </p>
         </motion.div>
 
@@ -47,7 +49,10 @@ export default function ProjectsOverviewPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Link href={`/projects/${project.id}`} className="group block h-full">
+              <Link
+                href={`/projects/${project.id}`}
+                className="group block h-full"
+              >
                 <div className="flex flex-col h-full rounded-2xl overflow-hidden bg-[#14162e] border border-white/10 transition-all duration-500 group-hover:-translate-y-2 group-hover:border-brand-pink/40 group-hover:shadow-[0_20px_50px_rgba(255,77,109,0.15)]">
                   {/* Image */}
                   <div className="relative aspect-[4/3] bg-[#0c0e20] overflow-hidden">
@@ -62,7 +67,8 @@ export default function ProjectsOverviewPage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                     <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/50 backdrop-blur-sm text-xs font-semibold text-white/90 border border-white/10">
-                      {project.images.length} {lang === 'ar' ? 'تصميمات' : 'Designs'}
+                      {project.images.length}{" "}
+                      {lang === "ar" ? "تصميمات" : "Designs"}
                     </div>
                   </div>
 
@@ -76,7 +82,9 @@ export default function ProjectsOverviewPage() {
                     </p>
 
                     <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs font-semibold text-brand-pink">
-                      <span>{lang === 'ar' ? 'استعرض النماذج' : 'View Showcase'}</span>
+                      <span>
+                        {lang === "ar" ? "استعرض النماذج" : "View Showcase"}
+                      </span>
                       <svg
                         width="16"
                         height="16"

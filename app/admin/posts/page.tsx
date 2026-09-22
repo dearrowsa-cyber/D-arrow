@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
-import { Plus, Search, Trash2, Edit, FileText } from 'lucide-react';
-import Image from 'next/image';
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import Link from "@util/link";
+import { Plus, Search, Trash2, Edit, FileText } from "lucide-react";
+import Image from "next/image";
 
 interface Post {
   id: string;
@@ -23,12 +23,16 @@ export default function PostsListPage() {
   const searchParams = useSearchParams();
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState('');
-  const [filterCategory, setFilterCategory] = useState('all');
-  const [filterStatus, setFilterStatus] = useState<string>(searchParams.get('status') || 'all');
-  const [filterTag, setFilterTag] = useState('all');
+  const [search, setSearch] = useState("");
+  const [filterCategory, setFilterCategory] = useState("all");
+  const [filterStatus, setFilterStatus] = useState<string>(
+    searchParams.get("status") || "all",
+  );
+  const [filterTag, setFilterTag] = useState("all");
   const [deleteId, setDeleteId] = useState<string | null>(null);
-  const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
+  const [toast, setToast] = useState<{ msg: string; type: string } | null>(
+    null,
+  );
 
   useEffect(() => {
     fetchPosts();
@@ -36,10 +40,11 @@ export default function PostsListPage() {
 
   const fetchPosts = async () => {
     try {
-      const res = await fetch('/api/blog/posts', { cache: 'no-store' });
+      const res = await fetch("/api/blog/posts", { cache: "no-store" });
       const data = await res.json();
-      const sorted = (data.posts || []).sort((a: Post, b: Post) =>
-        new Date(b.date).getTime() - new Date(a.date).getTime()
+      const sorted = (data.posts || []).sort(
+        (a: Post, b: Post) =>
+          new Date(b.date).getTime() - new Date(a.date).getTime(),
       );
       setPosts(sorted);
     } catch (err) {
@@ -52,16 +57,18 @@ export default function PostsListPage() {
   const handleDelete = async () => {
     if (!deleteId) return;
     try {
-      const res = await fetch(`/api/blog/posts?id=${deleteId}`, { method: 'DELETE' });
+      const res = await fetch(`/api/blog/posts?id=${deleteId}`, {
+        method: "DELETE",
+      });
       const data = await res.json();
       if (data.success) {
-        setPosts(prev => prev.filter(p => p.id !== deleteId));
-        showToast('تم حذف المقال بنجاح', 'success');
+        setPosts((prev) => prev.filter((p) => p.id !== deleteId));
+        showToast("تم حذف المقال بنجاح", "success");
       } else {
-        showToast('فشل في حذف المقال', 'error');
+        showToast("فشل في حذف المقال", "error");
       }
     } catch {
-      showToast('حدث خطأ', 'error');
+      showToast("حدث خطأ", "error");
     }
     setDeleteId(null);
   };
@@ -71,26 +78,45 @@ export default function PostsListPage() {
     setTimeout(() => setToast(null), 3000);
   };
 
-  const categories = ['all', ...new Set(posts.map(p => p.category))];
+  const categories = ["all", ...new Set(posts.map((p) => p.category))];
 
-  const allTags = Array.from(new Set(posts.flatMap(p => p.tags || [])));
+  const allTags = Array.from(new Set(posts.flatMap((p) => p.tags || [])));
 
-  const filteredPosts = posts.filter(p => {
-    const matchSearch = (p.title + (p.titleAr || '')).toLowerCase().includes(search.toLowerCase());
-    const matchCategory = filterCategory === 'all' || p.category === filterCategory;
-    const matchStatus = filterStatus === 'all' || (filterStatus === 'draft' ? p.status === 'draft' : p.status !== 'draft');
-    const matchTag = filterTag === 'all' || (p.tags && p.tags.includes(filterTag));
+  const filteredPosts = posts.filter((p) => {
+    const matchSearch = (p.title + (p.titleAr || ""))
+      .toLowerCase()
+      .includes(search.toLowerCase());
+    const matchCategory =
+      filterCategory === "all" || p.category === filterCategory;
+    const matchStatus =
+      filterStatus === "all" ||
+      (filterStatus === "draft" ? p.status === "draft" : p.status !== "draft");
+    const matchTag =
+      filterTag === "all" || (p.tags && p.tags.includes(filterTag));
     return matchSearch && matchCategory && matchStatus && matchTag;
   });
 
   if (loading) {
     return (
-      <div className="admin-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 400 }}>
-        <div style={{
-          width: 40, height: 40, border: '3px solid rgba(255,77,109,0.2)',
-          borderTopColor: '#FF4D6D', borderRadius: '50%',
-          animation: 'spin 0.8s linear infinite',
-        }} />
+      <div
+        className="admin-content"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: 400,
+        }}
+      >
+        <div
+          style={{
+            width: 40,
+            height: 40,
+            border: "3px solid rgba(255,77,109,0.2)",
+            borderTopColor: "#FF4D6D",
+            borderRadius: "50%",
+            animation: "spin 0.8s linear infinite",
+          }}
+        />
       </div>
     );
   }
@@ -108,23 +134,57 @@ export default function PostsListPage() {
       {deleteId && (
         <div className="admin-overlay">
           <div className="admin-dialog">
-            <h3 style={{ color: '#E6E6EA', fontSize: 20, margin: '0 0 12px' }}>تأكيد الحذف</h3>
-            <p style={{ color: '#9CA3AF', fontSize: 14, margin: '0 0 24px' }}>
+            <h3 style={{ color: "#E6E6EA", fontSize: 20, margin: "0 0 12px" }}>
+              تأكيد الحذف
+            </h3>
+            <p style={{ color: "#9CA3AF", fontSize: 14, margin: "0 0 24px" }}>
               هل أنت متأكد من حذف هذا المقال؟ لا يمكن التراجع عن هذا الإجراء.
             </p>
-            <div style={{ display: 'flex', gap: 12, justifyContent: 'flex-end' }}>
-              <button className="admin-btn admin-btn-ghost" onClick={() => setDeleteId(null)}>إلغاء</button>
-              <button className="admin-btn admin-btn-danger" onClick={handleDelete}>حذف</button>
+            <div
+              style={{ display: "flex", gap: 12, justifyContent: "flex-end" }}
+            >
+              <button
+                className="admin-btn admin-btn-ghost"
+                onClick={() => setDeleteId(null)}
+              >
+                إلغاء
+              </button>
+              <button
+                className="admin-btn admin-btn-danger"
+                onClick={handleDelete}
+              >
+                حذف
+              </button>
             </div>
           </div>
         </div>
       )}
 
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 16 }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 24,
+          flexWrap: "wrap",
+          gap: 16,
+        }}
+      >
         <div>
-          <h2 style={{ fontSize: 24, fontWeight: 700, color: '#E6E6EA', margin: '0 0 4px' }}>المقالات</h2>
-          <p style={{ color: '#6B7280', fontSize: 14, margin: 0 }}>{posts.length} مقال</p>
+          <h2
+            style={{
+              fontSize: 24,
+              fontWeight: 700,
+              color: "#E6E6EA",
+              margin: "0 0 4px",
+            }}
+          >
+            المقالات
+          </h2>
+          <p style={{ color: "#6B7280", fontSize: 14, margin: 0 }}>
+            {posts.length} مقال
+          </p>
         </div>
         <Link href="/admin/posts/new" className="admin-btn admin-btn-primary">
           <Plus size={18} />
@@ -134,22 +194,29 @@ export default function PostsListPage() {
 
       {/* Filters */}
       <div className="admin-card" style={{ marginBottom: 24, padding: 16 }}>
-        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', alignItems: 'center' }}>
-          <div className="admin-search" style={{ flex: '1 1 300px' }}>
+        <div
+          style={{
+            display: "flex",
+            gap: 16,
+            flexWrap: "wrap",
+            alignItems: "center",
+          }}
+        >
+          <div className="admin-search" style={{ flex: "1 1 300px" }}>
             <Search size={16} />
             <input
               className="admin-input"
               placeholder="البحث في المقالات..."
               value={search}
-              onChange={e => setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
               style={{ paddingRight: 16 }}
             />
           </div>
           <select
             className="admin-select"
             value={filterStatus}
-            onChange={e => setFilterStatus(e.target.value)}
-            style={{ width: 'auto', minWidth: 130 }}
+            onChange={(e) => setFilterStatus(e.target.value)}
+            style={{ width: "auto", minWidth: 130 }}
           >
             <option value="all">كل الحالات</option>
             <option value="published">منشور</option>
@@ -158,24 +225,30 @@ export default function PostsListPage() {
           <select
             className="admin-select"
             value={filterCategory}
-            onChange={e => setFilterCategory(e.target.value)}
-            style={{ width: 'auto', minWidth: 150 }}
+            onChange={(e) => setFilterCategory(e.target.value)}
+            style={{ width: "auto", minWidth: 150 }}
           >
             <option value="all">كل الفئات</option>
-            {categories.filter(c => c !== 'all').map(c => (
-              <option key={c} value={c}>{c}</option>
-            ))}
+            {categories
+              .filter((c) => c !== "all")
+              .map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
           </select>
           {allTags.length > 0 && (
             <select
               className="admin-select"
               value={filterTag}
-              onChange={e => setFilterTag(e.target.value)}
-              style={{ width: 'auto', minWidth: 140 }}
+              onChange={(e) => setFilterTag(e.target.value)}
+              style={{ width: "auto", minWidth: 140 }}
             >
               <option value="all">كل الوسوم</option>
-              {allTags.map(tag => (
-                <option key={tag} value={tag}>{tag}</option>
+              {allTags.map((tag) => (
+                <option key={tag} value={tag}>
+                  {tag}
+                </option>
               ))}
             </select>
           )}
@@ -183,7 +256,7 @@ export default function PostsListPage() {
       </div>
 
       {/* Posts Table */}
-      <div className="admin-card" style={{ padding: 0, overflow: 'hidden' }}>
+      <div className="admin-card" style={{ padding: 0, overflow: "hidden" }}>
         {filteredPosts.length > 0 ? (
           <table className="admin-table">
             <thead>
@@ -199,98 +272,158 @@ export default function PostsListPage() {
               </tr>
             </thead>
             <tbody>
-              {filteredPosts.map(post => (
+              {filteredPosts.map((post) => (
                 <tr key={post.id}>
                   <td>
-                    {post.imageUrl && post.imageUrl !== 'https://d-arrow.com/_headers' ? (
+                    {post.imageUrl &&
+                    post.imageUrl !== "https://d-arrow.com/_headers" ? (
                       <img
                         src={post.imageUrl}
                         alt="Post thumbnail"
-                        style={{ width: 40, height: 40, borderRadius: 8, objectFit: 'cover' }}
+                        style={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: 8,
+                          objectFit: "cover",
+                        }}
                         onError={(e) => {
-                          (e.target as HTMLElement).style.display = 'none';
+                          (e.target as HTMLElement).style.display = "none";
                         }}
                       />
                     ) : (
-                      <div style={{
-                        width: 40, height: 40, borderRadius: 8,
-                        background: 'linear-gradient(135deg, rgba(255,77,109,0.2), rgba(255,154,60,0.15))',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#FF4D6D',
-                      }}>
+                      <div
+                        style={{
+                          width: 40,
+                          height: 40,
+                          borderRadius: 8,
+                          background:
+                            "linear-gradient(135deg, rgba(255,77,109,0.2), rgba(255,154,60,0.15))",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "#FF4D6D",
+                        }}
+                      >
                         <FileText size={18} />
                       </div>
                     )}
                   </td>
                   <td style={{ maxWidth: 300 }}>
-                    <div style={{ 
-                      fontWeight: 600, 
-                      color: '#E6E6EA', 
-                      marginBottom: 2,
-                      display: '-webkit-box',
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: 'vertical',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis'
-                    }}>
+                    <div
+                      style={{
+                        fontWeight: 600,
+                        color: "#E6E6EA",
+                        marginBottom: 2,
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
                       {post.titleAr || post.title}
                     </div>
                     {post.titleAr && post.title && (
-                      <div style={{ 
-                        fontSize: 12, 
-                        color: '#6B7280',
-                        display: '-webkit-box',
-                        WebkitLineClamp: 1,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis'
-                      }}>
+                      <div
+                        style={{
+                          fontSize: 12,
+                          color: "#6B7280",
+                          display: "-webkit-box",
+                          WebkitLineClamp: 1,
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
                         {post.title}
                       </div>
                     )}
                   </td>
-                  <td><span className="admin-badge admin-badge-info">{post.category}</span></td>
                   <td>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, maxWidth: 200 }}>
-                      {(post.tags && post.tags.length > 0) ? post.tags.map((tag, i) => (
-                        <span key={i} style={{
-                          background: 'linear-gradient(135deg, rgba(255,77,109,0.12), rgba(255,154,60,0.08))',
-                          border: '1px solid rgba(255,77,109,0.2)',
-                          color: '#FF9A3C', padding: '2px 8px', borderRadius: 12,
-                          fontSize: 11, fontWeight: 500, whiteSpace: 'nowrap',
-                        }}>
-                          {tag}
-                        </span>
-                      )) : (
-                        <span style={{ color: '#4B5563', fontSize: 12 }}>—</span>
-                      )}
-                    </div>
-                  </td>
-                  <td style={{ color: '#9CA3AF', fontSize: 13 }}>{post.date}</td>
-                  <td style={{ color: '#9CA3AF', fontSize: 13 }}>{post.author}</td>
-                  <td>
-                    <span className={`admin-badge ${post.status === 'draft' ? 'admin-badge-warning' : 'admin-badge-success'}`}>
-                      {post.status === 'draft' ? 'مسودة' : 'منشور'}
+                    <span className="admin-badge admin-badge-info">
+                      {post.category}
                     </span>
                   </td>
                   <td>
-                    <div style={{ display: 'flex', gap: 8 }}>
-                      {post.status === 'draft' && (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        gap: 4,
+                        maxWidth: 200,
+                      }}
+                    >
+                      {post.tags && post.tags.length > 0 ? (
+                        post.tags.map((tag, i) => (
+                          <span
+                            key={i}
+                            style={{
+                              background:
+                                "linear-gradient(135deg, rgba(255,77,109,0.12), rgba(255,154,60,0.08))",
+                              border: "1px solid rgba(255,77,109,0.2)",
+                              color: "#FF9A3C",
+                              padding: "2px 8px",
+                              borderRadius: 12,
+                              fontSize: 11,
+                              fontWeight: 500,
+                              whiteSpace: "nowrap",
+                            }}
+                          >
+                            {tag}
+                          </span>
+                        ))
+                      ) : (
+                        <span style={{ color: "#4B5563", fontSize: 12 }}>
+                          —
+                        </span>
+                      )}
+                    </div>
+                  </td>
+                  <td style={{ color: "#9CA3AF", fontSize: 13 }}>
+                    {post.date}
+                  </td>
+                  <td style={{ color: "#9CA3AF", fontSize: 13 }}>
+                    {post.author}
+                  </td>
+                  <td>
+                    <span
+                      className={`admin-badge ${post.status === "draft" ? "admin-badge-warning" : "admin-badge-success"}`}
+                    >
+                      {post.status === "draft" ? "مسودة" : "منشور"}
+                    </span>
+                  </td>
+                  <td>
+                    <div style={{ display: "flex", gap: 8 }}>
+                      {post.status === "draft" && (
                         <button
                           className="admin-btn admin-btn-sm"
-                          style={{ background: 'rgba(16,185,129,0.1)', color: '#10B981', border: '1px solid rgba(16,185,129,0.2)' }}
+                          style={{
+                            background: "rgba(16,185,129,0.1)",
+                            color: "#10B981",
+                            border: "1px solid rgba(16,185,129,0.2)",
+                          }}
                           onClick={async () => {
                             try {
-                              const res = await fetch('/api/blog/posts', {
-                                method: 'PUT',
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify({ id: post.id, status: 'published' }),
+                              const res = await fetch("/api/blog/posts", {
+                                method: "PUT",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                  id: post.id,
+                                  status: "published",
+                                }),
                               });
                               if (res.ok) {
-                                setPosts(prev => prev.map(p => p.id === post.id ? { ...p, status: 'published' } : p));
-                                showToast('تم نشر المقال بنجاح', 'success');
+                                setPosts((prev) =>
+                                  prev.map((p) =>
+                                    p.id === post.id
+                                      ? { ...p, status: "published" }
+                                      : p,
+                                  ),
+                                );
+                                showToast("تم نشر المقال بنجاح", "success");
                               }
                             } catch {
-                              showToast('حدث خطأ أثناء النشر', 'error');
+                              showToast("حدث خطأ أثناء النشر", "error");
                             }
                           }}
                           title="نشر الآن"
@@ -321,9 +454,11 @@ export default function PostsListPage() {
         ) : (
           <div className="admin-empty">
             <FileText size={48} />
-            <p style={{ fontSize: 16, margin: '12px 0 4px', color: '#9CA3AF' }}>لا توجد مقالات</p>
-            <p style={{ fontSize: 13, color: '#6B7280' }}>
-              {search ? 'لا توجد نتائج تطابق بحثك' : 'ابدأ بإنشاء أول مقال'}
+            <p style={{ fontSize: 16, margin: "12px 0 4px", color: "#9CA3AF" }}>
+              لا توجد مقالات
+            </p>
+            <p style={{ fontSize: 13, color: "#6B7280" }}>
+              {search ? "لا توجد نتائج تطابق بحثك" : "ابدأ بإنشاء أول مقال"}
             </p>
           </div>
         )}

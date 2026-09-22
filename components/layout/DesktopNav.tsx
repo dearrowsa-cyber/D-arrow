@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import Link from "next/link";
+import Link from "@util/link";
 import {
   Coffee,
   UtensilsCrossed,
@@ -40,9 +40,10 @@ export default function DesktopNav({ lang, t }: { lang: string; t: any }) {
     }
   };
 
-  const navLinkSize = lang === "en"
-    ? "!text-sm xl:!text-[15px] px-1.5 xl:px-2"
-    : "!text-sm xl:!text-base px-3";
+  const navLinkSize =
+    lang === "en"
+      ? "!text-sm xl:!text-[15px] px-1.5 xl:px-2"
+      : "!text-sm xl:!text-base px-3";
 
   return (
     <nav className="hidden xl:flex gap-0.5 items-center flex-1 justify-center px-1 xl:px-2">

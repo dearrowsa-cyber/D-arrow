@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from 'framer-motion';
-import { useLanguage } from './LanguageProvider';
+import { motion } from "framer-motion";
+import { useLanguage } from "./LanguageProvider";
+import Link from "@util/link";
 
 export default function Vision2030() {
   const { t, lang } = useLanguage();
@@ -15,76 +16,114 @@ export default function Vision2030() {
       </div>
 
       <div className="w-full max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        <div className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${lang === 'ar' ? 'lg:flex-row' : ''}`}>
-          
+        <div
+          className={`flex flex-col lg:flex-row items-center gap-12 lg:gap-20 ${lang === "ar" ? "lg:flex-row" : ""}`}
+        >
           {/* Text Side */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true }}
-            className={`w-full lg:w-1/2 flex flex-col ${lang === 'ar' ? 'text-right items-start' : 'text-left items-start'}`}
-            dir={lang === 'ar' ? 'rtl' : 'ltr'}
+            className={`w-full lg:w-1/2 flex flex-col ${lang === "ar" ? "text-right items-start" : "text-left items-start"}`}
+            dir={lang === "ar" ? "rtl" : "ltr"}
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-pink/10 border border-brand-pink/20 mb-6">
               <span className="text-brand-pink font-semibold text-sm tracking-wide uppercase">
-                {t('visionBadge')}
+                {t("visionBadge")}
               </span>
             </div>
-            
+
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-              {t('visionTitle')}
+              {t("visionTitle")}
             </h2>
-            
+
             <p className="text-lg text-gray-300 dark:text-gray-400 mb-8 leading-relaxed">
-              {t('visionDescription')}
+              {t("visionDescription")}
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full mb-10">
               <div className="flex flex-col gap-3">
                 <div className={`flex items-center gap-3`}>
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-orange/20 to-brand-pink/20 flex items-center justify-center border border-brand-orange/20 flex-shrink-0">
-                    <svg className="w-6 h-6 text-brand-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    <svg
+                      className="w-6 h-6 text-brand-orange"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M13 10V3L4 14h7v7l9-11h-7z"
+                      />
                     </svg>
                   </div>
-                  <h4 className="text-white font-semibold text-lg">{t('visionFeature1Title')}</h4>
+                  <h4 className="text-white font-semibold text-lg">
+                    {t("visionFeature1Title")}
+                  </h4>
                 </div>
-                <p className={`text-sm text-gray-400 ${lang === 'ar' ? 'pr-15 text-right' : 'pl-15 text-left'}`}>{t('visionFeature1Desc')}</p>
+                <p
+                  className={`text-sm text-gray-400 ${lang === "ar" ? "pr-15 text-right" : "pl-15 text-left"}`}
+                >
+                  {t("visionFeature1Desc")}
+                </p>
               </div>
-              
+
               <div className="flex flex-col gap-3">
                 <div className={`flex items-center gap-3`}>
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-orange/20 to-brand-pink/20 flex items-center justify-center border border-brand-orange/20 flex-shrink-0">
-                    <svg className="w-6 h-6 text-brand-orange" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    <svg
+                      className="w-6 h-6 text-brand-orange"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
                     </svg>
                   </div>
-                  <h4 className="text-white font-semibold text-lg">{t('visionFeature2Title')}</h4>
+                  <h4 className="text-white font-semibold text-lg">
+                    {t("visionFeature2Title")}
+                  </h4>
                 </div>
-                <p className={`text-sm text-gray-400 ${lang === 'ar' ? 'pr-15 text-right' : 'pl-15 text-left'}`}>{t('visionFeature2Desc')}</p>
+                <p
+                  className={`text-sm text-gray-400 ${lang === "ar" ? "pr-15 text-right" : "pl-15 text-left"}`}
+                >
+                  {t("visionFeature2Desc")}
+                </p>
               </div>
             </div>
 
-            <a 
+            <Link
               href="/contact"
               className="inline-flex items-center justify-center px-8 py-3.5 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] !text-white rounded-lg font-bold transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(255,77,109,0.4)] group"
             >
-              {t('visionCTA')}
-              <svg 
-                className={`w-5 h-5 transition-transform group-hover:translate-x-1 ${lang === 'ar' ? 'mr-2 rotate-180' : 'ml-2'}`} 
-                fill="none" 
-                viewBox="0 0 24 24" 
+              {t("visionCTA")}
+              <svg
+                className={`w-5 h-5 transition-transform group-hover:translate-x-1 ${lang === "ar" ? "mr-2 rotate-180" : "ml-2"}`}
+                fill="none"
+                viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M14 5l7 7m0 0l-7 7m7-7H3"
+                />
               </svg>
-            </a>
+            </Link>
           </motion.div>
 
           {/* Video Side */}
-          <motion.div 
-            initial={{ opacity: 0, x: lang === 'ar' ? -50 : 50 }}
+          <motion.div
+            initial={{ opacity: 0, x: lang === "ar" ? -50 : 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             viewport={{ once: true }}
@@ -92,7 +131,7 @@ export default function Vision2030() {
           >
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-brand-pink/20">
               <div className="absolute inset-0 bg-gradient-to-tr from-brand-pink/20 to-transparent mix-blend-overlay z-10 pointer-events-none"></div>
-              <video 
+              <video
                 src="/media/vision-2030-v2.mp4"
                 autoPlay
                 loop
@@ -102,12 +141,15 @@ export default function Vision2030() {
                 aria-label="Saudi Vision 2030 AI Video"
               />
             </div>
-            
-            {/* Decorative elements for video */}
-            <div className={`absolute -bottom-6 ${lang === 'ar' ? '-left-6' : '-right-6'} w-32 h-32 bg-brand-orange/20 rounded-full blur-3xl -z-10`}></div>
-            <div className={`absolute -top-6 ${lang === 'ar' ? '-right-6' : '-left-6'} w-24 h-24 bg-brand-pink/20 rounded-full blur-2xl -z-10`}></div>
-          </motion.div>
 
+            {/* Decorative elements for video */}
+            <div
+              className={`absolute -bottom-6 ${lang === "ar" ? "-left-6" : "-right-6"} w-32 h-32 bg-brand-orange/20 rounded-full blur-3xl -z-10`}
+            ></div>
+            <div
+              className={`absolute -top-6 ${lang === "ar" ? "-right-6" : "-left-6"} w-24 h-24 bg-brand-pink/20 rounded-full blur-2xl -z-10`}
+            ></div>
+          </motion.div>
         </div>
       </div>
     </section>

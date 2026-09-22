@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import Link from "next/link";
+import Link from "@util/link";
 import Image from "next/image";
 import {
   ShoppingBag,
@@ -300,9 +300,7 @@ export default function StorePage() {
   };
 
   return (
-    <div
-      dir={isAr ? "rtl" : "ltr"}
-    >
+    <div dir={isAr ? "rtl" : "ltr"}>
       {/* Background Ambient Glows */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-gradient-to-b from-[#FF4D6D]/15 via-[#FF9A3C]/10 to-transparent rounded-full blur-[150px] pointer-events-none" />
       <div className="absolute top-1/3 -right-40 w-[500px] h-[500px] bg-[#FF4D6D]/10 rounded-full blur-[160px] pointer-events-none" />
@@ -458,7 +456,6 @@ export default function StorePage() {
         {/* Search & Categories Filter Bar */}
         <section className="space-y-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-[#12142B]/90 border border-white/10 rounded-2xl p-4 backdrop-blur-md">
-
             {/* Search Input */}
             <div className="relative w-full md:w-96">
               <Search
@@ -636,8 +633,12 @@ export default function StorePage() {
                         unoptimized
                         onError={(e) => {
                           const target = e.currentTarget as HTMLImageElement;
-                          if (target && target.src && !target.src.includes('/store/ecommerce.jpg')) {
-                            target.src = '/store/ecommerce.jpg';
+                          if (
+                            target &&
+                            target.src &&
+                            !target.src.includes("/store/ecommerce.jpg")
+                          ) {
+                            target.src = "/store/ecommerce.jpg";
                           }
                         }}
                       />

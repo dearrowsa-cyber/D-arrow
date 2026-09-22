@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, memo } from "react";
-import Link from "next/link";
+import Link from "@util/link";
 import Image from "next/image";
 import { useSelectedLayoutSegments } from "next/navigation";
 import { useLanguage } from "../LanguageProvider";

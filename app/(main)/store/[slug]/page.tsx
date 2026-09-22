@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import Link from "next/link";
+import Link from "@util/link";
 import Image from "next/image";
 import {
   ShoppingCart,
@@ -72,7 +72,10 @@ const toReadableText = (value: unknown) => {
   if (typeof value !== "string") return "";
 
   if (typeof document === "undefined") {
-    return value.replace(/<[^>]*>/g, "").replace(/&nbsp;/gi, " ").trim();
+    return value
+      .replace(/<[^>]*>/g, "")
+      .replace(/&nbsp;/gi, " ")
+      .trim();
   }
 
   const container = document.createElement("div");

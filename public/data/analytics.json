@@ -1,15 +1,15 @@
 {
-  "totalVisitors": 311,
-  "todayViews": 14,
+  "totalVisitors": 322,
+  "todayViews": 11,
   "pageViews": {
-    "/": 61,
+    "/": 65,
     "/blog": 22,
     "/blog/123": 1,
     "/blog/cmog6f88m0000iizx792fjazo": 1,
-    "/contact": 10,
+    "/contact": 11,
     "/services/dm_smm": 3,
-    "/pricing": 12,
-    "/services": 13,
+    "/pricing": 14,
+    "/services": 14,
     "/services/dm_marketing": 1,
     "/store": 41,
     "/store/ecommerce-store-admin-template": 1,
@@ -32,11 +32,11 @@
     "/test-email": 1,
     "/video-test": 1,
     "/cookies": 1,
-    "/provisions": 9,
+    "/provisions": 10,
     "/provisions/spark-fuel-stations-branding": 1,
     "/blog/d-arrow-digital-marketing-growth-agency": 1,
-    "/why-us": 3,
-    "/projects": 4,
+    "/why-us": 4,
+    "/projects": 5,
     "/projects/shoes": 1,
     "/lp/social-media": 1,
     "/provisions/mathwaa-association": 1,
@@ -45,5 +45,5 @@
     "/services/dm_content": 1,
     "/services/dm_influencer": 1
   },
-  "lastResetDate": "2026-09-21"
+  "lastResetDate": "2026-09-22"
 }

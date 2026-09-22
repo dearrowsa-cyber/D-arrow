@@ -3,7 +3,7 @@
 import { Suspense } from 'react';
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
+import Link from '@util/link';
 import { useLanguage } from '@/components/LanguageProvider';
 
 const SERVICES_MAP = [

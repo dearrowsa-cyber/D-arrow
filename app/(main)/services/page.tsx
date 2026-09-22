@@ -1,57 +1,60 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useState, useEffect, Suspense } from 'react';
-import { motion } from 'framer-motion';
-import styles from '../pricing/pricing.module.css';
-import { useLanguage } from '@/components/LanguageProvider';
-import Head from 'next/head';
-import ServiceCard from '@/components/ServiceCard';
-import AnimatedServicesShowcase from '@/components/AnimatedServicesShowcase';
-import { useSearchParams } from 'next/navigation';
+import Link from "@util/link";
+import { useState, useEffect, Suspense } from "react";
+import { motion } from "framer-motion";
+import styles from "../pricing/pricing.module.css";
+import { useLanguage } from "@/components/LanguageProvider";
+import Head from "next/head";
+import ServiceCard from "@/components/ServiceCard";
+import AnimatedServicesShowcase from "@/components/AnimatedServicesShowcase";
+import { useSearchParams } from "next/navigation";
 
 // Map English titles from siteData to the service IDs used in DETAILED_SERVICES
 const TITLE_TO_ID: Record<string, string> = {
-  'social media accounts management': 'dm_smm',
-  'digital marketing': 'dm_marketing',
-  'visual production': 'dm_visual',
-  'influencer marketing': 'dm_influencer',
-  'creative content': 'dm_content',
-  'exhibitions and conferences management': 'dm_exhibitions',
-  'advertisements': 'dm_advertising',
-  'marketing consultation': 'dm_consultation',
-  'seo & sro': 'dm_seo',
+  "social media accounts management": "dm_smm",
+  "digital marketing": "dm_marketing",
+  "visual production": "dm_visual",
+  "influencer marketing": "dm_influencer",
+  "creative content": "dm_content",
+  "exhibitions and conferences management": "dm_exhibitions",
+  advertisements: "dm_advertising",
+  "marketing consultation": "dm_consultation",
+  "seo & sro": "dm_seo",
   // Innovation & Development
-  'apps design and development': 'id_apps',
-  'website design and development': 'id_website',
-  'branding design & development': 'id_branding',
-  'software design and development': 'id_software',
-  'cloud services': 'id_cloud',
+  "apps design and development": "id_apps",
+  "website design and development": "id_website",
+  "branding design & development": "id_branding",
+  "software design and development": "id_software",
+  "cloud services": "id_cloud",
   // Real Estate
-  'real estate appraisal': 're_appraisal',
-  'real estate marketing': 're_marketing',
-  'property management and sales': 're_management',
-  'professional photography & representation': 're_photography',
-  'advertising campaign management': 're_campaign',
-  'real estate project image creation': 're_project_images',
-  'current image evaluation & enhancement': 're_current_eval',
-  'real estate project naming': 're_project_naming',
+  "real estate appraisal": "re_appraisal",
+  "real estate marketing": "re_marketing",
+  "property management and sales": "re_management",
+  "professional photography & representation": "re_photography",
+  "advertising campaign management": "re_campaign",
+  "real estate project image creation": "re_project_images",
+  "current image evaluation & enhancement": "re_current_eval",
+  "real estate project naming": "re_project_naming",
 };
 
 function resolveServiceId(service: any, index: number): string {
-  console.log('Resolving ID for service:', service.titleKey || service.title?.en);
+  console.log(
+    "Resolving ID for service:",
+    service.titleKey || service.title?.en,
+  );
 
   // 1. Already has id
-  if (service.id && service.id !== 'undefined') return service.id;
+  if (service.id && service.id !== "undefined") return service.id;
 
   // 2. Has titleKey (hardcoded services)
   if (service.titleKey) {
-    const id = service.titleKey.replace('_title', '');
-    if (id && id !== 'undefined') return id;
+    const id = service.titleKey.replace("_title", "");
+    if (id && id !== "undefined") return id;
   }
 
   // 3. Match from English title (dynamic siteData services)
-  const enTitle = (service.title?.en || '').toLowerCase().trim();
+  const enTitle = (service.title?.en || "").toLowerCase().trim();
   if (enTitle && TITLE_TO_ID[enTitle]) return TITLE_TO_ID[enTitle];
 
   // 4. Partial match
@@ -60,229 +63,229 @@ function resolveServiceId(service: any, index: number): string {
   }
 
   const fallbackId = `service-${index}`;
-  console.warn('Fallback ID generated:', fallbackId);
+  console.warn("Fallback ID generated:", fallbackId);
   return fallbackId;
 }
 
 function ServicesContent() {
   const { t, lang, siteData } = useLanguage();
-  const [expandedCategory, setExpandedCategory] = useState('digital-marketing');
+  const [expandedCategory, setExpandedCategory] = useState("digital-marketing");
   const searchParams = useSearchParams();
   const pageData = siteData;
 
   useEffect(() => {
-    const category = searchParams?.get('category') || 'digital-marketing';
+    const category = searchParams?.get("category") || "digital-marketing";
     setExpandedCategory(category);
   }, [searchParams]);
 
   const services = {
-    'digital-marketing': [
+    "digital-marketing": [
       {
-        titleKey: 'dm_smm_title',
-        descKey: 'dm_smm_desc',
-        icon: '/icon/mainicons1/social-media10.png',
-        featuresKey: 'features_smm',
-        price: '3,000',
-        priceCurrency: 'SAR / month',
-        backgroundImage: '/services/social-media-marketing1.jpeg'
+        titleKey: "dm_smm_title",
+        descKey: "dm_smm_desc",
+        icon: "/icon/mainicons1/social-media10.png",
+        featuresKey: "features_smm",
+        price: "3,000",
+        priceCurrency: "SAR / month",
+        backgroundImage: "/services/social-media-marketing1.jpeg",
       },
       {
-        titleKey: 'dm_marketing_title',
-        descKey: 'dm_marketing_desc',
-        icon: '/icon/services-icon/digital_marketing_promotion.png',
-        featuresKey: 'features_digitalMarketing',
-        price: 'Contact for Quote',
-        priceCurrency: 'Custom',
-        backgroundImage: '/services/Digital-marketing1.jpeg'
+        titleKey: "dm_marketing_title",
+        descKey: "dm_marketing_desc",
+        icon: "/icon/services-icon/digital_marketing_promotion.png",
+        featuresKey: "features_digitalMarketing",
+        price: "Contact for Quote",
+        priceCurrency: "Custom",
+        backgroundImage: "/services/Digital-marketing1.jpeg",
       },
       {
-        titleKey: 'dm_visual_title',
-        descKey: 'dm_visual_desc',
-        icon: '/icon/mainicons1/visiual.png',
-        featuresKey: 'features_visualProduction',
-        price: '2,000',
-        priceCurrency: 'SAR / project',
-        backgroundImage: '/services/Visual-Production1.jpeg'
+        titleKey: "dm_visual_title",
+        descKey: "dm_visual_desc",
+        icon: "/icon/mainicons1/visiual.png",
+        featuresKey: "features_visualProduction",
+        price: "2,000",
+        priceCurrency: "SAR / project",
+        backgroundImage: "/services/Visual-Production1.jpeg",
       },
       {
-        titleKey: 'dm_influencer_title',
-        descKey: 'dm_influencer_desc',
-        icon: '/icon/mainicons1/influencer.png',
-        featuresKey: 'features_influencer',
-        price: 'Contact for Quote',
-        priceCurrency: 'Custom',
-        backgroundImage: '/services/influencer.jpeg'
+        titleKey: "dm_influencer_title",
+        descKey: "dm_influencer_desc",
+        icon: "/icon/mainicons1/influencer.png",
+        featuresKey: "features_influencer",
+        price: "Contact for Quote",
+        priceCurrency: "Custom",
+        backgroundImage: "/services/influencer.jpeg",
       },
       {
-        titleKey: 'dm_content_title',
-        descKey: 'dm_content_desc',
-        icon: '/icon/services-icon/marketing_performance_chart.png',
-        featuresKey: 'features_creativeContent',
-        price: '1,200',
-        priceCurrency: 'SAR / month',
-        backgroundImage: '/services/creative-content1.jpeg'
+        titleKey: "dm_content_title",
+        descKey: "dm_content_desc",
+        icon: "/icon/services-icon/marketing_performance_chart.png",
+        featuresKey: "features_creativeContent",
+        price: "1,200",
+        priceCurrency: "SAR / month",
+        backgroundImage: "/services/creative-content1.jpeg",
       },
       {
-        titleKey: 'dm_exhibitions_title',
-        descKey: 'dm_exhibitions_desc',
-        icon: '/icon/mainicons1/sales-real10.png',
-        featuresKey: 'features_exhibitions',
-        price: 'Contact for Quote',
-        priceCurrency: 'Custom',
-        backgroundImage: '/services/Exhibitions1.jpeg'
+        titleKey: "dm_exhibitions_title",
+        descKey: "dm_exhibitions_desc",
+        icon: "/icon/mainicons1/sales-real10.png",
+        featuresKey: "features_exhibitions",
+        price: "Contact for Quote",
+        priceCurrency: "Custom",
+        backgroundImage: "/services/Exhibitions1.jpeg",
       },
       {
-        titleKey: 'dm_advertising_title',
-        descKey: 'dm_advertising_desc',
-        icon: '/icon/mainicons1/real-estate-marketing.png',
-        featuresKey: 'features_advertising',
-        price: '1,500',
-        priceCurrency: 'SAR / month',
-        backgroundImage: '/services/Advertisements1.jpeg'
+        titleKey: "dm_advertising_title",
+        descKey: "dm_advertising_desc",
+        icon: "/icon/mainicons1/real-estate-marketing.png",
+        featuresKey: "features_advertising",
+        price: "1,500",
+        priceCurrency: "SAR / month",
+        backgroundImage: "/services/Advertisements1.jpeg",
       },
       {
-        titleKey: 'dm_consultation_title',
-        descKey: 'dm_consultation_desc',
-        icon: '/icon/mainicons1/expertteam1.png',
-        featuresKey: 'features_consultation',
-        price: '500',
-        priceCurrency: 'SAR / hour',
-        backgroundImage: '/services/Marketing-Consultation1.jpeg'
+        titleKey: "dm_consultation_title",
+        descKey: "dm_consultation_desc",
+        icon: "/icon/mainicons1/expertteam1.png",
+        featuresKey: "features_consultation",
+        price: "500",
+        priceCurrency: "SAR / hour",
+        backgroundImage: "/services/Marketing-Consultation1.jpeg",
       },
       {
-        titleKey: 'dm_seo_title',
-        descKey: 'dm_seo_desc',
-        icon: '/icon/mainicons1/seo&sro10.png',
-        featuresKey: 'features_seoSro',
+        titleKey: "dm_seo_title",
+        descKey: "dm_seo_desc",
+        icon: "/icon/mainicons1/seo&sro10.png",
+        featuresKey: "features_seoSro",
         featured: true,
-        price: '1,800',
-        priceCurrency: 'SAR / month',
-        backgroundImage: '/services/seo-sro1.jpeg'
+        price: "1,800",
+        priceCurrency: "SAR / month",
+        backgroundImage: "/services/seo-sro1.jpeg",
       },
     ],
-    'innovation-development': [
+    "innovation-development": [
       {
-        titleKey: 'id_apps_title',
-        descKey: 'id_apps_desc',
-        icon: '/icon/mainicons1/app10.png',
-        featuresKey: 'features_appsDesign',
-        price: 'Contact for Quote',
-        priceCurrency: 'Custom',
-        backgroundImage: '/services/app-development.jpg'
+        titleKey: "id_apps_title",
+        descKey: "id_apps_desc",
+        icon: "/icon/mainicons1/app10.png",
+        featuresKey: "features_appsDesign",
+        price: "Contact for Quote",
+        priceCurrency: "Custom",
+        backgroundImage: "/services/app-development.jpg",
       },
       {
-        titleKey: 'id_website_title',
-        descKey: 'id_website_desc',
-        icon: '/icon/mainicons1/webd1.png',
-        featuresKey: 'features_websiteDesign',
-        price: 'Contact for Quote',
-        priceCurrency: 'Custom',
-        backgroundImage: '/services/website-development1.jpeg'
+        titleKey: "id_website_title",
+        descKey: "id_website_desc",
+        icon: "/icon/mainicons1/webd1.png",
+        featuresKey: "features_websiteDesign",
+        price: "Contact for Quote",
+        priceCurrency: "Custom",
+        backgroundImage: "/services/website-development1.jpeg",
       },
       {
-        titleKey: 'id_branding_title',
-        descKey: 'id_branding_desc',
-        icon: '/icon/mainicons1/bdeveloment.png',
-        featuresKey: 'features_brandingDesign',
+        titleKey: "id_branding_title",
+        descKey: "id_branding_desc",
+        icon: "/icon/mainicons1/bdeveloment.png",
+        featuresKey: "features_brandingDesign",
         featured: true,
-        price: 'Contact for Quote',
-        priceCurrency: 'Custom',
-        backgroundImage: '/services/BRAND-DESIGN.png'
+        price: "Contact for Quote",
+        priceCurrency: "Custom",
+        backgroundImage: "/services/BRAND-DESIGN.png",
       },
       {
-        titleKey: 'id_software_title',
-        descKey: 'id_software_desc',
-        icon: '/icon/mainicons1/software-10.png',
-        featuresKey: 'features_softwareDesign',
-        price: 'Contact for Quote',
-        priceCurrency: 'Custom',
-        backgroundImage: '/services/software-development.jpg'
+        titleKey: "id_software_title",
+        descKey: "id_software_desc",
+        icon: "/icon/mainicons1/software-10.png",
+        featuresKey: "features_softwareDesign",
+        price: "Contact for Quote",
+        priceCurrency: "Custom",
+        backgroundImage: "/services/software-development.jpg",
       },
       {
-        titleKey: 'id_cloud_title',
-        descKey: 'id_cloud_desc',
-        icon: '/icon/mainicons1/cloud10.png',
-        featuresKey: 'features_cloudServices',
-        price: 'Contact for Quote',
-        priceCurrency: 'Custom',
-        backgroundImage: '/services/cloud-services1.jpeg'
+        titleKey: "id_cloud_title",
+        descKey: "id_cloud_desc",
+        icon: "/icon/mainicons1/cloud10.png",
+        featuresKey: "features_cloudServices",
+        price: "Contact for Quote",
+        priceCurrency: "Custom",
+        backgroundImage: "/services/cloud-services1.jpeg",
       },
     ],
-    'real-estate': [
+    "real-estate": [
       {
-        titleKey: 're_appraisal_title',
-        descKey: 're_appraisal_desc',
-        icon: '/icon/mainicons1/analysis.png',
-        featuresKey: 'features_realEstateAppraisal',
-        price: 'Contact for Quote',
-        priceCurrency: 'Custom',
-        backgroundImage: '/services/appraisal1.jpeg'
+        titleKey: "re_appraisal_title",
+        descKey: "re_appraisal_desc",
+        icon: "/icon/mainicons1/analysis.png",
+        featuresKey: "features_realEstateAppraisal",
+        price: "Contact for Quote",
+        priceCurrency: "Custom",
+        backgroundImage: "/services/appraisal1.jpeg",
       },
       {
-        titleKey: 're_marketing_title',
-        descKey: 're_marketing_desc',
-        icon: '/icon/mainicons1/real-estate-marketing.png',
-        featuresKey: 'features_realEstateMarketing',
-        price: 'Contact for Quote',
-        priceCurrency: 'Custom',
-        backgroundImage: '/services/REAL-MARKETING1.jpeg'
+        titleKey: "re_marketing_title",
+        descKey: "re_marketing_desc",
+        icon: "/icon/mainicons1/real-estate-marketing.png",
+        featuresKey: "features_realEstateMarketing",
+        price: "Contact for Quote",
+        priceCurrency: "Custom",
+        backgroundImage: "/services/REAL-MARKETING1.jpeg",
       },
       {
-        titleKey: 're_management_title',
-        descKey: 're_management_desc',
-        icon: '/icon/mainicons1/sales-real10.png',
-        featuresKey: 'features_realEstateManagement',
+        titleKey: "re_management_title",
+        descKey: "re_management_desc",
+        icon: "/icon/mainicons1/sales-real10.png",
+        featuresKey: "features_realEstateManagement",
         featured: true,
-        price: 'Contact for Quote',
-        priceCurrency: 'Custom',
-        backgroundImage: '/services/propert1.jpeg'
+        price: "Contact for Quote",
+        priceCurrency: "Custom",
+        backgroundImage: "/services/propert1.jpeg",
       },
       {
-        titleKey: 're_photography_title',
-        descKey: 're_photography_desc',
-        icon: '/icon/mainicons1/influencer.png',
-        featuresKey: 'features_realEstatePhotography',
-        price: '2,500',
-        priceCurrency: 'SAR / project',
-        backgroundImage: '/services/PHOTOGRAPH1.jpeg'
+        titleKey: "re_photography_title",
+        descKey: "re_photography_desc",
+        icon: "/icon/mainicons1/influencer.png",
+        featuresKey: "features_realEstatePhotography",
+        price: "2,500",
+        priceCurrency: "SAR / project",
+        backgroundImage: "/services/PHOTOGRAPH1.jpeg",
       },
       {
-        titleKey: 're_campaign_title',
-        descKey: 're_campaign_desc',
-        icon: '/icon/services-icon/real_estate_marketing.png',
-        featuresKey: 'features_advertisingCampaign',
-        price: '2,000',
-        priceCurrency: 'SAR / month',
-        backgroundImage: '/services/Campaign-Management1.jpeg'
+        titleKey: "re_campaign_title",
+        descKey: "re_campaign_desc",
+        icon: "/icon/services-icon/real_estate_marketing.png",
+        featuresKey: "features_advertisingCampaign",
+        price: "2,000",
+        priceCurrency: "SAR / month",
+        backgroundImage: "/services/Campaign-Management1.jpeg",
       },
       {
-        titleKey: 're_project_images_title',
-        descKey: 're_project_images_desc',
-        icon: '/icon/mainicons1/creation10.png',
-        featuresKey: 'features_projectImages',
-        price: '3,000',
-        priceCurrency: 'SAR / project',
-        backgroundImage: '/services/image1.jpeg'
+        titleKey: "re_project_images_title",
+        descKey: "re_project_images_desc",
+        icon: "/icon/mainicons1/creation10.png",
+        featuresKey: "features_projectImages",
+        price: "3,000",
+        priceCurrency: "SAR / project",
+        backgroundImage: "/services/image1.jpeg",
       },
       {
-        titleKey: 're_current_eval_title',
-        descKey: 're_current_eval_desc',
-        icon: '/icon/mainicons1/current-image.png',
-        featuresKey: 'features_currentImageEval',
-        price: '1,500',
-        priceCurrency: 'SAR / project',
-        backgroundImage: '/services/current-image.jpeg'
+        titleKey: "re_current_eval_title",
+        descKey: "re_current_eval_desc",
+        icon: "/icon/mainicons1/current-image.png",
+        featuresKey: "features_currentImageEval",
+        price: "1,500",
+        priceCurrency: "SAR / project",
+        backgroundImage: "/services/current-image.jpeg",
       },
       {
-        titleKey: 're_project_naming_title',
-        descKey: 're_project_naming_desc',
-        icon: '/icon/mainicons1/real-estate-project.png',
-        featuresKey: 'features_projectNaming',
-        price: '1,000',
-        priceCurrency: 'SAR / project',
-        backgroundImage: '/services/project-naming.jpeg'
+        titleKey: "re_project_naming_title",
+        descKey: "re_project_naming_desc",
+        icon: "/icon/mainicons1/real-estate-project.png",
+        featuresKey: "features_projectNaming",
+        price: "1,000",
+        priceCurrency: "SAR / project",
+        backgroundImage: "/services/project-naming.jpeg",
       },
-    ]
+    ],
   };
 
   return (
@@ -292,24 +295,30 @@ function ServicesContent() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'LocalBusiness',
-            'name': 'D Arrow Digital',
-            'url': 'https://d-arrow.com',
-            'telephone': '+966-XXXXXXXXX',
-            'address': {
-              '@type': 'PostalAddress',
-              'addressCountry': 'SA',
+            "@context": "https://schema.org",
+            "@type": "LocalBusiness",
+            name: "D Arrow Digital",
+            url: "https://d-arrow.com",
+            telephone: "+966-XXXXXXXXX",
+            address: {
+              "@type": "PostalAddress",
+              addressCountry: "SA",
             },
-            'description': 'Comprehensive digital marketing and software development services for businesses worldwide.',
-            'image': 'https://d-arrow.com/logo.png',
-            'sameAs': [
-              'https://www.facebook.com/darrowdigital',
-              'https://www.twitter.com/darrowdigital',
-              'https://www.linkedin.com/in/%D8%B4%D8%B1%D9%83%D8%A9-%D8%AF%D9%8A-%D8%A2%D8%B1%D9%88-5024643b5/',
+            description:
+              "Comprehensive digital marketing and software development services for businesses worldwide.",
+            image: "https://d-arrow.com/logo.png",
+            sameAs: [
+              "https://www.facebook.com/darrowdigital",
+              "https://www.twitter.com/darrowdigital",
+              "https://www.linkedin.com/in/%D8%B4%D8%B1%D9%83%D8%A9-%D8%AF%D9%8A-%D8%A2%D8%B1%D9%88-5024643b5/",
             ],
-            'areaServed': ['SA', 'AE', 'KW', 'QA', 'BH', 'OM'],
-            'serviceType': ['Digital Marketing', 'Software Development', 'Web Design', 'Real Estate Marketing'],
+            areaServed: ["SA", "AE", "KW", "QA", "BH", "OM"],
+            serviceType: [
+              "Digital Marketing",
+              "Software Development",
+              "Web Design",
+              "Real Estate Marketing",
+            ],
           }),
         }}
       />
@@ -319,24 +328,32 @@ function ServicesContent() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Service',
-            'name': 'Digital Marketing & Development Services',
-            'description': 'Professional digital marketing, software development, and real estate marketing services',
-            'provider': {
-              '@type': 'LocalBusiness',
-              'name': 'D Arrow Digital',
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: "Digital Marketing & Development Services",
+            description:
+              "Professional digital marketing, software development, and real estate marketing services",
+            provider: {
+              "@type": "LocalBusiness",
+              name: "D Arrow Digital",
             },
-            'areaServed': {
-              '@type': 'Country',
-              'name': ['Saudi Arabia', 'UAE', 'Kuwait', 'Qatar', 'Bahrain', 'Oman'],
+            areaServed: {
+              "@type": "Country",
+              name: [
+                "Saudi Arabia",
+                "UAE",
+                "Kuwait",
+                "Qatar",
+                "Bahrain",
+                "Oman",
+              ],
             },
-            'offers': {
-              '@type': 'AggregateOffer',
-              'priceCurrency': 'SAR',
-              'offerCount': 16,
-              'lowPrice': 800,
-              'highPrice': 50000,
+            offers: {
+              "@type": "AggregateOffer",
+              priceCurrency: "SAR",
+              offerCount: 16,
+              lowPrice: 800,
+              highPrice: 50000,
             },
           }),
         }}
@@ -347,20 +364,20 @@ function ServicesContent() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'BreadcrumbList',
-            'itemListElement': [
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
               {
-                '@type': 'ListItem',
-                'position': 1,
-                'name': 'Home',
-                'item': 'https://d-arrow.com',
+                "@type": "ListItem",
+                position: 1,
+                name: "Home",
+                item: "https://d-arrow.com",
               },
               {
-                '@type': 'ListItem',
-                'position': 2,
-                'name': 'Services',
-                'item': 'https://d-arrow.com/services',
+                "@type": "ListItem",
+                position: 2,
+                name: "Services",
+                item: "https://d-arrow.com/services",
               },
             ],
           }),
@@ -372,18 +389,19 @@ function ServicesContent() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
-            '@context': 'https://schema.org',
-            '@type': 'Organization',
-            'name': 'D Arrow Digital',
-            'url': 'https://d-arrow.com',
-            'logo': 'https://d-arrow.com/logo.png',
-            'description': 'Leading digital marketing and software development agency',
-            'foundingDate': '2015',
-            'contactPoint': {
-              '@type': 'ContactPoint',
-              'contactType': 'Customer Service',
-              'email': 'support@d-arrow.com',
-              'availableLanguage': ['ar', 'en'],
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "D Arrow Digital",
+            url: "https://d-arrow.com",
+            logo: "https://d-arrow.com/logo.png",
+            description:
+              "Leading digital marketing and software development agency",
+            foundingDate: "2015",
+            contactPoint: {
+              "@type": "ContactPoint",
+              contactType: "Customer Service",
+              email: "support@d-arrow.com",
+              availableLanguage: ["ar", "en"],
             },
           }),
         }}
@@ -396,20 +414,20 @@ function ServicesContent() {
             <motion.h1
               initial={{ opacity: 0, y: -30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
               viewport={{ once: true }}
               className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-black dark:text-white"
             >
-              {pageData?.services?.title?.[lang] || t('ourServices')}
+              {pageData?.services?.title?.[lang] || t("ourServices")}
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2, ease: 'easeOut' }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               viewport={{ once: true }}
               className="text-lg text-gray-800 dark:text-gray-300"
             >
-              {pageData?.services?.description?.[lang] || t('servicesHeroDesc')}
+              {pageData?.services?.description?.[lang] || t("servicesHeroDesc")}
             </motion.p>
           </div>
         </div>
@@ -429,7 +447,11 @@ function ServicesContent() {
             transition={{ duration: 0.5 }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 auto-rows-fr [&>*]:min-w-0 [&>*]:h-full [&_*]:break-words"
           >
-            {(pageData?.services?.categories?.[expandedCategory] || services[expandedCategory as keyof typeof services] || []).map((service: any, index: number) => {
+            {(
+              pageData?.services?.categories?.[expandedCategory] ||
+              services[expandedCategory as keyof typeof services] ||
+              []
+            ).map((service: any, index: number) => {
               // Normalization to handle both the old hardcoded structure (titleKey, descKey) and the new dynamic structure (title.en, title.ar)
               const normalizedService = {
                 ...service,
@@ -437,7 +459,13 @@ function ServicesContent() {
                 title: service.title?.[lang] || t(service.titleKey),
                 description: service.description?.[lang] || t(service.descKey),
               };
-              return <ServiceCard key={index} service={normalizedService} index={index} />;
+              return (
+                <ServiceCard
+                  key={index}
+                  service={normalizedService}
+                  index={index}
+                />
+              );
             })}
           </motion.div>
         </div>
@@ -454,7 +482,7 @@ function ServicesContent() {
               viewport={{ once: true }}
               className="text-3xl md:text-4xl font-bold mb-4 text-black dark:text-white"
             >
-              {t('whyChooseServicesTitle')}
+              {t("whyChooseServicesTitle")}
             </motion.h2>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -463,16 +491,32 @@ function ServicesContent() {
               viewport={{ once: true }}
               className="text-gray-800 dark:text-gray-400 text-lg"
             >
-              {t('whyChooseServicesDesc')}
+              {t("whyChooseServicesDesc")}
             </motion.p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: '/icon/mainicons1/execution10.png', titleKey: 'servicesFeature_turnaround', descKey: 'servicesFeature_turnaround_desc' },
-              { icon: '/icon/mainicons1/datadrive1.png', titleKey: 'servicesFeature_focused', descKey: 'servicesFeature_focused_desc' },
-              { icon: '/icon/mainicons1/support10.png', titleKey: 'servicesFeature_support', descKey: 'servicesFeature_support_desc' },
-              { icon: '/icon/mainicons1/analysis.png', titleKey: 'servicesFeature_analytics', descKey: 'servicesFeature_analytics_desc' },
+              {
+                icon: "/icon/mainicons1/execution10.png",
+                titleKey: "servicesFeature_turnaround",
+                descKey: "servicesFeature_turnaround_desc",
+              },
+              {
+                icon: "/icon/mainicons1/datadrive1.png",
+                titleKey: "servicesFeature_focused",
+                descKey: "servicesFeature_focused_desc",
+              },
+              {
+                icon: "/icon/mainicons1/support10.png",
+                titleKey: "servicesFeature_support",
+                descKey: "servicesFeature_support_desc",
+              },
+              {
+                icon: "/icon/mainicons1/analysis.png",
+                titleKey: "servicesFeature_analytics",
+                descKey: "servicesFeature_analytics_desc",
+              },
             ].map((feature, i) => (
               <motion.div
                 key={i}
@@ -480,7 +524,10 @@ function ServicesContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -5, boxShadow: '0 10px 30px rgba(255, 77, 109, 0.2)' }}
+                whileHover={{
+                  y: -5,
+                  boxShadow: "0 10px 30px rgba(255, 77, 109, 0.2)",
+                }}
                 className="p-6 border border-gray-800 rounded-lg text-center hover:border-brand-pink/50 transition [&_*]:break-words"
               >
                 <motion.div
@@ -488,10 +535,18 @@ function ServicesContent() {
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <img src={feature.icon} alt={t(feature.titleKey)} className="w-14 h-14 max-w-[56px] max-h-[56px] object-contain mx-auto" />
+                  <img
+                    src={feature.icon}
+                    alt={t(feature.titleKey)}
+                    className="w-14 h-14 max-w-[56px] max-h-[56px] object-contain mx-auto"
+                  />
                 </motion.div>
-                <h4 className="font-semibold mb-2 !text-white dark:text-white">{t(feature.titleKey)}</h4>
-                <p className="text-gray-800 dark:text-gray-400 text-sm">{t(feature.descKey)}</p>
+                <h4 className="font-semibold mb-2 !text-white dark:text-white">
+                  {t(feature.titleKey)}
+                </h4>
+                <p className="text-gray-800 dark:text-gray-400 text-sm">
+                  {t(feature.descKey)}
+                </p>
               </motion.div>
             ))}
           </div>
@@ -508,7 +563,7 @@ function ServicesContent() {
             viewport={{ once: true }}
             className="text-3xl text-black dark:text-white md:text-4xl font-bold mb-6"
           >
-            {t('readyToElevateTitle')}
+            {t("readyToElevateTitle")}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -517,7 +572,7 @@ function ServicesContent() {
             viewport={{ once: true }}
             className="text-xl text-gray-800 dark:text-gray-400 mb-8"
           >
-            {t('readyToElevateDesc')}
+            {t("readyToElevateDesc")}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -526,20 +581,20 @@ function ServicesContent() {
             viewport={{ once: true }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link href="/contact" className="bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] !text-white px-8 py-4 rounded-lg font-semibold text-lg transition shadow-lg hover:shadow-amber-500/50 inline-block text-center">
-                {t('getYourFreeConsultation')}
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                href="/contact"
+                className="bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] !text-white px-8 py-4 rounded-lg font-semibold text-lg transition shadow-lg hover:shadow-amber-500/50 inline-block text-center"
+              >
+                {t("getYourFreeConsultation")}
               </Link>
             </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Link href="/pricing" className="border border-brand-pink/50 hover:border-brand-pink text-brand-pink px-8 py-4 rounded-lg font-semibold text-lg transition inline-block text-center">
-                {t('viewPricing')}
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                href="/pricing"
+                className="border border-brand-pink/50 hover:border-brand-pink text-brand-pink px-8 py-4 rounded-lg font-semibold text-lg transition inline-block text-center"
+              >
+                {t("viewPricing")}
               </Link>
             </motion.div>
           </motion.div>
@@ -551,7 +606,13 @@ function ServicesContent() {
 
 export default function ServicesPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen py-12 text-center text-white">Loading services...</div>}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen py-12 text-center text-white">
+          Loading services...
+        </div>
+      }
+    >
       <ServicesContent />
     </Suspense>
   );

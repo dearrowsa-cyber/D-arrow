@@ -1,21 +1,37 @@
-'use client';
+"use client";
 
-import { useState, useCallback, useEffect, use } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, Eye, ArrowRight, ArrowLeft } from 'lucide-react';
-import { useLanguage } from '@/components/LanguageProvider';
-import { projectsShowcase, type ProjectShowcase } from '@/lib/data/projects-showcase';
+import { useState, useCallback, useEffect, use } from "react";
+import Image from "next/image";
+import Link from "@util/link";
+import { notFound } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  ArrowRight,
+  ArrowLeft,
+} from "lucide-react";
+import { useLanguage } from "@/components/LanguageProvider";
+import {
+  projectsShowcase,
+  type ProjectShowcase,
+} from "@/lib/data/projects-showcase";
 
 const DARK_BLUR =
-  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPj/HwADBwIAMCbHYQAAAABJRU5ErkJggg==';
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPj/HwADBwIAMCbHYQAAAABJRU5ErkJggg==";
 
-export default function CategoryProjectsPage({ params }: { params: Promise<{ category: string }> }) {
+export default function CategoryProjectsPage({
+  params,
+}: {
+  params: Promise<{ category: string }>;
+}) {
   const resolvedParams = use(params);
   const { lang } = useLanguage();
-  const project = projectsShowcase.find((p) => p.id === resolvedParams.category);
+  const project = projectsShowcase.find(
+    (p) => p.id === resolvedParams.category,
+  );
 
   if (!project) {
     notFound();
@@ -25,29 +41,33 @@ export default function CategoryProjectsPage({ params }: { params: Promise<{ cat
 
   const prev = useCallback(() => {
     if (lightboxIdx === null) return;
-    setLightboxIdx((i) => (i === 0 ? project.images.length - 1 : (i as number) - 1));
+    setLightboxIdx((i) =>
+      i === 0 ? project.images.length - 1 : (i as number) - 1,
+    );
   }, [lightboxIdx, project.images.length]);
 
   const next = useCallback(() => {
     if (lightboxIdx === null) return;
-    setLightboxIdx((i) => (i === project.images.length - 1 ? 0 : (i as number) + 1));
+    setLightboxIdx((i) =>
+      i === project.images.length - 1 ? 0 : (i as number) + 1,
+    );
   }, [lightboxIdx, project.images.length]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setLightboxIdx(null);
-      if (e.key === 'ArrowLeft') prev();
-      if (e.key === 'ArrowRight') next();
+      if (e.key === "Escape") setLightboxIdx(null);
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
     };
     if (lightboxIdx !== null) {
-      window.addEventListener('keydown', handler);
-      document.body.style.overflow = 'hidden';
+      window.addEventListener("keydown", handler);
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      window.removeEventListener('keydown', handler);
-      document.body.style.overflow = '';
+      window.removeEventListener("keydown", handler);
+      document.body.style.overflow = "";
     };
   }, [lightboxIdx, prev, next]);
 
@@ -63,8 +83,12 @@ export default function CategoryProjectsPage({ params }: { params: Promise<{ cat
             href="/projects"
             className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-brand-pink transition-colors"
           >
-            {lang === 'ar' ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
-            {lang === 'ar' ? 'الرجوع لكافة القطاعات' : 'Back to All Sectors'}
+            {lang === "ar" ? (
+              <ArrowRight className="w-4 h-4" />
+            ) : (
+              <ArrowLeft className="w-4 h-4" />
+            )}
+            {lang === "ar" ? "الرجوع لكافة القطاعات" : "Back to All Sectors"}
           </Link>
         </div>
 
@@ -76,7 +100,7 @@ export default function CategoryProjectsPage({ params }: { params: Promise<{ cat
           className="text-center mb-14"
         >
           <span className="inline-block text-xs font-semibold tracking-[0.2em] uppercase text-brand-pink mb-3 px-4 py-1.5 rounded-full bg-brand-pink/10 border border-brand-pink/20">
-            {lang === 'ar' ? 'نماذج أعمال القطاع' : 'Sector Portfolio'}
+            {lang === "ar" ? "نماذج أعمال القطاع" : "Sector Portfolio"}
           </span>
           <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-100 to-brand-pink">
             {project.title[lang]}
@@ -121,7 +145,7 @@ export default function CategoryProjectsPage({ params }: { params: Promise<{ cat
 
               <div className="absolute bottom-4 left-4 right-4">
                 <span className="text-xs text-white/80 font-medium">
-                  {lang === 'ar' ? `نموذج ${i + 1}` : `Sample ${i + 1}`}
+                  {lang === "ar" ? `نموذج ${i + 1}` : `Sample ${i + 1}`}
                 </span>
               </div>
             </motion.div>
@@ -137,20 +161,20 @@ export default function CategoryProjectsPage({ params }: { params: Promise<{ cat
           className="mt-16 p-8 md:p-12 rounded-3xl bg-gradient-to-r from-brand-pink/20 via-[#14162e] to-brand-orange/20 border border-brand-pink/20 text-center relative overflow-hidden"
         >
           <h2 className="text-2xl md:text-3xl font-bold mb-4 text-white">
-            {lang === 'ar'
+            {lang === "ar"
               ? `جاهز لترقية حضور براندك في مجال ${project.title.ar}؟`
               : `Ready to elevate your ${project.title.en} brand?`}
           </h2>
           <p className="text-sm md:text-base text-gray-300 max-w-2xl mx-auto mb-6">
-            {lang === 'ar'
-              ? 'نساعدك في وكالة دي آرو على تصميم وإنتاج محتوى إبداعي يزيد من مبيعاتك وتفاعل جمهورك المستهدف.'
-              : 'At D Arrow agency, we craft creative campaigns designed to drive sales and boost customer engagement.'}
+            {lang === "ar"
+              ? "نساعدك في وكالة دي آرو على تصميم وإنتاج محتوى إبداعي يزيد من مبيعاتك وتفاعل جمهورك المستهدف."
+              : "At D Arrow agency, we craft creative campaigns designed to drive sales and boost customer engagement."}
           </p>
           <a
             href="/contact"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-brand-pink to-brand-orange text-white font-bold shadow-lg shadow-brand-pink/30 hover:scale-105 transition-transform"
           >
-            {lang === 'ar' ? 'تواصل معنا الآن' : 'Contact Us Now'}
+            {lang === "ar" ? "تواصل معنا الآن" : "Contact Us Now"}
           </a>
         </motion.div>
       </div>

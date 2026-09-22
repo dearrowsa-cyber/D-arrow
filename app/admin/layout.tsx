@@ -1,71 +1,101 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import Link from 'next/link';
-import './admin.css';
-import { LayoutDashboard, FileText, Globe, DollarSign, LogOut, Menu, X, Image, Search, Tags, ArrowRightLeft, Bot, Code, Map, ShoppingBag, Package, Ticket, Star, Sun, Moon } from 'lucide-react';
+import { useEffect, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
+import Link from "@util/link";
+import "./admin.css";
+import {
+  LayoutDashboard,
+  FileText,
+  Globe,
+  DollarSign,
+  LogOut,
+  Menu,
+  X,
+  Image,
+  Search,
+  Tags,
+  ArrowRightLeft,
+  Bot,
+  Code,
+  Map,
+  ShoppingBag,
+  Package,
+  Ticket,
+  Star,
+  Sun,
+  Moon,
+} from "lucide-react";
 
 const navItems = [
-  { href: '/admin', label: 'لوحة التحكم', icon: LayoutDashboard },
-  { href: '/admin/posts', label: 'المقالات', icon: FileText },
-  { href: '/admin/pages', label: 'الصفحات', icon: Globe },
-  { href: '/admin/pricing', label: 'الأسعار', icon: DollarSign },
-  { href: '/admin/media', label: 'الوسائط', icon: Image },
-  { href: '/admin/seo', label: 'لوحة SEO', icon: Search },
-  { href: '/admin/seo/meta', label: 'سيو الصفحات (العناوين والوصف)', icon: Tags },
-  { href: '/admin/seo/redirects', label: 'التحويلات', icon: ArrowRightLeft },
-  { href: '/admin/seo/robots', label: 'Robots.txt', icon: Bot },
-  { href: '/admin/seo/schema', label: 'Schema', icon: Code },
-  { href: '/admin/seo/sitemap', label: 'خريطة الموقع', icon: Map },
+  { href: "/admin", label: "لوحة التحكم", icon: LayoutDashboard },
+  { href: "/admin/posts", label: "المقالات", icon: FileText },
+  { href: "/admin/pages", label: "الصفحات", icon: Globe },
+  { href: "/admin/pricing", label: "الأسعار", icon: DollarSign },
+  { href: "/admin/media", label: "الوسائط", icon: Image },
+  { href: "/admin/seo", label: "لوحة SEO", icon: Search },
+  {
+    href: "/admin/seo/meta",
+    label: "سيو الصفحات (العناوين والوصف)",
+    icon: Tags,
+  },
+  { href: "/admin/seo/redirects", label: "التحويلات", icon: ArrowRightLeft },
+  { href: "/admin/seo/robots", label: "Robots.txt", icon: Bot },
+  { href: "/admin/seo/schema", label: "Schema", icon: Code },
+  { href: "/admin/seo/sitemap", label: "خريطة الموقع", icon: Map },
 ];
 
 const storeNavItems = [
-  { href: '/admin/store/products', label: 'المنتجات', icon: Package },
-  { href: '/admin/store/orders', label: 'الطلبات', icon: ShoppingBag },
-  { href: '/admin/store/coupons', label: 'الكوبونات', icon: Ticket },
-  { href: '/admin/store/reviews', label: 'التقييمات', icon: Star },
+  { href: "/admin/store/products", label: "المنتجات", icon: Package },
+  { href: "/admin/store/orders", label: "الطلبات", icon: ShoppingBag },
+  { href: "/admin/store/coupons", label: "الكوبونات", icon: Ticket },
+  { href: "/admin/store/reviews", label: "التقييمات", icon: Star },
 ];
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const [isAuth, setIsAuth] = useState(false);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('admin_theme');
-    if (savedTheme === 'light') setTheme('light');
+    const savedTheme = localStorage.getItem("admin_theme");
+    if (savedTheme === "light") setTheme("light");
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === 'dark' ? 'light' : 'dark';
+    const newTheme = theme === "dark" ? "light" : "dark";
     setTheme(newTheme);
-    localStorage.setItem('admin_theme', newTheme);
+    localStorage.setItem("admin_theme", newTheme);
   };
 
-
   useEffect(() => {
-    const token = localStorage.getItem('admin_token');
-    if (!token && pathname !== '/admin/login') {
-      router.push('/admin/login');
+    const token = localStorage.getItem("admin_token");
+    if (!token && pathname !== "/admin/login") {
+      router.push("/admin/login");
     } else if (token) {
       // Verify token
-      fetch('/api/admin/auth', { headers: { Authorization: `Bearer ${token}` } })
-        .then(res => res.json())
-        .then(data => {
+      fetch("/api/admin/auth", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => res.json())
+        .then((data) => {
           if (data.success) {
             setIsAuth(true);
           } else {
-            localStorage.removeItem('admin_token');
-            router.push('/admin/login');
+            localStorage.removeItem("admin_token");
+            router.push("/admin/login");
           }
         })
         .catch(() => {
-          localStorage.removeItem('admin_token');
-          router.push('/admin/login');
+          localStorage.removeItem("admin_token");
+          router.push("/admin/login");
         })
         .finally(() => setLoading(false));
     } else {
@@ -74,12 +104,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }, [pathname, router]);
 
   const handleLogout = () => {
-    localStorage.removeItem('admin_token');
-    router.push('/admin/login');
+    localStorage.removeItem("admin_token");
+    router.push("/admin/login");
   };
 
   // Login page - no sidebar
-  if (pathname === '/admin/login') {
+  if (pathname === "/admin/login") {
     return (
       <div className="admin-layout">
         <style suppressHydrationWarning>{`
@@ -94,15 +124,29 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   if (loading) {
     return (
-      <div className="admin-layout" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{
-            width: 40, height: 40, border: '3px solid rgba(255,77,109,0.2)',
-            borderTopColor: '#FF4D6D', borderRadius: '50%',
-            animation: 'spin 0.8s linear infinite', margin: '0 auto 16px'
-          }} />
+      <div
+        className="admin-layout"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "100vh",
+        }}
+      >
+        <div style={{ textAlign: "center" }}>
+          <div
+            style={{
+              width: 40,
+              height: 40,
+              border: "3px solid rgba(255,77,109,0.2)",
+              borderTopColor: "#FF4D6D",
+              borderRadius: "50%",
+              animation: "spin 0.8s linear infinite",
+              margin: "0 auto 16px",
+            }}
+          />
           <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-          <p style={{ color: '#9CA3AF', fontSize: 14 }}>جاري التحميل...</p>
+          <p style={{ color: "#9CA3AF", fontSize: 14 }}>جاري التحميل...</p>
         </div>
       </div>
     );
@@ -111,24 +155,29 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (!isAuth) return null;
 
   return (
-    <div className={`admin-layout ${theme === 'light' ? 'light-mode' : ''}`}>
+    <div className={`admin-layout ${theme === "light" ? "light-mode" : ""}`}>
       {/* FORCE HIDE GLOBAL CHROME */}
       <style suppressHydrationWarning>{`
         header, footer, canvas, .network-background { display: none !important; }
         .admin-sidebar { display: flex !important; }
         .admin-main { display: flex !important; }
       `}</style>
-      
+
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 45 }}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.5)",
+            zIndex: 45,
+          }}
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <aside className={`admin-sidebar ${sidebarOpen ? 'open' : ''}`}>
+      <aside className={`admin-sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="admin-sidebar-logo">
           <img src="/DR-LOGO.png" alt="D Arrow" style={{ height: 36 }} />
           <span>Admin Panel</span>
@@ -136,24 +185,24 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         <nav className="admin-sidebar-nav">
           <div className="admin-nav-section">القائمة الرئيسية</div>
-          {navItems.map(item => (
+          {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`admin-nav-item ${pathname === item.href ? 'active' : ''}`}
+              className={`admin-nav-item ${pathname === item.href ? "active" : ""}`}
               onClick={() => setSidebarOpen(false)}
             >
               <item.icon size={20} />
               {item.label}
             </Link>
           ))}
-          
+
           <div className="admin-nav-section">المتجر الإلكتروني</div>
-          {storeNavItems.map(item => (
+          {storeNavItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`admin-nav-item ${pathname === item.href || pathname?.startsWith(item.href + '/') ? 'active' : ''}`}
+              className={`admin-nav-item ${pathname === item.href || pathname?.startsWith(item.href + "/") ? "active" : ""}`}
               onClick={() => setSidebarOpen(false)}
             >
               <item.icon size={20} />
@@ -163,11 +212,20 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </nav>
 
         <div className="admin-sidebar-footer">
-          <button onClick={handleLogout} className="admin-nav-item" style={{ width: '100%', border: 'none' }}>
+          <button
+            onClick={handleLogout}
+            className="admin-nav-item"
+            style={{ width: "100%", border: "none" }}
+          >
             <LogOut size={20} />
             تسجيل الخروج
           </button>
-          <Link href="/" className="admin-nav-item" style={{ marginTop: 4 }} target="_blank">
+          <Link
+            href="/"
+            className="admin-nav-item"
+            style={{ marginTop: 4 }}
+            target="_blank"
+          >
             <Globe size={20} />
             عرض الموقع
           </Link>
@@ -178,34 +236,55 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <div className="admin-main">
         {/* Top bar */}
         <div className="admin-topbar">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <button
               className="admin-btn-ghost"
-              style={{ display: 'none', padding: 8, background: 'transparent', border: 'none', color: '#9CA3AF' }}
+              style={{
+                display: "none",
+                padding: 8,
+                background: "transparent",
+                border: "none",
+                color: "#9CA3AF",
+              }}
               onClick={() => setSidebarOpen(!sidebarOpen)}
               id="mobile-menu-btn"
             >
               {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
             <style>{`@media(max-width:1024px){#mobile-menu-btn{display:flex!important}}`}</style>
-            <h1 className="admin-topbar-title" style={{ fontSize: 18, margin: 0 }}>
-              {navItems.find(n => n.href === pathname)?.label || 'لوحة التحكم'}
+            <h1
+              className="admin-topbar-title"
+              style={{ fontSize: 18, margin: 0 }}
+            >
+              {navItems.find((n) => n.href === pathname)?.label ||
+                "لوحة التحكم"}
             </h1>
           </div>
-          <div className="admin-topbar-actions" style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <div
+            className="admin-topbar-actions"
+            style={{ display: "flex", alignItems: "center", gap: 16 }}
+          >
             <button
               onClick={toggleTheme}
               style={{
-                background: 'transparent', border: '1px solid rgba(255, 77, 109, 0.2)', 
-                borderRadius: '50%', width: 36, height: 36, display: 'flex', 
-                alignItems: 'center', justifyContent: 'center', color: '#FF4D6D',
-                cursor: 'pointer'
+                background: "transparent",
+                border: "1px solid rgba(255, 77, 109, 0.2)",
+                borderRadius: "50%",
+                width: 36,
+                height: 36,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#FF4D6D",
+                cursor: "pointer",
               }}
-              title={theme === 'dark' ? 'تفعيل الوضع النهاري' : 'تفعيل الوضع الليلي'}
+              title={
+                theme === "dark" ? "تفعيل الوضع النهاري" : "تفعيل الوضع الليلي"
+              }
             >
-              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+              {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
             </button>
-            <span style={{ fontSize: 13, color: '#6B7280' }}>
+            <span style={{ fontSize: 13, color: "#6B7280" }}>
               مرحباً، Admin
             </span>
           </div>

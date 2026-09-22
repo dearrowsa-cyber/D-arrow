@@ -1,56 +1,66 @@
-import React from 'react';
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import { 
-  Sparkles, 
-  ShoppingBag, 
-  Mail, 
-  Phone, 
-  Instagram, 
-  CheckCircle2, 
-  Star, 
+import React from "react";
+import type { Metadata } from "next";
+import Link from "@util/link";
+import {
+  Sparkles,
+  ShoppingBag,
+  Mail,
+  Phone,
+  Instagram,
+  CheckCircle2,
+  Star,
   ArrowLeft,
   Heart,
   Crown,
   Share2,
-  Clock
-} from 'lucide-react';
+  Clock,
+} from "lucide-react";
 
 export const metadata: Metadata = {
-  title: 'سارة | Sara — المتجر الرسمي والبورتفوليو',
-  description: 'الموقع الرسمي لـ سارة — أزياء وتصاميم فاخرة، تعاونات تجارية، وخدمات إبداعية.',
+  title: "سارة | Sara — المتجر الرسمي والبورتفوليو",
+  description:
+    "الموقع الرسمي لـ سارة — أزياء وتصاميم فاخرة، تعاونات تجارية، وخدمات إبداعية.",
 };
 
 export default function SaraPage() {
   const products = [
     {
-      id: '1',
-      name: 'عباية الحرير الملكي الأسود المطرز',
-      price: '850 ر.س',
-      tag: 'الأكثر طلباً',
-      image: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80',
-      description: 'حرير كوري فاخر مع تطريز يدوي بخيوط الحرير الياباني وشيلة منتقاة.',
+      id: "1",
+      name: "عباية الحرير الملكي الأسود المطرز",
+      price: "850 ر.س",
+      tag: "الأكثر طلباً",
+      image:
+        "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80",
+      description:
+        "حرير كوري فاخر مع تطريز يدوي بخيوط الحرير الياباني وشيلة منتقاة.",
     },
     {
-      id: '2',
-      name: 'كولكشن صيف 2026 الكتان الطبيعي',
-      price: '620 ر.س',
-      tag: 'حصري',
-      image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80',
-      description: 'قصة بليزر عصرية بأقمشة طبيعية خفيفة ومريحة للاستخدام اليومي الراقي.',
+      id: "2",
+      name: "كولكشن صيف 2026 الكتان الطبيعي",
+      price: "620 ر.س",
+      tag: "حصري",
+      image:
+        "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
+      description:
+        "قصة بليزر عصرية بأقمشة طبيعية خفيفة ومريحة للاستخدام اليومي الراقي.",
     },
     {
-      id: '3',
-      name: 'قفطان المناسبات التراثي الفاخر',
-      price: '1,200 ر.س',
-      tag: 'إصدار محدود',
-      image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=80',
-      description: 'مستوحى من التراث السعودي الأصيل مع لمسات عصرية وشك يدوي راقٍ.',
+      id: "3",
+      name: "قفطان المناسبات التراثي الفاخر",
+      price: "1,200 ر.س",
+      tag: "إصدار محدود",
+      image:
+        "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=800&q=80",
+      description:
+        "مستوحى من التراث السعودي الأصيل مع لمسات عصرية وشك يدوي راقٍ.",
     },
   ];
 
   return (
-    <div className="min-h-screen pt-16 bg-[#070913] text-white font-sans selection:bg-rose-500 selection:text-white flex flex-col" dir="rtl">
+    <div
+      className="min-h-screen pt-16 bg-[#070913] text-white font-sans selection:bg-rose-500 selection:text-white flex flex-col"
+      dir="rtl"
+    >
       {/* Top Navbar */}
       <header className="sticky top-0 z-50 bg-[#070913]/85 backdrop-blur-xl border-b border-white/10">
         {/* Increased height to h-24 for better spacing and alignment */}
@@ -65,7 +75,9 @@ export default function SaraPage() {
               <h1 className="font-extrabold text-xl tracking-wide bg-gradient-to-r from-white via-rose-100 to-rose-400 bg-clip-text text-transparent">
                 SARA | سارة
               </h1>
-              <p className="text-[10px] md:text-xs text-rose-300/70 font-medium pb-6">Official Brand & Portfolio</p>
+              <p className="text-[10px] md:text-xs text-rose-300/70 font-medium pb-6">
+                Official Brand & Portfolio
+              </p>
             </div>
           </div>
 
@@ -112,7 +124,9 @@ export default function SaraPage() {
             </h2>
 
             <p className="text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-              مرحباً بكم في المنصة الرسمية لـ <strong>سارة</strong> — تصاميم أزياء حصرية، استشارات إبداعية، وتنسيقات تناسب ذوق المرأة الخليجية العصرية.
+              مرحباً بكم في المنصة الرسمية لـ <strong>سارة</strong> — تصاميم
+              أزياء حصرية، استشارات إبداعية، وتنسيقات تناسب ذوق المرأة الخليجية
+              العصرية.
             </p>
 
             <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
@@ -135,38 +149,60 @@ export default function SaraPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-10 max-w-4xl mx-auto">
               <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex flex-col items-center justify-center h-full text-center">
                 <Crown className="w-6 h-6 text-amber-400 mb-2" />
-                <div className="text-2xl md:text-3xl font-extrabold text-white">100%</div>
-                <div className="text-xs text-slate-400 mt-1">تصاميم أصلية حصرية</div>
+                <div className="text-2xl md:text-3xl font-extrabold text-white">
+                  100%
+                </div>
+                <div className="text-xs text-slate-400 mt-1">
+                  تصاميم أصلية حصرية
+                </div>
               </div>
               <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex flex-col items-center justify-center h-full text-center">
                 <Star className="w-6 h-6 text-rose-400 mb-2" />
-                <div className="text-2xl md:text-3xl font-extrabold text-white">4.9 / 5</div>
-                <div className="text-xs text-slate-400 mt-1">تقييم العملاء المميز</div>
+                <div className="text-2xl md:text-3xl font-extrabold text-white">
+                  4.9 / 5
+                </div>
+                <div className="text-xs text-slate-400 mt-1">
+                  تقييم العملاء المميز
+                </div>
               </div>
               <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex flex-col items-center justify-center h-full text-center">
                 <Clock className="w-6 h-6 text-pink-400 mb-2" />
-                <div className="text-2xl md:text-3xl font-extrabold text-white">توصيل سريع</div>
-                <div className="text-xs text-slate-400 mt-1">لجميع مناطق المملكة</div>
+                <div className="text-2xl md:text-3xl font-extrabold text-white">
+                  توصيل سريع
+                </div>
+                <div className="text-xs text-slate-400 mt-1">
+                  لجميع مناطق المملكة
+                </div>
               </div>
               <div className="p-6 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex flex-col items-center justify-center h-full text-center">
                 <CheckCircle2 className="w-6 h-6 text-emerald-400 mb-2" />
-                <div className="text-2xl md:text-3xl font-extrabold text-white">معتمد</div>
-                <div className="text-xs text-slate-400 mt-1">خدمة عملاء على مدار الساعة</div>
+                <div className="text-2xl md:text-3xl font-extrabold text-white">
+                  معتمد
+                </div>
+                <div className="text-xs text-slate-400 mt-1">
+                  خدمة عملاء على مدار الساعة
+                </div>
               </div>
             </div>
           </div>
         </section>
 
         {/* Featured Products */}
-        <section id="products" className="py-16 md:py-20 px-6 max-w-7xl mx-auto border-t border-white/10">
+        <section
+          id="products"
+          className="py-16 md:py-20 px-6 max-w-7xl mx-auto border-t border-white/10"
+        >
           <div className="text-center space-y-4 mb-12 md:mb-16">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 text-rose-400 text-xs font-semibold">
               <ShoppingBag className="w-3.5 h-3.5" />
               التشكيلة المختارة
             </div>
-            <h3 className="text-2xl md:text-3xl font-extrabold">أحدث الإبداعات والتصاميم</h3>
+            <h3 className="text-2xl md:text-3xl font-extrabold">
+              أحدث الإبداعات والتصاميم
+            </h3>
             <p className="text-slate-400 max-w-xl mx-auto text-sm md:text-base">
-              قطع تم انتقاؤها وصياغتها بدقة وعناية فائقة لتبرز تميزك في كل مناسبة.
+              قطع تم انتقاؤها وصياغتها بدقة وعناية فائقة لتبرز تميزك في كل
+              مناسبة.
             </p>
           </div>
 
@@ -200,8 +236,12 @@ export default function SaraPage() {
 
                   <div className="pt-4 border-t border-white/10 flex items-center justify-between">
                     <div>
-                      <span className="text-xs text-slate-400 block">السعر</span>
-                      <span className="text-lg md:text-xl font-black text-rose-400">{p.price}</span>
+                      <span className="text-xs text-slate-400 block">
+                        السعر
+                      </span>
+                      <span className="text-lg md:text-xl font-black text-rose-400">
+                        {p.price}
+                      </span>
                     </div>
                     <a
                       href={`https://wa.me/966551234567?text=${encodeURIComponent(`مرحباً سارة، أود الاستفسار والطلب لـ: ${p.name}`)}`}
@@ -229,7 +269,8 @@ export default function SaraPage() {
               تواصل رسمي مع سارة
             </h3>
             <p className="text-slate-300 max-w-lg mx-auto text-sm md:text-base leading-relaxed">
-              للتعاونات التجارية، الاستشارات الخاصة، والطلبات الكبرى، يرجى التواصل عبر البريد الرسمي المعتمد:
+              للتعاونات التجارية، الاستشارات الخاصة، والطلبات الكبرى، يرجى
+              التواصل عبر البريد الرسمي المعتمد:
             </p>
 
             <div className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-black/40 border border-white/10 text-rose-300 font-mono text-sm md:text-base">

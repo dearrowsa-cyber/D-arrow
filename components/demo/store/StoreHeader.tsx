@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { 
-  ShoppingCart, 
-  Search, 
-  Heart, 
-  Sliders, 
-  Menu, 
-  X, 
-  Sparkles, 
+import React, { useState } from "react";
+import Link from "@util/link";
+import {
+  ShoppingCart,
+  Search,
+  Heart,
+  Sliders,
+  Menu,
+  X,
+  Sparkles,
   ExternalLink,
   ChevronDown,
   LayoutDashboard,
@@ -22,44 +22,43 @@ import {
   Store,
   ArrowRight,
   ShieldCheck,
-  Zap
-} from 'lucide-react';
-import { useStore } from './StoreContext';
+  Zap,
+} from "lucide-react";
+import { useStore } from "./StoreContext";
 
 export default function StoreHeader() {
-  const { 
-    settings, 
-    cartCount, 
+  const {
+    settings,
+    cartCount,
     cartSubtotal,
-    setIsCartOpen, 
-    wishlist, 
-    setIsCustomizerOpen, 
-    searchQuery, 
+    setIsCartOpen,
+    wishlist,
+    setIsCustomizerOpen,
+    searchQuery,
     setSearchQuery,
-    updateSettings 
+    updateSettings,
   } = useStore();
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currencyDropdown, setCurrencyDropdown] = useState(false);
 
   const CURRENCIES = [
-    { code: 'SAR', label: 'ريال سعودي (SAR)', rate: 1 },
-    { code: 'AED', label: 'درهم إماراتي (AED)', rate: 0.98 },
-    { code: 'KWD', label: 'دينار كويتي (KWD)', rate: 0.082 },
-    { code: 'USD', label: 'دولار أمريكي (USD)', rate: 0.27 },
+    { code: "SAR", label: "ريال سعودي (SAR)", rate: 1 },
+    { code: "AED", label: "درهم إماراتي (AED)", rate: 0.98 },
+    { code: "KWD", label: "دينار كويتي (KWD)", rate: 0.082 },
+    { code: "USD", label: "دولار أمريكي (USD)", rate: 0.27 },
   ];
 
   const brandGradient = `linear-gradient(135deg, ${settings.primaryColor}, ${settings.accentColor})`;
 
   return (
-    <header className="w-full z-40 relative demo-store-root font-sans text-white" dir="rtl">
-      
+    <header
+      className="w-full z-40 relative demo-store-root font-sans text-white"
+      dir="rtl"
+    >
       {/* 1. Top Control & Quick Switcher Bar */}
-      <div 
-        className="backdrop-blur-md border-b border-[#382E0E] py-2 px-3 sm:px-8 transition-colors duration-300 bg-[#120E04]/90"
-      >
+      <div className="backdrop-blur-md border-b border-[#382E0E] py-2 px-3 sm:px-8 transition-colors duration-300 bg-[#120E04]/90">
         <div className="max-w-[1550px] w-full mx-auto flex items-center justify-between gap-2">
-          
           {/* Live indicator */}
           <div className="hidden xs:flex sm:flex items-center gap-2">
             <span className="flex h-2 w-2 relative flex-shrink-0">
@@ -113,48 +112,52 @@ export default function StoreHeader() {
 
       {/* 2. Dynamic Announcement Bar */}
       {settings.announcementEnabled && (
-        <div 
+        <div
           className="text-xs sm:text-sm font-black text-center py-2.5 px-4 shadow-sm transition-all duration-300 relative overflow-hidden text-black"
-          style={{ background: 'linear-gradient(135deg, #FFE600 0%, #FFD700 100%)' }}
+          style={{
+            background: "linear-gradient(135deg, #FFE600 0%, #FFD700 100%)",
+          }}
         >
           <div className="max-w-[1550px] w-full mx-auto flex items-center justify-center gap-2 text-black font-black">
             <Sparkles className="w-4 h-4 animate-pulse flex-shrink-0 text-black" />
-            <span className="truncate tracking-normal drop-shadow-sm">{settings.announcementText}</span>
+            <span className="truncate tracking-normal drop-shadow-sm">
+              {settings.announcementText}
+            </span>
           </div>
         </div>
       )}
 
       {/* 3. Main Luxury Store Header */}
-      <div 
-        className="backdrop-blur-xl border-b border-[#382E0E] sticky top-0 z-40 transition-colors duration-300 shadow-sm bg-[#161205]/95"
-      >
+      <div className="backdrop-blur-xl border-b border-[#382E0E] sticky top-0 z-40 transition-colors duration-300 shadow-sm bg-[#161205]/95">
         <div className="max-w-[1550px] w-full mx-auto px-4 sm:px-8 lg:px-12">
           <div className="flex items-center justify-between h-16 sm:h-20 lg:h-24 gap-3 sm:gap-6">
-            
             {/* Right: Mobile Menu Toggle & Large Clear Brand Logo */}
             <div className="flex items-center gap-4 flex-shrink-0">
-              <button 
+              <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="lg:hidden p-2.5 rounded-2xl bg-[#1C1707] hover:bg-[#2D250B] text-white border border-[#382E0E] transition"
               >
-                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {mobileMenuOpen ? (
+                  <X className="w-6 h-6" />
+                ) : (
+                  <Menu className="w-6 h-6" />
+                )}
               </button>
 
-              <Link href="/demo/store" className="flex items-center gap-2 sm:gap-3.5 group">
+              <Link
+                href="/demo/store"
+                className="flex items-center gap-2 sm:gap-3.5 group"
+              >
                 {settings.logoUrl ? (
-                  <div 
-                    className="relative h-11 w-11 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-xl sm:rounded-2xl overflow-hidden bg-[#1C1707] border-2 border-[#FFE600] p-1.5 sm:p-2 flex items-center justify-center shadow-lg shadow-[#FFE600]/20 group-hover:scale-105 transition-transform flex-shrink-0"
-                  >
-                    <img 
-                      src={settings.logoUrl} 
+                  <div className="relative h-11 w-11 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-xl sm:rounded-2xl overflow-hidden bg-[#1C1707] border-2 border-[#FFE600] p-1.5 sm:p-2 flex items-center justify-center shadow-lg shadow-[#FFE600]/20 group-hover:scale-105 transition-transform flex-shrink-0">
+                    <img
+                      src={settings.logoUrl}
                       alt={settings.storeName}
                       className="h-full w-full object-contain"
                     />
                   </div>
                 ) : (
-                  <div 
-                    className="h-11 w-11 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-xl sm:rounded-2xl flex items-center justify-center font-black text-lg sm:text-2xl text-black shadow-xl flex-shrink-0 group-hover:scale-105 transition-transform btn-phosphor"
-                  >
+                  <div className="h-11 w-11 sm:h-14 sm:w-14 lg:h-16 lg:w-16 rounded-xl sm:rounded-2xl flex items-center justify-center font-black text-lg sm:text-2xl text-black shadow-xl flex-shrink-0 group-hover:scale-105 transition-transform btn-phosphor">
                     {settings.storeName.charAt(0)}
                   </div>
                 )}
@@ -164,9 +167,7 @@ export default function StoreHeader() {
                     <span className="font-black text-sm sm:text-xl lg:text-2xl text-white tracking-tight leading-tight group-hover:text-[#FFE600] transition-colors block">
                       {settings.storeName}
                     </span>
-                    <span 
-                      className="hidden sm:inline-block px-2 py-0.5 rounded-lg text-[10px] font-black text-black shadow-sm uppercase bg-gradient-to-r from-[#FFE600] to-[#FFD700]"
-                    >
+                    <span className="hidden sm:inline-block px-2 py-0.5 rounded-lg text-[10px] font-black text-black shadow-sm uppercase bg-gradient-to-r from-[#FFE600] to-[#FFD700]">
                       Store
                     </span>
                   </div>
@@ -189,8 +190,8 @@ export default function StoreHeader() {
                 />
                 <Search className="w-5 h-5 text-[#FFE600] absolute right-4 top-1/2 -translate-y-1/2" />
                 {searchQuery && (
-                  <button 
-                    onClick={() => setSearchQuery('')}
+                  <button
+                    onClick={() => setSearchQuery("")}
                     className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
                   >
                     <X className="w-4 h-4" />
@@ -201,7 +202,6 @@ export default function StoreHeader() {
 
             {/* Left: Actions (Currency, Wishlist, Luxury Cart) */}
             <div className="flex items-center gap-3 sm:gap-3.5 flex-shrink-0">
-              
               {/* Currency Selector */}
               <div className="relative">
                 <button
@@ -218,17 +218,22 @@ export default function StoreHeader() {
                       <button
                         key={curr.code}
                         onClick={() => {
-                          updateSettings({ currency: curr.code as any, currencyRate: curr.rate });
+                          updateSettings({
+                            currency: curr.code as any,
+                            currencyRate: curr.rate,
+                          });
                           setCurrencyDropdown(false);
                         }}
                         className={`w-full text-right px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-between transition cursor-pointer ${
                           settings.currency === curr.code
-                            ? 'bg-[#382E0E] text-[#FFE600] font-black'
-                            : 'text-[#E2E8F0] hover:bg-[#2D250B]'
+                            ? "bg-[#382E0E] text-[#FFE600] font-black"
+                            : "text-[#E2E8F0] hover:bg-[#2D250B]"
                         }`}
                       >
                         <span>{curr.label}</span>
-                        {settings.currency === curr.code && <Check className="w-4 h-4 text-[#FFE600]" />}
+                        {settings.currency === curr.code && (
+                          <Check className="w-4 h-4 text-[#FFE600]" />
+                        )}
                       </button>
                     ))}
                   </div>
@@ -243,9 +248,7 @@ export default function StoreHeader() {
               >
                 <Heart className="w-5 h-5" />
                 {wishlist.length > 0 && (
-                  <span 
-                    className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full text-black font-black text-[10px] flex items-center justify-center shadow-md bg-[#FFE600]"
-                  >
+                  <span className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full text-black font-black text-[10px] flex items-center justify-center shadow-md bg-[#FFE600]">
                     {wishlist.length}
                   </span>
                 )}
@@ -267,39 +270,54 @@ export default function StoreHeader() {
                   </span>
                 )}
               </button>
-
             </div>
-
           </div>
 
           {/* Category Navigation Bar */}
           <nav className="hidden lg:flex items-center justify-between border-t border-[#382E0E] py-3.5 text-xs sm:text-sm font-bold text-[#D1D5DB]">
             <div className="flex items-center gap-8">
-              <Link href="/demo/store" className="hover:text-[#FFE600] transition flex items-center gap-1.5 font-black text-white">
+              <Link
+                href="/demo/store"
+                className="hover:text-[#FFE600] transition flex items-center gap-1.5 font-black text-white"
+              >
                 <span>جميع المنتجات والعروض</span>
               </Link>
-              <Link href="/demo/store#flash-deals" className="hover:text-[#FFE600] transition">عروض الخصم السريعة</Link>
-              <Link href="/demo/store#catalog" className="hover:text-[#FFE600] transition">الكتالوج الكامل</Link>
-              <Link href="/demo/store/track" className="hover:text-[#FFE600] text-[#FFE600] font-black transition flex items-center gap-1">
+              <Link
+                href="/demo/store#flash-deals"
+                className="hover:text-[#FFE600] transition"
+              >
+                عروض الخصم السريعة
+              </Link>
+              <Link
+                href="/demo/store#catalog"
+                className="hover:text-[#FFE600] transition"
+              >
+                الكتالوج الكامل
+              </Link>
+              <Link
+                href="/demo/store/track"
+                className="hover:text-[#FFE600] text-[#FFE600] font-black transition flex items-center gap-1"
+              >
                 <span>تتبع الشحنات المباشر</span>
               </Link>
             </div>
 
             <div className="flex items-center gap-6 text-xs text-[#9CA3AF] font-bold">
-              <span className="flex items-center gap-1.5">توصيل سريع لكافة المدن</span>
-              <span className="flex items-center gap-1.5">استرجاع مجاني 14 يوم</span>
+              <span className="flex items-center gap-1.5">
+                توصيل سريع لكافة المدن
+              </span>
+              <span className="flex items-center gap-1.5">
+                استرجاع مجاني 14 يوم
+              </span>
               <span className="flex items-center gap-1.5">خدمة عملاء 24/7</span>
             </div>
           </nav>
-
         </div>
       </div>
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div 
-          className="lg:hidden border-b border-[#382E0E] p-5 space-y-4 animate-in slide-in-from-top-4 bg-[#161205]"
-        >
+        <div className="lg:hidden border-b border-[#382E0E] p-5 space-y-4 animate-in slide-in-from-top-4 bg-[#161205]">
           <div className="relative w-full">
             <input
               type="text"
@@ -312,43 +330,43 @@ export default function StoreHeader() {
           </div>
 
           <div className="space-y-2 text-xs sm:text-sm font-bold text-[#D1D5DB]">
-            <Link 
-              href="/demo/store" 
+            <Link
+              href="/demo/store"
               onClick={() => setMobileMenuOpen(false)}
               className="block p-3 rounded-xl hover:bg-[#1C1707] hover:text-[#FFE600] transition"
             >
               الرئيسية
             </Link>
-            <Link 
-              href="/demo/store#flash-deals" 
+            <Link
+              href="/demo/store#flash-deals"
               onClick={() => setMobileMenuOpen(false)}
               className="block p-3 rounded-xl hover:bg-[#1C1707] hover:text-[#FFE600] transition"
             >
               عروض الخصم السريعة
             </Link>
-            <Link 
-              href="/demo/store#catalog" 
+            <Link
+              href="/demo/store#catalog"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-3 rounded-xl hover:bg-[#F0FDF8]"
             >
               الكتالوج الكامل
             </Link>
-            <Link 
-              href="/demo/store/track" 
+            <Link
+              href="/demo/store/track"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-3 rounded-xl text-[#059669] font-black bg-[#ECFDF5]"
             >
               تتبع حالة شحنتك
             </Link>
-            <Link 
-              href="/demo/store/checkout" 
+            <Link
+              href="/demo/store/checkout"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-3 rounded-xl text-[#064E3B] hover:bg-[#F0FDF8]"
             >
               إتمام الطلب والدفع المباشر
             </Link>
-            <Link 
-              href="/demo/store/admin" 
+            <Link
+              href="/demo/store/admin"
               onClick={() => setMobileMenuOpen(false)}
               className="block px-4 py-3 rounded-xl text-[#042F2E] font-black hover:bg-[#F0FDF8]"
             >
@@ -357,7 +375,6 @@ export default function StoreHeader() {
           </div>
         </div>
       )}
-
     </header>
   );
 }

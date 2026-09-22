@@ -1,9 +1,22 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { Activity, AlertTriangle, FileText, Settings, Navigation, Search, Database, Bot, TrendingUp, Sparkles, Wand2, CheckCircle } from 'lucide-react';
-import SeoScoreGauge from '@/components/seo/SeoScoreGauge';
+import { useEffect, useState } from "react";
+import Link from "@util/link";
+import {
+  Activity,
+  AlertTriangle,
+  FileText,
+  Settings,
+  Navigation,
+  Search,
+  Database,
+  Bot,
+  TrendingUp,
+  Sparkles,
+  Wand2,
+  CheckCircle,
+} from "lucide-react";
+import SeoScoreGauge from "@/components/seo/SeoScoreGauge";
 
 interface KeywordStat {
   keyword: string;
@@ -29,22 +42,32 @@ export default function SeoDashboard() {
   const [aiAnalysis, setAiAnalysis] = useState<string | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [autoFixing, setAutoFixing] = useState(false);
-  const [autoFixResult, setAutoFixResult] = useState<{ success: boolean; error?: string; stats?: { fixedPosts?: number; fixedProducts?: number; fixedPages?: number } } | null>(null);
+  const [autoFixResult, setAutoFixResult] = useState<{
+    success: boolean;
+    error?: string;
+    stats?: {
+      fixedPosts?: number;
+      fixedProducts?: number;
+      fixedPages?: number;
+    };
+  } | null>(null);
 
   useEffect(() => {
-    fetch('/api/admin/seo/dashboard', {
-      headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` }
+    fetch("/api/admin/seo/dashboard", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
+      },
     })
-      .then(res => res.json())
-      .then(res => {
+      .then((res) => res.json())
+      .then((res) => {
         if (res.success) {
           setData(res.data);
         } else {
-          setErrorMsg(res.error || 'Failed to load SEO data.');
+          setErrorMsg(res.error || "Failed to load SEO data.");
         }
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         setErrorMsg(err.message);
         setLoading(false);
       });
@@ -56,34 +79,45 @@ export default function SeoDashboard() {
     setAiAnalysis(null);
 
     try {
-      const res = await fetch('/api/admin/seo/ai-analysis', {
-        method: 'POST',
+      const res = await fetch("/api/admin/seo/ai-analysis", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('admin_token')}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
         },
-        body: JSON.stringify({ errors: data.allErrors })
+        body: JSON.stringify({ errors: data.allErrors }),
       });
       const result = await res.json();
       if (result.success && result.analysis) {
         setAiAnalysis(result.analysis);
       } else {
-        setAiAnalysis(`حدث خطأ أثناء التحليل: ${result.error || result.debug || 'Unknown error'}`);
+        setAiAnalysis(
+          `حدث خطأ أثناء التحليل: ${result.error || result.debug || "Unknown error"}`,
+        );
       }
     } catch (error: unknown) {
-      setAiAnalysis(`حدث خطأ أثناء الاتصال بالخادم: ${(error as Error).message}`);
+      setAiAnalysis(
+        `حدث خطأ أثناء الاتصال بالخادم: ${(error as Error).message}`,
+      );
     }
     setAnalyzing(false);
   };
 
   const handleAutoFix = async () => {
-    if (!confirm('هل أنت متأكد أنك تريد البدء في إصلاح محتوى الموقع تلقائياً؟ هذه العملية قد تستغرق بعض الوقت.')) return;
+    if (
+      !confirm(
+        "هل أنت متأكد أنك تريد البدء في إصلاح محتوى الموقع تلقائياً؟ هذه العملية قد تستغرق بعض الوقت.",
+      )
+    )
+      return;
     setAutoFixing(true);
     setAutoFixResult(null);
     try {
-      const res = await fetch('/api/admin/seo/smart-fix', {
-        method: 'POST',
-        headers: { Authorization: `Bearer ${localStorage.getItem('admin_token')}` }
+      const res = await fetch("/api/admin/seo/smart-fix", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
+        },
       });
       const result = await res.json();
       setAutoFixResult(result);
@@ -97,25 +131,50 @@ export default function SeoDashboard() {
     setAutoFixing(false);
   };
 
-  if (loading) return <div className="admin-content">Loading SEO Dashboard...</div>;
+  if (loading)
+    return <div className="admin-content">Loading SEO Dashboard...</div>;
 
   return (
     <div className="admin-content">
-      <div style={{ marginBottom: '32px' }}>
-        <h2 style={{ fontSize: '28px', margin: '0 0 8px' }}>لوحة تحكم السيو (SEO Dashboard)</h2>
-        <p style={{ color: '#9CA3AF' }}>نظرة شاملة على أداء محركات البحث الخاص بموقعك</p>
+      <div style={{ marginBottom: "32px" }}>
+        <h2 style={{ fontSize: "28px", margin: "0 0 8px" }}>
+          لوحة تحكم السيو (SEO Dashboard)
+        </h2>
+        <p style={{ color: "#9CA3AF" }}>
+          نظرة شاملة على أداء محركات البحث الخاص بموقعك
+        </p>
       </div>
 
       {errorMsg && (
-        <div style={{ padding: '16px', background: 'rgba(239, 68, 68, 0.15)', color: '#EF4444', borderRadius: '12px', marginBottom: '24px', border: '1px solid rgba(239, 68, 68, 0.3)', display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <div
+          style={{
+            padding: "16px",
+            background: "rgba(239, 68, 68, 0.15)",
+            color: "#EF4444",
+            borderRadius: "12px",
+            marginBottom: "24px",
+            border: "1px solid rgba(239, 68, 68, 0.3)",
+            display: "flex",
+            alignItems: "center",
+            gap: "12px",
+          }}
+        >
           <AlertTriangle size={20} />
-          <div><strong>خطأ في جلب البيانات:</strong> {errorMsg}</div>
+          <div>
+            <strong>خطأ في جلب البيانات:</strong> {errorMsg}
+          </div>
         </div>
       )}
 
-      <div className="admin-grid-4" style={{ marginBottom: '32px' }}>
+      <div className="admin-grid-4" style={{ marginBottom: "32px" }}>
         <div className="admin-stat-card">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <div>
               <div className="admin-stat-value">{data?.avgScore || 0}/100</div>
               <div className="admin-stat-label">متوسط درجة السيو</div>
@@ -125,32 +184,49 @@ export default function SeoDashboard() {
         </div>
 
         <div className="admin-stat-card">
-          <div className="admin-stat-icon orange"><AlertTriangle size={24} /></div>
+          <div className="admin-stat-icon orange">
+            <AlertTriangle size={24} />
+          </div>
           <div className="admin-stat-value">{data?.totalIssues || 0}</div>
           <div className="admin-stat-label">مشاكل السيو (Issues)</div>
         </div>
 
         <div className="admin-stat-card">
-          <div className="admin-stat-icon pink"><FileText size={24} /></div>
+          <div className="admin-stat-icon pink">
+            <FileText size={24} />
+          </div>
           <div className="admin-stat-value">{data?.totalPages || 0}</div>
           <div className="admin-stat-label">صفحات مفهرسة (Indexed)</div>
         </div>
 
         <div className="admin-stat-card">
-          <div className="admin-stat-icon blue"><Navigation size={24} /></div>
+          <div className="admin-stat-icon blue">
+            <Navigation size={24} />
+          </div>
           <div className="admin-stat-value">{data?.redirectsCount || 0}</div>
           <div className="admin-stat-label">تحويلات الروابط (Redirects)</div>
         </div>
       </div>
 
-      <div className="admin-grid-2" style={{ marginBottom: '32px' }}>
+      <div className="admin-grid-2" style={{ marginBottom: "32px" }}>
         {/* Brand Rankings */}
         <div className="admin-card">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              marginBottom: "16px",
+            }}
+          >
             <StarIcon color="#F59E0B" />
             <h3 style={{ margin: 0 }}>ترتيب العلامة التجارية (Brand Rank)</h3>
           </div>
-          <p style={{ color: '#9CA3AF', fontSize: '14px', marginBottom: '16px' }}>ترتيب موقعك عند البحث عن اسم الشركة (D-Arrow).</p>
+          <p
+            style={{ color: "#9CA3AF", fontSize: "14px", marginBottom: "16px" }}
+          >
+            ترتيب موقعك عند البحث عن اسم الشركة (D-Arrow).
+          </p>
           <table className="admin-table">
             <thead>
               <tr>
@@ -164,15 +240,24 @@ export default function SeoDashboard() {
                 data!.brandKeywords.map((kw: KeywordStat, i: number) => (
                   <tr key={i}>
                     <td style={{ fontWeight: 500 }}>{kw.keyword}</td>
-                    <td style={{ color: kw.position <= 3 ? '#10B981' : '#FFF' }}>
-                      {kw.position ? `#${kw.position}` : '--'}
+                    <td
+                      style={{ color: kw.position <= 3 ? "#10B981" : "#FFF" }}
+                    >
+                      {kw.position ? `#${kw.position}` : "--"}
                     </td>
                     <td>{kw.clicks}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={3} style={{ textAlign: 'center', color: '#9CA3AF', padding: '32px' }}>
+                  <td
+                    colSpan={3}
+                    style={{
+                      textAlign: "center",
+                      color: "#9CA3AF",
+                      padding: "32px",
+                    }}
+                  >
                     <p style={{ margin: 0 }}>لا توجد بيانات متاحة حالياً</p>
                   </td>
                 </tr>
@@ -183,11 +268,22 @@ export default function SeoDashboard() {
 
         {/* General Rankings */}
         <div className="admin-card">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px' }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "8px",
+              marginBottom: "16px",
+            }}
+          >
             <TrendingUp color="#3B82F6" />
             <h3 style={{ margin: 0 }}>ترتيب الكلمات العامة (General Rank)</h3>
           </div>
-          <p style={{ color: '#9CA3AF', fontSize: '14px', marginBottom: '16px' }}>الكلمات المستهدفة الأخرى في محركات البحث.</p>
+          <p
+            style={{ color: "#9CA3AF", fontSize: "14px", marginBottom: "16px" }}
+          >
+            الكلمات المستهدفة الأخرى في محركات البحث.
+          </p>
           <table className="admin-table">
             <thead>
               <tr>
@@ -201,15 +297,24 @@ export default function SeoDashboard() {
                 data!.generalKeywords.map((kw: KeywordStat, i: number) => (
                   <tr key={i}>
                     <td style={{ fontWeight: 500 }}>{kw.keyword}</td>
-                    <td style={{ color: kw.position <= 10 ? '#10B981' : '#FFF' }}>
-                      {kw.position ? `#${kw.position}` : '--'}
+                    <td
+                      style={{ color: kw.position <= 10 ? "#10B981" : "#FFF" }}
+                    >
+                      {kw.position ? `#${kw.position}` : "--"}
                     </td>
                     <td>{kw.clicks}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={3} style={{ textAlign: 'center', color: '#9CA3AF', padding: '32px' }}>
+                  <td
+                    colSpan={3}
+                    style={{
+                      textAlign: "center",
+                      color: "#9CA3AF",
+                      padding: "32px",
+                    }}
+                  >
                     <p style={{ margin: 0 }}>لا توجد بيانات متاحة حالياً</p>
                   </td>
                 </tr>
@@ -220,99 +325,264 @@ export default function SeoDashboard() {
       </div>
 
       {/* AI Analysis Section */}
-      <div className="admin-card" style={{ marginBottom: '32px', border: '1px solid #374151' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '24px', flexWrap: 'wrap', gap: '16px' }}>
+      <div
+        className="admin-card"
+        style={{ marginBottom: "32px", border: "1px solid #374151" }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            marginBottom: "24px",
+            flexWrap: "wrap",
+            gap: "16px",
+          }}
+        >
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                marginBottom: "8px",
+              }}
+            >
               <Bot color="#8B5CF6" size={28} />
               <h3 style={{ margin: 0 }}>محلل السيو الذكي (AI Auditor)</h3>
             </div>
-            <p style={{ color: '#9CA3AF', margin: 0 }}>احصل على خطة عمل مقترحة من الذكاء الاصطناعي لحل المشاكل الحالية.</p>
+            <p style={{ color: "#9CA3AF", margin: 0 }}>
+              احصل على خطة عمل مقترحة من الذكاء الاصطناعي لحل المشاكل الحالية.
+            </p>
           </div>
-          <button 
+          <button
             className="admin-btn"
-            style={{ backgroundColor: '#8B5CF6', color: '#FFF', border: 'none' }}
+            style={{
+              backgroundColor: "#8B5CF6",
+              color: "#FFF",
+              border: "none",
+            }}
             onClick={handleAiAnalysis}
             disabled={analyzing || !data?.allErrors?.length}
           >
             {analyzing ? (
-              <><span className="spin" style={{ display: 'inline-block', marginRight: '8px' }}>↻</span> جاري التحليل...</>
+              <>
+                <span
+                  className="spin"
+                  style={{ display: "inline-block", marginRight: "8px" }}
+                >
+                  ↻
+                </span>{" "}
+                جاري التحليل...
+              </>
             ) : (
-              <><Sparkles size={18} /> تحليل المشاكل الذكي</>
+              <>
+                <Sparkles size={18} /> تحليل المشاكل الذكي
+              </>
             )}
           </button>
         </div>
 
         {aiAnalysis && (
-          <div style={{ background: '#111827', padding: '24px', borderRadius: '8px', marginBottom: '24px', borderLeft: '4px solid #8B5CF6' }}>
-            <div className="ai-markdown" dangerouslySetInnerHTML={{ __html: renderMarkdown(aiAnalysis) }} />
+          <div
+            style={{
+              background: "#111827",
+              padding: "24px",
+              borderRadius: "8px",
+              marginBottom: "24px",
+              borderLeft: "4px solid #8B5CF6",
+            }}
+          >
+            <div
+              className="ai-markdown"
+              dangerouslySetInnerHTML={{ __html: renderMarkdown(aiAnalysis) }}
+            />
           </div>
         )}
 
         {(data?.recentErrors?.length ?? 0) > 0 ? (
           <div>
-            <h4 style={{ marginBottom: '16px', color: '#E5E7EB' }}>أبرز الأخطاء الحالية:</h4>
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'grid', gap: '8px' }}>
-              {data!.recentErrors.map((err: { page: string; error: string }, i: number) => (
-                <li key={i} style={{ background: '#1F2937', padding: '12px 16px', borderRadius: '6px', display: 'flex', gap: '12px', alignItems: 'center' }}>
-                  <AlertTriangle size={16} color="#EF4444" style={{ flexShrink: 0 }} />
-                  <span style={{ color: '#9CA3AF', fontSize: '14px', flexShrink: 0 }}>[{err.page}]</span>
-                  <span style={{ fontSize: '14px' }}>{err.error}</span>
-                </li>
-              ))}
+            <h4 style={{ marginBottom: "16px", color: "#E5E7EB" }}>
+              أبرز الأخطاء الحالية:
+            </h4>
+            <ul
+              style={{
+                listStyle: "none",
+                padding: 0,
+                margin: 0,
+                display: "grid",
+                gap: "8px",
+              }}
+            >
+              {data!.recentErrors.map(
+                (err: { page: string; error: string }, i: number) => (
+                  <li
+                    key={i}
+                    style={{
+                      background: "#1F2937",
+                      padding: "12px 16px",
+                      borderRadius: "6px",
+                      display: "flex",
+                      gap: "12px",
+                      alignItems: "center",
+                    }}
+                  >
+                    <AlertTriangle
+                      size={16}
+                      color="#EF4444"
+                      style={{ flexShrink: 0 }}
+                    />
+                    <span
+                      style={{
+                        color: "#9CA3AF",
+                        fontSize: "14px",
+                        flexShrink: 0,
+                      }}
+                    >
+                      [{err.page}]
+                    </span>
+                    <span style={{ fontSize: "14px" }}>{err.error}</span>
+                  </li>
+                ),
+              )}
             </ul>
           </div>
         ) : (
-          <div style={{ textAlign: 'center', padding: '40px', color: '#6B7280' }}>
-            <div style={{ fontSize: '48px', marginBottom: '12px' }}>✅</div>
-            <p style={{ fontSize: '16px', margin: 0 }}>لا توجد أخطاء حالياً — عمل رائع!</p>
-            <p style={{ fontSize: '13px', color: '#4B5563', margin: '8px 0 0' }}>قم بإجراء فحص SEO جديد من صفحة &quot;إدارة بيانات SEO&quot; لتحديث البيانات.</p>
+          <div
+            style={{ textAlign: "center", padding: "40px", color: "#6B7280" }}
+          >
+            <div style={{ fontSize: "48px", marginBottom: "12px" }}>✅</div>
+            <p style={{ fontSize: "16px", margin: 0 }}>
+              لا توجد أخطاء حالياً — عمل رائع!
+            </p>
+            <p
+              style={{ fontSize: "13px", color: "#4B5563", margin: "8px 0 0" }}
+            >
+              قم بإجراء فحص SEO جديد من صفحة &quot;إدارة بيانات SEO&quot; لتحديث
+              البيانات.
+            </p>
           </div>
         )}
       </div>
 
       {/* Advanced Auto-Fixer Section */}
-      <div className="admin-card" style={{ marginBottom: '32px', border: '1px solid rgba(255, 77, 109, 0.3)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '16px', flexWrap: 'wrap', gap: '16px' }}>
+      <div
+        className="admin-card"
+        style={{
+          marginBottom: "32px",
+          border: "1px solid rgba(255, 77, 109, 0.3)",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            marginBottom: "16px",
+            flexWrap: "wrap",
+            gap: "16px",
+          }}
+        >
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+                marginBottom: "8px",
+              }}
+            >
               <Wand2 color="#FF4D6D" size={28} />
-              <h3 style={{ margin: 0, color: '#FF4D6D' }}>مُصلح السيو المتقدم (Advanced Auto-Fixer)</h3>
+              <h3 style={{ margin: 0, color: "#FF4D6D" }}>
+                مُصلح السيو المتقدم (Advanced Auto-Fixer)
+              </h3>
             </div>
-            <p style={{ color: '#9CA3AF', margin: 0 }}>أداة ذكية لإصلاح الصور، تحسين العناوين، وضبط الكلمات المفتاحية في المقالات والمنتجات أوتوماتيكياً.</p>
+            <p style={{ color: "#9CA3AF", margin: 0 }}>
+              أداة ذكية لإصلاح الصور، تحسين العناوين، وضبط الكلمات المفتاحية في
+              المقالات والمنتجات أوتوماتيكياً.
+            </p>
           </div>
-          <button 
+          <button
             className="admin-btn"
-            style={{ backgroundColor: '#FF4D6D', color: '#FFF', border: 'none' }}
+            style={{
+              backgroundColor: "#FF4D6D",
+              color: "#FFF",
+              border: "none",
+            }}
             onClick={handleAutoFix}
             disabled={autoFixing}
           >
             {autoFixing ? (
-              <><span className="spin" style={{ display: 'inline-block', marginRight: '8px' }}>↻</span> جاري الإصلاح...</>
+              <>
+                <span
+                  className="spin"
+                  style={{ display: "inline-block", marginRight: "8px" }}
+                >
+                  ↻
+                </span>{" "}
+                جاري الإصلاح...
+              </>
             ) : (
-              <><Wand2 size={18} /> تنفيذ الإصلاحات آلياً</>
+              <>
+                <Wand2 size={18} /> تنفيذ الإصلاحات آلياً
+              </>
             )}
           </button>
         </div>
 
         {autoFixResult && (
-          <div style={{ marginTop: '16px', padding: '16px', borderRadius: '8px', background: autoFixResult.success ? 'rgba(255, 77, 109, 0.1)' : 'rgba(239, 68, 68, 0.1)', border: `1px solid ${autoFixResult.success ? '#FF4D6D' : '#EF4444'}` }}>
+          <div
+            style={{
+              marginTop: "16px",
+              padding: "16px",
+              borderRadius: "8px",
+              background: autoFixResult.success
+                ? "rgba(255, 77, 109, 0.1)"
+                : "rgba(239, 68, 68, 0.1)",
+              border: `1px solid ${autoFixResult.success ? "#FF4D6D" : "#EF4444"}`,
+            }}
+          >
             {autoFixResult.success ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "12px" }}
+              >
                 <CheckCircle color="#FF4D6D" size={24} />
                 <div>
-                  <strong style={{ display: 'block', color: '#FF4D6D', marginBottom: '4px' }}>تمت عملية الإصلاح بنجاح!</strong>
-                  <p style={{ margin: 0, color: '#D1D5DB', fontSize: '14px' }}>
-                    تم إصلاح {autoFixResult.stats?.fixedPosts || 0} مقال، و {autoFixResult.stats?.fixedProducts || 0} منتج، و {autoFixResult.stats?.fixedPages || 0} صفحة. يتم الآن تحديث البيانات...
+                  <strong
+                    style={{
+                      display: "block",
+                      color: "#FF4D6D",
+                      marginBottom: "4px",
+                    }}
+                  >
+                    تمت عملية الإصلاح بنجاح!
+                  </strong>
+                  <p style={{ margin: 0, color: "#D1D5DB", fontSize: "14px" }}>
+                    تم إصلاح {autoFixResult.stats?.fixedPosts || 0} مقال، و{" "}
+                    {autoFixResult.stats?.fixedProducts || 0} منتج، و{" "}
+                    {autoFixResult.stats?.fixedPages || 0} صفحة. يتم الآن تحديث
+                    البيانات...
                   </p>
                 </div>
               </div>
             ) : (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "12px" }}
+              >
                 <AlertTriangle color="#EF4444" size={24} />
                 <div>
-                  <strong style={{ display: 'block', color: '#EF4444', marginBottom: '4px' }}>فشلت عملية الإصلاح</strong>
-                  <p style={{ margin: 0, color: '#D1D5DB', fontSize: '14px' }}>{autoFixResult.error}</p>
+                  <strong
+                    style={{
+                      display: "block",
+                      color: "#EF4444",
+                      marginBottom: "4px",
+                    }}
+                  >
+                    فشلت عملية الإصلاح
+                  </strong>
+                  <p style={{ margin: 0, color: "#D1D5DB", fontSize: "14px" }}>
+                    {autoFixResult.error}
+                  </p>
                 </div>
               </div>
             )}
@@ -320,41 +590,106 @@ export default function SeoDashboard() {
         )}
       </div>
 
-      <h3 style={{ marginBottom: '24px' }}>أدوات السيو المتقدمة</h3>
+      <h3 style={{ marginBottom: "24px" }}>أدوات السيو المتقدمة</h3>
       <div className="admin-grid-3">
-        <Link href="/admin/seo/meta" className="group" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className="admin-card group-hover:border-brand-pink" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
-            <Search size={32} color="#3B82F6" style={{ margin: '0 auto 16px' }} />
-            <h4 style={{ color: '#E6E6EA' }}>إدارة بيانات SEO</h4>
-            <p style={{ fontSize: '13px', margin: 0, color: '#9CA3AF' }}>تعديل العناوين، الأوصاف، والكلمات المفتاحية</p>
+        <Link
+          href="/admin/seo/meta"
+          className="group"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <div
+            className="admin-card group-hover:border-brand-pink"
+            style={{ padding: "32px", textAlign: "center", color: "#E6E6EA" }}
+          >
+            <Search
+              size={32}
+              color="#3B82F6"
+              style={{ margin: "0 auto 16px" }}
+            />
+            <h4 style={{ color: "#E6E6EA" }}>إدارة بيانات SEO</h4>
+            <p style={{ fontSize: "13px", margin: 0, color: "#9CA3AF" }}>
+              تعديل العناوين، الأوصاف، والكلمات المفتاحية
+            </p>
           </div>
         </Link>
-        <Link href="/admin/seo/keywords" className="group" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className="admin-card group-hover:border-brand-pink" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
-            <Activity size={32} color="#8B5CF6" style={{ margin: '0 auto 16px' }} />
-            <h4 style={{ color: '#E6E6EA' }}>متتبع الكلمات المفتاحية</h4>
-            <p style={{ fontSize: '13px', margin: 0, color: '#9CA3AF' }}>تتبع ترتيبك في جوجل، النقرات، والظهور</p>
+        <Link
+          href="/admin/seo/keywords"
+          className="group"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <div
+            className="admin-card group-hover:border-brand-pink"
+            style={{ padding: "32px", textAlign: "center", color: "#E6E6EA" }}
+          >
+            <Activity
+              size={32}
+              color="#8B5CF6"
+              style={{ margin: "0 auto 16px" }}
+            />
+            <h4 style={{ color: "#E6E6EA" }}>متتبع الكلمات المفتاحية</h4>
+            <p style={{ fontSize: "13px", margin: 0, color: "#9CA3AF" }}>
+              تتبع ترتيبك في جوجل، النقرات، والظهور
+            </p>
           </div>
         </Link>
-        <Link href="/admin/seo/redirects" className="group" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className="admin-card group-hover:border-brand-pink" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
-            <Navigation size={32} color="#F59E0B" style={{ margin: '0 auto 16px' }} />
-            <h4 style={{ color: '#E6E6EA' }}>إعادة التوجيه (Redirects)</h4>
-            <p style={{ fontSize: '13px', margin: 0, color: '#9CA3AF' }}>إدارة تحويلات 301 و 302 للحفاظ على الزيارات</p>
+        <Link
+          href="/admin/seo/redirects"
+          className="group"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <div
+            className="admin-card group-hover:border-brand-pink"
+            style={{ padding: "32px", textAlign: "center", color: "#E6E6EA" }}
+          >
+            <Navigation
+              size={32}
+              color="#F59E0B"
+              style={{ margin: "0 auto 16px" }}
+            />
+            <h4 style={{ color: "#E6E6EA" }}>إعادة التوجيه (Redirects)</h4>
+            <p style={{ fontSize: "13px", margin: 0, color: "#9CA3AF" }}>
+              إدارة تحويلات 301 و 302 للحفاظ على الزيارات
+            </p>
           </div>
         </Link>
-        <Link href="/admin/seo/schema" className="group" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className="admin-card group-hover:border-brand-pink" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
-            <Database size={32} color="#22C55E" style={{ margin: '0 auto 16px' }} />
-            <h4 style={{ color: '#E6E6EA' }}>مخطط البيانات (Schema)</h4>
-            <p style={{ fontSize: '13px', margin: 0, color: '#9CA3AF' }}>إضافة Rich Snippets لجوجل (مقالات، منتجات)</p>
+        <Link
+          href="/admin/seo/schema"
+          className="group"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <div
+            className="admin-card group-hover:border-brand-pink"
+            style={{ padding: "32px", textAlign: "center", color: "#E6E6EA" }}
+          >
+            <Database
+              size={32}
+              color="#22C55E"
+              style={{ margin: "0 auto 16px" }}
+            />
+            <h4 style={{ color: "#E6E6EA" }}>مخطط البيانات (Schema)</h4>
+            <p style={{ fontSize: "13px", margin: 0, color: "#9CA3AF" }}>
+              إضافة Rich Snippets لجوجل (مقالات، منتجات)
+            </p>
           </div>
         </Link>
-        <Link href="/admin/seo/robots" className="group" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className="admin-card group-hover:border-brand-pink" style={{ padding: '32px', textAlign: 'center', color: '#E6E6EA' }}>
-            <Settings size={32} color="#EF4444" style={{ margin: '0 auto 16px' }} />
-            <h4 style={{ color: '#E6E6EA' }}>ملف Robots.txt</h4>
-            <p style={{ fontSize: '13px', margin: 0, color: '#9CA3AF' }}>التحكم في زواحف محركات البحث</p>
+        <Link
+          href="/admin/seo/robots"
+          className="group"
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          <div
+            className="admin-card group-hover:border-brand-pink"
+            style={{ padding: "32px", textAlign: "center", color: "#E6E6EA" }}
+          >
+            <Settings
+              size={32}
+              color="#EF4444"
+              style={{ margin: "0 auto 16px" }}
+            />
+            <h4 style={{ color: "#E6E6EA" }}>ملف Robots.txt</h4>
+            <p style={{ fontSize: "13px", margin: 0, color: "#9CA3AF" }}>
+              التحكم في زواحف محركات البحث
+            </p>
           </div>
         </Link>
       </div>
@@ -370,37 +705,58 @@ export default function SeoDashboard() {
 
 function renderMarkdown(text: string): string {
   let html = text;
-  
+
   // Replace headers (###, ##)
-  html = html.replace(/^### (.*?)$/gm, '<h4 style="color: #E5E7EB; margin-top: 16px; margin-bottom: 8px; font-weight: 600;">$1</h4>');
-  html = html.replace(/^## (.*?)$/gm, '<h3 style="color: #F3F4F6; margin-top: 20px; margin-bottom: 10px; font-weight: 700;">$1</h3>');
-  
+  html = html.replace(
+    /^### (.*?)$/gm,
+    '<h4 style="color: #E5E7EB; margin-top: 16px; margin-bottom: 8px; font-weight: 600;">$1</h4>',
+  );
+  html = html.replace(
+    /^## (.*?)$/gm,
+    '<h3 style="color: #F3F4F6; margin-top: 20px; margin-bottom: 10px; font-weight: 700;">$1</h3>',
+  );
+
   // Replace list items starting with '-' or '*'
-  html = html.replace(/^\s*[-*]\s+(.*?)$/gm, '<li style="margin-left: 20px; margin-bottom: 6px; list-style-type: disc; color: #D1D5DB;">$1</li>');
-  
+  html = html.replace(
+    /^\s*[-*]\s+(.*?)$/gm,
+    '<li style="margin-left: 20px; margin-bottom: 6px; list-style-type: disc; color: #D1D5DB;">$1</li>',
+  );
+
   // Replace bold text (**text**)
-  html = html.replace(/\*\*(.*?)\*\*/g, '<strong style="color: #A78BFA; font-weight: bold;">$1</strong>');
-  
+  html = html.replace(
+    /\*\*(.*?)\*\*/g,
+    '<strong style="color: #A78BFA; font-weight: bold;">$1</strong>',
+  );
+
   // Replace inline code (`code`)
-  html = html.replace(/`(.*?)`/g, '<code style="background: #1F2937; padding: 2px 6px; border-radius: 4px; color: #F472B6; font-family: monospace; font-size: 0.9em;">$1</code>');
-  
+  html = html.replace(
+    /`(.*?)`/g,
+    '<code style="background: #1F2937; padding: 2px 6px; border-radius: 4px; color: #F472B6; font-family: monospace; font-size: 0.9em;">$1</code>',
+  );
+
   // Split into lines and wrap normal text paragraphs
-  const lines = html.split('\n');
-  const processedLines = lines.map(line => {
+  const lines = html.split("\n");
+  const processedLines = lines.map((line) => {
     const trimmed = line.trim();
-    if (!trimmed) return '';
-    if (trimmed.startsWith('<h') || trimmed.startsWith('<li')) {
+    if (!trimmed) return "";
+    if (trimmed.startsWith("<h") || trimmed.startsWith("<li")) {
       return trimmed;
     }
     return `<p style="margin-bottom: 12px; line-height: 1.6; color: #D1D5DB;">${trimmed}</p>`;
   });
-  
-  return processedLines.filter(p => p !== '').join('');
+
+  return processedLines.filter((p) => p !== "").join("");
 }
 
 function StarIcon(props: { color?: string }) {
   return (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill={props.color || "currentColor"} xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill={props.color || "currentColor"}
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
     </svg>
   );

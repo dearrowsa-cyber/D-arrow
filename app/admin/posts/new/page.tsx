@@ -1,52 +1,62 @@
-'use client';
+"use client";
 
-import { useState, useRef } from 'react';
-import { useRouter } from 'next/navigation';
-import { ArrowRight, Upload, X, Tag } from 'lucide-react';
-import Link from 'next/link';
-import Image from 'next/image';
-import RichTextEditor from '@/components/admin/RichTextEditor';
-import AIWriterAssistant from '@/components/admin/AIWriterAssistant';
-import SEOScorer from '@/components/admin/SEOScorer';
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { ArrowRight, Upload, X, Tag } from "lucide-react";
+import Link from "@util/link";
+import Image from "next/image";
+import RichTextEditor from "@/components/admin/RichTextEditor";
+import AIWriterAssistant from "@/components/admin/AIWriterAssistant";
+import SEOScorer from "@/components/admin/SEOScorer";
 
 const CATEGORIES = [
-  'Digital Marketing', 'AI & Technology', 'Innovation',
-  'Business', 'Strategy', 'Tips & Tricks', 'SEO', 'Web Development',
+  "Digital Marketing",
+  "AI & Technology",
+  "Innovation",
+  "Business",
+  "Strategy",
+  "Tips & Tricks",
+  "SEO",
+  "Web Development",
 ];
 
 export default function NewPostPage() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [saving, setSaving] = useState(false);
-  const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
-  const [activeTab, setActiveTab] = useState<'ar' | 'en'>('ar');
+  const [toast, setToast] = useState<{ msg: string; type: string } | null>(
+    null,
+  );
+  const [activeTab, setActiveTab] = useState<"ar" | "en">("ar");
   const [uploading, setUploading] = useState(false);
 
   const [form, setForm] = useState({
-    title: '',
-    titleAr: '',
-    slug: '',
-    content: '',
-    contentAr: '',
-    excerpt: '',
-    excerptAr: '',
-    category: 'Digital Marketing',
-    categoryAr: 'التسويق الرقمي',
-    author: 'D-Arrow',
-    imageUrl: '',
+    title: "",
+    titleAr: "",
+    slug: "",
+    content: "",
+    contentAr: "",
+    excerpt: "",
+    excerptAr: "",
+    category: "Digital Marketing",
+    categoryAr: "التسويق الرقمي",
+    author: "D-Arrow",
+    imageUrl: "",
     tags: [] as string[],
-    status: 'published',
-    date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().split('T')[0],
-    time: new Date().toTimeString().split(' ')[0].slice(0, 5),
+    status: "published",
+    date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISOString()
+      .split("T")[0],
+    time: new Date().toTimeString().split(" ")[0].slice(0, 5),
     isGated: false,
-    ctaType: 'default',
-    gatedContent: '',
-    gatedContentAr: '',
+    ctaType: "default",
+    gatedContent: "",
+    gatedContentAr: "",
   });
-  const [tagInput, setTagInput] = useState('');
+  const [tagInput, setTagInput] = useState("");
 
   const updateField = (key: string, value: string | boolean) => {
-    setForm(prev => ({ ...prev, [key]: value }));
+    setForm((prev) => ({ ...prev, [key]: value }));
   };
 
   const [generatingSeo, setGeneratingSeo] = useState(false);
@@ -58,49 +68,55 @@ export default function NewPostPage() {
 
     try {
       const formData = new FormData();
-      formData.append('file', file);
-      const res = await fetch('/api/admin/upload', { method: 'POST', body: formData });
+      formData.append("file", file);
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        body: formData,
+      });
       const data = await res.json();
       if (data.success) {
-        updateField('imageUrl', data.url);
-        showToast('تم رفع الصورة بنجاح', 'success');
+        updateField("imageUrl", data.url);
+        showToast("تم رفع الصورة بنجاح", "success");
       } else {
-        showToast(data.error || data.debug || 'فشل في رفع الصورة', 'error');
+        showToast(data.error || data.debug || "فشل في رفع الصورة", "error");
       }
     } catch (e: unknown) {
-      showToast(`حدث خطأ في الرفع: ${(e as Error).message}`, 'error');
+      showToast(`حدث خطأ في الرفع: ${(e as Error).message}`, "error");
     } finally {
       setUploading(false);
     }
   };
 
-  const optimizeSEO = async (lang: 'ar' | 'en') => {
-    const content = lang === 'ar' ? form.contentAr : form.content;
+  const optimizeSEO = async (lang: "ar" | "en") => {
+    const content = lang === "ar" ? form.contentAr : form.content;
     if (!content || content.length < 50) {
-      showToast('يرجى كتابة محتوى كافي للمقال أولاً', 'warning');
+      showToast("يرجى كتابة محتوى كافي للمقال أولاً", "warning");
       return;
     }
-    
+
     setGeneratingSeo(true);
-    showToast('جاري توليد الـ SEO بالذكاء الاصطناعي...', 'info');
+    showToast("جاري توليد الـ SEO بالذكاء الاصطناعي...", "info");
 
     try {
-      const res = await fetch('/api/admin/seo', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content, type: 'post', language: lang })
+      const res = await fetch("/api/admin/seo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content, type: "post", language: lang }),
       });
       const data = await res.json();
 
       if (data.success && data.seo) {
-        updateField(lang === 'ar' ? 'titleAr' : 'title', data.seo.title);
-        updateField(lang === 'ar' ? 'excerptAr' : 'excerpt', data.seo.description);
-        showToast('تم تحسين الـ SEO بنجاح!', 'success');
+        updateField(lang === "ar" ? "titleAr" : "title", data.seo.title);
+        updateField(
+          lang === "ar" ? "excerptAr" : "excerpt",
+          data.seo.description,
+        );
+        showToast("تم تحسين الـ SEO بنجاح!", "success");
       } else {
-        showToast(data.error || 'فشل في تحسين الـ SEO', 'error');
+        showToast(data.error || "فشل في تحسين الـ SEO", "error");
       }
     } catch (e) {
-      showToast('حدث خطأ أثناء الاتصال بالذكاء الاصطناعي', 'error');
+      showToast("حدث خطأ أثناء الاتصال بالذكاء الاصطناعي", "error");
     } finally {
       setGeneratingSeo(false);
     }
@@ -108,41 +124,44 @@ export default function NewPostPage() {
 
   const handleSubmit = async (asDraft = false) => {
     if (!form.title && !form.titleAr) {
-      showToast('يرجى إدخال عنوان المقال', 'error');
+      showToast("يرجى إدخال عنوان المقال", "error");
       return;
     }
     if (!form.content && !form.contentAr) {
-      showToast('يرجى إدخال محتوى المقال', 'error');
+      showToast("يرجى إدخال محتوى المقال", "error");
       return;
     }
 
     // Auto-generate slug if empty
     let finalSlug = form.slug;
     if (!finalSlug) {
-      const base = form.title || form.titleAr || 'post';
-      finalSlug = base.toLowerCase().replace(/[^\w\u0621-\u064A\s]/gi, '').replace(/\s+/g, '-');
+      const base = form.title || form.titleAr || "post";
+      finalSlug = base
+        .toLowerCase()
+        .replace(/[^\w\u0621-\u064A\s]/gi, "")
+        .replace(/\s+/g, "-");
     }
 
     setSaving(true);
     try {
-      const res = await fetch('/api/blog/posts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/blog/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...form,
           slug: finalSlug,
-          status: asDraft ? 'draft' : 'published',
+          status: asDraft ? "draft" : "published",
         }),
       });
       const data = await res.json();
       if (data.success) {
-        showToast('تم إنشاء المقال بنجاح', 'success');
-        setTimeout(() => router.push('/admin/posts'), 1000);
+        showToast("تم إنشاء المقال بنجاح", "success");
+        setTimeout(() => router.push("/admin/posts"), 1000);
       } else {
-        showToast(data.error || 'فشل في إنشاء المقال', 'error');
+        showToast(data.error || "فشل في إنشاء المقال", "error");
       }
     } catch {
-      showToast('حدث خطأ', 'error');
+      showToast("حدث خطأ", "error");
     } finally {
       setSaving(false);
     }
@@ -155,49 +174,118 @@ export default function NewPostPage() {
 
   return (
     <div className="admin-content">
-      {toast && <div className={`admin-toast admin-toast-${toast.type}`}>{toast.msg}</div>}
+      {toast && (
+        <div className={`admin-toast admin-toast-${toast.type}`}>
+          {toast.msg}
+        </div>
+      )}
 
       {/* Header */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, flexWrap: 'wrap', gap: 16 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <Link href="/admin/posts" className="admin-btn admin-btn-ghost admin-btn-sm">
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: 24,
+          flexWrap: "wrap",
+          gap: 16,
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <Link
+            href="/admin/posts"
+            className="admin-btn admin-btn-ghost admin-btn-sm"
+          >
             <ArrowRight size={18} />
           </Link>
           <div>
-            <h2 style={{ fontSize: 24, fontWeight: 700, color: '#E6E6EA', margin: 0 }}>مقال جديد</h2>
+            <h2
+              style={{
+                fontSize: 24,
+                fontWeight: 700,
+                color: "#E6E6EA",
+                margin: 0,
+              }}
+            >
+              مقال جديد
+            </h2>
           </div>
         </div>
-        <div style={{ display: 'flex', gap: 12 }}>
-          <button className="admin-btn admin-btn-secondary" onClick={() => handleSubmit(true)} disabled={saving}>
+        <div style={{ display: "flex", gap: 12 }}>
+          <button
+            className="admin-btn admin-btn-secondary"
+            onClick={() => handleSubmit(true)}
+            disabled={saving}
+          >
             حفظ كمسودة
           </button>
-          <button className="admin-btn admin-btn-primary" onClick={() => handleSubmit(false)} disabled={saving} style={{ background: 'linear-gradient(90deg, #10B981, #059669)', border: 'none' }}>
-            {saving ? 'جاري النشر...' : 'نشر المقال الآن'}
+          <button
+            className="admin-btn admin-btn-primary"
+            onClick={() => handleSubmit(false)}
+            disabled={saving}
+            style={{
+              background: "linear-gradient(90deg, #10B981, #059669)",
+              border: "none",
+            }}
+          >
+            {saving ? "جاري النشر..." : "نشر المقال الآن"}
           </button>
         </div>
       </div>
 
-      <div className="admin-grid-2" style={{ gridTemplateColumns: '1fr 360px', alignItems: 'start' }}>
+      <div
+        className="admin-grid-2"
+        style={{ gridTemplateColumns: "1fr 360px", alignItems: "start" }}
+      >
         {/* Main Editor */}
         <div>
           {/* Language Tabs */}
           <div className="admin-tabs" style={{ marginBottom: 20 }}>
-            <button className={`admin-tab ${activeTab === 'ar' ? 'active' : ''}`} onClick={() => setActiveTab('ar')}>العربية</button>
-            <button className={`admin-tab ${activeTab === 'en' ? 'active' : ''}`} onClick={() => setActiveTab('en')}>English</button>
+            <button
+              className={`admin-tab ${activeTab === "ar" ? "active" : ""}`}
+              onClick={() => setActiveTab("ar")}
+            >
+              العربية
+            </button>
+            <button
+              className={`admin-tab ${activeTab === "en" ? "active" : ""}`}
+              onClick={() => setActiveTab("en")}
+            >
+              English
+            </button>
           </div>
 
           <div className="admin-card">
-            {activeTab === 'ar' ? (
+            {activeTab === "ar" ? (
               <>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-                  <label className="admin-label" style={{ margin: 0 }}>العنوان والملخص</label>
-                  <button 
-                    className="admin-btn admin-btn-sm" 
-                    style={{ background: 'linear-gradient(90deg, #ff4d6d, #ff9a3c)', color: 'white', border: 'none', padding: '6px 12px', fontSize: 13, gap: 6 }} 
-                    onClick={() => optimizeSEO('ar')}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: 16,
+                  }}
+                >
+                  <label className="admin-label" style={{ margin: 0 }}>
+                    العنوان والملخص
+                  </label>
+                  <button
+                    className="admin-btn admin-btn-sm"
+                    style={{
+                      background: "linear-gradient(90deg, #ff4d6d, #ff9a3c)",
+                      color: "white",
+                      border: "none",
+                      padding: "6px 12px",
+                      fontSize: 13,
+                      gap: 6,
+                    }}
+                    onClick={() => optimizeSEO("ar")}
                     disabled={generatingSeo}
                   >
-                    🪄 {generatingSeo ? 'جاري التحسين...' : 'تحسين الـ SEO بالذكاء الاصطناعي'}
+                    🪄{" "}
+                    {generatingSeo
+                      ? "جاري التحسين..."
+                      : "تحسين الـ SEO بالذكاء الاصطناعي"}
                   </button>
                 </div>
                 <div style={{ marginBottom: 20 }}>
@@ -205,21 +293,40 @@ export default function NewPostPage() {
                     className="admin-input"
                     placeholder="العنوان بالعربية (اضغط على زر التحسين لملئه تلقائياً بعد كتابة المحتوى) *"
                     value={form.titleAr}
-                    onChange={e => updateField('titleAr', e.target.value)}
+                    onChange={(e) => updateField("titleAr", e.target.value)}
                     dir="rtl"
                   />
                 </div>
                 <div style={{ marginBottom: 20 }}>
-                  <textarea className="admin-textarea" placeholder="وصف ميتا (Meta Description) لظهور أفضل في جوجل (اضغط على زر التحسين لملئه تلقائياً)" value={form.excerptAr} onChange={e => updateField('excerptAr', e.target.value)} style={{ minHeight: 80 }} dir="rtl" />
+                  <textarea
+                    className="admin-textarea"
+                    placeholder="وصف ميتا (Meta Description) لظهور أفضل في جوجل (اضغط على زر التحسين لملئه تلقائياً)"
+                    value={form.excerptAr}
+                    onChange={(e) => updateField("excerptAr", e.target.value)}
+                    style={{ minHeight: 80 }}
+                    dir="rtl"
+                  />
                 </div>
-                <div style={{ marginBottom: 20, display: 'flex', gap: 12, background: 'rgba(255, 255, 255, 0.02)', padding: '16px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <div
+                  style={{
+                    marginBottom: 20,
+                    display: "flex",
+                    gap: 12,
+                    background: "rgba(255, 255, 255, 0.02)",
+                    padding: "16px",
+                    borderRadius: "8px",
+                    border: "1px solid rgba(255,255,255,0.05)",
+                  }}
+                >
                   <div style={{ flex: 1 }}>
-                    <label className="admin-label">تاريخ النشر (قابل للتعديل)</label>
+                    <label className="admin-label">
+                      تاريخ النشر (قابل للتعديل)
+                    </label>
                     <input
                       type="date"
                       className="admin-input"
                       value={form.date}
-                      onChange={e => updateField('date', e.target.value)}
+                      onChange={(e) => updateField("date", e.target.value)}
                     />
                   </div>
                   <div style={{ flex: 1 }}>
@@ -228,38 +335,76 @@ export default function NewPostPage() {
                       type="time"
                       className="admin-input"
                       value={form.time}
-                      onChange={e => updateField('time', e.target.value)}
+                      onChange={(e) => updateField("time", e.target.value)}
                     />
                   </div>
                 </div>
                 <div>
                   <label className="admin-label">المحتوى بالعربية *</label>
-                  <AIWriterAssistant content={form.contentAr} onContentChange={(val) => updateField('contentAr', val)} language="ar" />
+                  <AIWriterAssistant
+                    content={form.contentAr}
+                    onContentChange={(val) => updateField("contentAr", val)}
+                    language="ar"
+                  />
                   <RichTextEditor
                     value={form.contentAr}
-                    onChange={(val) => updateField('contentAr', val)}
+                    onChange={(val) => updateField("contentAr", val)}
                     dir="rtl"
                     placeholder="اكتب محتوى المقال هنا..."
                   />
                 </div>
                 {form.isGated && (
-                  <div style={{ marginTop: 20, padding: 16, border: '1px dashed #FF9A3C', borderRadius: 8, background: 'rgba(255, 154, 60, 0.05)' }}>
-                    <label className="admin-label" style={{ color: '#FF9A3C' }}>المحتوى المغلق (لجلب المشتركين) بالعربية</label>
-                    <RichTextEditor value={form.gatedContentAr} onChange={(val) => updateField('gatedContentAr', val)} dir="rtl" placeholder="اكتب المحتوى الذي سيتطلب إيميل ليظهر..." />
+                  <div
+                    style={{
+                      marginTop: 20,
+                      padding: 16,
+                      border: "1px dashed #FF9A3C",
+                      borderRadius: 8,
+                      background: "rgba(255, 154, 60, 0.05)",
+                    }}
+                  >
+                    <label className="admin-label" style={{ color: "#FF9A3C" }}>
+                      المحتوى المغلق (لجلب المشتركين) بالعربية
+                    </label>
+                    <RichTextEditor
+                      value={form.gatedContentAr}
+                      onChange={(val) => updateField("gatedContentAr", val)}
+                      dir="rtl"
+                      placeholder="اكتب المحتوى الذي سيتطلب إيميل ليظهر..."
+                    />
                   </div>
                 )}
               </>
             ) : (
               <>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-                  <label className="admin-label" style={{ margin: 0 }}>Title & Excerpt</label>
-                  <button 
-                    className="admin-btn admin-btn-sm" 
-                    style={{ background: 'linear-gradient(90deg, #ff4d6d, #ff9a3c)', color: 'white', border: 'none', padding: '6px 12px', fontSize: 13, gap: 6 }} 
-                    onClick={() => optimizeSEO('en')}
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    marginBottom: 16,
+                  }}
+                >
+                  <label className="admin-label" style={{ margin: 0 }}>
+                    Title & Excerpt
+                  </label>
+                  <button
+                    className="admin-btn admin-btn-sm"
+                    style={{
+                      background: "linear-gradient(90deg, #ff4d6d, #ff9a3c)",
+                      color: "white",
+                      border: "none",
+                      padding: "6px 12px",
+                      fontSize: 13,
+                      gap: 6,
+                    }}
+                    onClick={() => optimizeSEO("en")}
                     disabled={generatingSeo}
                   >
-                    🪄 {generatingSeo ? 'Generating SEO...' : 'Optimize SEO Details with AI'}
+                    🪄{" "}
+                    {generatingSeo
+                      ? "Generating SEO..."
+                      : "Optimize SEO Details with AI"}
                   </button>
                 </div>
                 <div style={{ marginBottom: 20 }}>
@@ -267,7 +412,7 @@ export default function NewPostPage() {
                     className="admin-input"
                     placeholder="Article title in English (Click Optimize to generate) *"
                     value={form.title}
-                    onChange={e => updateField('title', e.target.value)}
+                    onChange={(e) => updateField("title", e.target.value)}
                     dir="ltr"
                   />
                 </div>
@@ -276,25 +421,44 @@ export default function NewPostPage() {
                     className="admin-textarea"
                     placeholder="Meta Description for SEO (Click Optimize to generate)"
                     value={form.excerpt}
-                    onChange={e => updateField('excerpt', e.target.value)}
+                    onChange={(e) => updateField("excerpt", e.target.value)}
                     style={{ minHeight: 80 }}
                     dir="ltr"
                   />
                 </div>
                 <div>
                   <label className="admin-label">Content (English) *</label>
-                  <AIWriterAssistant content={form.content} onContentChange={(val) => updateField('content', val)} language="en" />
+                  <AIWriterAssistant
+                    content={form.content}
+                    onContentChange={(val) => updateField("content", val)}
+                    language="en"
+                  />
                   <RichTextEditor
                     value={form.content}
-                    onChange={(val) => updateField('content', val)}
+                    onChange={(val) => updateField("content", val)}
                     dir="ltr"
                     placeholder="Write article content here..."
                   />
                 </div>
                 {form.isGated && (
-                  <div style={{ marginTop: 20, padding: 16, border: '1px dashed #FF9A3C', borderRadius: 8, background: 'rgba(255, 154, 60, 0.05)' }}>
-                    <label className="admin-label" style={{ color: '#FF9A3C' }}>Gated Content (Lead Generation)</label>
-                    <RichTextEditor value={form.gatedContent} onChange={(val) => updateField('gatedContent', val)} dir="ltr" placeholder="Write the premium hidden content..." />
+                  <div
+                    style={{
+                      marginTop: 20,
+                      padding: 16,
+                      border: "1px dashed #FF9A3C",
+                      borderRadius: 8,
+                      background: "rgba(255, 154, 60, 0.05)",
+                    }}
+                  >
+                    <label className="admin-label" style={{ color: "#FF9A3C" }}>
+                      Gated Content (Lead Generation)
+                    </label>
+                    <RichTextEditor
+                      value={form.gatedContent}
+                      onChange={(val) => updateField("gatedContent", val)}
+                      dir="ltr"
+                      placeholder="Write the premium hidden content..."
+                    />
                   </div>
                 )}
               </>
@@ -303,17 +467,40 @@ export default function NewPostPage() {
         </div>
 
         {/* Sidebar Settings */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
           {/* Image Upload */}
           <div className="admin-card">
-            <h4 style={{ color: '#E6E6EA', fontSize: 15, margin: '0 0 16px' }}>صورة المقال</h4>
+            <h4 style={{ color: "#E6E6EA", fontSize: 15, margin: "0 0 16px" }}>
+              صورة المقال
+            </h4>
             {form.imageUrl ? (
               <div className="admin-upload-preview">
-                <Image src={form.imageUrl} alt="Preview" width={300} height={200} style={{ width: '100%', height: 'auto', borderRadius: 8 }} unoptimized />
+                <Image
+                  src={form.imageUrl}
+                  alt="Preview"
+                  width={300}
+                  height={200}
+                  style={{ width: "100%", height: "auto", borderRadius: 8 }}
+                  unoptimized
+                />
                 <button
                   className="remove-btn"
-                  onClick={() => updateField('imageUrl', '')}
-                  style={{ background: 'rgba(239,68,68,0.9)', color: 'white', border: 'none', cursor: 'pointer', position: 'absolute', top: 8, right: 8, width: 32, height: 32, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                  onClick={() => updateField("imageUrl", "")}
+                  style={{
+                    background: "rgba(239,68,68,0.9)",
+                    color: "white",
+                    border: "none",
+                    cursor: "pointer",
+                    position: "absolute",
+                    top: 8,
+                    right: 8,
+                    width: 32,
+                    height: 32,
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                 >
                   <X size={16} />
                 </button>
@@ -324,18 +511,35 @@ export default function NewPostPage() {
                 onClick={() => fileInputRef.current?.click()}
               >
                 {uploading ? (
-                  <div style={{
-                    width: 36, height: 36, border: '3px solid rgba(255,77,109,0.2)',
-                    borderTopColor: '#FF4D6D', borderRadius: '50%',
-                    animation: 'spin 0.8s linear infinite', margin: '0 auto 12px',
-                  }} />
+                  <div
+                    style={{
+                      width: 36,
+                      height: 36,
+                      border: "3px solid rgba(255,77,109,0.2)",
+                      borderTopColor: "#FF4D6D",
+                      borderRadius: "50%",
+                      animation: "spin 0.8s linear infinite",
+                      margin: "0 auto 12px",
+                    }}
+                  />
                 ) : (
-                  <Upload size={32} style={{ color: '#6B7280', margin: '0 auto 12px', display: 'block' }} />
+                  <Upload
+                    size={32}
+                    style={{
+                      color: "#6B7280",
+                      margin: "0 auto 12px",
+                      display: "block",
+                    }}
+                  />
                 )}
-                <p style={{ color: '#9CA3AF', fontSize: 14, margin: '0 0 4px' }}>
-                  {uploading ? 'جاري الرفع...' : 'اضغط لرفع صورة'}
+                <p
+                  style={{ color: "#9CA3AF", fontSize: 14, margin: "0 0 4px" }}
+                >
+                  {uploading ? "جاري الرفع..." : "اضغط لرفع صورة"}
                 </p>
-                <p style={{ color: '#6B7280', fontSize: 12, margin: 0 }}>JPG, PNG, WebP — Max 5MB</p>
+                <p style={{ color: "#6B7280", fontSize: 12, margin: 0 }}>
+                  JPG, PNG, WebP — Max 5MB
+                </p>
               </div>
             )}
             <input
@@ -343,7 +547,7 @@ export default function NewPostPage() {
               type="file"
               accept="image/*"
               onChange={handleImageUpload}
-              style={{ display: 'none' }}
+              style={{ display: "none" }}
             />
             {/* Or URL */}
             <div style={{ marginTop: 12 }}>
@@ -352,7 +556,7 @@ export default function NewPostPage() {
                 className="admin-input"
                 placeholder="https://..."
                 value={form.imageUrl}
-                onChange={e => updateField('imageUrl', e.target.value)}
+                onChange={(e) => updateField("imageUrl", e.target.value)}
                 dir="ltr"
               />
             </div>
@@ -360,13 +564,15 @@ export default function NewPostPage() {
 
           {/* Settings */}
           <div className="admin-card">
-            <h4 style={{ color: '#E6E6EA', fontSize: 15, margin: '0 0 16px' }}>الإعدادات وتقييم السيو</h4>
+            <h4 style={{ color: "#E6E6EA", fontSize: 15, margin: "0 0 16px" }}>
+              الإعدادات وتقييم السيو
+            </h4>
 
-            <SEOScorer 
-              title={form.titleAr || form.title} 
-              excerpt={form.excerptAr || form.excerpt} 
-              content={form.contentAr || form.content} 
-              tags={form.tags} 
+            <SEOScorer
+              title={form.titleAr || form.title}
+              excerpt={form.excerptAr || form.excerpt}
+              content={form.contentAr || form.content}
+              tags={form.tags}
             />
 
             <div style={{ marginBottom: 16 }}>
@@ -375,10 +581,12 @@ export default function NewPostPage() {
                 className="admin-input"
                 placeholder="مثال: /blog/my-article-title"
                 value={form.slug}
-                onChange={e => updateField('slug', e.target.value)}
+                onChange={(e) => updateField("slug", e.target.value)}
                 dir="ltr"
               />
-              <p style={{ fontSize: 12, color: '#6B7280', marginTop: 4 }}>يُستخدم في الـ Sitemap — اتركه فارغاً لاستخدام الرابط التلقائي</p>
+              <p style={{ fontSize: 12, color: "#6B7280", marginTop: 4 }}>
+                يُستخدم في الـ Sitemap — اتركه فارغاً لاستخدام الرابط التلقائي
+              </p>
             </div>
 
             <div style={{ marginBottom: 16 }}>
@@ -386,10 +594,12 @@ export default function NewPostPage() {
               <select
                 className="admin-select"
                 value={form.category}
-                onChange={e => updateField('category', e.target.value)}
+                onChange={(e) => updateField("category", e.target.value)}
               >
-                {CATEGORIES.map(c => (
-                  <option key={c} value={c}>{c}</option>
+                {CATEGORIES.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
                 ))}
               </select>
             </div>
@@ -399,7 +609,7 @@ export default function NewPostPage() {
               <input
                 className="admin-input"
                 value={form.categoryAr}
-                onChange={e => updateField('categoryAr', e.target.value)}
+                onChange={(e) => updateField("categoryAr", e.target.value)}
                 placeholder="مثل: التسويق الرقمي"
                 dir="rtl"
               />
@@ -410,27 +620,40 @@ export default function NewPostPage() {
               <input
                 className="admin-input"
                 value={form.author}
-                onChange={e => updateField('author', e.target.value)}
+                onChange={(e) => updateField("author", e.target.value)}
               />
             </div>
 
             {/* Tags */}
             <div style={{ marginBottom: 16 }}>
-              <label className="admin-label"><Tag size={14} style={{ display: 'inline', verticalAlign: 'middle', marginLeft: 6 }} />الوسوم (Tags)</label>
-              <div style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+              <label className="admin-label">
+                <Tag
+                  size={14}
+                  style={{
+                    display: "inline",
+                    verticalAlign: "middle",
+                    marginLeft: 6,
+                  }}
+                />
+                الوسوم (Tags)
+              </label>
+              <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
                 <input
                   className="admin-input"
                   placeholder="أضف وسم..."
                   value={tagInput}
-                  onChange={e => setTagInput(e.target.value)}
-                  onKeyDown={e => {
-                    if (e.key === 'Enter') {
+                  onChange={(e) => setTagInput(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
                       e.preventDefault();
                       const tag = tagInput.trim();
                       if (tag && !form.tags.includes(tag)) {
-                        setForm(prev => ({ ...prev, tags: [...prev.tags, tag] }));
+                        setForm((prev) => ({
+                          ...prev,
+                          tags: [...prev.tags, tag],
+                        }));
                       }
-                      setTagInput('');
+                      setTagInput("");
                     }
                   }}
                   dir="auto"
@@ -439,32 +662,63 @@ export default function NewPostPage() {
                 <button
                   type="button"
                   className="admin-btn admin-btn-sm"
-                  style={{ background: 'rgba(255,77,109,0.15)', color: '#FF4D6D', border: '1px solid rgba(255,77,109,0.3)', padding: '6px 12px', flexShrink: 0 }}
+                  style={{
+                    background: "rgba(255,77,109,0.15)",
+                    color: "#FF4D6D",
+                    border: "1px solid rgba(255,77,109,0.3)",
+                    padding: "6px 12px",
+                    flexShrink: 0,
+                  }}
                   onClick={() => {
                     const tag = tagInput.trim();
                     if (tag && !form.tags.includes(tag)) {
-                      setForm(prev => ({ ...prev, tags: [...prev.tags, tag] }));
+                      setForm((prev) => ({
+                        ...prev,
+                        tags: [...prev.tags, tag],
+                      }));
                     }
-                    setTagInput('');
+                    setTagInput("");
                   }}
                 >
                   +
                 </button>
               </div>
               {form.tags.length > 0 && (
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                   {form.tags.map((tag, i) => (
-                    <span key={i} style={{
-                      display: 'inline-flex', alignItems: 'center', gap: 4,
-                      background: 'linear-gradient(135deg, rgba(255,77,109,0.15), rgba(255,154,60,0.1))',
-                      border: '1px solid rgba(255,77,109,0.25)',
-                      color: '#FF9A3C', padding: '4px 10px', borderRadius: 20,
-                      fontSize: 13, fontWeight: 500,
-                    }}>
+                    <span
+                      key={i}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: 4,
+                        background:
+                          "linear-gradient(135deg, rgba(255,77,109,0.15), rgba(255,154,60,0.1))",
+                        border: "1px solid rgba(255,77,109,0.25)",
+                        color: "#FF9A3C",
+                        padding: "4px 10px",
+                        borderRadius: 20,
+                        fontSize: 13,
+                        fontWeight: 500,
+                      }}
+                    >
                       {tag}
                       <button
-                        onClick={() => setForm(prev => ({ ...prev, tags: prev.tags.filter((_, idx) => idx !== i) }))}
-                        style={{ background: 'none', border: 'none', color: '#FF4D6D', cursor: 'pointer', padding: 0, lineHeight: 1, fontSize: 16 }}
+                        onClick={() =>
+                          setForm((prev) => ({
+                            ...prev,
+                            tags: prev.tags.filter((_, idx) => idx !== i),
+                          }))
+                        }
+                        style={{
+                          background: "none",
+                          border: "none",
+                          color: "#FF4D6D",
+                          cursor: "pointer",
+                          padding: 0,
+                          lineHeight: 1,
+                          fontSize: 16,
+                        }}
                       >
                         ×
                       </button>
@@ -479,7 +733,7 @@ export default function NewPostPage() {
               <select
                 className="admin-select"
                 value={form.status}
-                onChange={e => updateField('status', e.target.value)}
+                onChange={(e) => updateField("status", e.target.value)}
               >
                 <option value="published">منشور</option>
                 <option value="draft">مسودة</option>
@@ -489,24 +743,46 @@ export default function NewPostPage() {
 
           {/* Lead Generation Settings */}
           <div className="admin-card">
-            <h4 style={{ color: '#E6E6EA', fontSize: 15, margin: '0 0 16px' }}>جلب العملاء (Lead Gen)</h4>
-            
-            <label className="admin-label" style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', marginBottom: 16 }}>
-              <input 
-                type="checkbox" 
-                checked={form.isGated} 
-                onChange={e => updateField('isGated', e.target.checked)} 
-                style={{ width: 18, height: 18, accentColor: '#FF4D6D' }}
+            <h4 style={{ color: "#E6E6EA", fontSize: 15, margin: "0 0 16px" }}>
+              جلب العملاء (Lead Gen)
+            </h4>
+
+            <label
+              className="admin-label"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                cursor: "pointer",
+                marginBottom: 16,
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={form.isGated}
+                onChange={(e) => updateField("isGated", e.target.checked)}
+                style={{ width: 18, height: 18, accentColor: "#FF4D6D" }}
               />
               تفعيل المحتوى المغلق (Gated Content)
             </label>
-            <p style={{ fontSize: 12, color: '#9CA3AF', marginBottom: 16, marginTop: -8 }}>
+            <p
+              style={{
+                fontSize: 12,
+                color: "#9CA3AF",
+                marginBottom: 16,
+                marginTop: -8,
+              }}
+            >
               سيتم إخفاء الجزء السفلي من المقال وطلب الإيميل من الزائر لفتحه.
             </p>
 
             <div>
               <label className="admin-label">إعلان الخدمة (Dynamic CTA)</label>
-              <select className="admin-select" value={form.ctaType} onChange={e => updateField('ctaType', e.target.value)}>
+              <select
+                className="admin-select"
+                value={form.ctaType}
+                onChange={(e) => updateField("ctaType", e.target.value)}
+              >
                 <option value="default">الإعلان الافتراضي العام</option>
                 <option value="seo">إعلان خدمة السيو (SEO)</option>
                 <option value="smm">إعلان السوشيال ميديا (SMM)</option>

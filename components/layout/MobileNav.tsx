@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import Link from "next/link";
+import Link from "@util/link";
 import { X, Menu, Star } from "lucide-react"; // Added Star
 
 export default function MobileNav({

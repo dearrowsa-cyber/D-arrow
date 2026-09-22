@@ -1,28 +1,49 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight, X, Sparkles, Target, Zap } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { PortfolioProject } from '@/lib/data/portfolio';
-import { useLanguage } from '@/components/LanguageProvider';
+import { useState } from "react";
+import Image from "next/image";
+import Link from "@util/link";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  X,
+  Sparkles,
+  Target,
+  Zap,
+} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { PortfolioProject } from "@/lib/data/portfolio";
+import { useLanguage } from "@/components/LanguageProvider";
 
-const DARK_BLUR = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPj/HwADBwIAMCbHYQAAAABJRU5ErkJggg==';
+const DARK_BLUR =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPj/HwADBwIAMCbHYQAAAABJRU5ErkJggg==";
 
-export default function ClientProjectPage({ project }: { project: PortfolioProject }) {
+export default function ClientProjectPage({
+  project,
+}: {
+  project: PortfolioProject;
+}) {
   const { lang, t } = useLanguage();
-  const isRtl = lang === 'ar';
+  const isRtl = lang === "ar";
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
   const openLightbox = (idx: number) => setLightboxIdx(idx);
   const closeLightbox = () => setLightboxIdx(null);
-  const nextImage = () => setLightboxIdx(prev => prev !== null ? (prev + 1) % project.gallery.length : null);
-  const prevImage = () => setLightboxIdx(prev => prev !== null ? (prev - 1 + project.gallery.length) % project.gallery.length : null);
+  const nextImage = () =>
+    setLightboxIdx((prev) =>
+      prev !== null ? (prev + 1) % project.gallery.length : null,
+    );
+  const prevImage = () =>
+    setLightboxIdx((prev) =>
+      prev !== null
+        ? (prev - 1 + project.gallery.length) % project.gallery.length
+        : null,
+    );
 
   return (
     <article className="min-h-screen bg-white dark:bg-[#080a1a]">
-
       {/* ── Compact Hero ── */}
       <section className="relative pt-28 pb-16 md:pt-32 md:pb-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -30,23 +51,50 @@ export default function ClientProjectPage({ project }: { project: PortfolioProje
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-8">
-          <Link 
-            href="/provisions" 
+          <Link
+            href="/provisions"
             className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-400 hover:text-brand-pink transition-colors mb-8 group"
           >
-            {isRtl ? <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" /> : <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />}
-            {isRtl ? 'العودة للمشاريع' : 'Back to Portfolio'}
+            {isRtl ? (
+              <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+            ) : (
+              <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+            )}
+            {isRtl ? "العودة للمشاريع" : "Back to Portfolio"}
           </Link>
 
-          <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
             <div className="flex flex-wrap gap-1.5 mb-4">
               {project.category.map((cat, idx) => (
-                <span key={idx} className="text-[10px] font-semibold tracking-[0.15em] uppercase text-brand-pink px-2.5 py-1 rounded-md bg-brand-pink/[0.06] border border-brand-pink/10">
-                  {cat === 'Web Design' ? (lang === 'ar' ? 'تصميم الويب' : 'Web Design') :
-                   cat === 'Marketing' ? (lang === 'ar' ? 'التسويق' : 'Marketing') :
-                   cat === 'Branding' ? (lang === 'ar' ? 'الهوية البصرية' : 'Branding') :
-                   cat === 'Web Development' ? (lang === 'ar' ? 'تطوير ويب' : 'Web Development') :
-                   cat === 'UI/UX Design' ? (lang === 'ar' ? 'تصميم واجهات' : 'UI/UX Design') : cat}
+                <span
+                  key={idx}
+                  className="text-[10px] font-semibold tracking-[0.15em] uppercase text-brand-pink px-2.5 py-1 rounded-md bg-brand-pink/[0.06] border border-brand-pink/10"
+                >
+                  {cat === "Web Design"
+                    ? lang === "ar"
+                      ? "تصميم الويب"
+                      : "Web Design"
+                    : cat === "Marketing"
+                      ? lang === "ar"
+                        ? "التسويق"
+                        : "Marketing"
+                      : cat === "Branding"
+                        ? lang === "ar"
+                          ? "الهوية البصرية"
+                          : "Branding"
+                        : cat === "Web Development"
+                          ? lang === "ar"
+                            ? "تطوير ويب"
+                            : "Web Development"
+                          : cat === "UI/UX Design"
+                            ? lang === "ar"
+                              ? "تصميم واجهات"
+                              : "UI/UX Design"
+                            : cat}
                 </span>
               ))}
             </div>
@@ -68,16 +116,16 @@ export default function ClientProjectPage({ project }: { project: PortfolioProje
 
       {/* ── Featured Image ── */}
       <section className="max-w-5xl mx-auto px-4 md:px-8 mb-16">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }} 
-          whileInView={{ opacity: 1, y: 0 }} 
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="relative rounded-2xl overflow-hidden border border-gray-100 dark:border-white/[0.04] shadow-2xl shadow-black/5 dark:shadow-black/30 cursor-pointer group bg-gray-50 dark:bg-[#0c0e22]"
           onClick={() => openLightbox(0)}
         >
-          <Image 
-            src={project.imageUrl} 
-            alt={project.title[lang]} 
+          <Image
+            src={project.imageUrl}
+            alt={project.title[lang]}
             width={1600}
             height={1000}
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 90vw, 1100px"
@@ -96,10 +144,10 @@ export default function ClientProjectPage({ project }: { project: PortfolioProje
       {/* ── Challenge / Solution / Results ── */}
       <section className="max-w-4xl mx-auto px-4 md:px-8 mb-20">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <motion.div 
-            initial={{ opacity: 0, y: 16 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
-            viewport={{ once: true }} 
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.4 }}
             className="bg-gray-50 dark:bg-[#0e1028] rounded-xl p-6 border border-gray-100 dark:border-white/[0.04] hover:border-brand-pink/15 transition-colors duration-300"
           >
@@ -107,17 +155,17 @@ export default function ClientProjectPage({ project }: { project: PortfolioProje
               <Target className="w-4.5 h-4.5 text-brand-pink" />
             </div>
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-2.5">
-              {isRtl ? 'التحدي' : 'The Challenge'}
+              {isRtl ? "التحدي" : "The Challenge"}
             </h3>
             <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
               {project.challenge[lang]}
             </p>
           </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 16 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
-            viewport={{ once: true }} 
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.1 }}
             className="bg-gray-50 dark:bg-[#0e1028] rounded-xl p-6 border border-gray-100 dark:border-white/[0.04] hover:border-brand-orange/15 transition-colors duration-300"
           >
@@ -125,17 +173,17 @@ export default function ClientProjectPage({ project }: { project: PortfolioProje
               <Sparkles className="w-4.5 h-4.5 text-brand-orange" />
             </div>
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-2.5">
-              {isRtl ? 'الحل المبتكر' : 'Our Solution'}
+              {isRtl ? "الحل المبتكر" : "Our Solution"}
             </h3>
             <p className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
               {project.solution[lang]}
             </p>
           </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 16 }} 
-            whileInView={{ opacity: 1, y: 0 }} 
-            viewport={{ once: true }} 
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.2 }}
             className="bg-gray-50 dark:bg-[#0e1028] rounded-xl p-6 border border-gray-100 dark:border-white/[0.04] hover:border-green-500/15 transition-colors duration-300"
           >
@@ -143,13 +191,15 @@ export default function ClientProjectPage({ project }: { project: PortfolioProje
               <Zap className="w-4.5 h-4.5 text-green-400" />
             </div>
             <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">
-              {isRtl ? 'النتائج' : 'Results'}
+              {isRtl ? "النتائج" : "Results"}
             </h3>
             <ul className="space-y-2.5">
               {project.results.map((result, idx) => (
                 <li key={idx} className="flex items-start gap-2">
                   <span className="w-1 h-1 rounded-full bg-green-400 mt-1.5 shrink-0" />
-                  <span className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">{result[lang]}</span>
+                  <span className="text-xs text-gray-600 dark:text-gray-400 leading-relaxed">
+                    {result[lang]}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -159,22 +209,31 @@ export default function ClientProjectPage({ project }: { project: PortfolioProje
 
       {/* ── Gallery ── */}
       <section className="max-w-5xl mx-auto px-4 md:px-8 mb-20">
-        <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
           <div className="flex items-center gap-3 mb-6">
             <div className="w-8 h-[2px] bg-gradient-to-r from-brand-pink to-brand-orange rounded-full" />
             <h2 className="text-sm font-semibold text-gray-900 dark:text-white tracking-wide">
-              {isRtl ? 'معرض الصور' : 'Project Gallery'}
+              {isRtl ? "معرض الصور" : "Project Gallery"}
             </h2>
           </div>
 
-          <div className={`grid gap-4 ${
-            project.gallery.length === 1 ? 'grid-cols-1' :
-            project.gallery.length === 2 ? 'grid-cols-1 md:grid-cols-2' :
-            project.gallery.length === 4 ? 'grid-cols-2' :
-            'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-          }`}>
+          <div
+            className={`grid gap-4 ${
+              project.gallery.length === 1
+                ? "grid-cols-1"
+                : project.gallery.length === 2
+                  ? "grid-cols-1 md:grid-cols-2"
+                  : project.gallery.length === 4
+                    ? "grid-cols-2"
+                    : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+            }`}
+          >
             {project.gallery.map((img, idx) => (
-              <motion.div 
+              <motion.div
                 key={idx}
                 initial={{ opacity: 0, scale: 0.97 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -183,9 +242,9 @@ export default function ClientProjectPage({ project }: { project: PortfolioProje
                 className="relative aspect-[4/3] rounded-xl overflow-hidden cursor-pointer group bg-gray-50 dark:bg-[#0a0c1e] border border-gray-100 dark:border-white/[0.04]"
                 onClick={() => openLightbox(idx)}
               >
-                <Image 
-                  src={img} 
-                  alt={`${project.title[lang]} - ${idx + 1}`} 
+                <Image
+                  src={img}
+                  alt={`${project.title[lang]} - ${idx + 1}`}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
@@ -207,29 +266,33 @@ export default function ClientProjectPage({ project }: { project: PortfolioProje
 
       {/* ── CTA ── */}
       <section className="max-w-3xl mx-auto px-4 md:px-8 pb-20">
-        <motion.div 
-          initial={{ opacity: 0, y: 16 }} 
-          whileInView={{ opacity: 1, y: 0 }} 
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           className="relative bg-[#0e1028] rounded-2xl p-8 md:p-12 text-center overflow-hidden border border-white/[0.04]"
         >
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-60 h-32 bg-brand-pink/10 rounded-full blur-[80px]" />
-          
+
           <div className="relative z-10">
             <h2 className="text-lg md:text-xl font-bold text-white mb-2">
-              {isRtl ? 'هل تريد نتائج مشابهة؟' : 'Ready for similar results?'}
+              {isRtl ? "هل تريد نتائج مشابهة؟" : "Ready for similar results?"}
             </h2>
             <p className="text-xs md:text-sm text-gray-400 mb-6 max-w-md mx-auto">
-              {isRtl 
-                ? 'دعنا نناقش كيف يمكننا مساعدة عملك على النمو وتحقيق أهدافه.' 
+              {isRtl
+                ? "دعنا نناقش كيف يمكننا مساعدة عملك على النمو وتحقيق أهدافه."
                 : "Let's discuss how we can help your business grow and achieve its goals."}
             </p>
-            <Link 
-              href="/contact" 
+            <Link
+              href="/contact"
               className="inline-flex items-center gap-2 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white px-6 py-2.5 rounded-full font-medium text-sm transition-all duration-300 hover:shadow-lg hover:scale-105 shadow-lg shadow-[#FF4D6D]/20"
             >
-              {isRtl ? 'تواصل معنا' : 'Start Your Project'}
-              {isRtl ? <ArrowLeft className="w-3.5 h-3.5" /> : <ArrowRight className="w-3.5 h-3.5" />}
+              {isRtl ? "تواصل معنا" : "Start Your Project"}
+              {isRtl ? (
+                <ArrowLeft className="w-3.5 h-3.5" />
+              ) : (
+                <ArrowRight className="w-3.5 h-3.5" />
+              )}
             </Link>
           </div>
         </motion.div>
@@ -245,32 +308,46 @@ export default function ClientProjectPage({ project }: { project: PortfolioProje
             className="fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
             onClick={closeLightbox}
           >
-            <button 
-              onClick={closeLightbox} 
+            <button
+              onClick={closeLightbox}
               className="absolute top-4 end-4 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors z-50"
             >
               <X className="w-5 h-5 text-white" />
             </button>
 
             {project.gallery.length > 1 && (
-              <button 
-                onClick={(e) => { e.stopPropagation(); prevImage(); }} 
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  prevImage();
+                }}
                 className="absolute start-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors z-50"
               >
-                {isRtl ? <ChevronRight className="w-5 h-5 text-white" /> : <ChevronLeft className="w-5 h-5 text-white" />}
+                {isRtl ? (
+                  <ChevronRight className="w-5 h-5 text-white" />
+                ) : (
+                  <ChevronLeft className="w-5 h-5 text-white" />
+                )}
               </button>
             )}
 
             {project.gallery.length > 1 && (
-              <button 
-                onClick={(e) => { e.stopPropagation(); nextImage(); }} 
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  nextImage();
+                }}
                 className="absolute end-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors z-50"
               >
-                {isRtl ? <ChevronLeft className="w-5 h-5 text-white" /> : <ChevronRight className="w-5 h-5 text-white" />}
+                {isRtl ? (
+                  <ChevronLeft className="w-5 h-5 text-white" />
+                ) : (
+                  <ChevronRight className="w-5 h-5 text-white" />
+                )}
               </button>
             )}
 
-            <motion.div 
+            <motion.div
               key={lightboxIdx}
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -278,8 +355,8 @@ export default function ClientProjectPage({ project }: { project: PortfolioProje
               className="relative w-full max-w-4xl max-h-[85vh] flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <Image 
-                src={project.gallery[lightboxIdx]} 
+              <Image
+                src={project.gallery[lightboxIdx]}
                 alt={`${project.title[lang]} - ${lightboxIdx + 1}`}
                 width={1200}
                 height={900}

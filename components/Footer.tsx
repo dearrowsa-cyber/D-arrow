@@ -1,15 +1,22 @@
 "use client";
 
 import { useLanguage } from "./LanguageProvider";
-import Link from "next/link";
+import Link from "@util/link";
 import Image from "next/image";
 import { useSelectedLayoutSegments } from "next/navigation";
-import { Linkedin, Instagram, Mail, MapPin, Phone, TrendingUp } from "lucide-react";
+import {
+  Linkedin,
+  Instagram,
+  Mail,
+  MapPin,
+  Phone,
+  TrendingUp,
+} from "lucide-react";
 import { FaTiktok, FaSnapchatGhost, FaWhatsapp } from "react-icons/fa";
 
 const Footer = () => {
   const segments = useSelectedLayoutSegments();
-  const isAdmin = segments && segments[0] === 'admin';
+  const isAdmin = segments && segments[0] === "admin";
   const { t, lang, siteData } = useLanguage();
 
   if (isAdmin) return null;
@@ -24,10 +31,8 @@ const Footer = () => {
       dir={lang === "ar" ? "rtl" : "ltr"}
     >
       <div className="max-w-7xl mx-auto px-5 md:px-12">
-
         {/* GRID SECTION */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-16 mb-9 md:mb-16">
-
           {/* LOGO + TAGLINE */}
           <div>
             <div className="mb-6">
@@ -50,28 +55,61 @@ const Footer = () => {
               {t("quickLinks")}
             </h4>
             <ul className="space-y-3 text-md">
-              <li><Link href="/" className="!text-white hover:text-pink-500 transition">{t("home")}</Link></li>
-              <li><Link href="/#about" className="!text-white hover:text-pink-500 transition">{t("aboutUs")}</Link></li>
-              <li><Link href="/#services" className="!text-white hover:text-pink-500 transition">{t("services")}</Link></li>
-              <li><Link href="/pricing" className="!text-white hover:text-pink-500 transition">{t("pricing")}</Link></li>
-              <li><Link href="/#contact" className="!text-white hover:text-pink-500 transition">{t("contact")}</Link></li>
+              <li>
+                <Link
+                  href="/"
+                  className="!text-white hover:text-pink-500 transition"
+                >
+                  {t("home")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/#about"
+                  className="!text-white hover:text-pink-500 transition"
+                >
+                  {t("aboutUs")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/#services"
+                  className="!text-white hover:text-pink-500 transition"
+                >
+                  {t("services")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/pricing"
+                  className="!text-white hover:text-pink-500 transition"
+                >
+                  {t("pricing")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/#contact"
+                  className="!text-white hover:text-pink-500 transition"
+                >
+                  {t("contact")}
+                </Link>
+              </li>
             </ul>
           </div>
 
           {/* CONTACT INFO */}
           <div>
-            <h4 className="text-lg font-semibold mb-5">
-              {t("contactInfo")}
-            </h4>
+            <h4 className="text-lg font-semibold mb-5">{t("contactInfo")}</h4>
             <div className="space-y-4 text-white text-sm">
-
               {/* Address — icon on the right in AR via parent RTL */}
               <div className="flex items-start gap-3">
                 <MapPin size={18} className="flex-shrink-0 mt-0.5" />
                 <p>
-                  {contact?.address?.[lang] || (lang === "ar"
-                    ? "منطقة الأحساء، المملكة العربية السعودية"
-                    : "Al-Ahsa Region, Saudi Arabia")}
+                  {contact?.address?.[lang] ||
+                    (lang === "ar"
+                      ? "منطقة الأحساء، المملكة العربية السعودية"
+                      : "Al-Ahsa Region, Saudi Arabia")}
                 </p>
               </div>
 
@@ -79,10 +117,10 @@ const Footer = () => {
               <div className="flex items-center gap-3">
                 <Mail size={18} className="flex-shrink-0" />
                 <a
-                  href={`mailto:${contact?.email || 'support@d-arrow.com'}`}
+                  href={`mailto:${contact?.email || "support@d-arrow.com"}`}
                   className="hover:text-pink-500 transition"
                 >
-                  {contact?.email || 'support@d-arrow.com'}
+                  {contact?.email || "support@d-arrow.com"}
                 </a>
               </div>
 
@@ -90,7 +128,7 @@ const Footer = () => {
               <div className="flex items-center gap-3">
                 <Phone size={18} className="flex-shrink-0" />
                 <a
-                  href={`tel:${contact?.phone || '+966500466349'}`}
+                  href={`tel:${contact?.phone || "+966500466349"}`}
                   className="hover:text-pink-500 transition"
                   dir="ltr"
                 >
@@ -102,30 +140,34 @@ const Footer = () => {
               <div className="flex flex-col gap-3 mt-5 pt-5 border-t border-brand-pink/20">
                 <div className="flex items-center gap-2">
                   <span className="font-semibold text-white">
-                    {lang === 'ar' ? 'السجل التجاري:' : 'CR Number:'}
+                    {lang === "ar" ? "السجل التجاري:" : "CR Number:"}
                   </span>
-                  <span className="text-gray-400" dir="ltr">7053575184</span>
+                  <span className="text-gray-400" dir="ltr">
+                    7053575184
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="font-semibold text-white">
-                    {lang === 'ar' ? 'الرقم الضريبي:' : 'VAT Number:'}
+                    {lang === "ar" ? "الرقم الضريبي:" : "VAT Number:"}
                   </span>
-                  <span className="text-gray-400" dir="ltr">314611548300003</span>
+                  <span className="text-gray-400" dir="ltr">
+                    314611548300003
+                  </span>
                 </div>
               </div>
-
             </div>
           </div>
 
           {/* SOCIAL ICONS */}
           <div>
-            <h4 className="text-lg font-semibold mb-5">
-              {t("followUs")}
-            </h4>
+            <h4 className="text-lg font-semibold mb-5">{t("followUs")}</h4>
 
             <div className="flex gap-4">
               <a
-                href={social?.linkedin || "https://www.linkedin.com/in/%D8%B4%D8%B1%D9%83%D8%A9-%D8%AF%D9%8A-%D8%A2%D8%B1%D9%88-5024643b5/"}
+                href={
+                  social?.linkedin ||
+                  "https://www.linkedin.com/in/%D8%B4%D8%B1%D9%83%D8%A9-%D8%AF%D9%8A-%D8%A2%D8%B1%D9%88-5024643b5/"
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-secondary-dark rounded-md flex items-center justify-center hover:bg-brand-pink transition transform hover:scale-110"
@@ -134,7 +176,9 @@ const Footer = () => {
               </a>
 
               <a
-                href={social?.instagram || "https://www.instagram.com/darrow.co/"}
+                href={
+                  social?.instagram || "https://www.instagram.com/darrow.co/"
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-secondary-dark rounded-md flex items-center justify-center hover:bg-pink-500 transition transform hover:scale-110"
@@ -143,7 +187,10 @@ const Footer = () => {
               </a>
 
               <a
-                href={social?.tiktok || "https://www.tiktok.com/@d.arrow.sa?_r=1&_t=ZS-95OXOuGs34j"}
+                href={
+                  social?.tiktok ||
+                  "https://www.tiktok.com/@d.arrow.sa?_r=1&_t=ZS-95OXOuGs34j"
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-secondary-dark rounded-md flex items-center justify-center hover:bg-brand-pink transition transform hover:scale-110"
@@ -152,7 +199,10 @@ const Footer = () => {
               </a>
 
               <a
-                href={social?.snapchat || "https://www.snapchat.com/@darrow.co?share_id=bINbFcr6nOc&locale=en-EG"}
+                href={
+                  social?.snapchat ||
+                  "https://www.snapchat.com/@darrow.co?share_id=bINbFcr6nOc&locale=en-EG"
+                }
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-secondary-dark rounded-md flex items-center justify-center hover:bg-brand-pink transition transform hover:scale-110"
@@ -176,11 +226,14 @@ const Footer = () => {
         <div className="border-t border-brand-pink/20 pt-6 text-center md:flex md:justify-between text-white text-xs md:text-sm">
           <p>{footer?.copyright?.[lang] || t("copyrightText")}</p>
           <div className="flex justify-center md:justify-end gap-6 mt-4 md:mt-0">
-            <Link href="/privacy" className="hover:text-pink-500 transition">{t("privacyPolicy")}</Link>
-            <Link href="/cookies" className="hover:text-pink-500 transition">{t("cookiePolicyTitle") || t("cookieSettings")}</Link>
+            <Link href="/privacy" className="hover:text-pink-500 transition">
+              {t("privacyPolicy")}
+            </Link>
+            <Link href="/cookies" className="hover:text-pink-500 transition">
+              {t("cookiePolicyTitle") || t("cookieSettings")}
+            </Link>
           </div>
         </div>
-
       </div>
     </footer>
   );
