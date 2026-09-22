@@ -1,0 +1,24 @@
+/* ===== PROCESS SECTIONS =====
+   Styles aliased to the global D-Arrow brand tokens (app/globals.css)
+   so the page stays in sync with the website identity. */
+
+.heroMeta {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 20;
+}
+
+.heroBadge {
+  background: linear-gradient(135deg, rgba(255, 77, 109, 0.15), rgba(255, 154, 60, 0.1));
+  color: var(--brand-pink);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  box-shadow: 0 8px 24px rgba(255, 77, 109, 0.15);
+  border: 1px solid rgba(255, 77, 109, 0.3);
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from 'react';
-import { useLanguage } from './LanguageProvider';
+import { useLanguage } from '../LanguageProvider';
 
 const stats = [
   { value: 2, key: 'yearsOfExperience' },

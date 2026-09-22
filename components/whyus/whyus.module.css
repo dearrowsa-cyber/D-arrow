@@ -1,0 +1,67 @@
+/* ===== WHY US SECTIONS =====
+   Styles aliased to the global D-Arrow brand tokens (app/globals.css)
+   so the page stays in sync with the website identity. */
+
+.heroMeta {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 20;
+}
+
+.heroBadge {
+  background: linear-gradient(135deg, rgba(255, 77, 109, 0.15), rgba(255, 154, 60, 0.1));
+  color: var(--brand-pink);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  box-shadow: 0 8px 24px rgba(255, 77, 109, 0.15);
+  border: 1px solid rgba(255, 77, 109, 0.3);
+}
+
+.whyCard {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-line);
+  border-radius: 16px;
+  padding: 32px 28px;
+  position: relative;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.whyCard:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 77, 109, 0.4);
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  width: 100%;
+}
+
+.iconWrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, rgba(255, 77, 109, 0.15), rgba(255, 154, 60, 0.05));
+  border: 1px solid rgba(255, 77, 109, 0.25);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+  min-height: 0;
+}

@@ -2,33 +2,33 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import dynamic from 'next/dynamic';
-import Hero from '@/components/Hero';
-import Stats from '@/components/Stats';
-import LazySection from '@/components/LazySection';
+import Hero from '@/components/home/Hero';
+import Stats from '@/components/home/Stats';
+import LazySection from '@/components/home/LazySection';
 import { getSeoMetadata } from '@/lib/seo/metadata';
 
 // Lazy load below-fold components with loading priority
-const AboutCompany = dynamic(() => import('@/components/AboutCompany'), {
+const AboutCompany = dynamic(() => import('@/components/home/AboutCompany'), {
   loading: () => <div className="py-8 lg:py-16 bg-gray-900" />,
   ssr: true,
 });
 
-const Process = dynamic(() => import('@/components/Process'), {
+const Process = dynamic(() => import('@/components/home/Process'), {
   loading: () => <div className="py-8 lg:py-16 bg-gray-900" />,
   ssr: true,
 });
 
-const CTA = dynamic(() => import('@/components/CTA'), {
+const CTA = dynamic(() => import('@/components/home/CTA'), {
   loading: () => <div className="py-8 lg:py-12 bg-gray-900" />,
   ssr: true,
 });
 
-const PartnersInSuccess = dynamic(() => import('@/components/PartnersInSuccess'), {
+const PartnersInSuccess = dynamic(() => import('@/components/home/PartnersInSuccess'), {
   loading: () => <div className="py-8 lg:py-16 bg-gray-900" />,
   ssr: true,
 });
 
-const Vision2030 = dynamic(() => import('@/components/Vision2030'), {
+const Vision2030 = dynamic(() => import('@/components/home/Vision2030'), {
   loading: () => <div className="py-8 lg:py-16 bg-gray-900" />,
   ssr: true,
 });

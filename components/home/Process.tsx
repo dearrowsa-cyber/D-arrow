@@ -1,6 +1,6 @@
 'use client';
 
-import { useLanguage } from './LanguageProvider';
+import { useLanguage } from '../LanguageProvider';
 import Image from 'next/image';
 
 const processSteps = [

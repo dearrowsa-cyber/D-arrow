@@ -2,8 +2,8 @@
 
 import Link from "@util/link";
 import { useState } from "react";
-import { useLanguage } from "./LanguageProvider";
-import ConsultationModal from "./ConsultationModal";
+import { useLanguage } from "../LanguageProvider";
+import ConsultationModal from "../ConsultationModal";
 
 const CTA = () => {
   const { t } = useLanguage();

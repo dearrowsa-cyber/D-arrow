@@ -1,6 +1,6 @@
 "use client";
 
-import { useLanguage } from "./LanguageProvider";
+import { useLanguage } from "../LanguageProvider";
 import Link from "@util/link";
 import Image from "next/image";
 import { useSelectedLayoutSegments } from "next/navigation";

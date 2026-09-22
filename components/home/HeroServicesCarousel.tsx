@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useLanguage } from './LanguageProvider';
+import { useLanguage } from '../LanguageProvider';
 
 interface Service {
   titleKey: string;

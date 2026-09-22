@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useLanguage } from "./LanguageProvider";
+import { useLanguage } from "../LanguageProvider";
 import Link from "@util/link";
 
 export default function AboutCompany() {

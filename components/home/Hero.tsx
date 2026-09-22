@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "@util/link";
-import { useLanguage } from "./LanguageProvider";
+import { useLanguage } from "../LanguageProvider";
 import HeroServicesCarousel from "./HeroServicesCarousel";
 
 const Hero = () => {

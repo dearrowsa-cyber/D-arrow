@@ -5,7 +5,7 @@ import { AnimatePresence } from 'framer-motion';
 import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 import Header from '@/components/layout/Header';
-import Footer from '@/components/Footer';
+import Footer from '@/components/layout/Footer';
 import Analytics from '@/components/Analytics';
 import CookieConsent from '@/components/CookieConsent';
 import WhatsAppWidget from '@/components/WhatsAppWidget';
