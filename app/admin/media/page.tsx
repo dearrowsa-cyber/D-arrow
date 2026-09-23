@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { Upload, Trash2, Copy, Check, Image as ImageIcon, Search } from 'lucide-react';
 
 export default function MediaPage() {
@@ -8,19 +8,19 @@ export default function MediaPage() {
   const [uploading, setUploading] = useState(false);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
-  const [images, setImages] = useState<{ url: string; name: string }[]>([]);
-  const [dragOver, setDragOver] = useState(false);
+  const [images, setImages] = useState<{ url: string; name: string }[]>(() => {
+    if (typeof window === 'undefined') return [];
 
-  // Load existing uploads from a simple tracking approach
-  useEffect(() => {
-    // We'll store uploaded images in localStorage for tracking
     const stored = localStorage.getItem('admin_uploads');
-    if (stored) {
-      try {
-        setImages(JSON.parse(stored));
-      } catch { }
+    if (!stored) return [];
+
+    try {
+      return JSON.parse(stored);
+    } catch {
+      return [];
     }
-  }, []);
+  });
+  const [dragOver, setDragOver] = useState(false);
 
   const saveImages = (imgs: { url: string; name: string }[]) => {
     setImages(imgs);

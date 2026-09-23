@@ -6,7 +6,10 @@ export const dynamic = 'force-dynamic';
 // Get all blog posts
 export async function GET(req: NextRequest) {
   try {
+    const status = req.nextUrl.searchParams.get('status');
+    const where = status === 'draft' || status === 'published' ? { status } : undefined;
     const rawPosts = await prisma.blogPost.findMany({
+      where,
       orderBy: { createdAt: 'desc' },
     });
 

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { isAdminRequestAuthenticated } from '@/lib/admin-auth';
 
 // Subdomain reserved for the real-estate demo (override with env var).
 const RE_SUBDOMAIN = process.env.RE_SUBDOMAIN || 'realestate';
@@ -7,13 +8,24 @@ const RE_MOUNT_PATH = '/demo/real-estate';
 
 export async function proxy(request: NextRequest) {
   const url = request.nextUrl.clone();
+
+  const isAdminPage = url.pathname.startsWith('/admin') && url.pathname !== '/admin/login';
+  const isAdminApi = url.pathname.startsWith('/api/admin') && url.pathname !== '/api/admin/auth';
+  if ((isAdminPage || isAdminApi) && !isAdminRequestAuthenticated(request)) {
+    if (isAdminApi) {
+      return NextResponse.json({ success: false, error: 'غير مصرح' }, { status: 401 });
+    }
+    url.pathname = '/admin/login';
+    return NextResponse.redirect(url);
+  }
+
   const hostname = (request.headers.get('host') ?? '').split(':')[0].toLowerCase();
   const hostParts = hostname.split('.');
 
   // Skip static assets, _next and direct APIs
   if (
     url.pathname.startsWith('/_next') ||
-    url.pathname.startsWith('/api') ||
+    (url.pathname.startsWith('/api') && !isAdminApi) ||
     url.pathname.includes('.')
   ) {
     return NextResponse.next();
@@ -51,6 +63,6 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico).*)',
+    '/((?!_next/static|_next/image|favicon.ico).*)',
   ],
 };

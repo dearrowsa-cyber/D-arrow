@@ -175,7 +175,12 @@ export default function RealEstateAdmin() {
         status: existing.status,
       });
     } else if (!properties.some((p) => p.slug === slug)) {
-      addProperty(payload);
+      const license = String(Date.now()).slice(-10);
+      addProperty({
+        ...payload,
+        falLicenseNumber: `FAL-${license}`,
+        adLicenseNumber: license,
+      });
     }
     setEditorOpen(false);
   };
@@ -533,6 +538,46 @@ export default function RealEstateAdmin() {
                     className="re-input"
                     value={settings.phone}
                     onChange={(e) => updateSettings({ phone: e.target.value })}
+                  />
+                </div>
+                <div className="re-field">
+                  <label>اسم الموقع</label>
+                  <input
+                    className="re-input"
+                    value={settings.siteName}
+                    onChange={(e) =>
+                      updateSettings({ siteName: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="re-field">
+                  <label>الوصف تحت اسم الموقع</label>
+                  <input
+                    className="re-input"
+                    value={settings.tagline}
+                    onChange={(e) =>
+                      updateSettings({ tagline: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="re-field">
+                  <label>عنوان الواجهة الرئيسية</label>
+                  <input
+                    className="re-input"
+                    value={settings.heroTitle}
+                    onChange={(e) =>
+                      updateSettings({ heroTitle: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="re-field">
+                  <label>الوصف تحت عنوان الواجهة</label>
+                  <input
+                    className="re-input"
+                    value={settings.heroSubtitle}
+                    onChange={(e) =>
+                      updateSettings({ heroSubtitle: e.target.value })
+                    }
                   />
                 </div>
               </div>

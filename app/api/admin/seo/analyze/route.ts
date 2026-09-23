@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { analyzeContent } from '@/lib/seo/analyzer';
-import { verifyToken } from '@/app/api/admin/auth/route';
+import { getAdminToken, verifyToken } from '@/lib/admin-auth';
 
 export async function POST(req: NextRequest) {
-  const authHeader = req.headers.get('authorization');
-  const token = authHeader?.replace('Bearer ', '');
-  
+  const token = getAdminToken(req);
+
   if (!token || !verifyToken(token)) {
     return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
   }

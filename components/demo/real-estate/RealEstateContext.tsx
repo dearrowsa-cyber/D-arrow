@@ -19,6 +19,10 @@ export interface RESettings {
   agencyName: string;
   slogan: string;
   phone: string;
+  siteName: string;
+  tagline: string;
+  heroTitle: string;
+  heroSubtitle: string;
   themePreset: ReThemePreset;
 }
 
@@ -26,6 +30,10 @@ const DEFAULT_SETTINGS: RESettings = {
   agencyName: 'عقارات دي-آرو',
   slogan: 'الوجهة العقارية الأولى في المملكة',
   phone: '+966551234567',
+  siteName: 'عقارات دي-آرو',
+  tagline: 'الوجهة العقارية الأولى في المملكة',
+  heroTitle: 'ابحث عن بيتك المستقبلي في المملكة',
+  heroSubtitle: 'نماذج سكنية واستثمارية مختارة بعناية في أفضل مواقع الرياض وجدة والخبر — بترخيص فال معتمد.',
   themePreset: 'emerald-gold',
 };
 

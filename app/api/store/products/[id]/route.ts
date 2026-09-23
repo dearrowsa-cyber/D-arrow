@@ -51,9 +51,13 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     const { id: _id, createdAt, updatedAt, reviews, orderItems, _count, ...rawUpdateData } = data;
 
     const updateData: Prisma.ProductUpdateInput = {};
-    const textFields = ['name', 'nameAr', 'slug', 'description', 'descriptionAr', 'currency', 'category', 'categoryAr', 'type', 'downloadUrl', 'demoUrl', 'status'] as const;
-    for (const field of textFields) {
+    const nullableTextFields = ['nameAr', 'description', 'descriptionAr', 'categoryAr', 'downloadUrl', 'demoUrl'] as const;
+    for (const field of nullableTextFields) {
       if (rawUpdateData[field] !== undefined) updateData[field] = rawUpdateData[field] === '' ? null : String(rawUpdateData[field]);
+    }
+    const requiredTextFields = ['name', 'slug', 'currency', 'category', 'type', 'status'] as const;
+    for (const field of requiredTextFields) {
+      if (rawUpdateData[field] !== undefined) updateData[field] = String(rawUpdateData[field]);
     }
     if (rawUpdateData.price !== undefined) updateData.price = parseNumber(rawUpdateData.price) ?? 0;
     if (rawUpdateData.salePrice !== undefined) updateData.salePrice = parseNumber(rawUpdateData.salePrice);

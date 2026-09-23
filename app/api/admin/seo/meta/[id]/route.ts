@@ -1,15 +1,14 @@
 import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import { verifyToken } from '@/app/api/admin/auth/route';
+import { getAdminToken, verifyToken } from '@/lib/admin-auth';
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const authHeader = req.headers.get('authorization');
-  const token = authHeader?.replace('Bearer ', '');
-  
+  const token = getAdminToken(req);
+
   if (!token || !verifyToken(token)) {
     return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
   }
@@ -35,9 +34,8 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const { id } = await params;
-  const authHeader = req.headers.get('authorization');
-  const token = authHeader?.replace('Bearer ', '');
-  
+  const token = getAdminToken(req);
+
   if (!token || !verifyToken(token)) {
     return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
   }
@@ -98,7 +96,7 @@ export async function DELETE(
     const { id } = await params;
     // Get slug before deleting so we can revalidate the page
     const entry = await prisma.seoMeta.findUnique({ where: { id }, select: { slug: true } });
-    
+
     await prisma.seoMeta.delete({
       where: { id }
     });

@@ -60,7 +60,7 @@ export interface MarketingPixels {
   metaActive: boolean;
 }
 
-export type ThemePreset = 'neon-phosphor' | 'emerald-royal' | 'luxury-dark' | 'gold-vip' | 'modern-purple' | 'midnight-blue' | 'espresso-amber';
+export type ThemePreset = 'neon-phosphor' | 'emerald-royal' | 'cyber-cyan' | 'luxury-rose' | 'gold-vip' | 'modern-purple' | 'midnight-blue' | 'titanium-silver' | 'espresso-amber';
 
 export interface StoreSettings {
   storeName: string;

@@ -1,8 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "@util/link";
+import { useAdminAuth } from "@/custom hooks/useAdminAuth";
+import { useAdminTheme } from "@/custom hooks/useAdminTheme";
 import "./admin.css";
 import {
   LayoutDashboard,
@@ -57,55 +59,15 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
   const pathname = usePathname();
-  const [isAuth, setIsAuth] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("admin_theme");
-    if (savedTheme === "light") setTheme("light");
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
-    setTheme(newTheme);
-    localStorage.setItem("admin_theme", newTheme);
-  };
-
-  useEffect(() => {
-    const token = localStorage.getItem("admin_token");
-    if (!token && pathname !== "/admin/login") {
-      router.push("/admin/login");
-    } else if (token) {
-      // Verify token
-      fetch("/api/admin/auth", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            setIsAuth(true);
-          } else {
-            localStorage.removeItem("admin_token");
-            router.push("/admin/login");
-          }
-        })
-        .catch(() => {
-          localStorage.removeItem("admin_token");
-          router.push("/admin/login");
-        })
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
-    }
-  }, [pathname, router]);
+  const { logout, isAuthenticated, isChecking } = useAdminAuth(
+    pathname !== "/admin/login",
+  );
+  const { theme, toggleTheme } = useAdminTheme();
 
   const handleLogout = () => {
-    localStorage.removeItem("admin_token");
-    router.push("/admin/login");
+    void logout();
   };
 
   // Login page - no sidebar
@@ -122,7 +84,7 @@ export default function AdminLayout({
     );
   }
 
-  if (loading) {
+  if (isChecking) {
     return (
       <div
         className="admin-layout"
@@ -152,7 +114,7 @@ export default function AdminLayout({
     );
   }
 
-  if (!isAuth) return null;
+  if (!isAuthenticated) return null;
 
   return (
     <div className={`admin-layout ${theme === "light" ? "light-mode" : ""}`}>

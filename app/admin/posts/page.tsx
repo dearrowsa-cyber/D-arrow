@@ -35,12 +35,14 @@ export default function PostsListPage() {
   );
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
+    fetchPosts(filterStatus);
+  }, [filterStatus]);
 
-  const fetchPosts = async () => {
+  const fetchPosts = async (status: string) => {
     try {
-      const res = await fetch("/api/blog/posts", { cache: "no-store" });
+      const query =
+        status === "all" ? "" : `?status=${encodeURIComponent(status)}`;
+      const res = await fetch(`/api/blog/posts${query}`, { cache: "no-store" });
       const data = await res.json();
       const sorted = (data.posts || []).sort(
         (a: Post, b: Post) =>

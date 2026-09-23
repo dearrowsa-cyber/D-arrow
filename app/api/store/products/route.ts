@@ -39,7 +39,7 @@ const toProductData = (data: Record<string, unknown>) => ({
   slug: String(data.slug || '').trim(),
   description: data.description ? String(data.description) : null,
   descriptionAr: data.descriptionAr ? String(data.descriptionAr) : null,
-  price: parseNumber(data.price, 'price', true),
+  price: parseNumber(data.price, 'price', true) ?? 0,
   salePrice: parseNumber(data.salePrice, 'salePrice'),
   currency: String(data.currency || 'SAR'),
   images: parseJsonArray(data.images),

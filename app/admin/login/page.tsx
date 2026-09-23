@@ -1,44 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { Lock, Eye, EyeOff } from "lucide-react";
 import Link from "@util/link";
+import { useAdminAuth } from "@/custom hooks/useAdminAuth";
 
 export default function AdminLoginPage() {
-  const router = useRouter();
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const { error, loading, login } = useAdminAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
-
-    try {
-      const res = await fetch("/api/admin/auth", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
-      });
-
-      const data = await res.json();
-
-      if (data.success) {
-        localStorage.setItem("admin_token", data.token);
-        router.push("/admin");
-        // Force reload to trigger auth check
-        window.location.href = "/admin";
-      } else {
-        setError(data.error || "كلمة المرور غير صحيحة");
-      }
-    } catch {
-      setError("حدث خطأ في الاتصال");
-    } finally {
-      setLoading(false);
-    }
+    await login(password);
   };
 
   return (
