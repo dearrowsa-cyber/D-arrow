@@ -1,7 +1,11 @@
 node_modules
+.next
+dist_cf_pages
+*.zip
 build
 dist
 .git
+.gemini
 .trae
 .log
 .figma

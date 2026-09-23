@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  output: 'export',
+  trailingSlash: true,
+
 
   productionBrowserSourceMaps: false,
   compress: true,
@@ -12,31 +15,8 @@ const nextConfig = {
 
   serverExternalPackages: ['@prisma/client', 'prisma'],
 
-  async redirects() {
-    return [
-      {
-        source: '/:path*',
-        has: [
-          {
-            type: 'host',
-            value: 'www.d-arrow.com',
-          },
-        ],
-        destination: 'https://d-arrow.com/:path*',
-        permanent: true,
-      },
-      {
-        source: '/influencer/mahmoud-sorour',
-        destination: 'https://in.d-arrow.com/mahmoud-sorour',
-        permanent: true,
-      },
-      {
-        source: '/mahmoud-sorour',
-        destination: 'https://in.d-arrow.com/mahmoud-sorour',
-        permanent: true,
-      },
-    ];
-  },
+  // redirects() not supported with output: 'export'
+  // async redirects() { ... },
 
   images: {
     unoptimized: true,
@@ -72,25 +52,8 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
   },
 
-  headers: async () => [
-    {
-      source: '/:path*',
-      headers: [
-        {
-          key: 'Cache-Control',
-          value: 'no-cache, no-store, must-revalidate',
-        },
-        {
-          key: 'Pragma',
-          value: 'no-cache',
-        },
-        {
-          key: 'Expires',
-          value: '0',
-        },
-      ],
-    },
-  ],
+  // headers() not supported with output: 'export'
+  // async headers() { ... },
 };
 
 module.exports = nextConfig;
