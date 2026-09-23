@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>متجر إبراهيم - التمور والقهوة والمكسرات</title>
+  <meta name="description" content="متجر إبراهيم للتمور والقهوة والمكسرات - خبرة 30 سنة في تقديم أجود منتجات نجران الأصيلة"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:"Cairo","Tajawal",sans-serif;background:#FAFAF7;color:#2C1A0E;overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+    :root{
+      --green-dark:#1B5E20;--green-mid:#2E7D32;--green-light:#4CAF50;--green-pale:#E8F5E9;
+      --brown-dark:#3E2723;--brown-mid:#5D4037;--brown-light:#8D6E63;--brown-pale:#EFEBE9;
+      --cream:#FFF8F0;--white:#FFFFFF;--text-light:#795548;
+      --gold:#C9A84C;--gold-light:#F5D78C;
+    }
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+    .section-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;color:var(--brown-dark);text-align:center;margin-bottom:.5rem}
+    .section-subtitle{text-align:center;color:var(--text-light);font-size:1rem;margin-bottom:3rem}
+    .badge{display:inline-block;background:linear-gradient(135deg,var(--green-pale),#C8E6C9);color:var(--green-dark);border:1px solid var(--green-light);border-radius:50px;padding:5px 18px;font-size:.85rem;font-weight:700;margin-bottom:1rem}
+
+    /* LOADER */
+    #loader{position:fixed;inset:0;z-index:9999;background:linear-gradient(135deg,var(--green-dark) 0%,var(--brown-dark) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .6s ease,visibility .6s ease}
+    #loader.hidden{opacity:0;visibility:hidden}
+    .loader-logo{width:110px;height:110px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px rgba(255,255,255,.3);margin-bottom:1.5rem;animation:pulse-logo 1.5s ease-in-out infinite}
+    .loader-title{font-size:2rem;font-weight:900;color:#fff;letter-spacing:2px}
+    .loader-sub{font-size:.85rem;color:rgba(255,255,255,.65);margin-top:.4rem;letter-spacing:3px}
+    .loader-bar{width:180px;height:3px;background:rgba(255,255,255,.15);border-radius:3px;margin-top:2rem;overflow:hidden}
+    .loader-bar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold-light),var(--gold));animation:loadBar 2s ease forwards}
+    @keyframes pulse-logo{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+    @keyframes loadBar{0%{width:0}100%{width:100%}}
+
+    /* HEADER */
+    header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(27,94,32,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.1);transition:all .3s}
+    header.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.2)}
+    nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;max-width:1200px;margin:0 auto}
+    .nav-logo{display:flex;align-items:center;gap:12px}
+    .nav-logo-icon{width:52px;height:52px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .nav-logo-text h1{font-size:1.2rem;font-weight:900;color:#fff;line-height:1.2}
+    .nav-logo-text p{font-size:.7rem;color:rgba(255,255,255,.75)}
+    .nav-links{display:flex;align-items:center;gap:8px}
+    .nav-links a{color:rgba(255,255,255,.9);font-weight:600;font-size:.95rem;padding:7px 14px;border-radius:8px;transition:background .2s}
+    .nav-links a:hover{background:rgba(255,255,255,.15)}
+    .nav-cta{background:linear-gradient(135deg,var(--gold),#A07830)!important;color:#fff!important;border-radius:10px!important;font-weight:700!important}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px}
+    .hamburger span{display:block;width:26px;height:2.5px;background:white;border-radius:3px}
+    .mobile-menu{display:none;position:fixed;top:80px;left:0;right:0;background:var(--green-dark);padding:16px 24px;flex-direction:column;gap:4px;z-index:99}
+    .mobile-menu.open{display:flex}
+    .mobile-menu a{color:white;padding:10px 12px;border-radius:8px;font-weight:600}
+    .mobile-menu a:hover{background:rgba(255,255,255,.15)}
+
+    /* HERO */
+    #hero{min-height:100vh;background:linear-gradient(160deg,var(--green-dark) 0%,#1a4a1e 40%,var(--brown-dark) 100%);display:flex;align-items:center;padding-top:80px;position:relative;overflow:hidden}
+    .hero-bg-pattern{position:absolute;inset:0;background-image:radial-gradient(circle at 20% 30%,rgba(76,175,80,.12) 0%,transparent 50%),radial-gradient(circle at 80% 70%,rgba(201,168,76,.1) 0%,transparent 50%)}
+    .hero-inner{display:flex;align-items:center;gap:48px;width:100%;max-width:1200px;margin:0 auto;padding:60px 28px;position:relative;z-index:2}
+    .hero-text{flex:1}
+    .hero-text .badge{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.12)}
+    .hero-title{font-size:clamp(2rem,4vw,3.4rem);font-weight:900;color:#fff;line-height:1.25;margin-bottom:1rem}
+    .hero-title span{color:var(--gold-light)}
+    .hero-desc{font-size:1.05rem;color:rgba(255,255,255,.78);line-height:1.8;margin-bottom:2rem}
+    .hero-contact{display:flex;flex-direction:column;gap:10px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:16px;padding:16px 20px;margin-bottom:2rem}
+    .hero-contact-item{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.88);font-size:.92rem}
+    .hero-contact-item svg{width:18px;height:18px;flex-shrink:0;color:var(--gold-light)}
+    .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+    .btn-primary{background:linear-gradient(135deg,var(--gold),#A07830);color:white;padding:14px 30px;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;border:none;transition:all .3s;display:inline-flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,0,0,.25);font-family:"Cairo",sans-serif}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+    .btn-outline{background:transparent;color:white;border:2px solid rgba(255,255,255,.4);padding:13px 28px;border-radius:12px;font-weight:700;font-size:1rem;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;gap:8px;font-family:"Cairo",sans-serif}
+    .btn-outline:hover{border-color:white;background:rgba(255,255,255,.1)}
+    .hero-visual{flex:1;display:flex;justify-content:center}
+    .hero-card-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:380px}
+    .hero-card{border-radius:20px;overflow:hidden;border:1px solid rgba(255,255,255,.15);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:14px;cursor:pointer;transition:transform .3s;aspect-ratio:1}
+    .hero-card:hover{transform:translateY(-4px)}
+    .hero-card-label{background:rgba(0,0,0,.55);backdrop-filter:blur(6px);color:white;font-size:.78rem;font-weight:700;padding:5px 10px;border-radius:20px;text-align:center;width:100%}
+    .hero-card-emoji{font-size:2.8rem;margin-bottom:8px}
+
+    /* STATS */
+    #stats{background:var(--green-dark);padding:60px 0}
+    .stats-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+    .stat-item{text-align:center;padding:32px 20px;border-left:1px solid rgba(255,255,255,.1)}
+    .stat-item:last-child{border-left:none}
+    .stat-num{font-size:clamp(2.5rem,5vw,4rem);font-weight:900;color:var(--gold-light);line-height:1}
+    .stat-label{color:rgba(255,255,255,.8);font-size:.95rem;font-weight:600;margin-top:8px}
+    .stat-icon{font-size:1.6rem;margin-bottom:8px}
+
+    /* PRODUCTS */
+    #products{padding:80px 0;background:var(--cream)}
+    .products-filter{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:2.5rem}
+    .filter-btn{padding:8px 22px;border-radius:50px;border:2px solid var(--brown-light);background:transparent;color:var(--brown-mid);font-family:"Cairo",sans-serif;font-weight:600;font-size:.9rem;cursor:pointer;transition:all .25s}
+    .filter-btn.active,.filter-btn:hover{background:var(--green-mid);color:white;border-color:var(--green-mid)}
+    .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:24px}
+    .product-card{background:var(--white);border-radius:20px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.07);transition:all .35s}
+    .product-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(0,0,0,.13)}
+    .product-img-wrap{height:200px;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative}
+    .product-img-emoji{font-size:6rem;line-height:1}
+    .product-badge-tag{position:absolute;top:12px;right:12px;background:var(--green-mid);color:white;padding:4px 12px;border-radius:20px;font-size:.75rem;font-weight:700}
+    .product-badge-tag.gold{background:linear-gradient(135deg,var(--gold),#A07830)}
+    .product-info{padding:18px}
+    .product-name{font-size:1.05rem;font-weight:800;color:var(--brown-dark);margin-bottom:5px}
+    .product-desc{font-size:.85rem;color:var(--text-light);line-height:1.6;margin-bottom:12px}
+    .product-features{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+    .product-tag{background:var(--green-pale);color:var(--green-dark);border-radius:20px;padding:3px 10px;font-size:.75rem;font-weight:600}
+    .product-footer{display:flex;align-items:center;justify-content:space-between}
+    .product-price{font-size:1rem;font-weight:900;color:var(--green-dark)}
+    .product-order-btn{background:var(--green-mid);color:white;border:none;border-radius:10px;padding:9px 18px;font-family:"Cairo",sans-serif;font-weight:700;font-size:.88rem;cursor:pointer;transition:background .25s}
+    .product-order-btn:hover{background:var(--green-dark)}
+
+    /* ABOUT */
+    #about{padding:80px 0;background:var(--white)}
+    .about-inner{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+    .about-logo-big{width:180px;height:180px;border-radius:50%;background:linear-gradient(135deg,var(--green-dark),var(--green-mid));display:flex;align-items:center;justify-content:center;margin:0 auto 24px;box-shadow:0 20px 60px rgba(27,94,32,.25)}
+    .about-info-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .about-info-card{background:var(--green-pale);border-radius:16px;padding:16px;border-right:3px solid var(--green-mid)}
+    .about-info-card h4{font-size:.8rem;color:var(--text-light);margin-bottom:4px}
+    .about-info-card p{font-size:1.05rem;font-weight:800;color:var(--green-dark)}
+    .about-text h2{font-size:clamp(1.5rem,2.5vw,2rem);font-weight:900;color:var(--brown-dark);margin-bottom:1rem}
+    .about-text p{color:var(--text-light);line-height:1.9;margin-bottom:1rem;font-size:.97rem}
+    .about-highlights{display:flex;flex-direction:column;gap:12px;margin-top:1.5rem}
+    .about-highlight-item{display:flex;align-items:flex-start;gap:14px;background:var(--brown-pale);border-radius:14px;padding:14px 16px}
+    .about-highlight-icon{width:44px;height:44px;border-radius:12px;background:var(--green-mid);color:white;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+    .about-highlight-text h4{font-weight:700;color:var(--brown-dark);font-size:.95rem}
+    .about-highlight-text p{font-size:.82rem;color:var(--text-light);margin-top:2px}
+
+    /* FEATURED */
+    #featured{padding:80px 0;background:var(--brown-pale)}
+    .featured-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:28px}
+    .featured-main{background:linear-gradient(135deg,var(--green-dark),var(--brown-dark));border-radius:24px;padding:44px;color:white;position:relative;overflow:hidden}
+    .featured-main .badge{color:var(--gold-light);border-color:var(--gold);background:rgba(201,168,76,.12)}
+    .featured-main h3{font-size:1.8rem;font-weight:900;margin-bottom:.5rem}
+    .featured-main > p{color:rgba(255,255,255,.75);line-height:1.7;margin-bottom:1.5rem;font-size:.95rem}
+    .featured-points{display:flex;flex-direction:column;gap:10px;margin-bottom:1.5rem}
+    .featured-point{display:flex;align-items:center;gap:10px;font-size:.9rem}
+    .featured-point::before{content:"✓";display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:var(--gold);border-radius:50%;font-size:.7rem;font-weight:900;flex-shrink:0}
+    .featured-side{display:flex;flex-direction:column;gap:20px}
+    .featured-side-card{background:var(--white);border-radius:18px;padding:22px;box-shadow:0 4px 16px rgba(0,0,0,.07);display:flex;gap:16px;align-items:center;transition:transform .3s}
+    .featured-side-card:hover{transform:translateX(-4px)}
+    .featured-side-icon{font-size:2.4rem}
+    .featured-side-text h4{font-weight:800;color:var(--brown-dark);margin-bottom:4px}
+    .featured-side-text p{font-size:.82rem;color:var(--text-light)}
+
+    /* WHY US */
+    #why{padding:80px 0;background:var(--cream)}
+    .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .why-card{background:var(--white);border-radius:20px;padding:32px 24px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.06);transition:all .3s;border-top:4px solid transparent}
+    .why-card:hover{border-top-color:var(--green-mid);transform:translateY(-4px)}
+    .why-icon{width:72px;height:72px;border-radius:20px;background:var(--green-pale);display:flex;align-items:center;justify-content:center;font-size:2rem;margin:0 auto 18px}
+    .why-card h3{font-size:1.05rem;font-weight:800;color:var(--brown-dark);margin-bottom:8px}
+    .why-card p{font-size:.87rem;color:var(--text-light);line-height:1.7}
+
+    /* TESTIMONIALS */
+    #testimonials{padding:80px 0;background:var(--green-dark)}
+    #testimonials .section-title{color:#fff}
+    #testimonials .section-subtitle{color:rgba(255,255,255,.65)}
+    .testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .testimonial-card{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:28px;transition:background .3s}
+    .testimonial-card:hover{background:rgba(255,255,255,.13)}
+    .stars{color:var(--gold-light);font-size:1.1rem;margin-bottom:14px}
+    .testimonial-text{color:rgba(255,255,255,.85);font-size:.92rem;line-height:1.8;margin-bottom:18px}
+    .testimonial-author{display:flex;align-items:center;gap:12px}
+    .author-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--green-mid));display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:white;font-weight:700;flex-shrink:0}
+    .author-name{font-weight:700;color:white;font-size:.92rem}
+    .author-city{font-size:.78rem;color:rgba(255,255,255,.55)}
+
+    /* CTA */
+    #cta{padding:72px 0;background:linear-gradient(135deg,var(--brown-dark) 0%,#5D3A1A 100%)}
+    .cta-inner{text-align:center}
+    .cta-inner h2{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:900;color:white;margin-bottom:.8rem}
+    .cta-inner p{color:rgba(255,255,255,.72);font-size:1rem;margin-bottom:2rem}
+    .cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+    .btn-wa{background:#25D366;color:white;padding:14px 32px;border-radius:12px;font-weight:700;font-size:1rem;display:inline-flex;align-items:center;gap:10px;transition:all .3s}
+    .btn-wa:hover{background:#20BD5A;transform:translateY(-2px)}
+
+    /* CONTACT */
+    #contact{padding:80px 0;background:var(--white)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+    .contact-info h2{font-size:1.8rem;font-weight:900;color:var(--brown-dark);margin-bottom:.8rem}
+    .contact-info > p{color:var(--text-light);line-height:1.8;margin-bottom:2rem}
+    .contact-items{display:flex;flex-direction:column;gap:16px}
+    .contact-item{display:flex;align-items:center;gap:16px;padding:16px;border-radius:14px;background:var(--green-pale);transition:transform .2s}
+    .contact-item:hover{transform:translateX(-4px)}
+    .contact-icon{width:46px;height:46px;border-radius:12px;background:var(--green-mid);color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.3rem}
+    .contact-item-label{font-size:.78rem;color:var(--text-light)}
+    .contact-item-val{font-weight:700;color:var(--green-dark);font-size:1rem}
+    .contact-form{background:var(--brown-pale);border-radius:20px;padding:32px}
+    .contact-form h3{font-size:1.2rem;font-weight:800;color:var(--brown-dark);margin-bottom:1.5rem}
+    .form-group{margin-bottom:16px}
+    .form-group label{display:block;font-size:.88rem;font-weight:600;color:var(--brown-mid);margin-bottom:6px}
+    .form-group input,.form-group textarea,.form-group select{width:100%;padding:12px 14px;border-radius:10px;border:1.5px solid rgba(93,64,55,.2);background:var(--white);font-family:"Cairo",sans-serif;font-size:.93rem;outline:none;transition:border-color .25s}
+    .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--green-mid)}
+    .form-group textarea{height:110px;resize:vertical}
+    .form-submit{width:100%;background:linear-gradient(135deg,var(--green-mid),var(--green-dark));color:white;border:none;padding:14px;border-radius:12px;font-family:"Cairo",sans-serif;font-weight:700;font-size:1rem;cursor:pointer;transition:all .3s}
+    .form-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(27,94,32,.3)}
+
+    /* FOOTER */
+    footer{background:var(--brown-dark);color:white;padding:60px 0 30px}
+    .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px;margin-bottom:48px}
+    .footer-brand h3{font-size:1.3rem;font-weight:900;margin-bottom:6px}
+    .footer-brand p{font-size:.85rem;color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:20px}
+    .social-row{display:flex;gap:10px}
+    .social-btn{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.1);color:white;display:flex;align-items:center;justify-content:center;transition:background .25s;font-size:1.1rem}
+    .social-btn:hover{background:var(--green-mid)}
+    .footer-col h4{font-size:1rem;font-weight:800;margin-bottom:16px;color:var(--gold-light)}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .footer-col ul li a{font-size:.88rem;color:rgba(255,255,255,.65);transition:color .2s}
+    .footer-col ul li a:hover{color:white}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+    .footer-bottom p{font-size:.82rem;color:rgba(255,255,255,.45)}
+    .footer-darrow{font-size:.78rem;color:rgba(255,255,255,.3);display:flex;align-items:center;gap:6px}
+
+    /* WA FLOAT */
+    .wa-float{position:fixed;left:24px;bottom:24px;z-index:999;width:56px;height:56px;border-radius:50%;background:#25D366;color:white;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.45);cursor:pointer;transition:all .3s;animation:bounce-wa 2.5s ease-in-out infinite}
+    .wa-float:hover{transform:scale(1.12);animation:none}
+    @keyframes bounce-wa{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+    /* SCROLL TOP */
+    #scrollTop{position:fixed;right:24px;bottom:24px;z-index:999;width:44px;height:44px;border-radius:50%;background:var(--green-mid);color:white;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .3s;opacity:0;transform:translateY(10px)}
+    #scrollTop.visible{opacity:1;transform:translateY(0)}
+    #scrollTop:hover{background:var(--green-dark)}
+
+    /* ANIMATIONS */
+    .fade-up{opacity:0;transform:translateY(30px);transition:opacity .65s ease,transform .65s ease}
+    .fade-up.visible{opacity:1;transform:translateY(0)}
+
+    @media(max-width:1024px){
+      .hero-inner{flex-direction:column;padding:40px 20px}
+      .about-inner,.contact-grid,.featured-grid{grid-template-columns:1fr;gap:32px}
+      .footer-grid{grid-template-columns:1fr 1fr}
+      .testimonials-grid{grid-template-columns:1fr;gap:14px}
+    }
+    @media(max-width:768px){
+      nav{padding:12px 18px}
+      .nav-links{display:none}
+      .hamburger{display:flex}
+      .why-grid{grid-template-columns:1fr 1fr}
+      .stats-grid{grid-template-columns:1fr}
+      .stat-item{border-left:none;border-top:1px solid rgba(255,255,255,.1)}
+      .footer-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:480px){
+      .why-grid{grid-template-columns:1fr}
+      .products-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="loader-logo">
+    <svg viewBox="0 0 80 80" width="60" height="60" xmlns="http://www.w3.org/2000/svg">
+      <rect x="36" y="34" width="8" height="28" rx="4" fill="#5D4037"/>
+      <ellipse cx="40" cy="22" rx="4" ry="15" fill="#2E7D32" transform="rotate(-18 40 22)"/>
+      <ellipse cx="40" cy="22" rx="4" ry="15" fill="#388E3C" transform="rotate(18 40 22)"/>
+      <ellipse cx="40" cy="24" rx="3.5" ry="13" fill="#66BB6A"/>
+      <circle cx="30" cy="37" r="4" fill="#C9A84C"/>
+      <circle cx="50" cy="35" r="4" fill="#A07830"/>
+      <circle cx="34" cy="33" r="2.5" fill="#F5D78C"/>
+    </svg>
+  </div>
+  <h1 class="loader-title">متجر إبراهيم</h1>
+  <p class="loader-sub">التمور · القهوة · المكسرات</p>
+  <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+</div>
+
+<a href="https://wa.me/966505729680" target="_blank" class="wa-float" aria-label="واتساب">
+  <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<button id="scrollTop" aria-label="للأعلى" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="20" height="20"><path d="M18 15l-6-6-6 6"/></svg>
+</button>
+
+<header id="mainHeader">
+  <nav>
+    <div class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 80 80" width="34" height="34" xmlns="http://www.w3.org/2000/svg">
+          <rect x="36" y="34" width="8" height="28" rx="4" fill="#5D4037"/>
+          <ellipse cx="40" cy="22" rx="4" ry="15" fill="#2E7D32" transform="rotate(-18 40 22)"/>
+          <ellipse cx="40" cy="22" rx="4" ry="15" fill="#388E3C" transform="rotate(18 40 22)"/>
+          <ellipse cx="40" cy="24" rx="3.5" ry="13" fill="#66BB6A"/>
+          <circle cx="30" cy="37" r="4" fill="#C9A84C"/>
+          <circle cx="50" cy="35" r="4" fill="#A07830"/>
+        </svg>
+      </div>
+      <div class="nav-logo-text">
+        <h1>متجر إبراهيم</h1>
+        <p>التمور · القهوة · المكسرات</p>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#hero">الرئيسية</a>
+      <a href="#products">المنتجات</a>
+      <a href="#about">من نحن</a>
+      <a href="#why">لماذا نحن</a>
+      <a href="#testimonials">آراء العملاء</a>
+      <a href="#contact">تواصل</a>
+      <a href="https://wa.me/966505729680" target="_blank" class="nav-cta">اطلب الآن</a>
+    </div>
+    <div class="hamburger" id="hamburgerBtn"><span></span><span></span><span></span></div>
+  </nav>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#hero" onclick="closeMobile()">الرئيسية</a>
+  <a href="#products" onclick="closeMobile()">المنتجات</a>
+  <a href="#about" onclick="closeMobile()">من نحن</a>
+  <a href="#why" onclick="closeMobile()">لماذا نحن</a>
+  <a href="#contact" onclick="closeMobile()">تواصل</a>
+  <a href="https://wa.me/966505729680" target="_blank" style="background:var(--gold);color:white;font-weight:700;border-radius:10px;text-align:center">اطلب الآن</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-inner">
+    <div class="hero-text fade-up">
+      <div class="badge">✨ خبرة 30 سنة في أجود المنتجات</div>
+      <h1 class="hero-title">أصالة نجران<br/><span>في كل منتج</span></h1>
+      <p class="hero-desc">متجر إبراهيم — وجهتك الأولى لأجود تمور نجران الأصيلة وقهوة نواة التمر والمكسرات المختارة. نقدم لكم أفضل ما أنتجته أرض نجران الطيبة بخبرة تمتد لثلاثة عقود.</p>
+      <div class="hero-contact">
+        <div class="hero-contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.18 2 2 0 012.22 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.59 7.53a16 16 0 006.29 6.29l.88-.88a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          <span dir="ltr">0505729680</span>
+        </div>
+        <div class="hero-contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <span>mt-ibrahim123 | ibrahimt123.com</span>
+        </div>
+        <div class="hero-contact-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>نجران، المملكة العربية السعودية</span>
+        </div>
+      </div>
+      <div class="hero-btns">
+        <a href="https://wa.me/966505729680" target="_blank" class="btn-primary">اطلب عبر واتساب</a>
+        <a href="#products" class="btn-outline">تصفح المنتجات</a>
+      </div>
+    </div>
+    <div class="hero-visual fade-up" style="transition-delay:.2s">
+      <div class="hero-card-grid">
+        <div class="hero-card" style="background:linear-gradient(160deg,rgba(93,64,55,.8),rgba(62,39,35,.9))"><div class="hero-card-emoji">🌴</div><div class="hero-card-label">تمور نجران الأصيلة</div></div>
+        <div class="hero-card" style="background:linear-gradient(160deg,rgba(27,94,32,.8),rgba(46,125,50,.9))"><div class="hero-card-emoji">☕</div><div class="hero-card-label">قهوة نواة التمر</div></div>
+        <div class="hero-card" style="background:linear-gradient(160deg,rgba(201,168,76,.7),rgba(160,120,48,.9))"><div class="hero-card-emoji">🌾</div><div class="hero-card-label">قمح بلدي أصيل</div></div>
+        <div class="hero-card" style="background:linear-gradient(160deg,rgba(93,64,55,.7),rgba(141,110,99,.9))"><div class="hero-card-emoji">🫘</div><div class="hero-card-label">مكسرات مختارة</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-item fade-up"><div class="stat-icon">🏆</div><div class="stat-num" data-target="30">0</div><div class="stat-label">سنة خبرة</div></div>
+      <div class="stat-item fade-up" style="transition-delay:.15s"><div class="stat-icon">😊</div><div class="stat-num" data-target="5000">0</div><div class="stat-label">عميل راضٍ</div></div>
+      <div class="stat-item fade-up" style="transition-delay:.3s"><div class="stat-icon">📦</div><div class="stat-num" data-target="15">0</div><div class="stat-label">منتج مميز</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="container">
+    <div class="badge" style="display:block;width:fit-content;margin:0 auto .5rem">🛍️ منتجاتنا المميزة</div>
+    <h2 class="section-title">أجود منتجات نجران</h2>
+    <p class="section-subtitle">مختارة بعناية — من أرض نجران إلى مائدتكم</p>
+    <div class="products-filter">
+      <button class="filter-btn active" onclick="filterProducts('all',this)">الكل</button>
+      <button class="filter-btn" onclick="filterProducts('dates',this)">التمور</button>
+      <button class="filter-btn" onclick="filterProducts('coffee',this)">القهوة</button>
+      <button class="filter-btn" onclick="filterProducts('wheat',this)">الحبوب</button>
+    </div>
+    <div class="products-grid">
+      <div class="product-card" data-cat="dates">
+        <div class="product-img-wrap" style="background:linear-gradient(135deg,#3E2723,#5D4037)"><div class="product-img-emoji">🌴</div><span class="product-badge-tag gold">الأكثر طلباً</span></div>
+        <div class="product-info"><h3 class="product-name">تمر برني نجران الجامبو</h3><p class="product-desc">فخر إنتاج نجران — جودة ملكية. تمر برني أصيل بحجم جامبو، يتميز بلونه الداكن وطعمه الغني.</p><div class="product-features"><span class="product-tag">طبيعي 100%</span><span class="product-tag">جودة ملكية</span><span class="product-tag">نجران الأصيل</span></div><div class="product-footer"><span class="product-price">تواصل للسعر</span><button class="product-order-btn" onclick="orderProduct('تمر برني نجران الجامبو')">اطلب الآن</button></div></div>
+      </div>
+      <div class="product-card" data-cat="dates">
+        <div class="product-img-wrap" style="background:linear-gradient(135deg,#795548,#A1887F)"><div class="product-img-emoji">🍯</div><span class="product-badge-tag">جودة فاخرة</span></div>
+        <div class="product-info"><h3 class="product-name">نخبة تمور نجران الملكية</h3><p class="product-desc">تمر بياض نجران الملكي - درجة أولى فاخر. سعة 500 جرام بتغليف أنيق.</p><div class="product-features"><span class="product-tag">درجة أولى</span><span class="product-tag">500 جرام</span><span class="product-tag">هدية مميزة</span></div><div class="product-footer"><span class="product-price">تواصل للسعر</span><button class="product-order-btn" onclick="orderProduct('نخبة تمور نجران الملكية')">اطلب الآن</button></div></div>
+      </div>
+      <div class="product-card" data-cat="dates">
+        <div class="product-img-wrap" style="background:linear-gradient(135deg,#4E342E,#6D4C41)"><div class="product-img-emoji">🧺</div><span class="product-badge-tag">تشكيلة</span></div>
+        <div class="product-info"><h3 class="product-name">تشكيلة تمور بياض نجران</h3><p class="product-desc">منتجات التمر بياض نجران الفاخرة — فن التحويل التقليدي. صناعات تحويلية أصيلة.</p><div class="product-features"><span class="product-tag">تقليدي أصيل</span><span class="product-tag">طبيعي</span></div><div class="product-footer"><span class="product-price">تواصل للسعر</span><button class="product-order-btn" onclick="orderProduct('تشكيلة تمور بياض نجران')">اطلب الآن</button></div></div>
+      </div>
+      <div class="product-card" data-cat="coffee">
+        <div class="product-img-wrap" style="background:linear-gradient(135deg,#1B5E20,#2E7D32)"><div class="product-img-emoji">☕</div><span class="product-badge-tag">منتج مميز</span></div>
+        <div class="product-info"><h3 class="product-name">قهوة نواة التمر</h3><p class="product-desc">مصنوعة من نواة التمر الخالص — خالية من الكافيين، غنية بالمعادن. بديل صحي لذيذ.</p><div class="product-features"><span class="product-tag">بدون كافيين</span><span class="product-tag">غني بالمعادن</span><span class="product-tag">بديل صحي</span></div><div class="product-footer"><span class="product-price">تواصل للسعر</span><button class="product-order-btn" onclick="orderProduct('قهوة نواة التمر')">اطلب الآن</button></div></div>
+      </div>
+      <div class="product-card" data-cat="wheat">
+        <div class="product-img-wrap" style="background:linear-gradient(135deg,#8D6E63,#A1887F)"><div class="product-img-emoji">🌾</div><span class="product-badge-tag">طازج</span></div>
+        <div class="product-info"><h3 class="product-name">قمح بلدي أصيل</h3><p class="product-desc">قمح نجراني بلدي طبيعي — غني بالألياف الطبيعية. جودة نجرانية أصيلة 100%.</p><div class="product-features"><span class="product-tag">طبيعي</span><span class="product-tag">غني بالألياف</span><span class="product-tag">جودة نجرانية</span></div><div class="product-footer"><span class="product-price">تواصل للسعر</span><button class="product-order-btn" onclick="orderProduct('قمح بلدي أصيل')">اطلب الآن</button></div></div>
+      </div>
+      <div class="product-card" data-cat="coffee">
+        <div class="product-img-wrap" style="background:linear-gradient(135deg,#4E342E,#795548)"><div class="product-img-emoji">🫘</div><span class="product-badge-tag">مختار</span></div>
+        <div class="product-info"><h3 class="product-name">مكسرات نجران المختارة</h3><p class="product-desc">تشكيلة من أجود المكسرات النجرانية المختارة بعناية، محمصة بأعلى معايير الجودة.</p><div class="product-features"><span class="product-tag">محمصة طازجة</span><span class="product-tag">اختيار فاخر</span></div><div class="product-footer"><span class="product-price">تواصل للسعر</span><button class="product-order-btn" onclick="orderProduct('مكسرات نجران المختارة')">اطلب الآن</button></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED -->
+<section id="featured">
+  <div class="container">
+    <div class="badge" style="display:block;width:fit-content;margin:0 auto .5rem">⭐ منتجنا المميز</div>
+    <h2 class="section-title">قهوة نواة التمر</h2>
+    <p class="section-subtitle">ابتكار نجراني أصيل — طعم مميز وفوائد صحية</p>
+    <div class="featured-grid fade-up">
+      <div class="featured-main">
+        <div class="badge">☕ من منتجات متجر إبراهيم</div>
+        <h3>قهوة نواة التمر الأصيلة</h3>
+        <p>مصنوعة بالكامل من نواة التمر النجراني الطبيعي — خالية من الكافيين، غنية بالمعادن والألياف. بديل صحي رائع للقهوة التقليدية بطعم دافئ ومميز يذكرك بأصالة الضيافة العربية.</p>
+        <div class="featured-points">
+          <div class="featured-point">مصنوعة من نواة التمر الخالص</div>
+          <div class="featured-point">خالية من الكافيين تماماً</div>
+          <div class="featured-point">غنية بالألياف والمعادن الطبيعية</div>
+          <div class="featured-point">بديل صحي ممتاز للقهوة</div>
+          <div class="featured-point">طعم فريد — أصالة الضيافة</div>
+        </div>
+        <a href="https://wa.me/966505729680" target="_blank" class="btn-primary" style="display:inline-flex">اطلب الآن</a>
+      </div>
+      <div class="featured-side">
+        <div class="featured-side-card"><div class="featured-side-icon">🌴</div><div class="featured-side-text"><h4>تمر برني نجران الجامبو</h4><p>فخر إنتاج نجران — جودة ملكية</p></div></div>
+        <div class="featured-side-card"><div class="featured-side-icon">🍯</div><div class="featured-side-text"><h4>تمر بياض نجران الفاخر</h4><p>نخبة التمور الملكية — درجة أولى</p></div></div>
+        <div class="featured-side-card"><div class="featured-side-icon">🌾</div><div class="featured-side-text"><h4>قمح بلدي أصيل</h4><p>طبيعي غني بالألياف — جودة نجرانية</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-visual fade-up">
+        <div class="about-logo-big">
+          <svg viewBox="0 0 100 100" width="110" height="110" xmlns="http://www.w3.org/2000/svg">
+            <rect x="46" y="42" width="8" height="34" rx="4" fill="#EFEBE9"/>
+            <ellipse cx="50" cy="28" rx="5" ry="18" fill="#A5D6A7" transform="rotate(-18 50 28)"/>
+            <ellipse cx="50" cy="28" rx="5" ry="18" fill="#81C784" transform="rotate(18 50 28)"/>
+            <ellipse cx="50" cy="30" rx="4" ry="16" fill="#C8E6C9"/>
+            <circle cx="38" cy="48" r="5" fill="#F5D78C"/>
+            <circle cx="62" cy="46" r="5" fill="#C9A84C"/>
+          </svg>
+        </div>
+        <div class="about-info-cards">
+          <div class="about-info-card"><h4>التأسيس</h4><p>منذ 30 سنة</p></div>
+          <div class="about-info-card"><h4>الموقع</h4><p>نجران</p></div>
+          <div class="about-info-card"><h4>العملاء</h4><p>+5000</p></div>
+          <div class="about-info-card"><h4>المنتجات</h4><p>+15 منتج</p></div>
+        </div>
+      </div>
+      <div class="about-text fade-up" style="transition-delay:.2s">
+        <div class="badge">🏡 قصتنا</div>
+        <h2>متجر إبراهيم — أصالة الضيافة</h2>
+        <p>منذ أكثر من ثلاثين عاماً، نحمل راية الأصالة النجرانية في كل ما نقدمه. متجر إبراهيم ليس مجرد متجر، بل هو إرث عائلي يتوارث الشغف بتقديم أجود منتجات أرض نجران الطيبة.</p>
+        <p>نتخصص في التمور النجرانية الأصيلة بأنواعها المتعددة، وقهوة نواة التمر المبتكرة، والحبوب الطبيعية والمكسرات المختارة، كل ذلك بمعايير جودة لا نتنازل عنها.</p>
+        <div class="about-highlights">
+          <div class="about-highlight-item"><div class="about-highlight-icon">🌱</div><div class="about-highlight-text"><h4>منتجات طبيعية 100%</h4><p>لا إضافات صناعية — من المزرعة مباشرة إلى مائدتكم</p></div></div>
+          <div class="about-highlight-item"><div class="about-highlight-icon">🚚</div><div class="about-highlight-text"><h4>توصيل لجميع مناطق المملكة</h4><p>نوصل منتجاتنا لجميع مدن المملكة العربية السعودية</p></div></div>
+          <div class="about-highlight-item"><div class="about-highlight-icon">✅</div><div class="about-highlight-text"><h4>ضمان الجودة والرضا</h4><p>رضاكم التام هو أولويتنا — نضمن جودة كل منتج</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="container">
+    <div class="badge" style="display:block;width:fit-content;margin:0 auto .5rem">💚 لماذا نحن</div>
+    <h2 class="section-title">لماذا تختار متجر إبراهيم؟</h2>
+    <p class="section-subtitle">نقدم أكثر من مجرد منتج — نقدم تجربة أصيلة</p>
+    <div class="why-grid">
+      <div class="why-card fade-up"><div class="why-icon">🏆</div><h3>30 سنة خبرة</h3><p>ثلاثة عقود من الخبرة في انتقاء وتقديم أجود منتجات نجران الأصيلة</p></div>
+      <div class="why-card fade-up" style="transition-delay:.1s"><div class="why-icon">🌿</div><h3>طبيعي 100%</h3><p>جميع منتجاتنا طبيعية خالصة بدون أي إضافات أو مواد حافظة</p></div>
+      <div class="why-card fade-up" style="transition-delay:.2s"><div class="why-icon">💰</div><h3>أسعار تنافسية</h3><p>أفضل جودة بأسعار منافسة — الجودة يجب أن تكون في متناول الجميع</p></div>
+      <div class="why-card fade-up" style="transition-delay:.3s"><div class="why-icon">🚀</div><h3>توصيل سريع</h3><p>نوصل طلباتكم بسرعة وأمان لجميع مناطق المملكة</p></div>
+      <div class="why-card fade-up" style="transition-delay:.4s"><div class="why-icon">🤝</div><h3>خدمة متميزة</h3><p>فريق خدمة العملاء متاح لمساعدتكم والإجابة على جميع استفساراتكم</p></div>
+      <div class="why-card fade-up" style="transition-delay:.5s"><div class="why-icon">🎁</div><h3>هدايا مميزة</h3><p>تشكيلة هدايا فاخرة من تمور نجران — خيار مثالي لكل المناسبات</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="container">
+    <div class="badge" style="display:block;width:fit-content;margin:0 auto .5rem;border-color:var(--gold);color:var(--gold-light);background:rgba(201,168,76,.12)">💬 آراء عملائنا</div>
+    <h2 class="section-title">ماذا يقول عملاؤنا</h2>
+    <p class="section-subtitle">رضاهم شهادتنا — آلاف العملاء وثقوا بنا</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card fade-up"><div class="stars">★★★★★</div><p class="testimonial-text">"والله ما شفت تمور زي تمور متجر إبراهيم. التمر برني الجامبو أفضل من كل اللي جربته. التوصيل سريع والتغليف ممتاز."</p><div class="testimonial-author"><div class="author-avatar">م</div><div><div class="author-name">محمد العمري</div><div class="author-city">الرياض</div></div></div></div>
+      <div class="testimonial-card fade-up" style="transition-delay:.15s"><div class="stars">★★★★★</div><p class="testimonial-text">"قهوة نواة التمر شيء غير! ما توقعت تكون بهالطعم. اشتريتها للفضول وبقيت أطلب منها كل شهر. منتج رائع ومميز جداً."</p><div class="testimonial-author"><div class="author-avatar">ن</div><div><div class="author-name">نورة السعدي</div><div class="author-city">جدة</div></div></div></div>
+      <div class="testimonial-card fade-up" style="transition-delay:.3s"><div class="stars">★★★★★</div><p class="testimonial-text">"اشتريت هدايا نهاية السنة للعمل من متجر إبراهيم. الكل انبسط وسألوني من وين. الجودة عالية والسعر معقول."</p><div class="testimonial-author"><div class="author-avatar">ع</div><div><div class="author-name">عبدالله القحطاني</div><div class="author-city">نجران</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="container">
+    <div class="cta-inner fade-up">
+      <div class="badge" style="border-color:var(--gold-light);color:var(--gold-light);background:rgba(201,168,76,.1)">📞 تواصل معنا</div>
+      <h2>اطلب منتجاتك الآن<br/>وتذوق أصالة نجران</h2>
+      <p>شحن سريع لجميع مناطق المملكة · منتجات طبيعية 100% · جودة مضمونة</p>
+      <div class="cta-btns">
+        <a href="https://wa.me/966505729680" target="_blank" class="btn-wa">واتساب: 0505729680</a>
+        <a href="tel:0505729680" class="btn-outline" style="color:white;border-color:rgba(255,255,255,.3)">اتصل الآن</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="badge" style="display:block;width:fit-content;margin:0 auto .5rem">📬 تواصل معنا</div>
+    <h2 class="section-title">نحن هنا لخدمتكم</h2>
+    <p class="section-subtitle">تواصلوا معنا لأي استفسار أو طلب</p>
+    <div class="contact-grid">
+      <div class="contact-info fade-up">
+        <h2>متجر إبراهيم</h2>
+        <p>نسعد بخدمتكم والإجابة على جميع استفساراتكم حول منتجاتنا من تمور نجران الأصيلة وقهوة نواة التمر.</p>
+        <div class="contact-items">
+          <a href="tel:0505729680" class="contact-item"><div class="contact-icon">📞</div><div><div class="contact-item-label">الهاتف / واتساب</div><div class="contact-item-val" dir="ltr">0505729680</div></div></a>
+          <a href="https://www.snapchat.com/add/mt-ibrahim123" target="_blank" class="contact-item"><div class="contact-icon">👻</div><div><div class="contact-item-label">سناب شات</div><div class="contact-item-val">mt-ibrahim123</div></div></a>
+          <a href="https://ibrahimt123.com" target="_blank" class="contact-item"><div class="contact-icon">🌐</div><div><div class="contact-item-label">الموقع الإلكتروني</div><div class="contact-item-val">ibrahimt123.com</div></div></a>
+          <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-item-label">الموقع</div><div class="contact-item-val">نجران، المملكة العربية السعودية</div></div></div>
+        </div>
+      </div>
+      <div class="contact-form fade-up" style="transition-delay:.2s">
+        <h3>أرسل استفساراتك</h3>
+        <div class="form-group"><label>الاسم الكريم</label><input type="text" placeholder="أدخل اسمك" id="contactName"/></div>
+        <div class="form-group"><label>رقم الجوال</label><input type="tel" placeholder="05XXXXXXXX" id="contactPhone" dir="ltr"/></div>
+        <div class="form-group"><label>المنتج المطلوب</label><select id="contactProduct"><option value="">-- اختر المنتج --</option><option>تمر برني نجران الجامبو</option><option>نخبة تمور نجران الملكية</option><option>تشكيلة تمور بياض نجران</option><option>قهوة نواة التمر</option><option>قمح بلدي أصيل</option><option>مكسرات نجران المختارة</option><option>أخرى</option></select></div>
+        <div class="form-group"><label>رسالتك</label><textarea placeholder="اكتب استفسارك أو طلبك هنا..." id="contactMsg"></textarea></div>
+        <button class="form-submit" onclick="sendWhatsapp()">إرسال عبر واتساب ⚡</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>متجر إبراهيم 🌴</h3>
+        <p>التمور والقهوة والمكسرات<br/>أصالة نجران منذ أكثر من 30 سنة</p>
+        <div class="social-row">
+          <a href="https://wa.me/966505729680" target="_blank" class="social-btn">💬</a>
+          <a href="https://www.snapchat.com/add/mt-ibrahim123" target="_blank" class="social-btn">👻</a>
+          <a href="https://ibrahimt123.com" target="_blank" class="social-btn">🌐</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>روابط سريعة</h4>
+        <ul>
+          <li><a href="#hero">الرئيسية</a></li>
+          <li><a href="#products">المنتجات</a></li>
+          <li><a href="#about">من نحن</a></li>
+          <li><a href="#why">لماذا نحن</a></li>
+          <li><a href="#testimonials">آراء العملاء</a></li>
+          <li><a href="#contact">تواصل</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>منتجاتنا</h4>
+        <ul>
+          <li><a href="#products">تمر برني نجران الجامبو</a></li>
+          <li><a href="#products">تمور بياض نجران</a></li>
+          <li><a href="#products">قهوة نواة التمر</a></li>
+          <li><a href="#products">قمح بلدي أصيل</a></li>
+          <li><a href="#products">مكسرات مختارة</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 متجر إبراهيم — جميع الحقوق محفوظة · نجران، المملكة العربية السعودية</p>
+      <div class="footer-darrow"><span>تصميم بواسطة</span><a href="https://d-arrow.com" target="_blank" style="color:rgba(255,255,255,.5);font-weight:700">دي آرو للتسويق الرقمي</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('load',()=>{setTimeout(()=>{document.getElementById('loader').classList.add('hidden')},2200)});
+window.addEventListener('scroll',()=>{const h=document.getElementById('mainHeader');const s=document.getElementById('scrollTop');if(window.scrollY>60){h.classList.add('scrolled');s.classList.add('visible')}else{h.classList.remove('scrolled');s.classList.remove('visible')}});
+document.getElementById('hamburgerBtn').addEventListener('click',()=>{document.getElementById('mobileMenu').classList.toggle('open')});
+function closeMobile(){document.getElementById('mobileMenu').classList.remove('open')}
+function filterProducts(cat,btn){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.product-card').forEach(card=>{if(cat==='all'||card.dataset.cat===cat){card.style.display='block';card.style.opacity='0';card.style.transform='scale(0.95)';setTimeout(()=>{card.style.transition='all 0.3s';card.style.opacity='1';card.style.transform='scale(1)'},50)}else{card.style.display='none'}})}
+function orderProduct(name){const msg=encodeURIComponent('السلام عليكم، أريد الاستفسار عن: '+name);window.open('https://wa.me/966505729680?text='+msg,'_blank')}
+function sendWhatsapp(){const name=document.getElementById('contactName').value.trim();const phone=document.getElementById('contactPhone').value.trim();const product=document.getElementById('contactProduct').value;const msg=document.getElementById('contactMsg').value.trim();if(!name){alert('الرجاء إدخال اسمك');return}const text='السلام عليكم 🌴\n*متجر إبراهيم*\n\nالاسم: '+name+'\nالجوال: '+(phone||'غير محدد')+'\nالمنتج: '+(product||'غير محدد')+'\nالرسالة: '+(msg||'لا توجد رسالة');window.open('https://wa.me/966505729680?text='+encodeURIComponent(text),'_blank')}
+const observer=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('visible')})},{threshold:0.1});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+function animateCounter(el,target){let s=0;const step=target/(2000/16);const t=setInterval(()=>{s+=step;if(s>=target){s=target;clearInterval(t)}el.textContent=Math.floor(s).toLocaleString('ar')+'+'},16)}
+const so=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.querySelectorAll('[data-target]').forEach(el=>animateCounter(el,parseInt(el.dataset.target)));so.unobserve(entry.target)}})},{threshold:0.3});
+const ss=document.getElementById('stats');if(ss)so.observe(ss);
+</script>
+</body>
+</html>

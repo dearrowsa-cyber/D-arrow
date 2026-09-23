@@ -32,11 +32,29 @@ interface ClientLayoutProps {
 
 export default function ClientLayout({ children }: ClientLayoutProps) {
   const pathname = usePathname();
-  const isStandaloneDemo = pathname?.startsWith('/demo/store') || pathname?.startsWith('/demo/real-estate') || pathname?.startsWith('/sara');
+  const isIbrahimStore = pathname?.startsWith('/demo/ibrahim-store');
+  const isStandaloneDemo = pathname?.startsWith('/demo/store') || pathname?.startsWith('/demo/real-estate') || pathname?.startsWith('/sara') || isIbrahimStore;
 
   const [showLoadingScreen, setShowLoadingScreen] = useState(!isStandaloneDemo);
   const [showChatBot, setShowChatBot] = useState(false);
   const { lang } = useLanguage();
+
+  // Reset HTML/body background for Ibrahim Store (Light Luxury theme)
+  useEffect(() => {
+    if (isIbrahimStore) {
+      const origHtmlBg = document.documentElement.style.backgroundColor;
+      const origBodyBg = document.body.style.backgroundColor;
+      const origScheme = document.documentElement.style.colorScheme;
+      document.documentElement.style.backgroundColor = '#FAF8F5';
+      document.body.style.backgroundColor = '#FAF8F5';
+      document.documentElement.style.colorScheme = 'light';
+      return () => {
+        document.documentElement.style.backgroundColor = origHtmlBg;
+        document.body.style.backgroundColor = origBodyBg;
+        document.documentElement.style.colorScheme = origScheme;
+      };
+    }
+  }, [isIbrahimStore]);
 
   // Hide loading screen after minimum delay (reduced for much faster FCP)
   useEffect(() => {
@@ -102,7 +120,13 @@ export default function ClientLayout({ children }: ClientLayoutProps) {
       </AnimatePresence>
 
       {!isStandaloneDemo && <NetworkBackground />}
-      <div className={`w-full overflow-x-clip relative z-10 ${isStandaloneDemo ? 'bg-transparent text-slate-900' : 'bg-[#070913] text-white grid-background'} min-h-screen min-h-[100dvh]`}>
+      <div className={`w-full overflow-x-clip relative z-10 ${
+        isIbrahimStore 
+          ? 'bg-[#FAF8F5] text-[#1C1917]' 
+          : isStandaloneDemo 
+            ? 'bg-transparent text-slate-900' 
+            : 'bg-[#070913] text-white grid-background'
+      } min-h-screen min-h-[100dvh]`}>
         {!isStandaloneDemo && <Header />}
         <main className={!isStandaloneDemo ? "" : "w-full min-h-screen p-0 m-0"}>
           {children}
