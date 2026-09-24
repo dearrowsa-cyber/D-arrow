@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import prisma from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
@@ -46,26 +47,53 @@ function normalizeSlug(input: string): string {
     .replace(/^-|-$/g, '');
 }
 
+const VALID_STATUSES = ['published', 'draft'] as const;
+
+const validStatus = (status: unknown): boolean =>
+  typeof status === 'string' && (VALID_STATUSES as readonly string[]).includes(status);
+
 // Add a new blog post
 export async function POST(req: NextRequest) {
   try {
     const newPost = await req.json();
 
-    const hasTitle = newPost.title || newPost.titleAr;
-    const hasContent = newPost.content || newPost.contentAr;
+    const hasTitle = typeof newPost.title === 'string' && newPost.title.trim()
+      || typeof newPost.titleAr === 'string' && newPost.titleAr.trim();
+    const hasContent = typeof newPost.content === 'string' && newPost.content.trim()
+      || typeof newPost.contentAr === 'string' && newPost.contentAr.trim();
 
     if (!hasTitle || !hasContent) {
       return NextResponse.json({
         success: false,
-        error: 'Missing required fields: title or titleAr, and content or contentAr',
+        error: !hasTitle
+          ? 'العنوان مطلوب (بالعربية أو بالإنجليزية)'
+          : 'المحتوى مطلوب (بالعربية أو بالإنجليزية)',
       }, { status: 400 });
+    }
+
+    if (newPost.status !== undefined && !validStatus(newPost.status)) {
+      return NextResponse.json({
+        success: false,
+        error: 'الحالة غير صالحة — يجب أن تكون "published" أو "draft"',
+      }, { status: 400 });
+    }
+
+    const slug = newPost.slug ? normalizeSlug(String(newPost.slug)) : null;
+    if (slug) {
+      const existingSlug = await prisma.blogPost.findUnique({ where: { slug } });
+      if (existingSlug) {
+        return NextResponse.json({
+          success: false,
+          error: 'الرابط (Slug) مستخدم بالفعل — اختر رابطاً آخر',
+        }, { status: 409 });
+      }
     }
 
     const post = await prisma.blogPost.create({
       data: {
         title: newPost.title || '',
         titleAr: newPost.titleAr || '',
-        slug: newPost.slug ? normalizeSlug(newPost.slug) : null,
+        slug,
         content: newPost.content || '',
         contentAr: newPost.contentAr || '',
         excerpt: newPost.excerpt || (newPost.content ? newPost.content.substring(0, 150) : ''),
@@ -85,6 +113,8 @@ export async function POST(req: NextRequest) {
         gatedContentAr: newPost.gatedContentAr || null,
       }
     });
+
+    revalidateTag('blog-posts', { expire: 0 });
 
     return NextResponse.json({
       success: true,
@@ -117,20 +147,72 @@ export async function PUT(req: NextRequest) {
     // Remove id from updates object as it shouldn't be updated
     const { id, createdAt, updatedAt, ...updateData } = updates;
 
+    const hasTitleUpdate =
+      'title' in updateData || 'titleAr' in updateData;
+    const hasContentUpdate =
+      'content' in updateData || 'contentAr' in updateData;
+
+    if (hasTitleUpdate &&
+      !(typeof updateData.title === 'string' && updateData.title.trim()) &&
+      !(typeof updateData.titleAr === 'string' && updateData.titleAr.trim())) {
+      return NextResponse.json({
+        success: false,
+        error: 'العنوان مطلوب (بالعربية أو بالإنجليزية)',
+      }, { status: 400 });
+    }
+
+    if (hasContentUpdate &&
+      !(typeof updateData.content === 'string' && updateData.content.trim()) &&
+      !(typeof updateData.contentAr === 'string' && updateData.contentAr.trim())) {
+      return NextResponse.json({
+        success: false,
+        error: 'المحتوى مطلوب (بالعربية أو بالإنجليزية)',
+      }, { status: 400 });
+    }
+
+    if (updateData.status !== undefined && !validStatus(updateData.status)) {
+      return NextResponse.json({
+        success: false,
+        error: 'الحالة غير صالحة — يجب أن تكون "published" أو "draft"',
+      }, { status: 400 });
+    }
+
+    const existing = await prisma.blogPost.findUnique({ where: { id } });
+    if (!existing) {
+      return NextResponse.json({
+        success: false,
+        error: 'المقال غير موجود',
+      }, { status: 404 });
+    }
+
     // Serialize tags array to JSON string if present
     if (updateData.tags && Array.isArray(updateData.tags)) {
       updateData.tags = JSON.stringify(updateData.tags);
     }
 
     // Normalize slug if present
-    if (updateData.slug) {
-      updateData.slug = normalizeSlug(updateData.slug);
+    if ('slug' in updateData) {
+      const normalized = updateData.slug
+        ? normalizeSlug(String(updateData.slug))
+        : null;
+      if (normalized && normalized !== existing.slug) {
+        const duplicate = await prisma.blogPost.findUnique({ where: { slug: normalized } });
+        if (duplicate) {
+          return NextResponse.json({
+            success: false,
+            error: 'الرابط (Slug) مستخدم بالفعل — اختر رابطاً آخر',
+          }, { status: 409 });
+        }
+      }
+      updateData.slug = normalized;
     }
 
     const post = await prisma.blogPost.update({
-      where: { id: updates.id },
+      where: { id },
       data: updateData,
     });
+
+    revalidateTag('blog-posts', { expire: 0 });
 
     return NextResponse.json({
       success: true,
@@ -154,9 +236,16 @@ export async function DELETE(req: NextRequest) {
       return NextResponse.json({ success: false, error: 'Missing post ID' }, { status: 400 });
     }
 
+    const existing = await prisma.blogPost.findUnique({ where: { id } });
+    if (!existing) {
+      return NextResponse.json({ success: false, error: 'المقال غير موجود' }, { status: 404 });
+    }
+
     await prisma.blogPost.delete({
       where: { id },
     });
+
+    revalidateTag('blog-posts', { expire: 0 });
 
     return NextResponse.json({
       success: true,

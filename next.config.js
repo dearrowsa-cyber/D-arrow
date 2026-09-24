@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export',
   trailingSlash: true,
 
 
@@ -15,7 +14,6 @@ const nextConfig = {
 
   serverExternalPackages: ['@prisma/client', 'prisma'],
 
-  // redirects() not supported with output: 'export'
   // async redirects() { ... },
 
   images: {
@@ -52,7 +50,6 @@ const nextConfig = {
     dangerouslyAllowSVG: true,
   },
 
-  // headers() not supported with output: 'export'
   // async headers() { ... },
 };
 

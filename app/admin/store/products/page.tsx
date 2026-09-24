@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "@util/link";
 import {
   Plus,
@@ -12,47 +12,17 @@ import {
   ExternalLink,
 } from "lucide-react";
 import Image from "next/image";
-
-interface Product {
-  id: string;
-  name: string;
-  nameAr?: string;
-  slug: string;
-  category: string;
-  categoryAr?: string;
-  price: number;
-  salePrice?: number;
-  type: string;
-  status: string;
-  images: string;
-  demoUrl?: string;
-  reviews?: { rating: number }[];
-  _count?: { reviews: number; orderItems: number };
-}
+import { useAdminProducts } from "@/features/store/admin-hooks";
 
 export default function AdminProductsPage() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
   const [seeding, setSeeding] = useState(false);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(
     null,
   );
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  const fetchProducts = async () => {
-    try {
-      const res = await fetch("/api/store/products");
-      const data = await res.json();
-      if (data.success) setProducts(data.products || []);
-    } catch {
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { products, loading, refetch, deleteProduct, updateProductStatus } =
+    useAdminProducts();
 
   const handleSeedTemplate = async () => {
     setSeeding(true);
@@ -63,7 +33,7 @@ export default function AdminProductsPage() {
       const data = await res.json();
       if (data.success) {
         showToast(data.message || "تم إدراج قالب المتجر بنجاح", "success");
-        fetchProducts();
+        refetch();
       } else {
         showToast(data.error || "حدث خطأ أثناء الإدراج", "error");
       }
@@ -76,19 +46,11 @@ export default function AdminProductsPage() {
 
   const handleDelete = async () => {
     if (!deleteId) return;
-    try {
-      const res = await fetch(`/api/store/products/${deleteId}`, {
-        method: "DELETE",
-      });
-      const data = await res.json();
-      if (data.success) {
-        setProducts((prev) => prev.filter((p) => p.id !== deleteId));
-        showToast("تم حذف المنتج", "success");
-      } else {
-        showToast(data.error || "فشل الحذف", "error");
-      }
-    } catch {
-      showToast("حدث خطأ", "error");
+    const success = await deleteProduct(deleteId);
+    if (success) {
+      showToast("تم حذف المنتج", "success");
+    } else {
+      showToast("فشل حذف المنتج", "error");
     }
     setDeleteId(null);
   };
@@ -227,7 +189,8 @@ export default function AdminProductsPage() {
             </p>
           </div>
         ) : (
-          <table className="admin-table">
+          <div className="admin-table-wrap">
+            <table className="admin-table">
             <thead>
               <tr>
                 <th>المنتج</th>
@@ -302,7 +265,7 @@ export default function AdminProductsPage() {
                       </div>
                     </td>
                     <td>{product.categoryAr || product.category}</td>
-                    <td>{formatPrice(product.price, product.salePrice)}</td>
+                    <td>{formatPrice(product.price, product.salePrice ?? undefined)}</td>
                     <td>
                       <span className="admin-badge admin-badge-info">
                         {product.type === "digital"
@@ -354,6 +317,30 @@ export default function AdminProductsPage() {
                             <ExternalLink size={14} />
                           </a>
                         )}
+                        {product.status === "draft" && (
+                          <button
+                            className="admin-btn admin-btn-sm"
+                            style={{
+                              background: "rgba(16,185,129,0.1)",
+                              color: "#10B981",
+                              border: "1px solid rgba(16,185,129,0.2)",
+                            }}
+                            onClick={async () => {
+                              const success = await updateProductStatus(
+                                product.id,
+                                "published",
+                              );
+                              if (success) {
+                                showToast("تم نشر المنتج بنجاح", "success");
+                              } else {
+                                showToast("حدث خطأ أثناء النشر", "error");
+                              }
+                            }}
+                            title="نشر الآن"
+                          >
+                            نشر
+                          </button>
+                        )}
                         <Link
                           href={`/admin/store/products/${product.id}`}
                           className="admin-btn admin-btn-ghost admin-btn-sm"
@@ -374,6 +361,7 @@ export default function AdminProductsPage() {
               })}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>

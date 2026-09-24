@@ -166,6 +166,29 @@ model CapturedLead {
   createdAt   DateTime @default(now())
 }
 
+model PricingPlan {
+  id            String   @id @default(cuid())
+  nameAr        String
+  nameEn        String
+  audienceAr    String
+  audienceEn    String
+  priceRange    String
+  priceUnitAr   String   @default("ر.س / شهرياً")
+  priceUnitEn   String   @default("SAR / month")
+  noteAr        String?
+  noteEn        String?
+  featured      Boolean  @default(false)
+  badgeAr       String?
+  badgeEn       String?
+  features      String   // JSON array of {ar, en} objects
+  ctaAr         String   @default("ابدأ الآن")
+  ctaEn         String   @default("Get Started")
+  status        String   @default("published") // published, draft
+  sortOrder     Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
 // =============================================
 // E-COMMERCE STORE MODELS
 // =============================================

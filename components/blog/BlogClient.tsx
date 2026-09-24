@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useLanguage } from "@/components/LanguageProvider";
+import { useBlogPosts } from "@/features/blog/hooks";
+import type { BlogPost } from "@/features/blog/data";
 import Link from "@util/link";
-import { useSearchParams } from "next/navigation";
 import {
   Search,
   Share2,
@@ -19,87 +19,27 @@ import {
   ArrowRight,
 } from "lucide-react";
 
-interface BlogPost {
-  id: string;
-  title: string;
-  titleAr?: string;
-  content: string;
-  contentAr?: string;
-  excerpt: string;
-  excerptAr?: string;
-  author: string;
-  date: string;
-  time: string;
-  category: string;
-  categoryAr?: string;
-  imageUrl?: string;
-  readTime: number;
-  tags?: string[];
-}
-
 interface BlogClientProps {
   initialPosts: BlogPost[];
 }
 
 export default function BlogClient({ initialPosts }: BlogClientProps) {
-  const { lang, t } = useLanguage();
-  const searchParams = useSearchParams();
-  const tagFromUrl = searchParams.get("tag");
-
-  const [posts] = useState<BlogPost[]>(initialPosts);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
-  const [selectedTag, setSelectedTag] = useState<string | null>(tagFromUrl);
-  const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
-
-  useEffect(() => {
-    setSelectedTag(tagFromUrl);
-  }, [tagFromUrl]);
-
-  const handleImageError = (postId: string) => {
-    setFailedImages((prev) => ({ ...prev, [postId]: true }));
-  };
-
-  const categories = ["all", ...new Set(posts.map((post) => post.category))];
-  const allTags = Array.from(new Set(posts.flatMap((p) => p.tags || [])));
-
-  const filteredPosts = posts.filter((post) => {
-    const matchCategory =
-      selectedCategory === "all" || post.category === selectedCategory;
-    const matchTag =
-      !selectedTag || (post.tags && post.tags.includes(selectedTag));
-    return matchCategory && matchTag;
-  });
-
-  const formatDate = (dateStr: string) => {
-    if (!dateStr) return "";
-    const parts = dateStr.split("T")[0].split("-").map(Number);
-    if (parts.length !== 3 || parts.some(isNaN)) return dateStr;
-    const options: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      calendar: "gregory",
-    };
-    try {
-      const d = new Date(parts[0], parts[1] - 1, parts[2]);
-      if (isNaN(d.getTime())) return dateStr;
-      return d.toLocaleDateString(lang === "ar" ? "ar-EG" : "en-US", options);
-    } catch {
-      return dateStr;
-    }
-  };
-
-  const stripHtml = (html: string) => {
-    if (!html) return "";
-    return html.replace(/<[^>]*>?/gm, "");
-  };
-
-  const getDisplayText = (
-    enText: string | undefined,
-    arText: string | undefined,
-  ) => {
-    return lang === "ar" ? arText || enText || "" : enText || arText || "";
-  };
+  const { t } = useLanguage();
+  const {
+    categories,
+    failedImages,
+    filteredPosts,
+    formatDate,
+    getDisplayText,
+    getPostHref,
+    handleImageError,
+    lang,
+    selectedCategory,
+    selectedTag,
+    setSelectedCategory,
+    setSelectedTag,
+    stripHtml,
+  } = useBlogPosts(initialPosts);
 
   const getCategoryIcon = (category: string) => {
     const c = category.toLowerCase();
@@ -137,7 +77,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
             <span className="px-4 py-1.5 bg-[#FF4D6D]/20 text-[#FF4D6D] font-bold rounded-full border border-[#FF4D6D]/40 flex items-center gap-2">
               #{selectedTag}
               <button
-                onClick={() => setSelectedTag(null)}
+                onClick={() => setSelectedTag()}
                 className="hover:text-white"
               >
                 ×
@@ -168,17 +108,6 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
           {filteredPosts.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredPosts.map((post) => {
-                let targetSlug = (post as any).slug || post.id;
-                if (
-                  typeof targetSlug === "string" &&
-                  (targetSlug.startsWith("http://") ||
-                    targetSlug.startsWith("https://"))
-                ) {
-                  targetSlug =
-                    targetSlug.split("/blog/").pop() ||
-                    targetSlug.split("/").pop() ||
-                    post.id;
-                }
                 return (
                   <article
                     key={post.id}
@@ -238,7 +167,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
                         {/* Title */}
                         <h2 className="text-lg md:text-xl font-extrabold mb-3 line-clamp-2 leading-snug">
                           <Link
-                            href={`/blog/${targetSlug}`}
+                            href={getPostHref(post)}
                             className="text-white hover:text-white/90 transition-colors duration-300 no-underline"
                           >
                             {getDisplayText(post.title, post.titleAr)}
@@ -281,7 +210,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
 
                       {/* Read More Interactive Button */}
                       <Link
-                        href={`/blog/${targetSlug}`}
+                        href={getPostHref(post)}
                         className="w-full py-3 px-4 bg-[#14162E] hover:bg-gradient-to-r hover:from-[#FF4D6D] hover:to-[#FF9A3C] border border-[#FF4D6D]/40 hover:border-transparent text-white font-bold text-sm rounded-xl transition-all duration-300 active:scale-95 flex items-center justify-center gap-2 group/btn cursor-pointer shadow-md"
                       >
                         <span className="text-white font-bold">
@@ -306,7 +235,7 @@ export default function BlogClient({ initialPosts }: BlogClientProps) {
               <button
                 onClick={() => {
                   setSelectedCategory("all");
-                  setSelectedTag(null);
+                  setSelectedTag();
                 }}
                 className="text-[#FF4D6D] mt-4 hover:underline"
               >

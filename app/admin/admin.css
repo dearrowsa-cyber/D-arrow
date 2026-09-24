@@ -358,10 +358,24 @@ body:has(.admin-login-page) footer {
 }
 
 /* ---- Table ---- */
+.admin-table-wrap {
+  overflow-x: auto;
+  max-width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
 .admin-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
+  min-width: 640px;
+}
+
+/* Let tables on small screens scroll horizontally instead of overflowing */
+@media (max-width: 826px) {
+  .admin-table {
+    min-width: 720px;
+  }
 }
 
 .admin-table thead th {

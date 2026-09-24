@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { useLanguage } from "@/components/LanguageProvider";
+import { useBlogPost } from "@/features/blog/hooks";
+import type { BlogPost } from "@/features/blog/data";
 import Link from "@util/link";
 import {
   ArrowLeft,
@@ -26,54 +27,22 @@ import ContentGate from "@/components/ContentGate";
 import DynamicCTA from "@/components/DynamicCTA";
 
 interface BlogPostClientProps {
-  post: any;
+  post: BlogPost;
 }
 
 export default function BlogPostClient({ post }: BlogPostClientProps) {
-  const { lang, t } = useLanguage();
-  const [imageError, setImageError] = useState(false);
-
-  const formatDate = (dateStr: string) => {
-    if (!dateStr) return "";
-    const parts = dateStr.split("T")[0].split("-").map(Number);
-    if (parts.length !== 3 || parts.some(isNaN)) return dateStr;
-    const options: Intl.DateTimeFormatOptions = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      calendar: "gregory",
-    };
-    try {
-      const d = new Date(parts[0], parts[1] - 1, parts[2]);
-      if (isNaN(d.getTime())) return dateStr;
-      return d.toLocaleDateString(lang === "ar" ? "ar-EG" : "en-US", options);
-    } catch {
-      return dateStr;
-    }
-  };
-
-  const getDisplayText = (enText: string, arText: string) => {
-    return lang === "ar" ? arText || enText : enText || arText;
-  };
-
-  const title = getDisplayText(post.title, post.titleAr);
-
-  // Sanitize the raw HTML from Quill to forcefully remove bad inline styles that break Arabic text
-  let rawContent = getDisplayText(post.content, post.contentAr) || "";
-  if (lang === "ar") {
-    rawContent = rawContent
-      .replace(/&nbsp;/g, " ") // Replace non-breaking spaces with normal spaces
-      .replace(/\u00A0/g, " ") // Replace unicode non-breaking spaces
-      .replace(/text-align:\s*justify;?/gi, "text-align: right;")
-      .replace(/white-space:\s*nowrap;?/gi, "white-space: normal;")
-      .replace(/word-break:\s*[^"';]+;?/gi, "")
-      .replace(/ql-align-justify/g, "ql-align-right");
-  }
-  const content = rawContent;
-
-  const gatedContent = getDisplayText(post.gatedContent, post.gatedContentAr);
-  const category = getDisplayText(post.category, post.categoryAr);
-  const tags: string[] = Array.isArray(post.tags) ? post.tags : [];
+  const { t } = useLanguage();
+  const {
+    category,
+    content,
+    formatDate,
+    gatedContent,
+    imageError,
+    lang,
+    setImageError,
+    tags,
+    title,
+  } = useBlogPost(post);
 
   const getCategoryIcon = (cat: string) => {
     const c = cat.toLowerCase();
@@ -192,7 +161,10 @@ export default function BlogPostClient({ post }: BlogPostClientProps) {
 
         {/* Content Gate */}
         {post.isGated && gatedContent && (
-          <ContentGate postSlug={post.slug} gatedContentHtml={gatedContent} />
+          <ContentGate
+            postSlug={post.slug || post.id}
+            gatedContentHtml={gatedContent}
+          />
         )}
 
         {/* Dynamic CTA */}

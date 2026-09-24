@@ -1,28 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "@util/link";
 import { Plus, Search, Trash2, Edit, FileText } from "lucide-react";
 import Image from "next/image";
-
-interface Post {
-  id: string;
-  title: string;
-  titleAr?: string;
-  category: string;
-  date: string;
-  status?: string;
-  author: string;
-  readTime: number;
-  imageUrl?: string;
-  tags?: string[];
-}
+import { useAdminBlogPosts } from "@/features/blog/admin-hooks";
+import type { BlogPost } from "@/features/blog/data";
 
 export default function PostsListPage() {
   const searchParams = useSearchParams();
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [filterCategory, setFilterCategory] = useState("all");
   const [filterStatus, setFilterStatus] = useState<string>(
@@ -34,43 +21,16 @@ export default function PostsListPage() {
     null,
   );
 
-  useEffect(() => {
-    fetchPosts(filterStatus);
-  }, [filterStatus]);
-
-  const fetchPosts = async (status: string) => {
-    try {
-      const query =
-        status === "all" ? "" : `?status=${encodeURIComponent(status)}`;
-      const res = await fetch(`/api/blog/posts${query}`, { cache: "no-store" });
-      const data = await res.json();
-      const sorted = (data.posts || []).sort(
-        (a: Post, b: Post) =>
-          new Date(b.date).getTime() - new Date(a.date).getTime(),
-      );
-      setPosts(sorted);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const statusFilter = filterStatus === "all" ? undefined : (filterStatus as "published" | "draft");
+  const { posts, loading, deletePost, updatePostStatus } = useAdminBlogPosts(statusFilter);
 
   const handleDelete = async () => {
     if (!deleteId) return;
-    try {
-      const res = await fetch(`/api/blog/posts?id=${deleteId}`, {
-        method: "DELETE",
-      });
-      const data = await res.json();
-      if (data.success) {
-        setPosts((prev) => prev.filter((p) => p.id !== deleteId));
-        showToast("تم حذف المقال بنجاح", "success");
-      } else {
-        showToast("فشل في حذف المقال", "error");
-      }
-    } catch {
-      showToast("حدث خطأ", "error");
+    const success = await deletePost(deleteId);
+    if (success) {
+      showToast("تم حذف المقال بنجاح", "success");
+    } else {
+      showToast("فشل في حذف المقال", "error");
     }
     setDeleteId(null);
   };
@@ -80,11 +40,11 @@ export default function PostsListPage() {
     setTimeout(() => setToast(null), 3000);
   };
 
-  const categories = ["all", ...new Set(posts.map((p) => p.category))];
+  const categories = ["all", ...new Set(posts.map((p: BlogPost) => p.category))];
 
-  const allTags = Array.from(new Set(posts.flatMap((p) => p.tags || [])));
+  const allTags = Array.from(new Set(posts.flatMap((p: BlogPost) => p.tags || [])));
 
-  const filteredPosts = posts.filter((p) => {
+  const filteredPosts = posts.filter((p: BlogPost) => {
     const matchSearch = (p.title + (p.titleAr || ""))
       .toLowerCase()
       .includes(search.toLowerCase());
@@ -260,6 +220,7 @@ export default function PostsListPage() {
       {/* Posts Table */}
       <div className="admin-card" style={{ padding: 0, overflow: "hidden" }}>
         {filteredPosts.length > 0 ? (
+          <div className="admin-table-wrap">
           <table className="admin-table">
             <thead>
               <tr>
@@ -405,26 +366,10 @@ export default function PostsListPage() {
                             border: "1px solid rgba(16,185,129,0.2)",
                           }}
                           onClick={async () => {
-                            try {
-                              const res = await fetch("/api/blog/posts", {
-                                method: "PUT",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({
-                                  id: post.id,
-                                  status: "published",
-                                }),
-                              });
-                              if (res.ok) {
-                                setPosts((prev) =>
-                                  prev.map((p) =>
-                                    p.id === post.id
-                                      ? { ...p, status: "published" }
-                                      : p,
-                                  ),
-                                );
-                                showToast("تم نشر المقال بنجاح", "success");
-                              }
-                            } catch {
+                            const success = await updatePostStatus(post.id, "published");
+                            if (success) {
+                              showToast("تم نشر المقال بنجاح", "success");
+                            } else {
                               showToast("حدث خطأ أثناء النشر", "error");
                             }
                           }}
@@ -451,8 +396,9 @@ export default function PostsListPage() {
                   </td>
                 </tr>
               ))}
-            </tbody>
+             </tbody>
           </table>
+          </div>
         ) : (
           <div className="admin-empty">
             <FileText size={48} />

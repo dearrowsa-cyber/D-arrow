@@ -1,44 +1,20 @@
-import { headers } from "next/headers";
-import BlogClient from "@/components/BlogClient";
+import BlogClient from "@/components/blog/BlogClient";
+import BlogSkeleton from "@/components/skeletons/BlogSkeleton";
 import { Suspense } from "react";
+import { getBlogPosts } from "@/features/blog/data";
 
 export const dynamic = "force-dynamic";
 
-async function getPosts(): Promise<any[]> {
-  try {
-    const headersList = await headers();
-    const host = headersList.get("host") || "localhost:3000";
-    const protocol =
-      headersList.get("x-forwarded-proto") ||
-      (host.includes("localhost") ? "http" : "https");
+async function BlogContent() {
+  const posts = await getBlogPosts();
 
-    const apiUrl = `${protocol}://${host}/api/blog/posts`;
-    const res = await fetch(apiUrl, { cache: "no-store" });
-
-    if (res.ok) {
-      const data = await res.json();
-      if (data.posts && Array.isArray(data.posts)) {
-        return data.posts;
-      }
-    }
-  } catch (error) {
-    console.error("Error fetching blog posts from /api/blog/posts:", error);
-  }
-
-  return [];
+  return <BlogClient initialPosts={posts} />;
 }
 
-export default async function BlogPage() {
-  const posts = await getPosts();
+export default function BlogPage() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen bg-[#0a0e27] pt-32 text-center text-white">
-          Loading blog...
-        </div>
-      }
-    >
-      <BlogClient initialPosts={posts} />
+    <Suspense fallback={<BlogSkeleton />}>
+      <BlogContent />
     </Suspense>
   );
 }

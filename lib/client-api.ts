@@ -1,6 +1,3 @@
-import { cookies } from "next/headers";
-import { ADMIN_AUTH_COOKIE } from "@/lib/admin-auth";
-
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 type RequestOptions = {
@@ -11,7 +8,6 @@ type RequestOptions = {
     isFormData?: boolean;
     cache?: RequestCache;
     revalidate?: number;
-    tags?: string[];
     token?: boolean | string;
 };
 
@@ -31,9 +27,17 @@ function getBaseUrl(): string {
     return BASE_URL;
 }
 
-/** Reads the admin token from the server-side cookie store. */
-export async function getAuthToken(): Promise<string | undefined> {
-    return (await cookies()).get(ADMIN_AUTH_COOKIE)?.value;
+/** Reads the admin token from client-side cookie */
+function getAuthToken(): string | undefined {
+    // Get token from document cookies
+    const cookies = document.cookie.split(';');
+    for (const cookie of cookies) {
+        const [name, value] = cookie.trim().split('=');
+        if (name === 'admin_token') {
+            return value;
+        }
+    }
+    return undefined;
 }
 
 async function request<T>({
@@ -44,7 +48,6 @@ async function request<T>({
     isFormData = false,
     cache = "no-store",
     revalidate,
-    tags,
     token = false,
 }: RequestOptions): Promise<T> {
     const url = new URL(endpoint, `${getBaseUrl()}/`);
@@ -63,7 +66,7 @@ async function request<T>({
     }
 
     if (token === true) {
-        const authToken = await getAuthToken();
+        const authToken = getAuthToken();
         if (authToken) {
             headers.set("Authorization", `Bearer ${authToken}`);
         }
@@ -71,12 +74,12 @@ async function request<T>({
         headers.set("Authorization", `Bearer ${token}`);
     }
 
-    const fetchOptions: RequestInit & { next?: { revalidate: number; tags?: string[] } } = {
+    const fetchOptions: RequestInit & { next?: { revalidate: number } } = {
         method,
         headers,
         body: data === undefined ? undefined : isFormData ? (data as BodyInit) : JSON.stringify(data),
         cache,
-        next: revalidate === undefined ? undefined : { revalidate, ...(tags ? { tags } : {}) },
+        next: revalidate === undefined ? undefined : { revalidate },
     };
     const response = await fetch(url, fetchOptions);
 
@@ -95,7 +98,7 @@ async function request<T>({
     return response.json() as Promise<T>;
 }
 
-export const api = {
+export const clientApi = {
     get: <T>(endpoint: string, options?: Omit<RequestOptions, "endpoint" | "method" | "data" | "isFormData">) =>
         request<T>({ endpoint, method: "GET", ...options }),
 

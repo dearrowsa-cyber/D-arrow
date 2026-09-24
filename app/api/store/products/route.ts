@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import prisma from '@/lib/prisma';
 
 const parseNumber = (value: unknown, field: string, required = false) => {
@@ -11,6 +12,14 @@ const parseNumber = (value: unknown, field: string, required = false) => {
   if (!Number.isFinite(parsed) || parsed < 0) throw new Error(`${field} must be a valid positive number`);
   return parsed;
 };
+
+const VALID_TYPES = ['digital', 'service', 'template', 'course'] as const;
+const VALID_STATUSES = ['published', 'draft'] as const;
+
+const validType = (t: unknown): boolean =>
+  typeof t === 'string' && (VALID_TYPES as readonly string[]).includes(t);
+const validStatus = (s: unknown): boolean =>
+  typeof s === 'string' && (VALID_STATUSES as readonly string[]).includes(s);
 
 const parseJsonArray = (value: unknown) => {
   if (Array.isArray(value)) return JSON.stringify(value.filter(item => typeof item === 'string' && item.trim()));
@@ -99,8 +108,33 @@ export async function POST(req: NextRequest) {
   try {
     const data = await req.json() as Record<string, unknown>;
 
-    if ((!data.name && !data.nameAr) || data.price === undefined) {
-      return NextResponse.json({ success: false, error: 'Name and price are required' }, { status: 400 });
+    if ((!data.name && !data.nameAr) || data.price === undefined || data.price === '') {
+      return NextResponse.json({ success: false, error: 'اسم المنتج والسعر مطلوبان' }, { status: 400 });
+    }
+
+    if (data.type !== undefined && !validType(data.type)) {
+      return NextResponse.json({
+        success: false,
+        error: 'النوع غير صالح — يجب أن يكون digital أو service أو template أو course',
+      }, { status: 400 });
+    }
+
+    if (data.status !== undefined && !validStatus(data.status)) {
+      return NextResponse.json({
+        success: false,
+        error: 'الحالة غير صالحة — يجب أن تكون "published" أو "draft"',
+      }, { status: 400 });
+    }
+
+    if (data.salePrice !== undefined && data.salePrice !== '' && data.salePrice !== null) {
+      const price = parseNumber(data.price, 'price', true);
+      const sale = parseNumber(data.salePrice, 'salePrice');
+      if (sale !== null && price !== null && sale > price) {
+        return NextResponse.json({
+          success: false,
+          error: 'سعر التخفيض (salePrice) لا يمكن أن يكون أكبر من السعر الأصلي',
+        }, { status: 400 });
+      }
     }
 
     // Auto-generate slug if not provided
@@ -113,6 +147,8 @@ export async function POST(req: NextRequest) {
     }
 
     const product = await prisma.product.create({ data: { ...toProductData(data), slug } });
+
+    revalidateTag('store-products', { expire: 0 });
 
     return NextResponse.json({ success: true, message: 'تم إنشاء المنتج بنجاح', product });
   } catch (error) {

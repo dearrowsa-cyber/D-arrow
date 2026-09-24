@@ -6,6 +6,7 @@ import { ArrowRight, Save, Upload, X, Plus, Trash2 } from "lucide-react";
 import Link from "@util/link";
 import Image from "next/image";
 import RichTextEditor from "@/components/admin/RichTextEditor";
+import { useAdminProductMutation } from "@/features/store/admin-hooks";
 
 const CATEGORIES = [
   "General",
@@ -27,7 +28,7 @@ const TYPES = [
 export default function NewProductPage() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [saving, setSaving] = useState(false);
+  const { createProduct, loading: saving } = useAdminProductMutation();
   const [uploading, setUploading] = useState(false);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(
     null,
@@ -90,29 +91,21 @@ export default function NewProductPage() {
       return showToast("يرجى إدخال اسم المنتج", "error");
     if (!form.price) return showToast("يرجى إدخال السعر", "error");
 
-    setSaving(true);
-    try {
-      const res = await fetch("/api/store/products", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          images: JSON.stringify(images),
-          features: JSON.stringify(features.filter((f) => f.trim())),
-          featuresAr: JSON.stringify(featuresAr.filter((f) => f.trim())),
-        }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        showToast("تم إنشاء المنتج بنجاح", "success");
-        setTimeout(() => router.push("/admin/store/products"), 1000);
-      } else {
-        showToast(data.error || "فشل في إنشاء المنتج", "error");
-      }
-    } catch {
-      showToast("حدث خطأ", "error");
-    } finally {
-      setSaving(false);
+    const result = await createProduct({
+      ...form,
+      status: form.status as "published" | "draft",
+      price: Number(form.price),
+      salePrice: form.salePrice ? Number(form.salePrice) : undefined,
+      images,
+      features: features.filter((f) => f.trim()),
+      featuresAr: featuresAr.filter((f) => f.trim()),
+    });
+
+    if (result.success) {
+      showToast("تم إنشاء المنتج بنجاح", "success");
+      setTimeout(() => router.push("/admin/store/products"), 1000);
+    } else {
+      showToast(result.error || "فشل في إنشاء المنتج", "error");
     }
   };
 
@@ -540,7 +533,7 @@ export default function NewProductPage() {
                 dir="ltr"
               />
               <p style={{ color: "#6B7280", fontSize: 12, margin: "6px 0 0" }}>
-                يظهر زر "معاينة حية" في صفحة المنتج للقوالب (مثال: /demo/store)
+                يظهر زر &quot;معاينة حية&quot; في صفحة المنتج للقوالب (مثال: /demo/store)
               </p>
             </div>
             <div style={{ marginBottom: 16 }}>

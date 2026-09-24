@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { ArrowRight, Upload, X, Save, Tag } from "lucide-react";
 import Link from "@util/link";
@@ -8,6 +8,8 @@ import Image from "next/image";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import AIWriterAssistant from "@/components/admin/AIWriterAssistant";
 import SEOScorer from "@/components/admin/SEOScorer";
+import { useAdminBlogPost } from "@/features/blog/admin-hooks";
+import type { BlogPost } from "@/features/blog/data";
 
 const CATEGORIES = [
   "Digital Marketing",
@@ -26,7 +28,6 @@ export default function EditPostPage() {
   const postId = params.id as string;
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [saving, setSaving] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(
     null,
   );
@@ -57,72 +58,37 @@ export default function EditPostPage() {
   });
   const [tagInput, setTagInput] = useState("");
 
-  useEffect(() => {
-    fetchPost();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [postId]);
+  const { post, loading, updatePost } = useAdminBlogPost(postId);
 
-  const fetchPost = async () => {
-    try {
-      const res = await fetch("/api/blog/posts");
-      const data = await res.json();
-      const post = (data.posts || []).find(
-        (p: {
-          id: string;
-          title?: string;
-          titleAr?: string;
-          slug?: string;
-          content?: string;
-          contentAr?: string;
-          excerpt?: string;
-          excerptAr?: string;
-          category?: string;
-          categoryAr?: string;
-          author?: string;
-          imageUrl?: string;
-          tags?: string[] | string;
-          status?: string;
-          date?: string;
-          time?: string;
-        }) => p.id === postId,
-      );
-      if (post) {
-        setForm({
-          id: post.id,
-          title: post.title || "",
-          titleAr: post.titleAr || "",
-          slug: post.slug || "",
-          content: post.content || "",
-          contentAr: post.contentAr || "",
-          excerpt: post.excerpt || "",
-          excerptAr: post.excerptAr || "",
-          category: post.category || "Digital Marketing",
-          categoryAr: post.categoryAr || "",
-          author: post.author || "D-Arrow",
-          imageUrl: post.imageUrl || "",
-          tags: Array.isArray(post.tags)
-            ? post.tags
-            : post.tags
-              ? JSON.parse(post.tags)
-              : [],
-          status: post.status || "published",
-          date: post.date || "",
-          time: post.time ? post.time.slice(0, 5) : "",
-          isGated: post.isGated || false,
-          ctaType: post.ctaType || "default",
-          gatedContent: post.gatedContent || "",
-          gatedContentAr: post.gatedContentAr || "",
-        });
-      } else {
-        showToast("المقال غير موجود", "error");
-        setTimeout(() => router.push("/admin/posts"), 1500);
-      }
-    } catch {
-      showToast("فشل في تحميل المقال", "error");
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    if (post) {
+      setForm({
+        id: post.id,
+        title: post.title || "",
+        titleAr: post.titleAr || "",
+        slug: post.slug || "",
+        content: post.content || "",
+        contentAr: post.contentAr || "",
+        excerpt: post.excerpt || "",
+        excerptAr: post.excerptAr || "",
+        category: post.category || "Digital Marketing",
+        categoryAr: post.categoryAr || "",
+        author: post.author || "D-Arrow",
+        imageUrl: post.imageUrl || "",
+        tags: Array.isArray(post.tags) ? post.tags : [],
+        status: post.status || "published",
+        date: post.date || "",
+        time: post.time ? post.time.slice(0, 5) : "",
+        isGated: post.isGated || false,
+        ctaType: post.ctaType || "default",
+        gatedContent: post.gatedContent || "",
+        gatedContentAr: post.gatedContentAr || "",
+      });
+    } else if (!loading) {
+      showToast("المقال غير موجود", "error");
+      setTimeout(() => router.push("/admin/posts"), 1500);
     }
-  };
+  }, [post, loading, router]);
 
   const updateField = (key: string, value: string | boolean) => {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -195,6 +161,10 @@ export default function EditPostPage() {
       showToast("يرجى إدخال عنوان المقال", "error");
       return;
     }
+    if (!form.content && !form.contentAr) {
+      showToast("يرجى إدخال محتوى المقال", "error");
+      return;
+    }
 
     // Auto-generate slug if empty
     let finalSlug = form.slug;
@@ -207,19 +177,14 @@ export default function EditPostPage() {
     }
 
     setSaving(true);
-    const finalStatus = statusOverride || form.status;
+    const finalStatus = (statusOverride || form.status) as "published" | "draft";
     try {
-      const res = await fetch("/api/blog/posts", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          slug: finalSlug,
-          status: finalStatus,
-        }),
+      const success = await updatePost({
+        ...form,
+        slug: finalSlug,
+        status: finalStatus,
       });
-      const data = await res.json();
-      if (data.success) {
+      if (success) {
         showToast(
           finalStatus === "published"
             ? "تم نشر المقال بنجاح"
@@ -228,7 +193,7 @@ export default function EditPostPage() {
         );
         setTimeout(() => router.push("/admin/posts"), 1000);
       } else {
-        showToast(data.error || "فشل في تحديث المقال", "error");
+        showToast("فشل في تحديث المقال", "error");
       }
     } catch {
       showToast("حدث خطأ", "error");

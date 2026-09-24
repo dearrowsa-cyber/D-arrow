@@ -8,6 +8,7 @@ import Image from "next/image";
 import RichTextEditor from "@/components/admin/RichTextEditor";
 import AIWriterAssistant from "@/components/admin/AIWriterAssistant";
 import SEOScorer from "@/components/admin/SEOScorer";
+import { useAdminBlogPostMutation } from "@/features/blog/admin-hooks";
 
 const CATEGORIES = [
   "Digital Marketing",
@@ -23,12 +24,12 @@ const CATEGORIES = [
 export default function NewPostPage() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(
     null,
   );
   const [activeTab, setActiveTab] = useState<"ar" | "en">("ar");
   const [uploading, setUploading] = useState(false);
+  const { loading: saving, createPost } = useAdminBlogPostMutation();
 
   const [form, setForm] = useState({
     title: "",
@@ -142,28 +143,20 @@ export default function NewPostPage() {
         .replace(/\s+/g, "-");
     }
 
-    setSaving(true);
     try {
-      const res = await fetch("/api/blog/posts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          slug: finalSlug,
-          status: asDraft ? "draft" : "published",
-        }),
+      const result = await createPost({
+        ...form,
+        slug: finalSlug,
+        status: asDraft ? "draft" : "published",
       });
-      const data = await res.json();
-      if (data.success) {
+      if (result.success) {
         showToast("تم إنشاء المقال بنجاح", "success");
         setTimeout(() => router.push("/admin/posts"), 1000);
       } else {
-        showToast(data.error || "فشل في إنشاء المقال", "error");
+        showToast(result.error || "فشل في إنشاء المقال", "error");
       }
     } catch {
       showToast("حدث خطأ", "error");
-    } finally {
-      setSaving(false);
     }
   };
 

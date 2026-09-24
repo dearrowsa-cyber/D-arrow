@@ -1,29 +1,17 @@
 import { Metadata } from "next";
-import prisma from "@/lib/prisma";
-import BlogPostClient from "@/components/BlogPostClient";
+import BlogPostClient from "@/components/blog/BlogPostClient";
 import { notFound } from "next/navigation";
+import { getBlogPost } from "@/features/blog/data";
 
 export const dynamic = "force-dynamic";
 
-// Generate dynamic SEO metadata for each blog post
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const decodedId = decodeURIComponent(id);
-  let post: any = null;
-
-  try {
-    post = await prisma.blogPost.findFirst({
-      where: {
-        OR: [{ id }, { slug: id }, { slug: decodedId }, { id: decodedId }],
-      },
-    });
-  } catch {
-    post = null;
-  }
+  const post = await getBlogPost(id);
 
   if (!post) return { title: "مقال غير موجود | D Arrow" };
 
@@ -32,10 +20,7 @@ export async function generateMetadata({
     post.excerptAr ||
     post.excerpt ||
     (post.contentAr || post.content || "").substring(0, 160);
-  const tags: string[] =
-    typeof post.tags === "string" && post.tags
-      ? JSON.parse(post.tags)
-      : post.tags || [];
+  const tags: string[] = Array.isArray(post.tags) ? post.tags : [];
   const keywords = [
     post.category,
     ...(post.categoryAr ? [post.categoryAr] : []),
@@ -88,26 +73,7 @@ export default async function BlogPostPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const decodedId = decodeURIComponent(id);
-  let post: any = null;
-
-  try {
-    const rawPost = await prisma.blogPost.findFirst({
-      where: {
-        OR: [{ id }, { slug: id }, { slug: decodedId }, { id: decodedId }],
-      },
-    });
-    if (rawPost) {
-      post = {
-        ...rawPost,
-        tags: rawPost.tags ? JSON.parse(rawPost.tags) : [],
-        createdAt: rawPost.createdAt.toISOString(),
-        updatedAt: rawPost.updatedAt.toISOString(),
-      };
-    }
-  } catch (error) {
-    console.error("Error fetching single blog post:", error);
-  }
+  const post = await getBlogPost(id);
 
   if (!post) return notFound();
 

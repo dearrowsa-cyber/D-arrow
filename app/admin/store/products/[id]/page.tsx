@@ -6,6 +6,7 @@ import { ArrowRight, Save, Upload, X, Plus, Trash2 } from "lucide-react";
 import Link from "@util/link";
 import Image from "next/image";
 import RichTextEditor from "@/components/admin/RichTextEditor";
+import { useAdminProduct, useAdminProductMutation } from "@/features/store/admin-hooks";
 
 const CATEGORIES = [
   "General",
@@ -29,8 +30,8 @@ export default function EditProductPage() {
   const params = useParams();
   const productId = params.id as string;
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [saving, setSaving] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const { product, loading } = useAdminProduct(productId);
+  const { loading: saving, updateProduct } = useAdminProductMutation();
   const [toast, setToast] = useState<{ msg: string; type: string } | null>(
     null,
   );
@@ -58,47 +59,37 @@ export default function EditProductPage() {
   const [features, setFeatures] = useState<string[]>([""]);
   const [featuresAr, setFeaturesAr] = useState<string[]>([""]);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
-    fetchProduct();
-  }, [productId]);
+    if (!product) return;
+    setForm({
+      name: product.name || "",
+      nameAr: product.nameAr || "",
+      slug: product.slug || "",
+      description: product.description || "",
+      descriptionAr: product.descriptionAr || "",
+      price: String(product.price || ""),
+      salePrice: product.salePrice ? String(product.salePrice) : "",
+      currency: product.currency || "SAR",
+      category: product.category || "General",
+      categoryAr: product.categoryAr || "",
+      type: product.type || "digital",
+      downloadUrl: product.downloadUrl || "",
+      demoUrl: product.demoUrl || "",
+      status: product.status || "published",
+      featured: product.featured || false,
+    });
+    setImages(product.images ? JSON.parse(product.images) : []);
+    setFeatures(product.features ? JSON.parse(product.features) : [""]);
+    setFeaturesAr(product.featuresAr ? JSON.parse(product.featuresAr) : [""]);
+  }, [product]);
 
-  const fetchProduct = async () => {
-    try {
-      const res = await fetch(`/api/store/products/${productId}`);
-      const data = await res.json();
-      if (data.success && data.product) {
-        const p = data.product;
-        setForm({
-          name: p.name || "",
-          nameAr: p.nameAr || "",
-          slug: p.slug || "",
-          description: p.description || "",
-          descriptionAr: p.descriptionAr || "",
-          price: String(p.price || ""),
-          salePrice: p.salePrice ? String(p.salePrice) : "",
-          currency: p.currency || "SAR",
-          category: p.category || "General",
-          categoryAr: p.categoryAr || "",
-          type: p.type || "digital",
-          downloadUrl: p.downloadUrl || "",
-          demoUrl: p.demoUrl || "",
-          status: p.status || "published",
-          featured: p.featured || false,
-        });
-        setImages(p.images ? JSON.parse(p.images) : []);
-        setFeatures(p.features ? JSON.parse(p.features) : [""]);
-        setFeaturesAr(p.featuresAr ? JSON.parse(p.featuresAr) : [""]);
-      } else {
-        showToast("المنتج غير موجود", "error");
-        setTimeout(() => router.push("/admin/store/products"), 1500);
-      }
-    } catch {
-      showToast("فشل التحميل", "error");
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    if (!loading && !product) {
+      showToast("المنتج غير موجود", "error");
+      setTimeout(() => router.push("/admin/store/products"), 1500);
     }
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, product]);
 
   const updateField = (key: string, value: string | boolean) =>
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -126,27 +117,32 @@ export default function EditProductPage() {
   const handleSubmit = async () => {
     if (!form.name && !form.nameAr)
       return showToast("يرجى إدخال اسم المنتج", "error");
-    setSaving(true);
-    try {
-      const res = await fetch(`/api/store/products/${productId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          images: JSON.stringify(images),
-          features: JSON.stringify(features.filter((f) => f.trim())),
-          featuresAr: JSON.stringify(featuresAr.filter((f) => f.trim())),
-        }),
-      });
-      const data = await res.json();
-      if (data.success) {
-        showToast("تم تحديث المنتج", "success");
-        setTimeout(() => router.push("/admin/store/products"), 1000);
-      } else showToast(data.error || "فشل التحديث", "error");
-    } catch {
-      showToast("حدث خطأ", "error");
-    } finally {
-      setSaving(false);
+    const price = Number(form.price);
+    if (form.price === "" || !Number.isFinite(price) || price < 0)
+      return showToast("يرجى إدخال سعر صحيح للمنتج", "error");
+    const salePrice =
+      form.salePrice !== "" && form.salePrice !== undefined
+        ? Number(form.salePrice)
+        : undefined;
+    if (salePrice !== undefined && (!Number.isFinite(salePrice) || salePrice < 0))
+      return showToast("يرجى إدخال سعر تخفيض صحيح", "error");
+    if (salePrice !== undefined && salePrice > price)
+      return showToast("سعر التخفيض لا يمكن أن يكون أكبر من السعر الأصلي", "error");
+    const result = await updateProduct({
+      id: productId,
+      ...form,
+      status: form.status as "published" | "draft",
+      price,
+      salePrice,
+      images,
+      features: features.filter((f) => f.trim()),
+      featuresAr: featuresAr.filter((f) => f.trim()),
+    });
+    if (result.success) {
+      showToast("تم تحديث المنتج", "success");
+      setTimeout(() => router.push("/admin/store/products"), 1000);
+    } else {
+      showToast(result.error || "فشل التحديث", "error");
     }
   };
 
@@ -563,7 +559,7 @@ export default function EditProductPage() {
                 dir="ltr"
               />
               <p style={{ color: "#6B7280", fontSize: 12, margin: "6px 0 0" }}>
-                يظهر زر "معاينة حية" في صفحة المنتج للقوالب (مثال: /demo/store)
+                يظهر زر &quot;معاينة حية&quot; في صفحة المنتج للقوالب (مثال: /demo/store)
               </p>
             </div>
             <div style={{ marginBottom: 16 }}>
