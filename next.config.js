@@ -12,6 +12,8 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
 
+  allowedDevOrigins: ['*.trycloudflare.com', 'localhost:3000'],
+
   serverExternalPackages: ['@prisma/client', 'prisma'],
 
   // async redirects() { ... },

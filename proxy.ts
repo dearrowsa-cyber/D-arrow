@@ -9,8 +9,10 @@ const RE_MOUNT_PATH = '/demo/real-estate';
 export async function proxy(request: NextRequest) {
   const url = request.nextUrl.clone();
 
-  const isAdminPage = url.pathname.startsWith('/admin') && url.pathname !== '/admin/login';
-  const isAdminApi = url.pathname.startsWith('/api/admin') && url.pathname !== '/api/admin/auth';
+  const normalizedPath = url.pathname.replace(/\/+$/, '') || '/';
+
+  const isAdminPage = normalizedPath.startsWith('/admin') && normalizedPath !== '/admin/login';
+  const isAdminApi = normalizedPath.startsWith('/api/admin') && normalizedPath !== '/api/admin/auth';
   if ((isAdminPage || isAdminApi) && !isAdminRequestAuthenticated(request)) {
     if (isAdminApi) {
       return NextResponse.json({ success: false, error: 'غير مصرح' }, { status: 401 });

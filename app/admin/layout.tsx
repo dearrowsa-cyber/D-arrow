@@ -59,11 +59,11 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
+  const rawPathname = usePathname();
+  const pathname = rawPathname ? rawPathname.replace(/\/+$/, "") || "/" : "";
+  const isLoginPage = pathname === "/admin/login";
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { logout, isAuthenticated, isChecking } = useAdminAuth(
-    pathname !== "/admin/login",
-  );
+  const { logout, isAuthenticated, isChecking } = useAdminAuth(!isLoginPage);
   const { theme, toggleTheme } = useAdminTheme();
 
   const handleLogout = () => {
@@ -71,7 +71,7 @@ export default function AdminLayout({
   };
 
   // Login page - no sidebar
-  if (pathname === "/admin/login") {
+  if (isLoginPage) {
     return (
       <div className="admin-layout">
         <style suppressHydrationWarning>{`
