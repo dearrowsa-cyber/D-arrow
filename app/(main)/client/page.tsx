@@ -121,7 +121,11 @@ export default function ClientPortalPage() {
   );
 
   return (
-    <div className="min-h-screen py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto" dir={isAr ? "rtl" : "ltr"}>
+    <div
+      className="min-h-screen py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto"
+      dir={isAr ? "rtl" : "ltr"}
+      style={{ fontFamily: "var(--font-cairo), system-ui, sans-serif" }}
+    >
       {/* Top Banner / Welcome */}
       <div className="relative rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-[#14162e] via-[#1a1b3a] to-[#0b0d1f] border border-white/10 shadow-xl overflow-hidden mb-8">
         <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-[#FF4D6D]/15 to-[#FF9A3C]/10 rounded-full blur-3xl pointer-events-none" />
