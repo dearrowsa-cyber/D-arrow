@@ -5,6 +5,8 @@ import Link from "@util/link";
 import Image from "next/image";
 import { useSelectedLayoutSegments } from "next/navigation";
 import { useLanguage } from "../LanguageProvider";
+import { useUserAuth } from "@/custom hooks/useUserAuth";
+import { User } from "lucide-react";
 
 import DesktopNav from "./DesktopNav";
 import MobileNav from "./MobileNav";
@@ -14,6 +16,7 @@ export default memo(function Header() {
   const isAdmin = segments && segments[0] === "admin";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { lang, setLang, t } = useLanguage();
+  const { user, isAuthenticated, isLoading: isAuthLoading } = useUserAuth();
 
   if (isAdmin) return null;
 
@@ -51,8 +54,31 @@ export default memo(function Header() {
           {/* Desktop Nav (Hidden below 1280px) */}
           <DesktopNav lang={lang} t={t} />
 
-          {/* Right Side Actions (Get Started, Lang, Menu) */}
+          {/* Right Side Actions (Auth, Get Started, Lang, Menu) */}
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+            {/* Customer Auth Button */}
+            {!isAuthLoading && (
+              isAuthenticated ? (
+                <Link
+                  href="/client"
+                  className="flex items-center gap-1.5 bg-white/10 hover:bg-white/15 border border-white/20 text-white px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition hover:shadow"
+                >
+                  <User size={15} className="text-[#FF4D6D]" />
+                  <span className="max-w-[80px] sm:max-w-[120px] truncate">
+                    {user?.name ? user.name.split(" ")[0] : (lang === "ar" ? "حسابي" : "Portal")}
+                  </span>
+                </Link>
+              ) : (
+                <Link
+                  href="/login"
+                  className="flex items-center gap-1 bg-white/5 hover:bg-white/10 border border-white/10 text-gray-200 hover:text-white px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition"
+                >
+                  <User size={14} className="text-[#FF4D6D]" />
+                  <span>{lang === "ar" ? "دخول" : "Login"}</span>
+                </Link>
+              )
+            )}
+
             {/* Get Started Button */}
             <Link
               href="/contact"
@@ -61,7 +87,7 @@ export default memo(function Header() {
               {t("getStarted")}
             </Link>
 
-            {/* Lang Toggle Button - STYLE FIXED TO MATCH START BUTTON */}
+            {/* Lang Toggle Button */}
             <button
               onClick={toggleLang}
               className="flex-shrink-0 bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white px-3 py-2 rounded-lg text-xs sm:text-sm font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 whitespace-nowrap"

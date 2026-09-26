@@ -62,3 +62,6 @@ Thumbs.db
 !/public/main-video.mp4
 
 .vercel
+*.exe
+*.zip
+dist_cf_pages/

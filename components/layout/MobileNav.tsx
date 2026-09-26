@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import Link from "@util/link";
-import { X, Menu, Star } from "lucide-react"; // Added Star
+import { X, Menu, Star, User } from "lucide-react";
+import { useUserAuth } from "@/custom hooks/useUserAuth";
 
 export default function MobileNav({
   isOpen,
@@ -19,6 +20,7 @@ export default function MobileNav({
   const [servicesOpen, setServicesOpen] = useState(false);
   const [projectsOpen, setProjectsOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const { user, isAuthenticated } = useUserAuth();
 
   useEffect(() => {
     setMounted(true);
@@ -273,6 +275,29 @@ export default function MobileNav({
                 >
                   {t("contact")}
                 </Link>
+
+                {/* Customer Login / Portal Link */}
+                <div className="pt-2 border-t border-white/10 mt-2">
+                  {isAuthenticated ? (
+                    <Link
+                      href="/client"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-base font-semibold text-white bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] rounded-xl whitespace-nowrap shadow-md"
+                    >
+                      <User size={18} />
+                      <span>{lang === "ar" ? `لوحة العميل (${user?.name?.split(" ")[0]})` : `Client Portal (${user?.name?.split(" ")[0]})`}</span>
+                    </Link>
+                  ) : (
+                    <Link
+                      href="/login"
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center gap-3 px-4 py-3 text-base font-medium text-gray-200 hover:text-white bg-white/5 hover:bg-white/10 rounded-xl whitespace-nowrap border border-white/10"
+                    >
+                      <User size={18} className="text-[#FF4D6D]" />
+                      <span>{lang === "ar" ? "تسجيل دخول العملاء" : "Client Sign In"}</span>
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
           </div>,

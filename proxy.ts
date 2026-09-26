@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { isAdminRequestAuthenticated } from '@/lib/admin-auth';
+import { isUserRequestAuthenticated } from '@/lib/user-auth';
 
 // Subdomain reserved for the real-estate demo (override with env var).
 const RE_SUBDOMAIN = process.env.RE_SUBDOMAIN || 'realestate';
@@ -18,6 +19,14 @@ export async function proxy(request: NextRequest) {
       return NextResponse.json({ success: false, error: 'غير مصرح' }, { status: 401 });
     }
     url.pathname = '/admin/login';
+    return NextResponse.redirect(url);
+  }
+
+  // Client Portal Protection
+  const isClientPage = normalizedPath.startsWith('/client');
+  if (isClientPage && !isUserRequestAuthenticated(request)) {
+    url.pathname = '/login';
+    url.searchParams.set('redirect', normalizedPath);
     return NextResponse.redirect(url);
   }
 

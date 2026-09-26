@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import { useLanguage } from '@/components/LanguageProvider';
-import { Lock, Mail, ArrowRight, ArrowLeft } from 'lucide-react';
+import { useUserAuth } from '@/custom hooks/useUserAuth';
+import Link from '@util/link';
+import { Lock, Mail, ArrowRight, ArrowLeft, Sparkles } from 'lucide-react';
 
 interface ContentGateProps {
   postSlug: string;
@@ -11,6 +13,7 @@ interface ContentGateProps {
 
 export default function ContentGate({ postSlug, gatedContentHtml }: ContentGateProps) {
   const { lang, t } = useLanguage();
+  const { isAuthenticated, user } = useUserAuth();
   const [unlocked, setUnlocked] = useState(false);
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
@@ -47,11 +50,16 @@ export default function ContentGate({ postSlug, gatedContentHtml }: ContentGateP
     }
   };
 
-  if (unlocked) {
+  if (unlocked || isAuthenticated) {
     return (
       <div className="mt-8 pt-8 border-t border-[#FF4D6D]/30 relative">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#0a0e27] px-4 text-[#10B981] flex items-center gap-2 font-bold text-sm">
-          <span>{lang === 'ar' ? 'المحتوى المتميز مفتوح' : 'Premium Content Unlocked'}</span>
+          <Sparkles size={15} />
+          <span>
+            {isAuthenticated
+              ? (lang === 'ar' ? `مرحباً ${user?.name ? user.name.split(' ')[0] : ''} • المحتوى الحصري مفتوح لحسابك` : `Welcome ${user?.name || ''} • Premium Content Unlocked`)
+              : (lang === 'ar' ? 'المحتوى المتميز مفتوح' : 'Premium Content Unlocked')}
+          </span>
         </div>
         <div 
           className="blog-post-content prose prose-invert max-w-none break-words prose-headings:text-white prose-p:text-base prose-a:text-[#FF4D6D] hover:prose-a:text-[#FF9A3C] prose-img:rounded-xl prose-img:max-w-full w-full overflow-hidden"
@@ -123,8 +131,15 @@ export default function ContentGate({ postSlug, gatedContentHtml }: ContentGateP
               </>
             )}
           </button>
+
+          <div className="mt-4 pt-3 border-t border-white/5 text-xs text-gray-400">
+            {lang === 'ar' ? 'لديك حساب بالفعل؟ ' : 'Already have an account? '}
+            <Link href={`/login?redirect=/blog/${postSlug}`} className="text-[#FF4D6D] hover:underline font-semibold">
+              {lang === 'ar' ? 'سجل دخولك الآن' : 'Sign in here'}
+            </Link>
+          </div>
         </form>
-        <p className="text-xs text-gray-500 mt-4">
+        <p className="text-xs text-gray-500 mt-3">
           {lang === 'ar' ? 'لن نقوم بإرسال رسائل مزعجة (Spam) أبداً.' : 'We will never send you spam.'}
         </p>
       </div>

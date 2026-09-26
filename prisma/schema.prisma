@@ -235,10 +235,40 @@ model Order {
   paymentIntentId String?  // Stripe payment intent ID
   status          String   @default("pending") // pending, processing, completed, cancelled
   notes           String?
+  userId          String?
+  user            User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
   items           OrderItem[]
+}
+
+model User {
+  id           String          @id @default(cuid())
+  name         String
+  email        String          @unique
+  passwordHash String
+  phone        String?
+  companyName  String?
+  role         String          @default("client") // client, vip, admin
+  avatarUrl    String?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+
+  orders       Order[]
+  inquiries    ClientInquiry[]
+}
+
+model ClientInquiry {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        String   @default("service") // service, consultation, custom_package
+  title       String
+  details     String?  // JSON or text details
+  status      String   @default("new") // new, in_progress, completed
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model OrderItem {
