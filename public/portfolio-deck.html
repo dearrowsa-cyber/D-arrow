@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D-Arrow | الملف التعريفي وسابقة الأعمال الاستراتيجية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070913;
+      --surface: #0e1222;
+      --surface-elevated: #141930;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(255, 154, 60, 0.25);
+      --primary: #FF9A3C;
+      --primary-light: #FFB366;
+      --secondary: #FF6F4F;
+      --gold: #F59E0B;
+      --text: #FFFFFF;
+      --text-muted: #94A3B8;
+      --text-dim: #64748B;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Fixed Header Controls */
+    .deck-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 64px;
+      background: rgba(7, 9, 19, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      z-index: 1000;
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      font-family: 'Cairo', sans-serif;
+      font-weight: 900;
+      font-size: 24px;
+      color: #FFFFFF;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-sub {
+      font-size: 13px;
+      color: var(--text-muted);
+      border-right: 1px solid var(--border);
+      padding-right: 12px;
+      font-weight: 500;
+    }
+
+    .btn-export {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 999px;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(255, 77, 109, 0.35);
+      transition: all 0.3s ease;
+    }
+
+    .btn-export:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255, 77, 109, 0.5);
+    }
+
+    /* Deck Layout */
+    .deck-wrapper {
+      max-width: 1240px;
+      margin: 84px auto 60px;
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    /* Individual Slide */
+    .slide-page {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 56px 60px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      min-height: 640px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .slide-page::before {
+      content: '';
+      position: absolute;
+      top: -160px;
+      right: -160px;
+      width: 380px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(255, 77, 109, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Slide Header */
+    .slide-top-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+    }
+
+    .slide-num {
+      font-family: 'Cairo', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 0.1em;
+    }
+
+    .slide-category {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Slide 1: Cover */
+    .cover-slide {
+      background: radial-gradient(ellipse at 50% 15%, rgba(255, 154, 60, 0.08) 0%, rgba(14, 18, 34, 0.95) 45%, var(--bg) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 40px;
+      position: relative;
+    }
+
+    .cover-slide::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 154, 60, 0.4), transparent);
+    }
+
+    .cover-logo-wrap {
+      margin-bottom: 24px;
+    }
+
+    .cover-logo-wrap img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .cover-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 24px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 999px;
+      color: #E2E8F0;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+    }
+
+    .cover-badge span:first-child {
+      color: var(--primary);
+    }
+
+    .cover-title {
+      font-family: 'Cairo', sans-serif;
+      font-size: 44px;
+      font-weight: 900;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      color: #FFFFFF;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      max-width: 900px;
+    }
+
+    .cover-sub {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin-bottom: 36px;
+      line-height: 1.8;
+    }
+
+    .cover-divider {
+      width: 70px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--primary), var(--gold), transparent);
+      border-radius: 2px;
+      margin: 0 auto 32px;
+    }
+
+    .cover-highlights {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      width: 100%;
+      max-width: 920px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 24px 28px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .highlight-item {
+      position: relative;
+    }
+
+    .highlight-item + .highlight-item::before {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 15%;
+      height: 70%;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .highlight-item h3 {
+      font-family: 'Cairo', sans-serif;
+      font-size: 30px;
+      font-weight: 900;
+      color: #FF9A3C;
+      margin-bottom: 4px;
+    }
+
+    .highlight-item p {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .cover-footer-line {
+      margin-top: 36px;
+      font-size: 13px;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+    }
+
+    /* Executive Intro Slide */
+    .intro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .intro-text h2 {
+      font-family: 'Cairo', sans-serif;
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 20px;
+      color: #FFF;
+    }
+
+    .intro-text p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .pillars-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .pillar-card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .pillar-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: rgba(255, 77, 109, 0.1);
+      border: 1px solid rgba(255, 77, 109, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .pillar-body h4 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 4px;
+    }
+
+    .pillar-body p {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Case Studies: 2-Column Split */
+    .case-split {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .case-body {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .case-headline h2 {
+      font-family: 'Cairo', sans-serif;
+      font-size: 30px;
+      font-weight: 800;
+      color: #FFF;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .case-headline .role-tag {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--secondary);
+    }
+
+    .case-narrative {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .case-specs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .spec-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+    }
+
+    .spec-card h5 {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .spec-card p {
+      font-size: 13px;
+      color: #CBD5E1;
+      line-height: 1.5;
+    }
+
+    .kpi-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .kpi-pill {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: #34D399;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Mockup Frame */
+    .mockup-window {
+      background: #171b30;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+      position: relative;
+    }
+
+    .mockup-header {
+      background: #101428;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot.red { background: #FF5F56; }
+    .dot.yellow { background: #FFBD2E; }
+    .dot.green { background: #27C93F; }
+
+    .mockup-url {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2px 14px;
+      border-radius: 6px;
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-right: 12px;
+      direction: ltr;
+    }
+
+    .mockup-img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      object-position: top;
+      display: block;
+    }
+
+    .mockup-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .mockup-gallery img {
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    /* Sector Grid */
+    .sector-showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .sector-item {
+      background: var(--surface-elevated);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .sector-item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .sector-content {
+      padding: 18px;
+    }
+
+    .sector-content h4 {
+      font-family: 'Cairo', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 6px;
+    }
+
+    .sector-content p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Slide Footer Signature */
+    .slide-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+      padding-top: 18px;
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    /* Final Slide: CTA */
+    .closing-slide {
+      text-align: center;
+      background: radial-gradient(ellipse at 50% 20%, rgba(255, 154, 60, 0.07) 0%, rgba(14, 18, 34, 0.95) 50%, var(--bg) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      justify-content: center;
+      align-items: center;
+      padding: 70px 40px;
+      position: relative;
+    }
+
+    .closing-slide::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 154, 60, 0.4), transparent);
+    }
+
+    .closing-slide h2 {
+      font-family: 'Cairo', sans-serif;
+      font-size: 38px;
+      font-weight: 900;
+      color: #FFFFFF;
+      margin-bottom: 16px;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .closing-slide p {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 680px;
+      margin: 0 auto 36px;
+      line-height: 1.8;
+    }
+
+    .cta-boxes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      width: 100%;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .cta-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-card h4 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .cta-card p {
+      font-family: 'Cairo', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: #FFF;
+      margin: 0;
+      direction: ltr;
+    }
+
+    @page {
+      size: 1400px 900px;
+      margin: 0;
+    }
+
+    /* Print / PDF Specific Rules */
+    @media print {
+      html, body {
+        width: 1400px !important;
+        height: auto !important;
+        background-color: #070913 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .slide-page {
+        page-break-after: always !important;
+        break-after: page !important;
+        width: 1400px !important;
+        height: 900px !important;
+        min-height: 900px !important;
+        max-height: 900px !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        padding: 40px 60px !important;
+      }
+      .deck-wrapper {
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+        max-width: 1400px !important;
+      }
+      .deck-header {
+        display: none !important;
+      }
+      .case-split {
+        display: grid !important;
+        grid-template-columns: 1.15fr 0.85fr !important;
+        gap: 40px !important;
+        align-items: center !important;
+      }
+      .mockup-img {
+        height: 320px !important;
+      }
+      .mockup-gallery img {
+        height: 75px !important;
+      }
+      .intro-grid {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 40px !important;
+      }
+      .cover-highlights {
+        display: grid !important;
+        grid-template-columns: repeat(4, 1fr) !important;
+        gap: 20px !important;
+      }
+      .cta-boxes {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 20px !important;
+      }
+      .sector-showcase-grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 18px !important;
+      }
+    }
+
+    @media screen and (max-width: 900px) {
+      .case-split, .intro-grid {
+        grid-template-columns: 1fr;
+      }
+      .sector-showcase-grid {
+        grid-template-columns: 1fr;
+      }
+      .cover-highlights {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .cta-boxes {
+        grid-template-columns: 1fr;
+      }
+      .cover-title {
+        font-size: 34px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Action Bar -->
+  <header class="deck-header">
+    <div class="brand-mark">
+      <span class="brand-logo">D-ARROW</span>
+      <span class="brand-sub">الملف التعريفي وسابقة الأعمال 2026</span>
+    </div>
+    <button class="btn-export" onclick="window.print()">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>
+        <path d="M6 14h12v8H6z"/>
+      </svg>
+      تصدير كـ PDF جاهز للعميل
+    </button>
+  </header>
+
+  <main class="deck-wrapper">
+
+    <!-- SLIDE 01: COVER -->
+    <section class="slide-page cover-slide">
+      <div>
+        <div class="cover-logo-wrap">
+          <img src="./Darrow-1.png" alt="D-Arrow Logo">
+        </div>
+        <span class="cover-badge">
+          <span class="badge-dot"></span>
+          <span>وكالة دي آرو للتسويق الرقمي والحلول المتكاملة</span>
+        </span>
+        <h1 class="cover-title">شريكك الاستراتيجي في بناء العلامات التجارية والحلول الرقمية الفاخرة</h1>
+        <p class="cover-sub">
+          نصمم ونطور تجارب استثنائية تجمع بين الفخامة البصرية، الهندسة البرمجية المتقدمة، وحملات النمو الموجهة لتحقيق أعلى عوائد في السوق السعودي والخليجي.
+        </p>
+
+        <div class="cover-divider"></div>
+
+        <div class="cover-highlights">
+          <div class="highlight-item">
+            <h3>+500</h3>
+            <p>مشروع منجز بنجاح</p>
+          </div>
+          <div class="highlight-item">
+            <h3>98%</h3>
+            <p>نسبة رضا العملاء والشركاء</p>
+          </div>
+          <div class="highlight-item">
+            <h3>360°</h3>
+            <p>حلول رقمية متكاملة</p>
+          </div>
+          <div class="highlight-item">
+            <h3>2030</h3>
+            <p>مواكبة لرؤية المملكة الطموحة</p>
+          </div>
+        </div>
+
+        <p class="cover-footer-line">D-ARROW DIGITAL AGENCY — KINGDOM OF SAUDI ARABIA — 2026</p>
+      </div>
+    </section>
+
+    <!-- SLIDE 02: EXECUTIVE INTRO -->
+    <section class="slide-page">
+      <div class="slide-top-meta">
+        <span class="slide-num">01 / الرؤية الاستراتيجية</span>
+        <span class="slide-category">مقدمة تنفيذية للعميل</span>
+      </div>
+
+      <div class="intro-grid">
+        <div class="intro-text">
+          <h2>كيف نصنع الفارق الحقيقي لمشروعك؟</h2>
+          <p>
+            في دي آرو، لا نكتفي بإنشاء موقع أو تصميم إعلان عابر؛ بل نبتكر هوية ومنظومة رقمية متماسكة تجعل علامتك التجارية الخيار الأول والأكثر موثوقية في ذهن عميلك المستهدف.
+          </p>
+          <p>
+            نجمع بين فهم عميق لثقافة وسلوك المستهلك في المملكة، وأحدث المعايير البرمجية والتصميمية العالمية لنضمن لك نمواً مستداماً وتحويلاً ملموساً للمبيعات.
+          </p>
+        </div>
+
+        <div class="pillars-list">
+          <div class="pillar-card">
+            <div class="pillar-icon">💎</div>
+            <div class="pillar-body">
+              <h4>الهويات البصرية الفاخرة (Luxury Branding)</h4>
+              <p>نصيغ هويات تجارية تفرض هيبتها من النظرة الأولى وتثبت قيمتها التنافسية في السوق.</p>
+            </div>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-icon">⚡</div>
+            <div class="pillar-body">
+              <h4>المنصات وتطبيقات الويب المتقدمة (Web Engineering)</h4>
+              <p>مواقع ومتاجر سريعة، آمنة، ومتوافقة 100% مع محركات البحث وتجربة الهاتف.</p>
+            </div>
+          </div>
+          <div class="pillar-card">
+            <div class="pillar-icon">📈</div>
+            <div class="pillar-body">
+              <h4>الحملات الإعلانية وصناعة المحتوى (Growth & Ads)</h4>
+              <p>حملات موجهة للمبيعات والطلب المباشر مع استراتيجيات تحسين عائد الإنفاق الإعلاني (ROAS).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>وكالة دي آرو | D-Arrow Digital</span>
+        <span>سابقة الأعمال والحلول الرقمية 2026</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 03: TANFEEZE REAL ESTATE -->
+    <section class="slide-page">
+      <div class="slide-top-meta">
+        <span class="slide-num">02 / دراسة حالة</span>
+        <span class="slide-category">قطاع التطوير والتسويق العقاري الفاخر</span>
+      </div>
+
+      <div class="case-split">
+        <div class="case-body">
+          <div class="case-headline">
+            <h2>منصة تنفيذي العقارية (Tanfeeze)</h2>
+            <div class="role-tag">بوابة عقارية فاخرة وتجربة مستخدم تفاعلية (UI/UX)</div>
+          </div>
+
+          <p class="case-narrative">
+            تطوير منصة وبوابة عقارية رائدة تعرض الفلل والمشاريع السكنية الراقية بأسلوب يحاكي فخامة المعمار السعودي الحديث ويسهل رحلة الحجز والمعاينة.
+          </p>
+
+          <div class="case-specs">
+            <div class="spec-card">
+              <h5>التحدي الاستراتيجي</h5>
+              <p>عرض مئات الوحدات العقارية بتفاصيلها وصورها دون التضحية بسرعة التصفح وسلاسة البحث.</p>
+            </div>
+            <div class="spec-card">
+              <h5>الحل المنفذ</h5>
+              <p>واجهة تفاعلية بفلاتر متقدمة حسب الموقع والنوع، مع ربط فوري بنظام استفسارات واتساب.</p>
+            </div>
+          </div>
+
+          <div class="kpi-pills">
+            <span class="kpi-pill">✔ ارتفاع معدلات التصفح بنسبة 45%</span>
+            <span class="kpi-pill">✔ مضاعفة طلبات المعاينة العقارية</span>
+            <span class="kpi-pill">✔ سرعة تحميل فائقة على الموبايل</span>
+          </div>
+        </div>
+
+        <div class="case-visual">
+          <div class="mockup-window">
+            <div class="mockup-header">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span class="mockup-url">tanfeeze.com/properties</span>
+            </div>
+            <img class="mockup-img" src="./portfolio/tanfeeze-1.png" alt="Tanfeeze Real Estate">
+          </div>
+          <div class="mockup-gallery">
+            <img src="./portfolio/tanfeeze-2.png" alt="Detail 1">
+            <img src="./portfolio/tanfeeze-3.png" alt="Detail 2">
+            <img src="./portfolio/tanfeeze-4.png" alt="Detail 3">
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>شركة تنفيذي العقارية — الرياض / الخبر</span>
+        <span>تصميم وتطوير المنصة: دي آرو</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 04: ZARABIE LUXURY FURNITURE -->
+    <section class="slide-page">
+      <div class="slide-top-meta">
+        <span class="slide-num">03 / دراسة حالة</span>
+        <span class="slide-category">الأثاث المنزلي والمكتبي الفاخر</span>
+      </div>
+
+      <div class="case-split">
+        <div class="case-body">
+          <div class="case-headline">
+            <h2>براند زرابي للأثاث (Zarabie Furniture)</h2>
+            <div class="role-tag">حملات تسويقية إبداعية وعروض ترويجية عالية التحويل</div>
+          </div>
+
+          <p class="case-narrative">
+            إدارة وتصميم الحملات الإعلانية ومحتوى السوشيال ميديا لمواسم التخفيضات الكبرى وعروض الكاش باك مع الحفاظ على الأناقة الفاخرة للعلامة التجارية.
+          </p>
+
+          <div class="case-specs">
+            <div class="spec-card">
+              <h5>التحدي الاستراتيجي</h5>
+              <p>إبراز عروض الخصومات الكبيرة (كاش باك 15%) دون الإخلال بالمظهر الفخم لأطقم الأثاث.</p>
+            </div>
+            <div class="spec-card">
+              <h5>الحل المنفذ</h5>
+              <p>تنسيق ألوان ترابية هادئة، إبراز شارات التقسيط (تابي، تمارا)، ورموز QR للشراء المباشر.</p>
+            </div>
+          </div>
+
+          <div class="kpi-pills">
+            <span class="kpi-pill">✔ نمو التفاعل على منصات السوشيال بنسبة 60%</span>
+            <span class="kpi-pill">✔ قفزة في المبيعات الإلكترونية خلال العروض</span>
+            <span class="kpi-pill">✔ تعزيز الثقة والمظهر الجمالي للبراند</span>
+          </div>
+        </div>
+
+        <div class="case-visual">
+          <div class="mockup-window">
+            <div class="mockup-header">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span class="mockup-url">instagram.com/zarabie</span>
+            </div>
+            <img class="mockup-img" src="./portfolio/zarabie-1.jpeg" alt="Zarabie Furniture">
+          </div>
+          <div class="mockup-gallery">
+            <img src="./portfolio/zarabie-2.jpeg" alt="Zarabie 2">
+            <img src="./portfolio/zarabie-3.jpeg" alt="Zarabie 3">
+            <img src="./portfolio/zarabie-1.jpeg" alt="Zarabie 1">
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>براند زرابي للأثاث — المملكة العربية السعودية</span>
+        <span>التسويق والتصميم الإعلاني: دي آرو</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 05: WEBER BURGER -->
+    <section class="slide-page">
+      <div class="slide-top-meta">
+        <span class="slide-num">04 / دراسة حالة</span>
+        <span class="slide-category">قطاع الأغذية والمطاعم السريعة (F&B)</span>
+      </div>
+
+      <div class="case-split">
+        <div class="case-body">
+          <div class="case-headline">
+            <h2>مطعم ويبر برجر (Weber Burger)</h2>
+            <div class="role-tag">موقع إلكتروني وقائمة طعام رقمية تفاعلية مع ربط التوصيل</div>
+          </div>
+
+          <p class="case-narrative">
+            تصميم وبناء تجربة رقمية حيوية لعلامة ويبر برجر الشهيرة بالخبر، تتيح للزوار استعراض الوجبات وإضافتها للسلة والربط المباشر مع تطبيقات التوصيل.
+          </p>
+
+          <div class="case-specs">
+            <div class="spec-card">
+              <h5>التحدي الاستراتيجي</h5>
+              <p>ابتكار هوية ويب جريئة ومرحة تفتح الشهية وتسهل الطلب السريع بأقل عدد من النقرات.</p>
+            </div>
+            <div class="spec-card">
+              <h5>الحل المنفذ</h5>
+              <p>منيو رقمي بصور عالية الجودة، ألوان براند جريئة، وتكامل مع (جاهز، هنقرستيشن، ذا شيفز).</p>
+            </div>
+          </div>
+
+          <div class="kpi-pills">
+            <span class="kpi-pill">✔ تجربة طلب أونلاين سهلة وسريعة</span>
+            <span class="kpi-pill">✔ زيادة ملحوظة في الطلبات المباشرة</span>
+            <span class="kpi-pill">✔ تكامل تام مع منصات التوصيل الكبرى</span>
+          </div>
+        </div>
+
+        <div class="case-visual">
+          <div class="mockup-window">
+            <div class="mockup-header">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span class="mockup-url">weberburger.com</span>
+            </div>
+            <img class="mockup-img" src="./portfolio/weber-1.png" alt="Weber Burger">
+          </div>
+          <div class="mockup-gallery">
+            <img src="./portfolio/weber-2.png" alt="Weber 2">
+            <img src="./portfolio/weber-3.png" alt="Weber 3">
+            <img src="./portfolio/weber-1.png" alt="Weber 1">
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>مطعم ويبر برجر — الخبر</span>
+        <span>تصميم وتطوير الموقع الرقمي: دي آرو</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 06: D-ARROW CREATIVE ADS & VIDEO -->
+    <section class="slide-page">
+      <div class="slide-top-meta">
+        <span class="slide-num">05 / دراسة حالة</span>
+        <span class="slide-category">الإنتاج المرئي والإعلانات ثلاثية الأبعاد (3D)</span>
+      </div>
+
+      <div class="case-split">
+        <div class="case-body">
+          <div class="case-headline">
+            <h2>حملات دي آرو التسويقية والإنتاج البصري</h2>
+            <div class="role-tag">سرد إعلاني عالي التأثير ورسائل تسويقية موجهة لأصحاب الأعمال</div>
+          </div>
+
+          <p class="case-narrative">
+            تطوير حملات تسويقية وإنتاج بصري يجمع بين التغطيات الميدانية الاحترافية، والتصاميم ثلاثية الأبعاد (3D)، وصياغة عروض جريئة تكسر رتابة الإعلانات التقليدية.
+          </p>
+
+          <div class="case-specs">
+            <div class="spec-card">
+              <h5>التحدي الاستراتيجي</h5>
+              <p>جذب انتباه الشركات وصناع القرار في بيئة إعلانية مزدحمة عبر رسائل تلامس الميزانية والأثر.</p>
+            </div>
+            <div class="spec-card">
+              <h5>الحل المنفذ</h5>
+              <p>دمج الهوية السعودية مع التصيير ثلاثي الأبعاد وعروض باقات مخصصة ذات قيمة مضافة عالية.</p>
+            </div>
+          </div>
+
+          <div class="kpi-pills">
+            <span class="kpi-pill">✔ مضاعفة استفسارات العملاء المؤهلين</span>
+            <span class="kpi-pill">✔ انتشار واسع وتفاعل غير مسبوق</span>
+            <span class="kpi-pill">✔ هوية بصرية ثابتة ومعروفة في السوق</span>
+          </div>
+        </div>
+
+        <div class="case-visual">
+          <div class="mockup-window">
+            <div class="mockup-header">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span class="mockup-url">d-arrow.com/campaigns</span>
+            </div>
+            <img class="mockup-img" src="./portfolio/darrow-1.jpeg" alt="D-Arrow 3D Marketing">
+          </div>
+          <div class="mockup-gallery">
+            <img src="./portfolio/darrow-2.jpeg" alt="D-Arrow 2">
+            <img src="./portfolio/darrow-3.jpeg" alt="D-Arrow 3">
+            <img src="./portfolio/darrow-4.jpeg" alt="D-Arrow 4">
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>وكالة دي آرو للتسويق الرقمي — المملكة العربية السعودية</span>
+        <span>صناعة المحتوى والإنتاج المرئي: دي آرو</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 07: CUSTOM ENTERPRISE ERP & SAAS -->
+    <section class="slide-page">
+      <div class="slide-top-meta">
+        <span class="slide-num">06 / دراسة حالة</span>
+        <span class="slide-category">هندسة البرمجيات والأنظمة السحابية (Enterprise SaaS)</span>
+      </div>
+
+      <div class="case-split">
+        <div class="case-body">
+          <div class="case-headline">
+            <h2>نظام ERP & CRM المخصص للشركات</h2>
+            <div class="role-tag">تطبيق ويب سحابي بنمط Dark UI لإدارة المبيعات والعمليات والموارد</div>
+          </div>
+
+          <p class="case-narrative">
+            تصميم وتطوير نظام مؤسسي موحد يجمع إدارة الموارد البشرية (People & HR)، خطط المبيعات والمشاريع، والفواتير في منصة واحدة تدعم مؤشرات الأداء الحية.
+          </p>
+
+          <div class="case-specs">
+            <div class="spec-card">
+              <h5>التحدي الاستراتيجي</h5>
+              <p>توحيد العمليات اليومية للشركة ومنع تشتت الموظفين بين برامج متعددة دون تعقيد الشاشة.</p>
+            </div>
+            <div class="spec-card">
+              <h5>الحل المنفذ</h5>
+              <p>واجهة Dark Mode عصرية، رسوم بيانية لحظية، وإدارة صلاحيات دقيقة لمختلف الأقسام.</p>
+            </div>
+          </div>
+
+          <div class="kpi-pills">
+            <span class="kpi-pill">✔ تسريع إنجاز المهام الداخلية بنسبة 60%</span>
+            <span class="kpi-pill">✔ تقارير وتحليلات فورية لمتخذي القرار</span>
+            <span class="kpi-pill">✔ أمان متقدم وعزل تام للبيانات</span>
+          </div>
+        </div>
+
+        <div class="case-visual">
+          <div class="mockup-window">
+            <div class="mockup-header">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span class="mockup-url">app.d-arrow.com/dashboard</span>
+            </div>
+            <img class="mockup-img" src="./portfolio/erp-1.jpeg" alt="Enterprise ERP Dashboard">
+          </div>
+          <div class="mockup-gallery">
+            <img src="./portfolio/erp-2.jpeg" alt="ERP 2">
+            <img src="./portfolio/erp-3.jpeg" alt="ERP 3">
+            <img src="./portfolio/erp-logo.jpeg" alt="ERP Logo">
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>حلول إدارة المنشآت والتحول الرقمي</span>
+        <span>الهندسة والتطوير البرمجي: دي آرو</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 08: OCA FURNITURE E-COMMERCE -->
+    <section class="slide-page">
+      <div class="slide-top-meta">
+        <span class="slide-num">07 / دراسة حالة</span>
+        <span class="slide-category">التجارة الإلكترونية والهوية البصرية (E-Commerce & Branding)</span>
+      </div>
+
+      <div class="case-split">
+        <div class="case-body">
+          <div class="case-headline">
+            <h2>متجر OCA للأثاث المنزلي والمكتبي</h2>
+            <div class="role-tag">تصميم الشعار الطباعي الإبداعي ومتجر إلكتروني متكامل</div>
+          </div>
+
+          <p class="case-narrative">
+            بناء متجر إلكتروني ذو طابع أوروبي راقٍ لعلامة OCA، مع ابتكار هوية بصرية متميزة تعتمد على شعار طباعي يدمج عناصر الأثاث داخل الحروف بذكاء.
+          </p>
+
+          <div class="case-specs">
+            <div class="spec-card">
+              <h5>التحدي الاستراتيجي</h5>
+              <p>تسهيل استعراض التشكيلات الواسعة من الأثاث والخزائن وتوفير تجربة تسوق سلسة وسريعة.</p>
+            </div>
+            <div class="spec-card">
+              <h5>الحل المنفذ</h5>
+              <p>واجهات مريحة بصرياً، تصنيف ذكي للمنتجات، ونظام شراء ودفع آمن يدعم بوابات الدفع المحلية.</p>
+            </div>
+          </div>
+
+          <div class="kpi-pills">
+            <span class="kpi-pill">✔ هوية بصرية لا تُنسى في السوق</span>
+            <span class="kpi-pill">✔ تجربة تسوق ترفع معدل التحويل وسلة الشراء</span>
+            <span class="kpi-pill">✔ سرعة فائقة في استعراض الكتالوج</span>
+          </div>
+        </div>
+
+        <div class="case-visual">
+          <div class="mockup-window">
+            <div class="mockup-header">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span class="mockup-url">ocafurniture.com</span>
+            </div>
+            <img class="mockup-img" src="./portfolio/oca-1.png" alt="OCA Store">
+          </div>
+          <div class="mockup-gallery">
+            <img src="./portfolio/oca-2.png" alt="OCA 2">
+            <img src="./portfolio/oca-3.png" alt="OCA 3">
+            <img src="./portfolio/oca-logo.png" alt="OCA Logo">
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>متجر OCA للأثاث — علامة تجارية سعودية</span>
+        <span>الهوية وتطوير المتجر: دي آرو</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 09: SPARK FUEL STATIONS BRANDING -->
+    <section class="slide-page">
+      <div class="slide-top-meta">
+        <span class="slide-num">08 / دراسة حالة</span>
+        <span class="slide-category">الهوية البصرية وتصميم الشعارات (Branding)</span>
+      </div>
+
+      <div class="case-split">
+        <div class="case-body">
+          <div class="case-headline">
+            <h2>بريق المستقبل لمحطات الوقود (Spark)</h2>
+            <div class="role-tag">تصميم الشعار والهوية البصرية الشاملة للعلامة التجارية</div>
+          </div>
+
+          <p class="case-narrative">
+            تصميم شامل للشعار والهوية البصرية لشركة "بريق المستقبل لمحطات الوقود". ركز المشروع على خلق هوية بصرية حديثة ومميزة تعكس الثقة والموثوقية للعلامة التجارية في قطاع محطات الوقود.
+          </p>
+
+          <div class="case-specs">
+            <div class="spec-card">
+              <h5>التحدي الاستراتيجي</h5>
+              <p>ابتكار هوية بصرية بارزة في سوق محطات الوقود التنافسي والتقليدي، مع ضمان وضوح الشعار من مسافة بعيدة لمرتادي الطرق.</p>
+            </div>
+            <div class="spec-card">
+              <h5>الحل المنفذ</h5>
+              <p>تطوير شعار ديناميكي وحديث مع نظام هوية بصرية متماسك بلوحة ألوان قوية وخطوط تعكس الطاقة والموثوقية.</p>
+            </div>
+          </div>
+
+          <div class="kpi-pills">
+            <span class="kpi-pill">✔ حضور قوي ومميز للعلامة التجارية</span>
+            <span class="kpi-pill">✔ تطبيق بصري متناسق عبر جميع نقاط الاتصال</span>
+            <span class="kpi-pill">✔ ردود فعل إيجابية من أصحاب المصلحة</span>
+          </div>
+        </div>
+
+        <div class="case-visual">
+          <div class="mockup-window">
+            <div class="mockup-header">
+              <span style="font-size: 11px; color: var(--primary); font-weight: 700;">⛽ المحاكاة المعمارية والهوية التشغيلية للمحطة</span>
+              <span class="mockup-url">SPARK FUEL STATIONS — BRANDING</span>
+            </div>
+            <img class="mockup-img" src="./portfolio/spark-1.png" alt="Spark Fuel Stations Canopy & Branding">
+          </div>
+          <div class="mockup-gallery">
+            <img src="./portfolio/spark-2.png" alt="البرج الطرقي Totem Sign">
+            <img src="./portfolio/spark-3.png" alt="مضخات التزود بالوقود Branded Pump">
+            <img src="./portfolio/spark-4.png" alt="دليل الهوية والزي الموحد Brand Guide">
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>بريق المستقبل لمحطات الوقود — المملكة العربية السعودية</span>
+        <span>تصميم الهوية البصرية والشعار: دي آرو</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 10: SECTOR SHOWCASE -->
+    <section class="slide-page">
+      <div class="slide-top-meta">
+        <span class="slide-num">09 / تنوع الخبرات</span>
+        <span class="slide-category">نماذج أعمالنا حسب القطاع التجاري</span>
+      </div>
+
+      <div class="sector-showcase-grid">
+        <div class="sector-item">
+          <img src="./projects-showcase/cafe/cover.png" alt="كافيهات">
+          <div class="sector-content">
+            <h4>☕ قطاع القهوة المختصة والكافيهات</h4>
+            <p>محتوى دافئ وصور آسرة تعزز زيارات الفروع والطلب اليومي للبراندات.</p>
+          </div>
+        </div>
+
+        <div class="sector-item">
+          <img src="./projects-showcase/restaurant/cover.png" alt="مطاعم">
+          <div class="sector-content">
+            <h4>🍔 قطاع المطاعم والأغذية (F&B)</h4>
+            <p>تصوير شهي وعروض ترويجية ترفع المبيعات عبر تطبيقات التوصيل.</p>
+          </div>
+        </div>
+
+        <div class="sector-item">
+          <img src="./projects-showcase/car-workshop/cover.png" alt="ورش سيارات">
+          <div class="sector-content">
+            <h4>🚗 مراكز صيانة وخدمات السيارات</h4>
+            <p>طاقة بصرية تعكس الدقة والسرعة وتؤسس الثقة مع أصحاب السيارات.</p>
+          </div>
+        </div>
+
+        <div class="sector-item">
+          <img src="./projects-showcase/althob-alshemagh/cover.png" alt="أزياء تقليدية">
+          <div class="sector-content">
+            <h4>👔 الأزياء التراثية والثوب والشماغ</h4>
+            <p>إبراز فخامة القماش وتفاصيل الحياكة بأسلوب عصري للمواسم والأعياد.</p>
+          </div>
+        </div>
+
+        <div class="sector-item">
+          <img src="./projects-showcase/shoes/cover.png" alt="أحذية">
+          <div class="sector-content">
+            <h4>👞 المصنوعات الجلدية والأحذية الراقية</h4>
+            <p>تصوير منتجات احترافي يعكس الجودة ويزيد من معدل إتمام الشراء.</p>
+          </div>
+        </div>
+
+        <div class="sector-item">
+          <img src="./portfolio/fatima-1.png" alt="استشارات">
+          <div class="sector-content">
+            <h4>🎯 الاستشارات والتدريب وتطوير الذات</h4>
+            <p>منصات متكاملة لحجز الجلسات وبيع الدورات والتعليم الإلكتروني.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-footer">
+        <span>وكالة دي آرو | D-Arrow Digital</span>
+        <span>تغطية متكاملة لأكثر من 8 قطاعات اقتصادية حيوية</span>
+      </div>
+    </section>
+
+    <!-- SLIDE 11: CLOSING & CALL TO ACTION -->
+    <section class="slide-page closing-slide">
+      <div>
+        <div class="cover-logo-wrap">
+          <img src="./Darrow-1.png" alt="D-Arrow Logo">
+        </div>
+        <span class="cover-badge">
+          <span class="badge-dot"></span>
+          <span>خطوتك القادمة للريادة والتوسع</span>
+        </span>
+        <h2>جاهزون لبدء قصة نجاح جديدة مع علامتك التجارية</h2>
+        <p>
+          يسعدنا في وكالة دي آرو عقد جلسة عمل استشارية لمناقشة تطلعات مشروعك، وتقديم استراتيجية مخصصة تجمع بين التصميم المتميز، الهندسة البرمجية، وتحقيق أعلى عوائد استثمارية.
+        </p>
+
+        <div class="cover-divider"></div>
+
+        <div class="cta-boxes">
+          <div class="cta-card">
+            <h4>الموقع الإلكتروني</h4>
+            <p>d-arrow.com</p>
+          </div>
+          <div class="cta-card">
+            <h4>البريد الإلكتروني المباشر</h4>
+            <p>info@d-arrow.com</p>
+          </div>
+          <div class="cta-card">
+            <h4>الهاتف والواتساب</h4>
+            <p>+966 50 046 6349</p>
+          </div>
+        </div>
+
+        <p class="cover-footer-line">D-ARROW DIGITAL AGENCY — KINGDOM OF SAUDI ARABIA — 2026</p>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
