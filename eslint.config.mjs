@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Local-only folders (one-off VPS/deploy/scratch scripts, not app code):
+    "scratch/**",
+    "scripts/**",
+    ".gemini/**",
+    "dist_cf_pages/**",
   ]),
 ]);
 

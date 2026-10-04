@@ -135,7 +135,7 @@ export default function RealEstateHome() {
 
     // Simple NLP heuristic matcher
     const qLower = userText.toLowerCase();
-    let bestMatch =
+    const bestMatch =
       properties.find((p) => {
         if (qLower.includes("فيلا") && p.type === "villa") return true;
         if (qLower.includes("شقة") && p.type === "apartment") return true;

@@ -28,7 +28,7 @@ const CounterNumber = ({ value }: { value: number }) => {
   useEffect(() => {
     if (!isVisible) return;
 
-    let start = 0;
+    const start = 0;
     const end = value;
     const duration = 2500; // 2.5 seconds
     const increment = end / (duration / 50);

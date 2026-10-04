@@ -1,8 +1,12 @@
 /** @type {import('next').NextConfig} */
+const path = require('path');
+
 const nextConfig = {
   reactStrictMode: true,
   trailingSlash: true,
-
+  // Pin the workspace root to this project so Next.js doesn't mis-detect it
+  // when a stray package-lock.json exists in a parent directory (C:\Users\omara).
+  outputFileTracingRoot: path.join(__dirname),
 
   productionBrowserSourceMaps: false,
   compress: true,

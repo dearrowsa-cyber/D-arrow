@@ -110,7 +110,7 @@ export default function PagesManagementPage() {
   const [generatingSeo, setGeneratingSeo] = useState<{ [key: string]: boolean }>({});
 
   const optimizePageSEO = async (section: string, lang: 'ar' | 'en') => {
-    let content = data[section]?.description?.[lang] || data[section]?.title?.[lang];
+    const content = data[section]?.description?.[lang] || data[section]?.title?.[lang];
     if (!content) {
       showToast('يرجى ملء الوصف أولاً كمسودة قبل تحسين الـ SEO', 'warning');
       return;

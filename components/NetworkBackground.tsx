@@ -57,7 +57,7 @@ export default function NetworkBackground() {
 
     const maxPossible = Math.sqrt(width * width + height * height);
     let raf = 0;
-    let frameCount = 0;
+    const frameCount = 0;
 
     // drifting rectangles for extra depth
     type Rect = { x: number; y: number; w: number; h: number; vx: number; vy: number; a: number };
@@ -75,7 +75,7 @@ export default function NetworkBackground() {
       });
     }
 
-    let lastTime = performance.now();
+    const lastTime = performance.now();
     let throttleFrame = 0;
 
     function step(time?: number) {

@@ -215,7 +215,7 @@ export default function ChatBot() {
         setShowNotification(true);
       }
     } catch (error: any) {
-      let errorMsg = chatLanguage === 'ar' ? `🔧 حدث خطأ` : `🔧 Oops!`;
+      const errorMsg = chatLanguage === 'ar' ? `🔧 حدث خطأ` : `🔧 Oops!`;
       
       // Update the last message with error
       setMessages(prev => {
