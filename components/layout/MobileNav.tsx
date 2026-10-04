@@ -1,3 +1,4 @@
+// MobileNav.tsx
 "use client";
 
 import { useState, useEffect } from "react";
@@ -277,7 +278,14 @@ export default function MobileNav({
                 </Link>
 
                 {/* Customer Login / Portal Link */}
-                <div className="pt-2 border-t border-white/10 mt-2">
+                <div className="pt-2 border-t border-white/10 mt-2 space-y-3">
+                  <Link
+                    href="/contact"
+                    onClick={() => setIsOpen(false)}
+                    className="block w-full text-center bg-gradient-to-r from-[#FF4D6D] to-[#FF9A3C] text-white px-4 py-3 rounded-xl text-base font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 whitespace-nowrap"
+                  >
+                    {t("getStarted")}
+                  </Link>
                   {isAuthenticated ? (
                     <Link
                       href="/client"
