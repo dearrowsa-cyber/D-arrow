@@ -16,15 +16,17 @@ export type ApiError = {
     message: string;
 };
 
-const BASE_URL = (
-    process.env.BACKEND_URL ||
-    process.env.NEXT_PUBLIC_API_URL ||
-    process.env.NEXT_PUBLIC_APP_URL ||
-    "http://localhost:3000"
-).replace(/\/$/, "");
-
 function getBaseUrl(): string {
-    return BASE_URL;
+    // On the client (browser), use relative URLs — browser picks the correct host automatically
+    if (typeof window !== "undefined") {
+        return "";
+    }
+    // On the server (SSR/API routes), use explicit URL
+    return (
+        process.env.BACKEND_URL ||
+        process.env.NEXT_PUBLIC_APP_URL ||
+        "http://localhost:3000"
+    ).replace(/\/$/, "");
 }
 
 /** Reads the admin token from client-side cookie */
@@ -50,14 +52,31 @@ async function request<T>({
     revalidate,
     token = false,
 }: RequestOptions): Promise<T> {
-    const url = new URL(endpoint, `${getBaseUrl()}/`);
-
-    if (params) {
-        for (const [key, value] of Object.entries(params)) {
-            if (value !== null && value !== undefined && value !== "") {
-                url.searchParams.set(key, String(value));
+    const base = getBaseUrl();
+    // Build the final URL: absolute on server, relative on client
+    let urlStr: string;
+    if (base) {
+        const url = new URL(endpoint, `${base}/`);
+        if (params) {
+            for (const [key, value] of Object.entries(params)) {
+                if (value !== null && value !== undefined && value !== "") {
+                    url.searchParams.set(key, String(value));
+                }
             }
         }
+        urlStr = url.toString();
+    } else {
+        // Client-side: use relative path
+        const queryString = params
+            ? "?" + new URLSearchParams(
+                Object.fromEntries(
+                    Object.entries(params)
+                        .filter(([, v]) => v !== null && v !== undefined && v !== "")
+                        .map(([k, v]) => [k, String(v)])
+                )
+              ).toString()
+            : "";
+        urlStr = `${endpoint}${queryString}`;
     }
 
     const headers = new Headers();
@@ -81,7 +100,7 @@ async function request<T>({
         cache,
         next: revalidate === undefined ? undefined : { revalidate },
     };
-    const response = await fetch(url, fetchOptions);
+    const response = await fetch(urlStr, fetchOptions);
 
     if (!response.ok) {
         const error: ApiError = {
