@@ -148,7 +148,7 @@ export async function POST(req: NextRequest) {
 
     const product = await prisma.product.create({ data: { ...toProductData(data), slug } });
 
-    revalidateTag('store-products');
+    revalidateTag('store-products', { expire: 0 });
 
     return NextResponse.json({ success: true, message: 'تم إنشاء المنتج بنجاح', product });
   } catch (error) {

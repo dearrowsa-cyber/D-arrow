@@ -135,7 +135,7 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
       data: updateData,
     });
 
-    revalidateTag('store-products');
+    revalidateTag('store-products', { expire: 0 });
 
     return NextResponse.json({ success: true, message: 'تم تحديث المنتج بنجاح', product });
   } catch (error) {
@@ -153,7 +153,7 @@ export async function DELETE(req: NextRequest, { params }: { params: Promise<{ i
       return NextResponse.json({ success: false, error: 'المنتج غير موجود' }, { status: 404 });
     }
     await prisma.product.delete({ where: { id } });
-    revalidateTag('store-products');
+    revalidateTag('store-products', { expire: 0 });
     return NextResponse.json({ success: true, message: 'تم حذف المنتج بنجاح' });
   } catch (error) {
     console.error('Error deleting product:', error);

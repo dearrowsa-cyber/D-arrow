@@ -114,7 +114,7 @@ export async function POST(req: NextRequest) {
       }
     });
 
-    revalidateTag('blog-posts');
+    revalidateTag('blog-posts', { expire: 0 });
 
     return NextResponse.json({
       success: true,
@@ -212,7 +212,7 @@ export async function PUT(req: NextRequest) {
       data: updateData,
     });
 
-    revalidateTag('blog-posts');
+    revalidateTag('blog-posts', { expire: 0 });
 
     return NextResponse.json({
       success: true,
@@ -245,7 +245,7 @@ export async function DELETE(req: NextRequest) {
       where: { id },
     });
 
-    revalidateTag('blog-posts');
+    revalidateTag('blog-posts', { expire: 0 });
 
     return NextResponse.json({
       success: true,
