@@ -113,7 +113,7 @@ export async function POST(req: NextRequest) {
       }
     });
 
-    revalidateTag('pricing-plans', { expire: 0 });
+    revalidateTag('pricing-plans');
 
     return NextResponse.json({
       success: true,
@@ -188,7 +188,7 @@ export async function PUT(req: NextRequest) {
       data: updateData,
     });
 
-    revalidateTag('pricing-plans', { expire: 0 });
+    revalidateTag('pricing-plans');
 
     return NextResponse.json({
       success: true,
@@ -224,7 +224,7 @@ export async function DELETE(req: NextRequest) {
       where: { id },
     });
 
-    revalidateTag('pricing-plans', { expire: 0 });
+    revalidateTag('pricing-plans');
 
     return NextResponse.json({
       success: true,
